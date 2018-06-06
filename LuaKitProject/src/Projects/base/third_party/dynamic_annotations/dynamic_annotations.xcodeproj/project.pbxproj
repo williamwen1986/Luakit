@@ -1,0 +1,264 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CC0468D6AB85EF6B46463E7A /* dynamic_annotations.c in Sources */ = {isa = PBXBuildFile; fileRef = FD00ADB9DE24249BAC8462F7 /* dynamic_annotations.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0DB9FB4E287C2541BFF23CA7 /* release_defaults.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_defaults.gypi; path = ../../../build/internal/release_defaults.gypi; sourceTree = "<group>"; };
+		31F9B0BAA91D9FCAE018E8BF /* filename_rules.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = filename_rules.gypi; path = ../../../build/filename_rules.gypi; sourceTree = "<group>"; };
+		3DACECB93A66418F1952F7B4 /* release_impl.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_impl.gypi; path = ../../../build/internal/release_impl.gypi; sourceTree = "<group>"; };
+		56D6F15D9642B38A283D2ADA /* release_impl_official.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_impl_official.gypi; path = ../../../build/internal/release_impl_official.gypi; sourceTree = "<group>"; };
+		57BDEA6F949D34E15E2EC344 /* dynamic_annotations.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = dynamic_annotations.gyp; sourceTree = "<group>"; };
+		67CA0C39F49FE84125042497 /* dynamic_annotations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dynamic_annotations.h; sourceTree = "<group>"; };
+		703F65CC0C7A13FA050FA22D /* valgrind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = valgrind.h; sourceTree = "<group>"; };
+		C36C6D828C334CDF0066110B /* libdynamic_annotations.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdynamic_annotations.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDA3EB39A6A8949FB732B36B /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../../build/common.gypi; sourceTree = "<group>"; };
+		EF22276FD6CD5B2CC539E591 /* release.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release.gypi; path = ../../../build/release.gypi; sourceTree = "<group>"; };
+		FD00ADB9DE24249BAC8462F7 /* dynamic_annotations.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dynamic_annotations.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		594B9772385D425AE532185C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0BD48C9B5F289088AE9D59E5 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				CDA3EB39A6A8949FB732B36B /* common.gypi */,
+				57BDEA6F949D34E15E2EC344 /* dynamic_annotations.gyp */,
+				31F9B0BAA91D9FCAE018E8BF /* filename_rules.gypi */,
+				EF22276FD6CD5B2CC539E591 /* release.gypi */,
+				0DB9FB4E287C2541BFF23CA7 /* release_defaults.gypi */,
+				3DACECB93A66418F1952F7B4 /* release_impl.gypi */,
+				56D6F15D9642B38A283D2ADA /* release_impl_official.gypi */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+		10867955CE0391620E5A474C = {
+			isa = PBXGroup;
+			children = (
+				6656E0424A0AD0C288577BAF /* Source */,
+				28DB9126701F5AE28F2BAFBC /* Products */,
+				0BD48C9B5F289088AE9D59E5 /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+		28DB9126701F5AE28F2BAFBC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C36C6D828C334CDF0066110B /* libdynamic_annotations.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6656E0424A0AD0C288577BAF /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				735EA922D86BC793F306BA29 /* ../valgrind */,
+				FD00ADB9DE24249BAC8462F7 /* dynamic_annotations.c */,
+				67CA0C39F49FE84125042497 /* dynamic_annotations.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		735EA922D86BC793F306BA29 /* ../valgrind */ = {
+			isa = PBXGroup;
+			children = (
+				703F65CC0C7A13FA050FA22D /* valgrind.h */,
+			);
+			path = ../valgrind;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EC0DBA4A09CC824DB448C52C /* dynamic_annotations */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E90426D91C0264623E5099E /* Build configuration list for PBXNativeTarget "dynamic_annotations" */;
+			buildPhases = (
+				EA26C0E5749BECAAC3D1127A /* Sources */,
+				594B9772385D425AE532185C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dynamic_annotations;
+			productName = dynamic_annotations;
+			productReference = C36C6D828C334CDF0066110B /* libdynamic_annotations.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8237744EC0EB45DBAE665BB7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = 7E16EFB1BD4FE0E4CF5DEA85 /* Build configuration list for PBXProject "dynamic_annotations" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 10867955CE0391620E5A474C;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EC0DBA4A09CC824DB448C52C /* dynamic_annotations */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EA26C0E5749BECAAC3D1127A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC0468D6AB85EF6B46463E7A /* dynamic_annotations.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		191460D5E179F42E3CBF9524 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					V8_DEPRECATION_WARNINGS,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					"USE_LIBJPEG_TURBO=1",
+					ENABLE_INPUT_SPEECH,
+					DISCARDABLE_MEMORY_ALWAYS_SUPPORTED_NATIVELY,
+					SYSTEM_NATIVELY_SIGNALS_MEMORY_PRESSURE,
+					"ICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE",
+					"ENABLE_EGLIMAGE=1",
+					"CLD_VERSION=1",
+					"ENABLE_SPELLCHECK=1",
+					"DISABLE_FTP_SUPPORT=1",
+					"DYNAMIC_ANNOTATIONS_ENABLED=1",
+					"WTF_USE_DYNAMIC_ANNOTATIONS=1",
+				);
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				HEADER_SEARCH_PATHS = ../../../;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = dynamic_annotations;
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = iphoneos;
+				USE_HEADERMAP = NO;
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
+			};
+			name = Debug;
+		};
+		A23A390A859C5DA001CDF2E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D0C03E9083AC7B487B201E88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F4F1A64D9BBC65A39A1A99EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					V8_DEPRECATION_WARNINGS,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					"USE_LIBJPEG_TURBO=1",
+					ENABLE_INPUT_SPEECH,
+					DISCARDABLE_MEMORY_ALWAYS_SUPPORTED_NATIVELY,
+					SYSTEM_NATIVELY_SIGNALS_MEMORY_PRESSURE,
+					"ICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE",
+					"ENABLE_EGLIMAGE=1",
+					"CLD_VERSION=1",
+					"ENABLE_SPELLCHECK=1",
+					"DISABLE_FTP_SUPPORT=1",
+					NDEBUG,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					"NS_BLOCK_ASSERTIONS=1",
+				);
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				HEADER_SEARCH_PATHS = ../../../;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = dynamic_annotations;
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = iphoneos;
+				USE_HEADERMAP = NO;
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E90426D91C0264623E5099E /* Build configuration list for PBXNativeTarget "dynamic_annotations" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				191460D5E179F42E3CBF9524 /* Debug */,
+				F4F1A64D9BBC65A39A1A99EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Release;
+		};
+		7E16EFB1BD4FE0E4CF5DEA85 /* Build configuration list for PBXProject "dynamic_annotations" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0C03E9083AC7B487B201E88 /* Debug */,
+				A23A390A859C5DA001CDF2E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8237744EC0EB45DBAE665BB7 /* Project object */;
+}

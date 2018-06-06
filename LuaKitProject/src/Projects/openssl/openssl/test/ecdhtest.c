@@ -1,0 +1,1 @@
+link ../crypto/ecdh/ecdhtest.c

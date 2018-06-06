@@ -1,0 +1,1 @@
+link ../crypto/hmac/hmactest.c

@@ -1,0 +1,1 @@
+link ../crypto/ripemd/rmdtest.c

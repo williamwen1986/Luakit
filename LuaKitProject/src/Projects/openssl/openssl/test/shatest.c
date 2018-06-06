@@ -1,0 +1,1 @@
+link ../crypto/sha/shatest.c

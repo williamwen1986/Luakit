@@ -1,0 +1,679 @@
+ChangeLog
+
+2016.8.3 19:33:28
+1、imap/pop3/smtp在使用sasl认证的时候，优先使用简单的方式
+
+Index: src/third_party/curl-7.43.0/lib/curl_sasl.c
+===================================================================
+--- src/third_party/curl-7.43.0/lib/curl_sasl.c	(revision 46025)
++++ src/third_party/curl-7.43.0/lib/curl_sasl.c	(revision 46026)
+@@ -1399,8 +1399,36 @@
+       result = sasl_create_external_message(data, conn->user, &resp, &len);
+   }
+   else if(conn->bits.user_passwd) {
++    if((enabledmechs & SASL_MECH_XOAUTH2) || conn->xoauth2_bearer) {
++      mech = SASL_MECH_STRING_XOAUTH2;
++      state1 = SASL_XOAUTH2;
++      sasl->authused = SASL_MECH_XOAUTH2;
++
++      if(force_ir || data->set.sasl_ir)
++        result = sasl_create_xoauth2_message(data, conn->user,
++                                             conn->xoauth2_bearer,
++                                             &resp, &len);
++    }
++    else if(enabledmechs & SASL_MECH_LOGIN) {
++      mech = SASL_MECH_STRING_LOGIN;
++      state1 = SASL_LOGIN;
++      state2 = SASL_LOGIN_PASSWD;
++      sasl->authused = SASL_MECH_LOGIN;
++
++      if(force_ir || data->set.sasl_ir)
++        result = sasl_create_login_message(data, conn->user, &resp, &len);
++    }
++    else if(enabledmechs & SASL_MECH_PLAIN) {
++      mech = SASL_MECH_STRING_PLAIN;
++      state1 = SASL_PLAIN;
++      sasl->authused = SASL_MECH_PLAIN;
++
++      if(force_ir || data->set.sasl_ir)
++        result = sasl_create_plain_message(data, conn->user, conn->passwd,
++                                           &resp, &len);
++    }
+ #if defined(USE_KERBEROS5)
+-    if(enabledmechs & SASL_MECH_GSSAPI) {
++    else if(enabledmechs & SASL_MECH_GSSAPI) {
+       sasl->mutual_auth = FALSE; /* TODO: Calculate mutual authentication */
+       mech = SASL_MECH_STRING_GSSAPI;
+       state1 = SASL_GSSAPI;
+@@ -1415,10 +1443,9 @@
+                                                       NULL, &conn->krb5,
+                                                       &resp, &len);
+     }
+-    else
+ #endif
+ #ifndef CURL_DISABLE_CRYPTO_AUTH
+-    if(enabledmechs & SASL_MECH_DIGEST_MD5) {
++    else if(enabledmechs & SASL_MECH_DIGEST_MD5) {
+       mech = SASL_MECH_STRING_DIGEST_MD5;
+       state1 = SASL_DIGESTMD5;
+       sasl->authused = SASL_MECH_DIGEST_MD5;
+@@ -1428,10 +1455,9 @@
+       state1 = SASL_CRAMMD5;
+       sasl->authused = SASL_MECH_CRAM_MD5;
+     }
+-    else
+ #endif
+ #ifdef USE_NTLM
+-    if(enabledmechs & SASL_MECH_NTLM) {
++    else if(enabledmechs & SASL_MECH_NTLM) {
+       mech = SASL_MECH_STRING_NTLM;
+       state1 = SASL_NTLM;
+       state2 = SASL_NTLM_TYPE2MSG;
+@@ -1440,37 +1466,8 @@
+       if(force_ir || data->set.sasl_ir)
+         result = Curl_sasl_create_ntlm_type1_message(conn->user, conn->passwd,
+                                                      &conn->ntlm, &resp, &len);
+-      }
+-    else
++    }
+ #endif
+-    if((enabledmechs & SASL_MECH_XOAUTH2) || conn->xoauth2_bearer) {
+-      mech = SASL_MECH_STRING_XOAUTH2;
+-      state1 = SASL_XOAUTH2;
+-      sasl->authused = SASL_MECH_XOAUTH2;
+-
+-      if(force_ir || data->set.sasl_ir)
+-        result = sasl_create_xoauth2_message(data, conn->user,
+-                                             conn->xoauth2_bearer,
+-                                             &resp, &len);
+-    }
+-    else if(enabledmechs & SASL_MECH_LOGIN) {
+-      mech = SASL_MECH_STRING_LOGIN;
+-      state1 = SASL_LOGIN;
+-      state2 = SASL_LOGIN_PASSWD;
+-      sasl->authused = SASL_MECH_LOGIN;
+-
+-      if(force_ir || data->set.sasl_ir)
+-        result = sasl_create_login_message(data, conn->user, &resp, &len);
+-    }
+-    else if(enabledmechs & SASL_MECH_PLAIN) {
+-      mech = SASL_MECH_STRING_PLAIN;
+-      state1 = SASL_PLAIN;
+-      sasl->authused = SASL_MECH_PLAIN;
+-
+-      if(force_ir || data->set.sasl_ir)
+-        result = sasl_create_plain_message(data, conn->user, conn->passwd,
+-                                           &resp, &len);
+-    }
+   }
+
+   if(!result) {
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+
+2016.5.9 11:57:09
+1、imap合并7.48版本的imap_atom方法。
+2、imap使用login命令登录的时候，password强制添加引号
+
+Index: src/third_party/curl-7.43.0/lib/imap.c
+===================================================================
+--- src/third_party/curl-7.43.0/lib/imap.c	(revision 40015)
++++ src/third_party/curl-7.43.0/lib/imap.c	(working copy)
+@@ -98,8 +98,8 @@
+                         int numsocks);
+ static CURLcode imap_doing(struct connectdata *conn, bool *dophase_done);
+ static CURLcode imap_setup_connection(struct connectdata *conn);
+-static char *imap_box_atom(const char *str);
+-static char *imap_atom(const char *str);
++static char *imap_atom_quote(const char *str); // 强制添加引号
++static char *imap_atom(const char *str, bool escape_only);
+ static CURLcode imap_sendf(struct connectdata *conn, const char *fmt, ...);
+ static CURLcode imap_parse_url_options(struct connectdata *conn);
+ static CURLcode imap_parse_url_path(struct connectdata *conn);
+@@ -548,8 +548,8 @@
+   }
+
+   /* Make sure the username and password are in the correct atom format */
+-  user = imap_atom(conn->user);
+-  passwd = imap_atom(conn->passwd);
++  user = imap_atom(conn->user, false);
++  passwd = imap_atom_quote(conn->passwd);
+
+   /* Send the LOGIN command */
+   result = imap_sendf(conn, "LOGIN %s %s", user ? user : "",
+@@ -688,11 +688,7 @@
+                         imap->custom_params ? imap->custom_params : "");
+   else {
+     /* Make sure the mailbox is in the correct atom format */
+-    if(imap->mailbox) {
+-      mailbox = imap_box_atom(imap->mailbox);
+-    } else {
+-      mailbox = imap_atom("");
+-    }
++    mailbox = imap->mailbox ? imap_atom(imap->mailbox, true) : strdup("");
+     if(!mailbox)
+       return CURLE_OUT_OF_MEMORY;
+
+@@ -733,7 +729,7 @@
+   }
+
+   /* Make sure the mailbox is in the correct atom format */
+-  mailbox = imap_box_atom(imap->mailbox);
++  mailbox = imap_atom_quote(imap->mailbox);
+   if(!mailbox)
+     return CURLE_OUT_OF_MEMORY;
+
+@@ -807,7 +803,7 @@
+   }
+
+   /* Make sure the mailbox is in the correct atom format */
+-  mailbox = imap_box_atom(imap->mailbox);
++  mailbox = imap_atom_quote(imap->mailbox);
+   if(!mailbox)
+     return CURLE_OUT_OF_MEMORY;
+
+@@ -1883,7 +1879,7 @@
+   return result;
+ }
+
+-static char *imap_box_atom(const char *str) {
++static char *imap_atom_quote(const char *str) {
+   const char *p1;
+   char *p2;
+   size_t backsp_count = 0;
+@@ -1949,38 +1945,47 @@
+  * The returned string needs to be freed.
+  *
+  */
+-static char *imap_atom(const char *str)
++static char *imap_atom(const char *str, bool escape_only)
+ {
++  const char atom_specials[] = "(){ %*]";
+   const char *p1;
+   char *p2;
+   size_t backsp_count = 0;
+   size_t quote_count = 0;
+-  bool space_exists = FALSE;
++  bool others_exists = FALSE;
+   size_t newlen = 0;
+   char *newstr = NULL;
+
+   if(!str)
+     return NULL;
+
+-  /* Count any unescaped characters */
++  /* Look for "atom-specials", counting the backslash and quote characters as
++   these will need escapping */
+   p1 = str;
+   while(*p1) {
+     if(*p1 == '\\')
+       backsp_count++;
+     else if(*p1 == '"')
+       quote_count++;
+-    else if(*p1 == ' ')
+-      space_exists = TRUE;
+-
++    else if(!escape_only) {
++      const char *p3 = atom_specials;
++
++      while(*p3 && !others_exists) {
++        if(*p1 == *p3)
++          others_exists = TRUE;
++
++        p3++;
++      }
++    }
+     p1++;
+   }
+
+   /* Does the input contain any unescaped characters? */
+-  if(!backsp_count && !quote_count && !space_exists)
++  if(!backsp_count && !quote_count && !others_exists)
+     return strdup(str);
+
+   /* Calculate the new string length */
+-  newlen = strlen(str) + backsp_count + quote_count + (space_exists ? 2 : 0);
++  newlen = strlen(str) + backsp_count + quote_count + (others_exists ? 2 : 0);
+
+   /* Allocate the new string */
+   newstr = (char *) malloc((newlen + 1) * sizeof(char));
+@@ -1989,7 +1994,7 @@
+
+   /* Surround the string in quotes if necessary */
+   p2 = newstr;
+-  if(space_exists) {
++  if(others_exists) {
+     newstr[0] = '"';
+     newstr[newlen - 1] = '"';
+     p2++;
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+
+2016.4.29 11:47:59
+1、imap对文件夹操作的时候一定加上引号
+
+Index: src/third_party/curl-7.43.0/lib/imap.c
+===================================================================
+--- src/third_party/curl-7.43.0/lib/imap.c	(revision 39529)
++++ src/third_party/curl-7.43.0/lib/imap.c	(revision 39530)
+@@ -98,6 +98,7 @@
+                         int numsocks);
+ static CURLcode imap_doing(struct connectdata *conn, bool *dophase_done);
+ static CURLcode imap_setup_connection(struct connectdata *conn);
++static char *imap_box_atom(const char *str);
+ static char *imap_atom(const char *str);
+ static CURLcode imap_sendf(struct connectdata *conn, const char *fmt, ...);
+ static CURLcode imap_parse_url_options(struct connectdata *conn);
+@@ -687,7 +688,11 @@
+                         imap->custom_params ? imap->custom_params : "");
+   else {
+     /* Make sure the mailbox is in the correct atom format */
+-    mailbox = imap_atom(imap->mailbox ? imap->mailbox : "");
++    if(imap->mailbox) {
++      mailbox = imap_box_atom(imap->mailbox);
++    } else {
++      mailbox = imap_atom("");
++    }
+     if(!mailbox)
+       return CURLE_OUT_OF_MEMORY;
+
+@@ -728,7 +733,7 @@
+   }
+
+   /* Make sure the mailbox is in the correct atom format */
+-  mailbox = imap_atom(imap->mailbox);
++  mailbox = imap_box_atom(imap->mailbox);
+   if(!mailbox)
+     return CURLE_OUT_OF_MEMORY;
+
+@@ -802,7 +807,7 @@
+   }
+
+   /* Make sure the mailbox is in the correct atom format */
+-  mailbox = imap_atom(imap->mailbox);
++  mailbox = imap_box_atom(imap->mailbox);
+   if(!mailbox)
+     return CURLE_OUT_OF_MEMORY;
+
+@@ -1878,6 +1883,62 @@
+   return result;
+ }
+
++static char *imap_box_atom(const char *str) {
++  const char *p1;
++  char *p2;
++  size_t backsp_count = 0;
++  size_t quote_count = 0;
++  size_t newlen = 0;
++  char *newstr = NULL;
++
++  if(!str)
++    return NULL;
++
++  /* Count any unescaped characters */
++  p1 = str;
++  while(*p1) {
++    if(*p1 == '\\')
++      backsp_count++;
++    else if(*p1 == '"')
++      quote_count++;
++
++    p1++;
++  }
++
++  /* Calculate the new string length */
++  newlen = strlen(str) + backsp_count + quote_count + 2;
++
++  /* Allocate the new string */
++  newstr = (char *) malloc((newlen + 1) * sizeof(char));
++  if(!newstr)
++    return NULL;
++
++  /* Surround the string in quotes if necessary */
++  p2 = newstr;
++  newstr[0] = '"';
++  newstr[newlen - 1] = '"';
++  p2++;
++
++  /* Copy the string, escaping backslash and quote characters along the way */
++  p1 = str;
++  while(*p1) {
++    if(*p1 == '\\' || *p1 == '"') {
++      *p2 = '\\';
++      p2++;
++    }
++
++    *p2 = *p1;
++
++    p1++;
++    p2++;
++  }
++
++  /* Terminate the string */
++  newstr[newlen] = '\0';
++
++  return newstr;
++}
++
+ /***********************************************************************
+  *
+  * imap_atom()
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+
+2016.4.12 20:47:04
+1、imap fetch命令使用UID FETCH
+
+Index: src/third_party/curl-7.43.0/lib/imap.c
+===================================================================
+--- src/third_party/curl-7.43.0/lib/imap.c	(revision 37699)
++++ src/third_party/curl-7.43.0/lib/imap.c	(revision 37700)
+@@ -762,12 +762,12 @@
+
+   /* Send the FETCH command */
+   if(imap->partial)
+-    result = imap_sendf(conn, "FETCH %s BODY[%s]<%s>",
++    result = imap_sendf(conn, "UID FETCH %s BODY.PEEK[%s]<%s>",
+                         imap->uid,
+                         imap->section ? imap->section : "",
+                         imap->partial);
+   else
+-    result = imap_sendf(conn, "FETCH %s BODY[%s]",
++    result = imap_sendf(conn, "UID FETCH %s BODY.PEEK[%s]",
+                         imap->uid,
+                         imap->section ? imap->section : "");
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+
+2016.4.11 17:14:31
+1、imap通过url解析出mailbox的时候需要包括空格
+
+Index: src/third_party/curl-7.43.0/lib/imap.c
+===================================================================
+--- src/third_party/curl-7.43.0/lib/imap.c	(revision 37594)
++++ src/third_party/curl-7.43.0/lib/imap.c	(working copy)
+@@ -1961,7 +1961,7 @@
+  * Portable test of whether the specified char is a "bchar" as defined in the
+  * grammar of RFC-5092.
+  */
+-static bool imap_is_bchar(char ch)
++static bool imap_is_bchar(char ch, bool ignore_space)
+ {
+   switch(ch) {
+     /* bchar */
+@@ -1986,7 +1986,11 @@
+     /* bchar -> achar -> uchar -> pct-encoded */
+     case '%': /* HEXDIG chars are already included above */
+       return true;
+-
++    case ' ': {
++      if(ignore_space) {
++        return true;
++      }
++    }
+     default:
+       return false;
+   }
+@@ -2060,7 +2064,7 @@
+   const char *ptr = begin;
+
+   /* See how much of the URL is a valid path and decode it */
+-  while(imap_is_bchar(*ptr))
++  while(imap_is_bchar(*ptr, true))
+     ptr++;
+
+   if(ptr != begin) {
+@@ -2098,7 +2102,7 @@
+
+     /* Find the length of the value parameter */
+     begin = ++ptr;
+-    while(imap_is_bchar(*ptr))
++    while(imap_is_bchar(*ptr, false))
+       ptr++;
+
+     /* Decode the value parameter */
+@@ -2158,7 +2162,7 @@
+   if(imap->mailbox && !imap->uid && *ptr == '?') {
+     /* Find the length of the query parameter */
+     begin = ++ptr;
+-    while(imap_is_bchar(*ptr))
++    while(imap_is_bchar(*ptr, false))
+       ptr++;
+
+     /* Decode the query parameter */
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+
+2016.3.31 21:52:47
+1、修改imap_state_id_resp
+
+Index: src/third_party/curl-7.43.0/lib/imap.c
+===================================================================
+--- src/third_party/curl-7.43.0/lib/imap.c	(revision 36784)
++++ src/third_party/curl-7.43.0/lib/imap.c	(working copy)
+@@ -1073,14 +1073,15 @@
+                                    imapstate instate)
+ {
+   CURLcode result = CURLE_OK;
+-  struct imap_conn *imapc = &conn->proto.imapc;
+-  struct pingpong *pp = &imapc->pp;
+-  if(pp->cache) {
+-    Curl_safefree(pp->cache);
+-    pp->cache_size = 0;
++
++  if(imapcode == '*') {
++    // do nothing
++  } else if(imapcode == 'O') {
++    result = imap_perform_authentication(conn);
++  } else {
++    // whatever go on...
++    result = imap_perform_authentication(conn);
+   }
+-  // whatever go on...
+-  result = imap_perform_authentication(conn);
+   return result;
+ }
+
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+
+2016.3.31 21:18:16
+1、imap添加ID命令的支持(User-Agent)
+2、pop3_endofresp处理-Err错误字符串匹配
+
+Index: src/third_party/curl-7.43.0/lib/pop3.c
+===================================================================
+--- src/third_party/curl-7.43.0/lib/pop3.c	(revision 36757)
++++ src/third_party/curl-7.43.0/lib/pop3.c	(working copy)
+@@ -246,7 +246,8 @@
+   struct pop3_conn *pop3c = &conn->proto.pop3c;
+
+   /* Do we have an error response? */
+-  if(len >= 4 && !memcmp("-ERR", line, 4)) {
++  if((len >= 4 && !memcmp("-ERR", line, 4)) ||
++     (len >= 1 && !memcmp("-Err", line, 4))) {
+     *resp = '-';
+
+     return TRUE;
+Index: src/third_party/curl-7.43.0/lib/imap.h
+===================================================================
+--- src/third_party/curl-7.43.0/lib/imap.h	(revision 36757)
++++ src/third_party/curl-7.43.0/lib/imap.h	(working copy)
+@@ -33,6 +33,7 @@
+   IMAP_SERVERGREET,  /* waiting for the initial greeting immediately after
+                         a connect */
+   IMAP_CAPABILITY,
++  IMAP_ID,
+   IMAP_STARTTLS,
+   IMAP_UPGRADETLS,   /* asynchronously upgrade the connection to SSL/TLS
+                        (multi mode only) */
+@@ -78,6 +79,7 @@
+   bool tls_supported;         /* StartTLS capability supported by server */
+   bool login_disabled;        /* LOGIN command disabled by server */
+   bool ir_supported;          /* Initial response supported by server */
++  bool id_supported;          /* ID command supported by server */
+   char *mailbox;              /* The last selected mailbox */
+   char *mailbox_uidvalidity;  /* UIDVALIDITY parsed from select response */
+ };
+Index: src/third_party/curl-7.43.0/lib/imap.c
+===================================================================
+--- src/third_party/curl-7.43.0/lib/imap.c	(revision 36757)
++++ src/third_party/curl-7.43.0/lib/imap.c	(working copy)
+@@ -317,6 +317,11 @@
+           return FALSE;
+         break;
+
++      case IMAP_ID:
++        if(!imap_matchresp(line, len, "ID"))
++          return FALSE;
++        break;
++
+       case IMAP_LIST:
+         if((!imap->custom && !imap_matchresp(line, len, "LIST")) ||
+           (imap->custom && !imap_matchresp(line, len, imap->custom) &&
+@@ -425,6 +430,7 @@
+     "STOP",
+     "SERVERGREET",
+     "CAPABILITY",
++    "ID",
+     "STARTTLS",
+     "UPGRADETLS",
+     "AUTHENTICATE",
+@@ -463,6 +469,7 @@
+   imapc->sasl.authmechs = SASL_AUTH_NONE; /* No known auth. mechanisms yet */
+   imapc->sasl.authused = SASL_AUTH_NONE;  /* Clear the auth. mechanism used */
+   imapc->tls_supported = FALSE;           /* Clear the TLS capability */
++  imapc->id_supported = FALSE;            /* Clear the ID capability */
+
+   /* Send the CAPABILITY command */
+   result = imap_sendf(conn, "CAPABILITY");
+@@ -637,6 +644,32 @@
+
+ /***********************************************************************
+  *
++ * imap_perform_id()
++ *
++ * Sends a ID command
++ */
++static CURLcode imap_perform_id(struct connectdata *conn)
++{
++  CURLcode result = CURLE_OK;
++  struct SessionHandle *data = conn->data;
++
++  char* param = (char*)data->set.str[STRING_USERAGENT];
++  if(!param || !strlen(param)) {
++    failf(data, "Could not get ID command param! So go on...");
++    result = imap_perform_authentication(conn);
++    return result;
++  }
++  /* Send the ID... */
++  result = imap_sendf(conn, "ID %s", param);
++
++  if(!result)
++    state(conn, IMAP_ID);
++
++  return result;
++}
++
++/***********************************************************************
++ *
+  * imap_perform_list()
+  *
+  * Sends a LIST command or an alternative custom request.
+@@ -910,6 +943,10 @@
+            llen == wordlen)
+           imapc->sasl.authmechs |= mechbit;
+       }
++      /* Dose the server support the ID command */
++      else if(wordlen == 2 && !memcmp(line, "ID", 2)) {
++        imapc->id_supported = TRUE;
++      }
+
+       line += wordlen;
+     }
+@@ -920,19 +957,34 @@
+       if(imapc->tls_supported)
+         /* Switch to TLS connection now */
+         result = imap_perform_starttls(conn);
+-      else if(data->set.use_ssl == CURLUSESSL_TRY)
+-        /* Fallback and carry on with authentication */
+-        result = imap_perform_authentication(conn);
++      else if(data->set.use_ssl == CURLUSESSL_TRY) {
++        if(imapc->id_supported) {
++          result = imap_perform_id(conn);
++        } else {
++          /* Fallback and carry on with authentication */
++          result = imap_perform_authentication(conn);
++        }
++      }
+       else {
+         failf(data, "STARTTLS not supported.");
+         result = CURLE_USE_SSL_FAILED;
+       }
+     }
+-    else
++    else {
++      if(imapc->id_supported) {
++        result = imap_perform_id(conn);
++      } else {
++        result = imap_perform_authentication(conn);
++      }
++    }
++  }
++  else {
++    if(imapc->id_supported) {
++      result = imap_perform_id(conn);
++    } else {
+       result = imap_perform_authentication(conn);
++    }
+   }
+-  else
+-    result = imap_perform_authentication(conn);
+
+   return result;
+ }
+@@ -1016,6 +1068,22 @@
+   return result;
+ }
+
++/* For ID responses */
++static CURLcode imap_state_id_resp(struct connectdata *conn, int imapcode,
++                                   imapstate instate)
++{
++  CURLcode result = CURLE_OK;
++  struct imap_conn *imapc = &conn->proto.imapc;
++  struct pingpong *pp = &imapc->pp;
++  if(pp->cache) {
++    Curl_safefree(pp->cache);
++    pp->cache_size = 0;
++  }
++  // whatever go on...
++  result = imap_perform_authentication(conn);
++  return result;
++}
++
+ /* For LIST responses */
+ static CURLcode imap_state_list_resp(struct connectdata *conn, int imapcode,
+                                      imapstate instate)
+@@ -1310,6 +1378,10 @@
+       result = imap_state_capability_resp(conn, imapcode, imapc->state);
+       break;
+
++    case IMAP_ID:
++      result = imap_state_id_resp(conn, imapcode, imapc->state);
++      break;
++
+     case IMAP_STARTTLS:
+       result = imap_state_starttls_resp(conn, imapcode, imapc->state);
+       break;

@@ -1,0 +1,1 @@
+link ../crypto/md4/md4.c

@@ -1,0 +1,4 @@
+armv7 DONE
+See ../gtest-build
+armv7s DONE
+See ../gtest-build
