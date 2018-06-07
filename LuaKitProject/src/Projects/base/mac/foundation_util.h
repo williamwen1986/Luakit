@@ -51,8 +51,8 @@ typedef CR_FORWARD_ENUM(unsigned int, NSSearchPathDirectory);
 typedef unsigned int NSSearchPathDomainMask;
 #endif
 
-typedef struct OpaqueSecTrustRef* SecACLRef;
-typedef struct OpaqueSecTrustedApplicationRef* SecTrustedApplicationRef;
+//typedef struct OpaqueSecTrustRef* SecACLRef;
+//typedef struct OpaqueSecTrustedApplicationRef* SecTrustedApplicationRef;
 
 namespace base {
 
@@ -289,8 +289,8 @@ CF_CAST_DECL(CGColor);
 CF_CAST_DECL(CTFont);
 CF_CAST_DECL(CTRun);
 
-CF_CAST_DECL(SecACL);
-CF_CAST_DECL(SecTrustedApplication);
+//CF_CAST_DECL(SecACL);
+//CF_CAST_DECL(SecTrustedApplication);
 
 #undef CF_CAST_DECL
 

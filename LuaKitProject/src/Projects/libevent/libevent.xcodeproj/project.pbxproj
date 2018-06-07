@@ -212,7 +212,7 @@
 					"-fstack-protector-all",
 				);
 				PRODUCT_NAME = event;
-				SDKROOT = iphoneos11.2;
+				SDKROOT = iphoneos;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wendif-labels",
@@ -250,7 +250,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRODUCT_NAME = event;
-				SDKROOT = iphoneos11.2;
+				SDKROOT = iphoneos;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wendif-labels",

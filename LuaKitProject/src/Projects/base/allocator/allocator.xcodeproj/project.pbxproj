@@ -838,7 +838,7 @@
 			buildSettings = {
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = All;
-				SDKROOT = iphoneos11.2;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -847,7 +847,7 @@
 			buildSettings = {
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = All;
-				SDKROOT = iphoneos11.2;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
