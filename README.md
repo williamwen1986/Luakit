@@ -2,6 +2,7 @@ Luakit
 -----------------------------
 
 A multi-platform solution in lua , you can develop your app, IOS or android app with this tool, truely  write once , use everywhere. Notice , you can only use Luakit to write business logic code including network, db orm,  multithread model, but not UI code, Luakit do not provide api for UI development.
+
 Why write apps with Luakit?
 -----------------------------
 
