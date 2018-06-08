@@ -6,7 +6,7 @@ A multi-platform solution in lua , you can develop your app, IOS or android app 
 Why write apps with Luakit?
 -----------------------------
 
-I will say the most effective way to develop apps on more than one platform. Here are some reasons
+I will say Luakit is the most effective tool to develop apps on more than one platform. Here are some reasons
 
 * Cross platform, truely write once use everywhere, this feature is very attractive, if you have experienced multi-platform development , cross platform will be very impressive for you. It can promote efficiency largely.
 
