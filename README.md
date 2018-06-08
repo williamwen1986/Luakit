@@ -13,3 +13,15 @@ I will say Luakit is the most effective tool to develop apps on more than one pl
 * Dynamic and flexible, write business logic code in lua , you can release your code anytime, truely agile development.
 
 * Forget the annoying memory management, lua support automatic garbage collection. Lua has closures, also known as blocks. These features make Luakit much more effective than other c++ cross platform solution.
+
+Examples
+-----------------------------
+
+For some simple Luakit apps, check out the [source folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject).
+
+We provide some powerful multi-threading api in lua , you can see ThreadTest in Android Demo folder and IOS Demo folder. Notice , It is not only thread safety multithreading model, but also really competition multithreading model. It is a unique solution to perform competition multithreading in lua or js.
+
+Create thread
+```lua
+local newThreadId = lua.thread.createThread(BusinessThreadLOGIC,"newThread")
+```
