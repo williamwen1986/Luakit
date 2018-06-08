@@ -29,8 +29,8 @@ Create thread
 -- BusinessThreadLOGIC
 -- BusinessThreadFILE
 -- BusinessThreadIO
--- param2 is the thread name
--- result is new threadId which is the token you should hold to do further action
+-- Param2 is the thread name
+-- Result is new threadId which is the token you should hold to do further action
 local newThreadId = lua.thread.createThread(BusinessThreadLOGIC,"newThread")
 ```
 Comming soon......
