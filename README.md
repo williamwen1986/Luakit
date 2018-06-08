@@ -40,7 +40,7 @@ Perform method on a specified thread async
 ```lua
 -- Parma1 is the threadId for which you want to perform method
 -- Parma2 is the modelName
--- Parma2 is the methodName
+-- Parma3 is the methodName
 -- The result is just like you run the below code on a specified thread async
 -- require(modelName).methodName("params", 1.1, {1,2,3}, function (p)
 -- end)
@@ -48,5 +48,19 @@ lua.thread.postToThread(threadId,modelName,methodName,"params", 1.1, {1,2,3}, fu
 	-- do something here
 end)
 ```
+
+Perform method on a specified thread sync
+```lua
+-- Parma1 is the threadId for which you want to perform method
+-- Parma2 is the modelName
+-- Parma3 is the methodName
+-- The result is just like you run the below code on a specified thread sync
+-- local result = require(modelName).methodName("params", 1.1, {1,2,3}, function (p)
+-- end)
+local result = lua.thread.postToThreadSync(threadId,modelName,methodName,"params", 1.1, {1,2,3}, function (p)
+	-- do something here
+end)
+```
+
 Comming soon......
 -----------------------------
