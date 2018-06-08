@@ -98,5 +98,10 @@ local Table = require('orm.class.table')
 local weatherTable = Table("weather")
 ```
 
+Insert data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+```lua
+
+```
+
 Comming soon......
 -----------------------------
