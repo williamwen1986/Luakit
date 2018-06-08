@@ -23,7 +23,7 @@ We provide some powerful multi-threading api in lua , you can see ThreadTest in 
 
 * **Multithreading**
 
-	Create thread
+Create thread
 ```lua
 -- Parma1 is the thread type ,there are five types of thread you can create.
 -- BusinessThreadUI
@@ -37,7 +37,6 @@ local newThreadId = lua.thread.createThread(BusinessThreadLOGIC,"newThread")
 ```
 
 Perform method on a specified thread async
-	
 ```lua
 -- Parma1 is the threadId for which you want to perform method
 -- Parma2 is the modelName
