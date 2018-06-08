@@ -23,7 +23,7 @@ For some simple Luakit apps, check out the [source folder](https://github.com/wi
 
 We provide some powerful multi-threading api in lua , you can see ThreadTest in Android Demo folder and IOS Demo folder. Notice , It is not only thread safety multithreading model, but also really competition multithreading model. It is the unique solution to perform competition multithreading in lua or js.
 
-Create thread
+Create thread , [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
 ```lua
 -- Parma1 is the thread type ,there are five types of thread you can create.
 -- BusinessThreadUI
@@ -36,7 +36,7 @@ Create thread
 local newThreadId = lua.thread.createThread(BusinessThreadLOGIC,"newThread")
 ```
 
-Perform method on a specified thread async
+Perform method on a specified thread async, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
 ```lua
 -- Parma1 is the threadId for which you want to perform method
 -- Parma2 is the modelName
@@ -49,7 +49,7 @@ lua.thread.postToThread(threadId,modelName,methodName,"params", 1.1, {1,2,3}, fu
 end)
 ```
 
-Perform method on a specified thread sync
+Perform method on a specified thread sync, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
 ```lua
 -- Parma1 is the threadId for which you want to perform method
 -- Parma2 is the modelName
@@ -72,9 +72,17 @@ Luakit provide a orm solution which has below features
 * Timing auto transaction
 * Thread safe
 
-Define your model 
+Define your model, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 ```lua
 -- Add the define table to dbData.lua
+-- Luakit provide 7 colum types
+-- IntegerField to sqlite integer 
+-- RealField to sqlite real 
+-- BlobField to sqlite blob 
+-- CharField to sqlite varchar 
+-- TextField to sqlite text 
+-- BooleandField to sqlite bool
+-- DateTimeField to sqlite integer
 local weather = {
 	__dbname__ = "test.db",
     __tablename__ = "weather",
