@@ -72,5 +72,23 @@ Luakit provide a orm solution which has below features
 * Timing auto transaction
 * Thread safe
 
+Define your model 
+```lua
+-- Add the define table to dbData.lua
+local weather = {
+	__dbname__ = "test.db",
+    __tablename__ = "weather",
+    id = {"IntegerField",{primary_key = true}},
+    wind = {"TextField",{}},
+    date = {"TextField",{}},
+    low = {"IntegerField",{}},
+    high = {"IntegerField",{}},
+    city =  {"TextField",{}},
+}
+-- when you use, you can do just like below
+local Table = require('orm.class.table')
+local weatherTable = Table("weather")
+```
+
 Comming soon......
 -----------------------------
