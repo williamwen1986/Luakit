@@ -19,7 +19,7 @@ Examples
 
 For some simple Luakit apps, check out the [source folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject).
 
-* **Multithreading**
+**Multithreading**
 
 We provide some powerful multi-threading api in lua , you can see ThreadTest in Android Demo folder and IOS Demo folder. Notice , It is not only thread safety multithreading model, but also really competition multithreading model. It is the unique solution to perform competition multithreading in lua or js.
 
@@ -61,6 +61,8 @@ local result = lua.thread.postToThreadSync(threadId,modelName,methodName,"params
 	-- do something here
 end)
 ```
+
+**ORM**
 
 Comming soon......
 -----------------------------
