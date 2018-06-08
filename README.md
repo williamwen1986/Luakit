@@ -21,7 +21,9 @@ For some simple Luakit apps, check out the [source folder](https://github.com/wi
 
 We provide some powerful multi-threading api in lua , you can see ThreadTest in Android Demo folder and IOS Demo folder. Notice , It is not only thread safety multithreading model, but also really competition multithreading model. It is a unique solution to perform competition multithreading in lua or js.
 
-Create thread
+* **Multithreading**
+
+	Create thread
 ```lua
 -- Parma1 is the thread type ,there are five types of thread you can create.
 -- BusinessThreadUI
