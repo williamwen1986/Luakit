@@ -45,6 +45,7 @@ Perform method on a specified thread async
 -- require(modelName).methodName("params", 1.1, {1,2,3}, function (p)
 -- end)
 lua.thread.postToThreadSync(threadId,modelName,methodName,"params", 1.1, {1,2,3}, function (p)
+	-- do something here
 end)
 ```
 Comming soon......
