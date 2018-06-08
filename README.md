@@ -35,5 +35,15 @@ We provide some powerful multi-threading api in lua , you can see ThreadTest in 
 -- Result is new threadId which is the token you should hold to do further action
 local newThreadId = lua.thread.createThread(BusinessThreadLOGIC,"newThread")
 ```
+
+	Perform method on a specified thread async
+```lua
+-- Parma1 is the thread for which you want to perform method
+-- Parma2 is the modelName
+-- Parma2 is the methodName
+-- The result is just like you run the below code on a specified thread async
+-- require(modelName).methodName(param1, param2, param3)
+lua.thread.postToThreadSync(threadId,modelName,methodName,param1, param2, param3)
+```
 Comming soon......
 -----------------------------
