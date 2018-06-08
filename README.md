@@ -37,8 +37,9 @@ local newThreadId = lua.thread.createThread(BusinessThreadLOGIC,"newThread")
 ```
 
 	Perform method on a specified thread async
+	
 ```lua
--- Parma1 is the thread for which you want to perform method
+-- Parma1 is the threadId for which you want to perform method
 -- Parma2 is the modelName
 -- Parma2 is the methodName
 -- The result is just like you run the below code on a specified thread async
