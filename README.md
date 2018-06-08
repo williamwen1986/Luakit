@@ -84,7 +84,7 @@ Define your model, [demo code](https://github.com/williamwen1986/Luakit/blob/mas
 -- BooleandField to sqlite bool
 -- DateTimeField to sqlite integer
 local weather = {
-	__dbname__ = "test.db",
+	 __dbname__ = "test.db",
     __tablename__ = "weather",
     id = {"IntegerField",{primary_key = true}},
     wind = {"TextField",{}},
