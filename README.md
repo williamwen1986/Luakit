@@ -23,5 +23,13 @@ We provide some powerful multi-threading api in lua , you can see ThreadTest in 
 
 Create thread
 ```lua
+-- Parma1 is the thread type ,there are five types of thread you can create.
+-- BusinessThreadUI
+-- BusinessThreadDB
+-- BusinessThreadLOGIC
+-- BusinessThreadFILE
+-- BusinessThreadIO
+-- param2 is the thread name
+-- result is new threadId which is token you should hold to do further action
 local newThreadId = lua.thread.createThread(BusinessThreadLOGIC,"newThread")
 ```
