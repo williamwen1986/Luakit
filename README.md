@@ -36,7 +36,7 @@ We provide some powerful multi-threading api in lua , you can see ThreadTest in 
 local newThreadId = lua.thread.createThread(BusinessThreadLOGIC,"newThread")
 ```
 
-	Perform method on a specified thread async
+Perform method on a specified thread async
 	
 ```lua
 -- Parma1 is the threadId for which you want to perform method
