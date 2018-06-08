@@ -12,4 +12,4 @@ I will say Luakit is the most effective tool to develop apps on more than one pl
 
 * Dynamic and flexible, write business logic code in lua , you can release your code anytime, truely agile development.
 
-* Forget the annoying memory management, lua support automatic garbage collection. Lua has closures, also known as blocks. This features make Luakit much more effective than other c++ cross platform solution.
+* Forget the annoying memory management, lua support automatic garbage collection. Lua has closures, also known as blocks. These features make Luakit much more effective than other c++ cross platform solution.
