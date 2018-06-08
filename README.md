@@ -42,8 +42,10 @@ Perform method on a specified thread async
 -- Parma2 is the modelName
 -- Parma2 is the methodName
 -- The result is just like you run the below code on a specified thread async
--- require(modelName).methodName(param1, param2, param3)
-lua.thread.postToThreadSync(threadId,modelName,methodName,param1, param2, param3)
+-- require(modelName).methodName("params", 1.1, {1,2,3}, function (p)
+-- end)
+lua.thread.postToThreadSync(threadId,modelName,methodName,"params", 1.1, {1,2,3}, function (p)
+end)
 ```
 Comming soon......
 -----------------------------
