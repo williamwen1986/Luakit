@@ -64,5 +64,13 @@ end)
 
 **ORM**
 
+Luakit provide a orm solution which has below features
+
+* Object-oriented interfaces
+* Automatically create and update table schemas.
+* Has internal cache
+* Timing auto transaction
+* Thread safe
+
 Comming soon......
 -----------------------------
