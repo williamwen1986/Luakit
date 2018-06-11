@@ -175,8 +175,9 @@ user_group = newsTable.get:join(userTable,nil,nil,nil,{create_user_id = "usernam
 print("join matchColumns ")
 ```
 
-**Http request** [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/WeatherManager.lua)
+**Http request**
 
+Luakit provide a http request interface, it has an internal dispatcher which contains a FIFO queue , here is the [source code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/network/async_task_dispatcher.h), [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/WeatherManager.lua)
 ```lua
 -- url , the request url
 -- isPost, boolean value represent post or get
