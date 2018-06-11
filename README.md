@@ -109,5 +109,27 @@ local user = userTable({
 user:save()
 ```
 
+Update data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+```lua
+local userTable = Table("user")
+local user = userTable.get:primaryKey({"user1"}):first()
+user.password = "efg"
+user.time_create = os.time()
+user:save()
+```
+
+Delete data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+```lua
+local userTable = Table("user")
+local user = userTable.get:primaryKey({"user1"}):first()
+user:delete()
+```
+
+Batch update, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+```lua
+local userTable = Table("user")
+userTable.get:where({age__gt = 40}):update({age = 45})
+```
+
 Comming soon......
 -----------------------------
