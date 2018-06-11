@@ -163,5 +163,20 @@ users = userTable.get:primaryKey({"first","randomusername"}):all()
 print("select primaryKey -----------")
 ```
 
+Join, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+```lua
+local userTable = Table("user")
+local newsTable = Table("news")
+local user_group = newsTable.get:join(userTable):all()
+print("join foreign_key")
+user_group = newsTable.get:join(userTable,"news.create_user_id = user.username AND user.age < ?", {20}):all()
+print("join where ")
+user_group = newsTable.get:join(userTable,nil,nil,nil,{create_user_id = "username", title = "username"}):all()
+print("join matchColumns ")
+```
+
+
+
+
 Comming soon......
 -----------------------------
