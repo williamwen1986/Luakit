@@ -84,14 +84,14 @@ Define your model, [demo code](https://github.com/williamwen1986/Luakit/blob/mas
 -- BooleandField to sqlite bool
 -- DateTimeField to sqlite integer
 user = {
-		__dbname__ = "test.db",
-	    __tablename__ = "user",
-	    username = {"CharField",{max_length = 100, unique = true, primary_key = true}},
-	    password = {"CharField",{max_length = 50, unique = true}},
-	    age = {"IntegerField",{null = true}},
-	    job = {"CharField",{max_length = 50, null = true}},
-	    des = {"TextField",{null = true}},
-	    time_create = {"DateTimeField",{null = true}}
+	__dbname__ = "test.db",
+	__tablename__ = "user",
+	username = {"CharField",{max_length = 100, unique = true, primary_key = true}},
+	password = {"CharField",{max_length = 50, unique = true}},
+	age = {"IntegerField",{null = true}},
+	job = {"CharField",{max_length = 50, null = true}},
+	des = {"TextField",{null = true}},
+	time_create = {"DateTimeField",{null = true}}
 	},
 -- when you use, you can do just like below
 local Table = require('orm.class.table')
@@ -102,9 +102,9 @@ Insert data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/Lu
 ```lua
 local userTable = Table("user")
 local user = userTable({
-		username = "user1",
-        password = "abc",
-        time_create = os.time()
+	username = "user1",
+	password = "abc",
+	time_create = os.time()
 })
 user:save()
 ```
