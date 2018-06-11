@@ -175,8 +175,22 @@ user_group = newsTable.get:join(userTable,nil,nil,nil,{create_user_id = "usernam
 print("join matchColumns ")
 ```
 
+**Http request** [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/WeatherManager.lua)
 
-
+```lua
+-- url , the request url
+-- isPost, boolean value represent post or get
+-- uploadContent, string value represent the post data
+-- uploadPath,  string value represent the file path to post
+-- downloadPath, string value to tell where to save the response
+-- headers, tables to tell the http header
+-- socketWatcherTimeout, int value represent the socketTimeout
+-- onResponse, function value represent the response callback
+-- onProgress, function value represent the onProgress callback
+lua.http.request({ url  = "http://tj.nineton.cn/Heart/index/all?city=CHSH000000",
+	onResponse = function (response)
+	end})
+```
 
 Comming soon......
 -----------------------------
