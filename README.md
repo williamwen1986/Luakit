@@ -131,5 +131,10 @@ local userTable = Table("user")
 userTable.get:where({age__gt = 40}):update({age = 45})
 ```
 
+Batch Delete, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+```lua
+userTable.get:where({age__gt = 40}):delete()
+```
+
 Comming soon......
 -----------------------------
