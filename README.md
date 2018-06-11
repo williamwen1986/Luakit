@@ -83,24 +83,30 @@ Define your model, [demo code](https://github.com/williamwen1986/Luakit/blob/mas
 -- TextField to sqlite text 
 -- BooleandField to sqlite bool
 -- DateTimeField to sqlite integer
-local weather = {
-	__dbname__ = "test.db",
-	__tablename__ = "weather",
-	id = {"IntegerField",{primary_key = true}},
-	wind = {"TextField",{}},
-	date = {"TextField",{}},
-	low = {"IntegerField",{}},
-	high = {"IntegerField",{}},
-	city =  {"TextField",{}},
-}
+user = {
+		__dbname__ = "test.db",
+	    __tablename__ = "user",
+	    username = {"CharField",{max_length = 100, unique = true, primary_key = true}},
+	    password = {"CharField",{max_length = 50, unique = true}},
+	    age = {"IntegerField",{null = true}},
+	    job = {"CharField",{max_length = 50, null = true}},
+	    des = {"TextField",{null = true}},
+	    time_create = {"DateTimeField",{null = true}}
+	},
 -- when you use, you can do just like below
 local Table = require('orm.class.table')
-local weatherTable = Table("weather")
+local userTable = Table("user")
 ```
 
 Insert data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 ```lua
-
+local userTable = Table("user")
+local user = userTable({
+		username = "user1",
+        password = "abc",
+        time_create = os.time()
+})
+user:save()
 ```
 
 Comming soon......
