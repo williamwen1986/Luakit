@@ -137,5 +137,31 @@ local userTable = Table("user")
 userTable.get:where({age__gt = 40}):delete()
 ```
 
+Select, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+```lua
+local userTable = Table("user")
+local users = userTable.get:all()
+print("select all -----------")
+local user = userTable.get:first()
+print("select first -----------")
+users = userTable.get:limit(3):offset(2):all()
+print("select limit offset -----------")
+users = userTable.get:order_by({desc('age'), asc('username')}):all()
+print("select order_by -----------")
+users = userTable.get:where({ age__lt = 30,
+								age__lte = 30,
+								age__gt = 10,
+								age__gte = 10,
+								username__in = {"first", "second", "creator"},
+								password__notin = {"testpasswd", "new", "hello"},
+								username__null = false
+								}):all()
+print("select where -----------")
+users = userTable.get:where({"scrt_tw",30},"password = ? AND age < ?"):all()
+print("select where customs -----------")
+users = userTable.get:primaryKey({"first","randomusername"}):all()
+print("select primaryKey -----------")
+```
+
 Comming soon......
 -----------------------------
