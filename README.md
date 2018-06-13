@@ -285,7 +285,14 @@ _notification_observer->AddObserver(3);
 
 post_notification(3, @{@"row":@(2)});
 ```
-
-
-Comming soon......
+Setup
 -----------------------------
+
+[Set up Luakit in android](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-android)
+
+[Set up Luakit in IOS](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-IOS)
+
+More
+-----------------------------
+
+Any questions? Send an email to williamwen1986@gmail.com
