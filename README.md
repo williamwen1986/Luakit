@@ -273,6 +273,19 @@ map.put("row", new Integer(2));
 NotificationHelper.postNotification(3, map);
 ```
 
+IOS register and post notification,, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/IOS%20Demo/NotificationTest/NotificationTest/ViewController.mm)
+
+```	objective-c
+_notification_observer.reset(new NotificationProxyObserver(self));
+_notification_observer->AddObserver(3);
+- (void)onNotification:(int)type data:(id)data
+{
+    NSLog(@"object-c onNotification type = %d data = %@", type , data);
+}
+
+post_notification(3, @{@"row":@(2)});
+```
+
 
 Comming soon......
 -----------------------------
