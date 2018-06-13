@@ -223,5 +223,34 @@ end
 socket:connect()
 ```
 
+**Notification**
+
+Luakit provide a notification system by which notifications can transfer through the lua environment and native environment
+
+Lua register and post notification, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/notification_test.lua)
+
+```lua
+lua.notification.createListener(function (l)
+	local listener = l
+	listener:AddObserver(3,
+	    function (data)
+	        print("lua Observer")
+	        if data then
+	            for k,v in pairs(data) do
+	                print("lua Observer"..k..v)
+	            end
+	        end
+	    end
+	)
+end);
+
+lua.notification.postNotification(3,
+{
+    lua1 = "lua123",
+    lua2 = "lua234"
+})
+```
+
+
 Comming soon......
 -----------------------------
