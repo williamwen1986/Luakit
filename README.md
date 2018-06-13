@@ -251,6 +251,28 @@ lua.notification.postNotification(3,
 })
 ```
 
+Android register and post notification,, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/Android%20Demo/NotificationTest/app/src/main/java/luakit/com/notificationtest/MainActivity.java)
+
+```java
+LuaNotificationListener  listener = new LuaNotificationListener();
+INotificationObserver  observer = new INotificationObserver() {
+    @Override
+    public void onObserve(int type, Object info) {
+        HashMap<String, Integer> map = (HashMap<String, Integer>)info;
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            Log.i("business", "android onObserve");
+            Log.i("business", entry.getKey());
+            Log.i("business",""+entry.getValue());
+        }
+    }
+};
+listener.addObserver(3, observer);
+
+HashMap<String, Integer> map = new HashMap<String, Integer>();
+map.put("row", new Integer(2));
+NotificationHelper.postNotification(3, map);
+```
+
 
 Comming soon......
 -----------------------------
