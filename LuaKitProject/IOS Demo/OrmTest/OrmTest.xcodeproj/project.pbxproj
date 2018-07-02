@@ -384,6 +384,7 @@
 					"$(SRCROOT)/../../src/Projects/lua-5.1.5/lua",
 				);
 				INFOPLIST_FILE = OrmTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -408,6 +409,7 @@
 					"$(SRCROOT)/../../src/Projects/lua-5.1.5/lua",
 				);
 				INFOPLIST_FILE = OrmTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
