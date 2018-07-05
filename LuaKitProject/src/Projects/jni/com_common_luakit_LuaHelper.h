@@ -11,6 +11,25 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_common_luakit_LuaHelper_startLuaKitNative
   (JNIEnv *, jclass, jobject);
 
+JNIEXPORT jobject JNICALL Java_com_common_luakit_LuaHelper_callLuaFunction__Ljava_lang_String_2Ljava_lang_String_2
+  (JNIEnv *, jclass, jstring, jstring);
+
+JNIEXPORT jobject JNICALL Java_com_common_luakit_LuaHelper_callLuaFunction__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_Object_2
+  (JNIEnv *, jclass, jstring, jstring ,jobject);
+
+JNIEXPORT jobject JNICALL Java_com_common_luakit_LuaHelper_callLuaFunction__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_Object_2Ljava_lang_Object_2
+  (JNIEnv *, jclass, jstring, jstring ,jobject ,jobject);
+
+JNIEXPORT jobject JNICALL Java_com_common_luakit_LuaHelper_callLuaFunction__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_Object_2Ljava_lang_Object_2Ljava_lang_Object_2
+  (JNIEnv *, jclass, jstring, jstring ,jobject ,jobject ,jobject);
+
+JNIEXPORT jobject JNICALL Java_com_common_luakit_LuaHelper_callLuaFunction__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_Object_2Ljava_lang_Object_2Ljava_lang_Object_2Ljava_lang_Object_2
+  (JNIEnv *, jclass, jstring, jstring ,jobject ,jobject ,jobject ,jobject);
+
+JNIEXPORT jobject JNICALL Java_com_common_luakit_LuaHelper_callLuaFunction__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_Object_2Ljava_lang_Object_2Ljava_lang_Object_2Ljava_lang_Object_2Ljava_lang_Object_2
+  (JNIEnv *, jclass, jstring, jstring ,jobject ,jobject ,jobject ,jobject ,jobject);
+
+
 #ifdef __cplusplus
 }
 #endif

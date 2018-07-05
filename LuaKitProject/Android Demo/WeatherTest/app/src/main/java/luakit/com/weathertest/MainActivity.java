@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.common.luakit.Demo;
 import com.common.luakit.ILuaCallback;
 import com.common.luakit.LuaHelper;
 
@@ -23,8 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LuaHelper.startLuaKit(this);
-
-        Object[] ret = Demo.getWeather();
+        Object[] ret =  (Object[]) LuaHelper.callLuaFunction("WeatherManager","getWeather");
         ILuaCallback callback = new ILuaCallback() {
             @Override
             public void onResult(Object o) {
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         };
-        Demo.loadWeather(callback);
+        LuaHelper.callLuaFunction("WeatherManager","loadWeather", callback);
         ListView lv=(ListView) findViewById(R.id.lv);
         adapter = new MyAdapter(this);
         adapter.source = ret;

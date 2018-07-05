@@ -12,6 +12,18 @@ public class LuaHelper {
 
     private static native void startLuaKitNative(Context c);
 
+    public static native Object callLuaFunction(String moduleName, String methodName);
+
+    public static native Object callLuaFunction(String moduleName, String methodName, Object p1);
+
+    public static native Object callLuaFunction(String moduleName, String methodName, Object p1, Object p2);
+
+    public static native Object callLuaFunction(String moduleName, String methodName, Object p1, Object p2, Object p3);
+
+    public static native Object callLuaFunction(String moduleName, String methodName, Object p1, Object p2, Object p3, Object p4);
+
+    public static native Object callLuaFunction(String moduleName, String methodName, Object p1, Object p2, Object p3, Object p4, Object p5);
+
     static { System.loadLibrary("luaFramework");}
 
     public static void startLuaKit(Context c){

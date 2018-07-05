@@ -12,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.common.luakit.Demo;
 import com.common.luakit.INotificationObserver;
 import com.common.luakit.LuaHelper;
 import com.common.luakit.LuaNotificationListener;
@@ -30,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LuaHelper.startLuaKit(this);
-        Demo.notificationTest();
-
+        LuaHelper.callLuaFunction("notification_test","test");
         ListView lv=(ListView) findViewById(R.id.lv);
         adapter = new MyAdapter(this);
         lv.setOnItemClickListener( new MyOnItemClickListener());
