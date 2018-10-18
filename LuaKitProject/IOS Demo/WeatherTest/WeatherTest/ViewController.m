@@ -53,8 +53,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell * cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"test"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",self.weathers[indexPath.row][@"city"],self.weathers[indexPath.row][@"date"]];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"最高温度：%@ 最低温度：%@ %@",self.weathers[indexPath.row][@"high"],self.weathers[indexPath.row][@"low"],self.weathers[indexPath.row][@"wind"]]; ;
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ 日出日落：%@",self.weathers[indexPath.row][@"city"],self.weathers[indexPath.row][@"sun_info"]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"最高温度：%@ 最低温度：%@ %@ %@",self.weathers[indexPath.row][@"high"],self.weathers[indexPath.row][@"low"],self.weathers[indexPath.row][@"wind_direction"],self.weathers[indexPath.row][@"wind"]];
     return cell;
 }
 

@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
             HashMap<String,Object> map = (HashMap<String,Object>)source[position];
             TextView title = (TextView) convertView.findViewById(R.id.title);
             TextView subTitle = (TextView) convertView.findViewById(R.id.subTitle);
-            String titleText = map.get("city") + " " + map.get("date");
-            String subTitleText = "最高温度:" + " " + map.get("high") + " 最低温度:" + " " + map.get("low") + " " + map.get("wind") ;
+            String titleText = map.get("city") + " 日出日落：" + map.get("sun_info");
+            String subTitleText = "最高温度:" + " " + map.get("high") + " 最低温度:" + " " + map.get("low") + " " + map.get("wind_direction") + " " + map.get("wind") ;
             title.setText(titleText);
             subTitle.setText(subTitleText);
             return convertView;
