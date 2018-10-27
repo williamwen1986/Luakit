@@ -3,9 +3,14 @@
 extern "C" {
 #endif
 #import "lua.h"
+#import "lauxlib.h"
 #ifdef __cplusplus
 }
 #endif
+
+lua_State *getCurrentThreadLuaState();
+
+void startLuakit(int argc, char * argv[]);
 
 void oc_fromObjc(lua_State *L, id object);
 

@@ -3,7 +3,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#import "lauxlib.h"
+#include "lua.h"
+#include "lualib.h"
 #import "lapi.h"
 #ifdef __cplusplus
 }
@@ -13,6 +14,30 @@ extern "C" {
 #include "lua_notify.h"
 #include "NotificationProxyObserver.h"
 #include "lua_helpers.h"
+
+#include "base/command_line.h"
+#include "base/memory/scoped_ptr.h"
+#include "common/business_main_delegate.h"
+#include "common/business_runtime.h"
+#include "tools/lua_helpers.h"
+#include "base/thread_task_runner_handle.h"
+#include "common/base_lambda_support.h"
+
+lua_State *getCurrentThreadLuaState(){
+    return BusinessThread::GetCurrentThreadLuaState();
+}
+
+void startLuakit(int argc, char * argv[])
+{
+    CommandLine::Init(argc, argv);
+    NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+    luaSetPackagePath([bundlePath cStringUsingEncoding:NSUTF8StringEncoding]);
+    setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
+    BusinessMainDelegate* delegate = new BusinessMainDelegate();
+    BusinessRuntime* business_runtime = BusinessRuntime::Create();
+    business_runtime->Initialize(delegate);
+    business_runtime->Run();
+}
 
 void pushOneObject(lua_State *L, id object);
 id getOneObject(lua_State *L, int stackIndex);
