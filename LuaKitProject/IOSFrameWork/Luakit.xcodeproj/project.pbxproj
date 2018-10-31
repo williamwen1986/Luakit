@@ -64,7 +64,6 @@
 		2883AE4C20B5457A005E1F54 /* lua_http_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE0720B5457A005E1F54 /* lua_http_task.cpp */; };
 		2883AE4D20B5457A005E1F54 /* dtoa.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE0B20B5457A005E1F54 /* dtoa.c */; };
 		2883AE4E20B5457A005E1F54 /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE0D20B5457A005E1F54 /* fpconv.c */; };
-		2883AE4F20B5457A005E1F54 /* g_fmt.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE0F20B5457A005E1F54 /* g_fmt.c */; };
 		2883AE5020B5457A005E1F54 /* lua_cjson.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE1820B5457A005E1F54 /* lua_cjson.c */; };
 		2883AE5120B5457A005E1F54 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE1A20B5457A005E1F54 /* Makefile */; };
 		2883AE5220B5457A005E1F54 /* strbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE2120B5457A005E1F54 /* strbuf.c */; };
@@ -334,7 +333,6 @@
 		2883AE0C20B5457A005E1F54 /* dtoa_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtoa_config.h; sourceTree = "<group>"; };
 		2883AE0D20B5457A005E1F54 /* fpconv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fpconv.c; sourceTree = "<group>"; };
 		2883AE0E20B5457A005E1F54 /* fpconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fpconv.h; sourceTree = "<group>"; };
-		2883AE0F20B5457A005E1F54 /* g_fmt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = g_fmt.c; sourceTree = "<group>"; };
 		2883AE1020B5457A005E1F54 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		2883AE1320B5457A005E1F54 /* util.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = util.lua; sourceTree = "<group>"; };
 		2883AE1420B5457A005E1F54 /* json2lua.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json2lua.lua; sourceTree = "<group>"; };
@@ -670,7 +668,6 @@
 				2883AE0C20B5457A005E1F54 /* dtoa_config.h */,
 				2883AE0D20B5457A005E1F54 /* fpconv.c */,
 				2883AE0E20B5457A005E1F54 /* fpconv.h */,
-				2883AE0F20B5457A005E1F54 /* g_fmt.c */,
 				2883AE1020B5457A005E1F54 /* LICENSE */,
 				2883AE1120B5457A005E1F54 /* lua */,
 				2883AE1620B5457A005E1F54 /* lua-cjson-2.1devel-1.rockspec */,
@@ -1007,7 +1004,6 @@
 				2883ADAE20B5439B005E1F54 /* ltm.c in Sources */,
 				2883ADE520B54516005E1F54 /* net_errors.cc in Sources */,
 				2883AD9E20B5439B005E1F54 /* lgc.c in Sources */,
-				2883AE4F20B5457A005E1F54 /* g_fmt.c in Sources */,
 				2883AD9620B5439B005E1F54 /* lauxlib.c in Sources */,
 				2883AD9C20B5439B005E1F54 /* ldump.c in Sources */,
 				2883ADE820B54516005E1F54 /* socket_watcher.cpp in Sources */,
