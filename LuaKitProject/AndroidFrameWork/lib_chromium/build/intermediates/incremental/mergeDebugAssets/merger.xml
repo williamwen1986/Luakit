@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/williamwen/AndroidStudioProjects/test1/lib_chromium/src/main/assets"/><source path="/Users/williamwen/AndroidStudioProjects/test1/lib_chromium/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/williamwen/AndroidStudioProjects/test1/lib_chromium/src/debug/assets"/></dataSet></merger>

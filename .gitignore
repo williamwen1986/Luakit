@@ -1,0 +1,7 @@
+xcuserdata
+.DS_Store
+.idea
+intermediates
+lib_chromium/build/generated
+lib_chromium/build/outputs
+LuaKitProject/src/Projects/jni/obj
