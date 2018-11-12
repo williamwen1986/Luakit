@@ -22,7 +22,7 @@
 		2898C8DA20C6373B00249775 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 286F345520BFEFCB000E64CF /* libcrypto.a */; };
 		2898C8DB20C6373B00249775 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 286F345620BFEFCB000E64CF /* libssl.a */; };
 		3C962AEF2199A2BD002B91E7 /* language.lua in Resources */ = {isa = PBXBuildFile; fileRef = 3C962AEE2199A2BD002B91E7 /* language.lua */; };
-		3C962AF12199A5AF002B91E7 /* en.lua in Resources */ = {isa = PBXBuildFile; fileRef = 3C962AF02199A5AF002B91E7 /* en.lua */; };
+		3C962AFD2199A6A5002B91E7 /* language in Resources */ = {isa = PBXBuildFile; fileRef = 3C962AFC2199A6A4002B91E7 /* language */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,7 +68,7 @@
 		2898C88920C5675B00249775 /* WeatherManager.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WeatherManager.lua; path = ../../src/Projects/LuaSrc/WeatherManager.lua; sourceTree = "<group>"; };
 		2898C88A20C5675B00249775 /* DB.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DB.lua; path = ../../src/Projects/LuaSrc/DB.lua; sourceTree = "<group>"; };
 		3C962AEE2199A2BD002B91E7 /* language.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = language.lua; path = ../../src/Projects/LuaSrc/language.lua; sourceTree = "<group>"; };
-		3C962AF02199A5AF002B91E7 /* en.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = en.lua; path = ../../src/Projects/LuaSrc/en.lua; sourceTree = "<group>"; };
+		3C962AFC2199A6A4002B91E7 /* language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = language; path = ../../src/Projects/LuaSrc/language; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +89,7 @@
 		286F340E20BFEEEC000E64CF = {
 			isa = PBXGroup;
 			children = (
-				3C962AF02199A5AF002B91E7 /* en.lua */,
+				3C962AFC2199A6A4002B91E7 /* language */,
 				3C962AEE2199A2BD002B91E7 /* language.lua */,
 				2898C88A20C5675B00249775 /* DB.lua */,
 				2898C88820C5675B00249775 /* orm */,
@@ -225,10 +225,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				286F342720BFEEED000E64CF /* LaunchScreen.storyboard in Resources */,
-				3C962AF12199A5AF002B91E7 /* en.lua in Resources */,
 				2898C88B20C5675B00249775 /* orm in Resources */,
 				3C962AEF2199A2BD002B91E7 /* language.lua in Resources */,
 				2898C88D20C5675B00249775 /* DB.lua in Resources */,
+				3C962AFD2199A6A5002B91E7 /* language in Resources */,
 				286F342420BFEEED000E64CF /* Assets.xcassets in Resources */,
 				2898C88C20C5675B00249775 /* WeatherManager.lua in Resources */,
 				286F342220BFEEEC000E64CF /* Main.storyboard in Resources */,

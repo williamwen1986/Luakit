@@ -49,7 +49,7 @@ local languagesTable = {
 local languageCode = lua.language.getLanguageType()
 
 return function (word)
-    local t = require(languagesTable[languageCode+1])
+    local t = require("language."..languagesTable[languageCode+1])
     if t then
         return t[word]
     else
