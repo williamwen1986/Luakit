@@ -22,6 +22,31 @@ jclass g_BuildInfo_clazz = NULL;
 
 // Step 2: method stubs.
 
+static base::subtle::AtomicWord g_BuildInfo_getLanguage = 0;
+static base::android::ScopedJavaLocalRef<jstring>
+    Java_BuildInfo_getLanguage(JNIEnv* env, jobject context) {
+  /* Must call RegisterNativesImpl()  */
+  CHECK_CLAZZ(env, g_BuildInfo_clazz,
+      g_BuildInfo_clazz, NULL);
+  jmethodID method_id =
+      base::android::MethodID::LazyGet<
+      base::android::MethodID::TYPE_STATIC>(
+      env, g_BuildInfo_clazz,
+      "getLanguage",
+
+"("
+"Landroid/content/Context;"
+")"
+"Ljava/lang/String;",
+      &g_BuildInfo_getLanguage);
+
+  jstring ret =
+      static_cast<jstring>(env->CallStaticObjectMethod(g_BuildInfo_clazz,
+          method_id, context));
+  jni_generator::CheckException(env);
+  return base::android::ScopedJavaLocalRef<jstring>(env, ret);
+}
+
 static base::subtle::AtomicWord g_BuildInfo_getDevice = 0;
 static base::android::ScopedJavaLocalRef<jstring>
     Java_BuildInfo_getDevice(JNIEnv* env) {

@@ -17,6 +17,7 @@ extern "C" {
 #include "base/files/file_path.h"
 #include "lua_file.h"
 #include "lua_notify.h"
+#include "lua_language.h"
 #include "LuakitLoader.h"
 #include "xxtea.h"
 
@@ -245,6 +246,7 @@ extern int luaInit(lua_State* L)
     luaopen_callback(L);
     luaopen_thread(L);
     luaopen_timer(L);
+    luaopen_language(L);
     luaopen_cjson(L);
     luaopen_cjson_safe(L);
     luaopen_async_socket(L);

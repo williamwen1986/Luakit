@@ -41,7 +41,8 @@ struct BuildInfoSingletonTraits {
 };
 
 BuildInfo::BuildInfo(JNIEnv* env)
-    : device_(StrDupJString(Java_BuildInfo_getDevice(env))),
+    : language_(StrDupJString(Java_BuildInfo_getLanguage(env, GetApplicationContext()))),
+      device_(StrDupJString(Java_BuildInfo_getDevice(env))),
       model_(StrDupJString(Java_BuildInfo_getDeviceModel(env))),
       brand_(StrDupJString(Java_BuildInfo_getBrand(env))),
       android_build_id_(StrDupJString(Java_BuildInfo_getAndroidBuildId(env))),

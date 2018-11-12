@@ -44,6 +44,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/.././ \
                     $(LOCAL_PATH)/../extensions/AsyncSocket \
                     $(LOCAL_PATH)/../extensions/File \
                     $(LOCAL_PATH)/../extensions/Notify \
+                    $(LOCAL_PATH)/../extensions/language \
                     $(LOCAL_PATH)/../lua-5.1.5/lua/tools \
 
 

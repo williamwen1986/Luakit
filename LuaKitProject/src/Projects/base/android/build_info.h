@@ -36,6 +36,10 @@ class BASE_EXPORT BuildInfo {
   // available even if the process is in a crash state. Sadly
   // std::string.c_str() doesn't guarantee that memory won't be allocated when
   // it is called.
+  const char* language() const {
+    return language_;
+  }
+
   const char* device() const {
     return device_;
   }
@@ -93,6 +97,7 @@ class BASE_EXPORT BuildInfo {
   // available even if the process is in a crash state. Sadly
   // std::string.c_str() doesn't guarantee that memory won't be allocated when
   // it is called.
+  const char* const language_;
   const char* const device_;
   const char* const model_;
   const char* const brand_;

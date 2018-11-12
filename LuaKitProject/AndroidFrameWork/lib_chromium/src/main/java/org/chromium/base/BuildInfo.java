@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.util.Log;
+import java.util.Locale;
 
 
 /**
@@ -34,6 +35,18 @@ public class BuildInfo {
     @CalledByNative
     public static String getDevice() {
         return Build.DEVICE;
+    }
+
+    @CalledByNative
+    public static String getLanguage(Context context) {
+        Locale locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            locale = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            locale = context.getResources().getConfiguration().locale;
+        }
+        String lang = locale.getLanguage() + "-" + locale.getCountry();
+        return lang;
     }
 
     @CalledByNative

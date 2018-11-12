@@ -80,6 +80,8 @@
 		2883AEFF20B55619005E1F54 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2883ACEE20B44352005E1F54 /* libcurl.a */; };
 		2898C85120C55F2200249775 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2898C84F20C55F2200249775 /* xxtea.cpp */; };
 		2898C85220C55F2200249775 /* LuakitLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2898C85020C55F2200249775 /* LuakitLoader.cpp */; };
+		3C962AD621992FF0002B91E7 /* lua_language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C962AC421992FF0002B91E7 /* lua_language.cpp */; };
+		3C962AD921993203002B91E7 /* languageUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3C962AD821993203002B91E7 /* languageUtil.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -389,6 +391,10 @@
 		2898C84E20C55F2200249775 /* LuakitLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuakitLoader.h; sourceTree = "<group>"; };
 		2898C84F20C55F2200249775 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
 		2898C85020C55F2200249775 /* LuakitLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuakitLoader.cpp; sourceTree = "<group>"; };
+		3C962AC321992FF0002B91E7 /* lua_language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_language.h; sourceTree = "<group>"; };
+		3C962AC421992FF0002B91E7 /* lua_language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_language.cpp; sourceTree = "<group>"; };
+		3C962AD721993203002B91E7 /* languageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = languageUtil.h; sourceTree = "<group>"; };
+		3C962AD821993203002B91E7 /* languageUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = languageUtil.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -619,6 +625,7 @@
 		2883ADFD20B5457A005E1F54 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3C962AC221992FF0002B91E7 /* language */,
 				2883ADFE20B5457A005E1F54 /* AsyncSocket */,
 				2883AE0120B5457A005E1F54 /* File */,
 				2883AE0420B5457A005E1F54 /* HTTP */,
@@ -781,6 +788,17 @@
 				2883AF0120B55641005E1F54 /* libssl.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3C962AC221992FF0002B91E7 /* language */ = {
+			isa = PBXGroup;
+			children = (
+				3C962AD721993203002B91E7 /* languageUtil.h */,
+				3C962AD821993203002B91E7 /* languageUtil.mm */,
+				3C962AC321992FF0002B91E7 /* lua_language.h */,
+				3C962AC421992FF0002B91E7 /* lua_language.cpp */,
+			);
+			path = language;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -995,11 +1013,13 @@
 				2883ADB020B5439B005E1F54 /* lundump.c in Sources */,
 				2883ADC520B544ED005E1F54 /* sqlite3.c in Sources */,
 				2883ADAB20B5439B005E1F54 /* lstrlib.c in Sources */,
+				3C962AD621992FF0002B91E7 /* lua_language.cpp in Sources */,
 				2883ADE420B54516005E1F54 /* io_buffer.cc in Sources */,
 				2883AE5020B5457A005E1F54 /* lua_cjson.c in Sources */,
 				2883AD9520B5439B005E1F54 /* lapi.c in Sources */,
 				2883AE5520B5457A005E1F54 /* lua_notify.cpp in Sources */,
 				2883AE5220B5457A005E1F54 /* strbuf.c in Sources */,
+				3C962AD921993203002B91E7 /* languageUtil.mm in Sources */,
 				2883ADA520B5439B005E1F54 /* lobject.c in Sources */,
 				2883ADAE20B5439B005E1F54 /* ltm.c in Sources */,
 				2883ADE520B54516005E1F54 /* net_errors.cc in Sources */,
