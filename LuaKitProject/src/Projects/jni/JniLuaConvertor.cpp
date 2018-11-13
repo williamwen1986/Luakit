@@ -20,6 +20,7 @@ static jclass FloatClass;
 static jclass DoubleClass;
 static jclass HashmapClass;
 static jclass StringClass;
+static jclass ArraylistClass;
 
 static bool hasInitClass = false;
 static std::recursive_mutex  globle_lock;
@@ -62,6 +63,8 @@ static void initClass (JNIEnv *env){
         StringClass = (jclass)env->NewGlobalRef(StringClass);
         HashmapClass = env->FindClass(JNIModel::HashMap::classSig);
         HashmapClass = (jclass)env->NewGlobalRef(HashmapClass);
+        ArraylistClass = env->FindClass(JNIModel::ArrayList::classSig);
+        ArraylistClass = (jclass)env->NewGlobalRef(ArraylistClass);
         hasInitClass = true;
     }
 }
@@ -111,7 +114,21 @@ static void pushOneObject(lua_State *L, JNIEnv *env, jobject o)
             env->DeleteLocalRef(val);
         }
         env->PopLocalFrame(NULL);
-    } else if (isJavaArray(env,o)){
+    } else if (env->IsInstanceOf(o,ArraylistClass)) {
+        lua_newtable(L);
+        JniEnvWrapper envw(env);
+        env->PushLocalFrame(0);
+        jint size = envw.CallIntMethod(o, JNIModel::ArrayList::classSig, JNIModel::ArrayList::size.name, JNIModel::ArrayList::size.sig);
+        for (int i = 0; i < size; ++i)
+        {
+            lua_pushinteger(L,i+1);
+            jobject val = envw.CallObjectMethod(o, JNIModel::ArrayList::classSig, JNIModel::ArrayList::get.name, JNIModel::ArrayList::get.sig,i);
+            pushOneObject(L, env, val);
+            lua_rawset(L, -3);
+            env->DeleteLocalRef(val);
+        }
+        env->PopLocalFrame(NULL);
+    }  else if (isJavaArray(env,o)){
         int length = env->GetArrayLength((jobjectArray)o);
         if (length > 0)
         {
@@ -196,13 +213,13 @@ static jobject getTableObject(lua_State *L, JNIEnv *env, int stackIndex) {
             return NULL;
         }
         int index = 0;
-        instance = envw.NewObjectArray("java/lang/Object", length, NULL);
-
+        jclass clazz = env->FindClass(JNIModel::ArrayList::classSig);
+        jmethodID methodid = env->GetMethodID(clazz, JNIModel::ArrayList::init.name, JNIModel::ArrayList::init.sig);
+        instance = env->NewObject(clazz, methodid, length);
         lua_pushnil(L);  /* first key */
         while (lua_next(L, -2)) {
-            int index = lua_tonumber(L, -2) - 1;
             jobject element = object_copyToJava(L, env, -1);
-            env->SetObjectArrayElement((jobjectArray)instance, index, element);
+            envw.CallBooleanMethod(instance, JNIModel::ArrayList::classSig, JNIModel::ArrayList::add.name, JNIModel::ArrayList::add.sig, element);
             env->DeleteLocalRef(element);
             lua_pop(L, 1);
         }

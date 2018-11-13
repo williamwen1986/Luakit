@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.common.luakit.ILuaCallback;
 import com.common.luakit.LuaHelper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,19 +23,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LuaHelper.startLuaKit(this);
-        Object[] ret =  (Object[]) LuaHelper.callLuaFunction("WeatherManager","getWeather");
+        ArrayList<Object> ret =  (ArrayList<Object>) LuaHelper.callLuaFunction("WeatherManager","getWeather");
         ILuaCallback callback = new ILuaCallback() {
             @Override
             public void onResult(Object o) {
-                Object[] ret = (Object[])o;
-                adapter.source = ret;
+                ArrayList<Object> ret = (ArrayList<Object>)o;
+                adapter.source = ret.toArray();
                 adapter.notifyDataSetChanged();
             }
         };
         LuaHelper.callLuaFunction("WeatherManager","loadWeather", callback);
         ListView lv=(ListView) findViewById(R.id.lv);
         adapter = new MyAdapter(this);
-        adapter.source = ret;
+        adapter.source = ret.toArray();
         lv.setAdapter(adapter);
     }
 

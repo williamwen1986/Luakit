@@ -115,6 +115,14 @@ namespace JNIModel {
 		void ConvertToNative(JNIEnv* env, jobject source, std::map<KeyType, ValueType>& target);
 	}
 
+	namespace ArrayList {
+		DEFINE_SIGNATURE("java/util/ArrayList");
+		static const Function init = { "<init>", "(I)V" };
+		static const Function add = { "add", "(Ljava/lang/Object;)Z" };
+		static const Function get = { "get", "(I)Ljava/lang/Object;" };
+		static const Function size = { "size", "()I" };
+	}
+
 	namespace SimpleEntry {
 		DEFINE_SIGNATURE("java/util/AbstractMap$SimpleEntry");
 		static const Function init = { "<init>", "(Ljava/lang/String;Ljava/lang/String;)V" };
