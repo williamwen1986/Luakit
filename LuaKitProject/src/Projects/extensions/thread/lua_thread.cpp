@@ -141,7 +141,7 @@ static int postToThreadSync(lua_State *L){
         if (params != NULL) {
             lua_pushlightuserdata(state, params);
             lua_setglobal(state, "cParams");
-            lua = "LUA_SYNC_RESULT = {require('"+moduleName+"')." + methodName +"(lua.thread.unpack(cParams))}";
+            lua = "LUA_SYNC_RESULT = {require('"+moduleName+"')." + methodName +"(lua_thread.unpack(cParams))}";
         } else {
             lua = "LUA_SYNC_RESULT = {require('"+moduleName+"')." + methodName +"()}";
         }
@@ -278,7 +278,7 @@ static int postToThreadSync(lua_State *L){
             if (params != NULL) {
                 lua_pushlightuserdata(state, params);
                 lua_setglobal(state, "cParams");
-                lua = "LUA_SYNC_RESULT = {require('"+moduleName+"')." + methodName +"(lua.thread.unpack(cParams))}";
+                lua = "LUA_SYNC_RESULT = {require('"+moduleName+"')." + methodName +"(lua_thread.unpack(cParams))}";
             } else {
                 lua = "LUA_SYNC_RESULT = {require('"+moduleName+"')." + methodName +"()}";
             }
@@ -492,7 +492,7 @@ static int postToThread(lua_State *L)
         if (params != NULL) {
             lua_pushlightuserdata(state, params);
             lua_setglobal(state, "cParams");
-            lua = "require('"+moduleName+"')." + methodName +"(lua.thread.unpack(cParams))";
+            lua = "require('"+moduleName+"')." + methodName +"(lua_thread.unpack(cParams))";
         } else {
             lua = "require('"+moduleName+"')." + methodName +"()";
         }

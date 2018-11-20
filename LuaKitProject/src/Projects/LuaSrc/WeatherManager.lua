@@ -94,14 +94,14 @@ _weatherManager.parseWeathers = function (responseStr,callback)
 end
 
 _weatherManager.loadWeather = function (callback)
-	lua.http.request({ url  = "http://mobile.weather.com.cn/data/forecast/101010100.html?_=1381891660081",
+	lua_http.request({ url  = "http://mobile.weather.com.cn/data/forecast/101010100.html?_=1381891660081",
 		onResponse = function (response)
 			if response.http_code ~= 200 then
 				if callback then
 					callback(nil)
 				end
 			else
-				lua.thread.postToThread(BusinessThreadLOGIC,"WeatherManager","parseWeathers",response.response,function(data)
+				lua_thread.postToThread(BusinessThreadLOGIC,"WeatherManager","parseWeathers",response.response,function(data)
 					if callback then
 						callback(data)
 					end

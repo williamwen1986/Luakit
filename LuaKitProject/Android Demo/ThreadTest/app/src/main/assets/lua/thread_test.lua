@@ -7,19 +7,19 @@ test.fun1 = function ()
 			end)		
 	end
 	print("fun1")
-	local newThreadId1 = lua.thread.createThread(BusinessThreadLOGIC,"newThread1")
-	lua.thread.postToThreadSync(newThreadId1,"thread_test","fun2","params:111-222",callback)
+	local newThreadId1 = lua_thread.createThread(BusinessThreadLOGIC,"newThread1")
+	lua_thread.postToThreadSync(newThreadId1,"thread_test","fun2","params:111-222",callback)
 	print("fun1 end")
 end
 
 test.fun2 = function (p1,callback)
 	print("fun2:"..p1)
-	local newThreadId2 = lua.thread.createThread(BusinessThreadLOGIC,"newThread2")
+	local newThreadId2 = lua_thread.createThread(BusinessThreadLOGIC,"newThread2")
 	callback(p1,function(p,c)
 		print("fun2 callback p:"..p)
 		c(p..p)
 	end)
-	lua.thread.postToThread(newThreadId2,"thread_test","fun3","params:222-333",callback)
+	lua_thread.postToThread(newThreadId2,"thread_test","fun3","params:222-333",callback)
 	print("fun2 end")
 end
 

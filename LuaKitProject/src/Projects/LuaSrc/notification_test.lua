@@ -1,13 +1,13 @@
 local notification = {}
 
 notification.test = function ()
-    lua.thread.postToThread(BusinessThreadLOGIC,"notification_test","testOnLOGICThread")
+    lua_thread.postToThread(BusinessThreadLOGIC,"notification_test","testOnLOGICThread")
 end
 
 local listener
 
 notification.testOnLOGICThread = function ()
-    lua.notification.createListener(function (l)
+    lua_notification.createListener(function (l)
         listener = l
         listener:AddObserver(3,
             function (data)
@@ -23,11 +23,11 @@ notification.testOnLOGICThread = function ()
 end
 
 notification.testPostNotification = function ()
-    lua.thread.postToThread(BusinessThreadLOGIC,"notification_test","postNotificationOnIOThread")
+    lua_thread.postToThread(BusinessThreadLOGIC,"notification_test","postNotificationOnIOThread")
 end
 
 notification.postNotificationOnIOThread = function ()
-    lua.notification.postNotification(3,
+    lua_notification.postNotification(3,
         {
             lua1 = "lua123",
             lua2 = "lua234"

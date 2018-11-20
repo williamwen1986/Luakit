@@ -25,7 +25,7 @@ db = {
         _dbName = name
         _db.init(_dbName)
 
-        _timer = lua.timer.createTimer(1)
+        _timer = lua_timer.createTimer(1)
 
         local beginTransation = function( )
             db.execute("begin exclusive transaction")

@@ -7,8 +7,8 @@ extern "C" {
 #include <mutex>
 #include "base/memory/ref_counted.h"
 #include "common/common/business_client_thread.h"
-#define LUA_THREAD_METATABLE_NAME "lua.thread"
-#define LUA_CALLBACK_METATABLE_NAME "lua.callback"
+#define LUA_THREAD_METATABLE_NAME "lua_thread"
+#define LUA_CALLBACK_METATABLE_NAME "lua_callback"
 
 
 namespace thread {

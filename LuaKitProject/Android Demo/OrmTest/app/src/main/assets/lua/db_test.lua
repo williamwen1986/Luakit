@@ -28,7 +28,7 @@ db.test_create = function ()
 	print("password:"..user.password)
 	print("time_create:"..os.time(user.time_create))
 	user:save()
-	lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+	lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
 	local users = userTable.get:all()
 	for i,v in ipairs(users) do
 		print(i.."---------------------")
@@ -36,7 +36,7 @@ db.test_create = function ()
 		print(v.password)
 		print(os.time(user.time_create))
 	end
-	lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+	lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
 end
 
 db.test_update = function ()
@@ -48,7 +48,7 @@ db.test_update = function ()
 	print("password:"..user.password)
 	print("time_create:"..os.time(user.time_create))
 	user:save()
-	lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+	lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
 	local users = userTable.get:all()
 	for i,v in ipairs(users) do
 		print(i.."---------------------")
@@ -56,7 +56,7 @@ db.test_update = function ()
 		print(v.password)
 		print(os.time(user.time_create))
 	end
-	lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+	lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
 
 end
 
@@ -64,7 +64,7 @@ db.test_delete = function ()
 	local userTable = Table("user")
 	local user = userTable.get:primaryKey({"user1"}):first()
 	user:delete()
-	lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+	lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
 	local users = userTable.get:all()
 	print("users count :"..#users)
 	for i,v in ipairs(users) do
@@ -73,7 +73,7 @@ db.test_delete = function ()
 		print(v.password)
 		print(os.time(user.time_create))
 	end
-	lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+	lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
 end
 
 db.test_update_many = function ()
@@ -91,9 +91,9 @@ db.test_update_many = function ()
                      age = age[i]})
         user:save()
     end
-    lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+    lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
     userTable.get:where({age__gt = 40}):update({age = 45})
-    lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+    lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
     local users = userTable.get:all()
 	print("users count :"..#users)
 	for i,v in ipairs(users) do
@@ -120,9 +120,9 @@ db.test_delete_many = function ()
                      age = age[i]})
         user:save()
     end
-    lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+    lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
     userTable.get:where({age__gt = 40}):delete()
-    lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+    lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
     local users = userTable.get:all()
 	print("users count :"..#users)
 	for i,v in ipairs(users) do
@@ -220,21 +220,21 @@ db.test_join = function ()
 
     print("join foreign_key")
     local user_group = newsTable.get:join(userTable):all()
-    lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+    lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
     for _,v in pairs(user_group) do
     	print(v.title.." ".. v.create_user_id.. " " .. v.user.username .. "  " .. v.user.password .. "  " .. v.user.age)
     end
 
     print("join where ")
     user_group = newsTable.get:join(userTable,"news.create_user_id = user.username AND user.age < ?", {20}):all()
-    lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+    lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
     for _,v in pairs(user_group) do
     	print(v.title.." ".. v.create_user_id.. " " .. v.user.username .. "  " .. v.user.password .. "  " .. v.user.age)
     end
 
     print("join matchColumns ")
     user_group = newsTable.get:join(userTable,nil,nil,nil,{create_user_id = "username", title = "username"}):all()
-    lua.thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
+    lua_thread.postToThreadSync(userTable.cacheThreadId,"orm.cache","printInstanceCache")
     for _,v in pairs(user_group) do
     	print(v.title.." ".. v.create_user_id.. " " .. v.user.username .. "  " .. v.user.password .. "  " .. v.user.age)
     end

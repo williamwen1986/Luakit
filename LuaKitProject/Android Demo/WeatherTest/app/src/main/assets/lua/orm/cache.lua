@@ -25,21 +25,21 @@ _cache = {
 
     initWithDB = function (dbname)
         if _dbThreadId == -1 then
-            local cacheThreadId = lua.thread.createThread(BusinessThreadLOGIC,"db_"..dbname)
+            local cacheThreadId = lua_thread.createThread(BusinessThreadLOGIC,"db_"..dbname)
             _dbThreadId = cacheThreadId
-            lua.thread.postToThreadSync(_dbThreadId,"orm.model","init",dbname)
+            lua_thread.postToThreadSync(_dbThreadId,"orm.model","init",dbname)
         end
     end,
 
     query = function (query, params, name)
         params = params or {}
-        local data = lua.thread.postToThreadSync(_dbThreadId,"orm.model","query",query,params,name)
+        local data = lua_thread.postToThreadSync(_dbThreadId,"orm.model","query",query,params,name)
         return data
     end,
 
     execute = function (query, params)
         params = params or {}
-        local data = lua.thread.postToThreadSync(_dbThreadId,"orm.model","execute",query,params)
+        local data = lua_thread.postToThreadSync(_dbThreadId,"orm.model","execute",query,params)
         return data
     end,
 
@@ -69,7 +69,7 @@ _cache = {
             end
             return results
         end
-        results = lua.thread.postToThreadSync(_dbThreadId,"orm.model","rows",sql,bindValues)
+        results = lua_thread.postToThreadSync(_dbThreadId,"orm.model","rows",sql,bindValues)
 
         local needCacheTable = {}
 
@@ -162,7 +162,7 @@ _cache = {
 
         
         if not needPrimaryKey then
-            lua.thread.postToThread(_dbThreadId,"orm.model","insert",insert,bindValues)
+            lua_thread.postToThread(_dbThreadId,"orm.model","insert",insert,bindValues)
             if t.__primary_key and  kv[t.__primary_key.name] ~= nil then
                 if not _instanceCache[tablename] then
                     _instanceCache[tablename] = {}
@@ -171,7 +171,7 @@ _cache = {
             end
         else
             local result,rowId
-            result,rowId = lua.thread.postToThreadSync(_dbThreadId,"orm.model","insert",insert,bindValues,needPrimaryKey)
+            result,rowId = lua_thread.postToThreadSync(_dbThreadId,"orm.model","insert",insert,bindValues,needPrimaryKey)
             return  
         end
     end,
@@ -199,7 +199,7 @@ _cache = {
         end
         if t.__primary_key then
             local selectSql = "SELECT "..t.__primary_key.name.." FROM "..tablename.." "..whereSql
-            local results = lua.thread.postToThreadSync(_dbThreadId,"orm.model","rows",selectSql,whereBindingValues)
+            local results = lua_thread.postToThreadSync(_dbThreadId,"orm.model","rows",selectSql,whereBindingValues)
             local ids = {}
             for _,v in ipairs(results) do
                 table.insert(ids, v[1])
@@ -220,7 +220,7 @@ _cache = {
                 for _,v in ipairs(ids) do
                     table.insert(setBindingValue,v)
                 end
-                lua.thread.postToThread(_dbThreadId,"orm.model","execute",_update,setBindingValue)
+                lua_thread.postToThread(_dbThreadId,"orm.model","execute",_update,setBindingValue)
                 -- remove cache
                 if _instanceCache[tablename] then
                     for _,v in ipairs(ids) do
@@ -242,7 +242,7 @@ _cache = {
                 for _,v in ipairs(whereBindingValues) do
                     table.insert(setBindingValue,v)
                 end
-                lua.thread.postToThread(_dbThreadId,"orm.model","execute",_update,setBindingValue)
+                lua_thread.postToThread(_dbThreadId,"orm.model","execute",_update,setBindingValue)
             else
                 BACKTRACE(WARNING, "No table columns for update")
             end
@@ -294,7 +294,7 @@ _cache = {
             for _,v in ipairs(ids) do
                 table.insert(setBindingValue,v)
             end
-            lua.thread.postToThread(_dbThreadId,"orm.model","execute",_update,setBindingValue)
+            lua_thread.postToThread(_dbThreadId,"orm.model","execute",_update,setBindingValue)
             -- remove cache
             if _instanceCache[tablename] then
                 for _,v in ipairs(ids) do
@@ -322,7 +322,7 @@ _cache = {
         local t = Table(tablename)
         if t.__primary_key then
             local selectSql = "SELECT "..t.__primary_key.name.." from "..tablename.." "..whereSql
-            local results = lua.thread.postToThreadSync(_dbThreadId,"orm.model","rows",selectSql,bindValues)
+            local results = lua_thread.postToThreadSync(_dbThreadId,"orm.model","rows",selectSql,bindValues)
             local ids = {}
             for _,v in ipairs(results) do
                 table.insert(ids, v[1])
@@ -332,7 +332,7 @@ _cache = {
                 s:primaryKey(ids)
                 local whereSql = s:_buildPrimaryKey()
                 local sql = "DELETE from "..tablename.." "..whereSql
-                lua.thread.postToThread(_dbThreadId,"orm.model","execute",sql,ids)
+                lua_thread.postToThread(_dbThreadId,"orm.model","execute",sql,ids)
 
                 -- remove cache
                 if _instanceCache[tablename] then
@@ -343,7 +343,7 @@ _cache = {
             end
         else
             local sql = "DELETE from "..tablename.." "..whereSql
-            lua.thread.postToThread(_dbThreadId,"orm.model","execute",sql,bindValues)
+            lua_thread.postToThread(_dbThreadId,"orm.model","execute",sql,bindValues)
         end
     end,
 
@@ -354,7 +354,7 @@ _cache = {
             s:primaryKey(ids)
             local whereSql = s:_buildPrimaryKey()
             local sql = "DELETE from "..tablename.." "..whereSql
-            lua.thread.postToThread(_dbThreadId,"orm.model","execute",sql,ids)
+            lua_thread.postToThread(_dbThreadId,"orm.model","execute",sql,ids)
 
             -- remove cache
             if _instanceCache[tablename] then

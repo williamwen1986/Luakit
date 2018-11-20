@@ -10,7 +10,7 @@ require ("orm.tools.func")
 local Select = require('orm.class.select')
 local Query, QueryList = require('orm.class.query')
 local fields = require('orm.tools.fields')
-local _DBDataThreadId = lua.thread.createThread(BusinessThreadLOGIC,"DB_DATA")
+local _DBDataThreadId = lua_thread.createThread(BusinessThreadLOGIC,"DB_DATA")
 
 ------------------------------------------------------------------------------
 --                               Table                                      --
@@ -28,7 +28,7 @@ Table = {
 
 function  Table:isTableExist(tableName)
     local sql = "SELECT tbl_name FROM sqlite_master WHERE type='table' AND tbl_name=?"
-    local result = lua.thread.postToThreadSync(self.cacheThreadId,"orm.cache","query",sql,{tableName})
+    local result = lua_thread.postToThreadSync(self.cacheThreadId,"orm.cache","query",sql,{tableName})
     if result and #result > 0 then
         return true
     else 
@@ -38,13 +38,13 @@ end
 
 function Table:existColumnsForTable(tableName)
     local sql = "PRAGMA table_info(" .. tableName .. ")"
-    local result = lua.thread.postToThreadSync(self.cacheThreadId,"orm.cache","query",sql,{},"name")
+    local result = lua_thread.postToThreadSync(self.cacheThreadId,"orm.cache","query",sql,{},"name")
     return result
 end
 
 function Table:existIndexesForTable(tableName)
     local sql = "PRAGMA index_list(" .. tableName .. ")" 
-    local result = lua.thread.postToThreadSync(self.cacheThreadId,"orm.cache","query",sql,{},"name")
+    local result = lua_thread.postToThreadSync(self.cacheThreadId,"orm.cache","query",sql,{},"name")
     local ret = {}
     for _,v in ipairs(result) do
         if not v:startswith("sqlite_autoindex") then
@@ -72,14 +72,14 @@ function Table:updateTableSchema(table_instance)
     for i,colType in ipairs(table_instance.__colnames) do
         if not table.has_value(existColumns, colType.name) then
             local sql  = "ALTER TABLE " .. table_instance.__tablename__ .." ADD COLUMN " .. colType.name  .. " " .. colType:_create_type(true)
-            lua.thread.postToThreadSync(self.cacheThreadId,"orm.cache","execute",sql)
+            lua_thread.postToThreadSync(self.cacheThreadId,"orm.cache","execute",sql)
         end
     end
 end
 
 function Table:createIndex(table_instance,colType)
     local sql = "CREATE INDEX IF NOT EXISTS " .. table_instance.__tablename__ .. "_".. colType.name .. " ON " .. table_instance.__tablename__ .. "(" .. colType.name .. ")"
-    return lua.thread.postToThreadSync(self.cacheThreadId,"orm.cache","execute",sql)
+    return lua_thread.postToThreadSync(self.cacheThreadId,"orm.cache","execute",sql)
 end
 
 function Table:createIndexes(table_instance)
@@ -108,7 +108,7 @@ function Table:updateTableIndex(table_instance)
     for k,v in pairs(existingIndexesMap) do
         if v ~= nil then
             local sql = "DROP INDEX "..v
-            lua.thread.postToThreadSync(self.cacheThreadId,"orm.cache","execute",sql)
+            lua_thread.postToThreadSync(self.cacheThreadId,"orm.cache","execute",sql)
         end 
     end
 
@@ -162,7 +162,7 @@ function Table:create_table(table_instance)
 
     create_query = create_query .. "\n)"
 
-    lua.thread.postToThreadSync(self.cacheThreadId,"orm.cache","execute",create_query)
+    lua_thread.postToThreadSync(self.cacheThreadId,"orm.cache","execute",create_query)
 end
 
 -- Create new table instance
@@ -171,25 +171,25 @@ end
 -- and other must be a column names
 --------------------------------------
 function Table.new(self, tableName)
-    local args = lua.thread.postToThreadSync(self.DBDataThreadId,"orm.dbData","tableParams",tableName)
+    local args = lua_thread.postToThreadSync(self.DBDataThreadId,"orm.dbData","tableParams",tableName)
 
     local colnames = {}
     local create_query
 
     self.__tablename__ = args.__tablename__
     self.__dbname__ = args.__dbname__
-    lua.thread.synchronized(function ()
+    lua_thread.synchronized(function ()
         local cacheName = "cache_"..self.__dbname__
-        local dbInfo = lua.thread.postToThreadSync(self.DBDataThreadId,"orm.dbData","get",self.__dbname__)
+        local dbInfo = lua_thread.postToThreadSync(self.DBDataThreadId,"orm.dbData","get",self.__dbname__)
         if  not dbInfo then
-            local cacheThreadId = lua.thread.createThread(BusinessThreadLOGIC,cacheName)
+            local cacheThreadId = lua_thread.createThread(BusinessThreadLOGIC,cacheName)
             dbInfo = {
                 threadName = cacheName,
                 threadId = cacheThreadId
             }
-            lua.thread.postToThreadSync(self.DBDataThreadId,"orm.dbData","set", self.__dbname__,dbInfo)
+            lua_thread.postToThreadSync(self.DBDataThreadId,"orm.dbData","set", self.__dbname__,dbInfo)
         end 
-        lua.thread.postToThreadSync(dbInfo.threadId,"orm.cache","initWithDB",self.__dbname__)
+        lua_thread.postToThreadSync(dbInfo.threadId,"orm.cache","initWithDB",self.__dbname__)
         self.cacheThreadId = dbInfo.threadId
     end)
 

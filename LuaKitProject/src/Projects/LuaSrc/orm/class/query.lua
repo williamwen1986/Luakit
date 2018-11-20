@@ -127,7 +127,7 @@ function Query(own_table, data)
                 end 
             end
 
-            local result,rowId = lua.thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","insert",self.own_table.__tablename__,kv,needPrimaryKey)
+            local result,rowId = lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","insert",self.own_table.__tablename__,kv,needPrimaryKey)
             if needPrimaryKey and rowId ~= nil then
                 self._data[self.own_table.__primary_key.name] = {
                     new = rowId,
@@ -151,7 +151,7 @@ function Query(own_table, data)
             if not self.own_table.__primary_key then
                 error("can not query delete without primary_key")
             end
-            lua.thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","deleteWithPrimaryKey",self.own_table.__tablename__,{self[self.own_table.__primary_key.name]})
+            lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","deleteWithPrimaryKey",self.own_table.__tablename__,{self[self.own_table.__primary_key.name]})
             self._data = {}
         end
     }

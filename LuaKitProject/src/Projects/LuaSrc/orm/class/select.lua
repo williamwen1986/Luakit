@@ -174,7 +174,7 @@ local Select = function(own_table)
                     return primaryKeyStr
                 else
                     local sqlKey = "primary_"..own_table.__tablename__..#self._rules.primaryKey
-                    local cache = lua.thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","getCacheSql", self.own_table.__tablename__ , sqlKey)
+                    local cache = lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","getCacheSql", self.own_table.__tablename__ , sqlKey)
                     if cache then
                         return cache
                     else
@@ -183,7 +183,7 @@ local Select = function(own_table)
                            table.insert(keys,"?")
                         end
                         local primaryKeyStr = "\nWHERE ".. self.own_table.__primary_key.name.." IN("..table.join(keys)..") "
-                        lua.thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","setCacheSql", self.own_table.__tablename__ , sqlKey, primaryKeyStr)
+                        lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","setCacheSql", self.own_table.__tablename__ , sqlKey, primaryKeyStr)
                         return primaryKeyStr
                     end
                 end
@@ -309,7 +309,7 @@ local Select = function(own_table)
             if needColumns and table.getn(needColumns) > 0 then
                 sqlKey = sqlKey..table.concat(needColumns,"_")
             end
-            local cache = lua.thread.postToThreadSync(own_table.cacheThreadId,"orm.cache","getCacheSql",own_table.__tablename__, sqlKey)
+            local cache = lua_thread.postToThreadSync(own_table.cacheThreadId,"orm.cache","getCacheSql",own_table.__tablename__, sqlKey)
             if cache then
                 for _,v in ipairs(cache.needColumns) do
                    table.insert(self._rules.selectColumns,v)
@@ -342,7 +342,7 @@ local Select = function(own_table)
 
             include = table.join(include)
 
-            lua.thread.postToThreadSync(own_table.cacheThreadId,"orm.cache","setCacheSql", own_table.__tablename__, sqlKey, {
+            lua_thread.postToThreadSync(own_table.cacheThreadId,"orm.cache","setCacheSql", own_table.__tablename__, sqlKey, {
                 include = include,
                 needColumns = cacheNeedColumns,
             })
@@ -470,7 +470,7 @@ local Select = function(own_table)
             if self._rules.offset then
                 _select = _select .. " \nOFFSET " .. self._rules.offset
             end
-            return lua.thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","rows",self.own_table.__tablename__,_select,self._rules._bindValuse,needColumns,self._rules.primaryKey,self._rules.selectColumns)
+            return lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","rows",self.own_table.__tablename__,_select,self._rules._bindValuse,needColumns,self._rules.primaryKey,self._rules.selectColumns)
         end,
 
         -- Add column to table
@@ -651,7 +651,7 @@ local Select = function(own_table)
         update = function (self, data)
             if Type.is.table(data) then
                 if self._rules.primaryKey and #self._rules.primaryKey>0 then
-                    lua.thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","updateWithPrimaryKey",self.own_table.__tablename__,self._rules.primaryKey,data)
+                    lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","updateWithPrimaryKey",self.own_table.__tablename__,self._rules.primaryKey,data)
                 else
                     -- -- Build WHERE
                     local _where = ""
@@ -667,7 +667,7 @@ local Select = function(own_table)
                             BACKTRACE(INFO, "No 'where' statement. All data update!")
                         end
                     end
-                    lua.thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","update",self.own_table.__tablename__,_where,self._rules._bindValuse,data)
+                    lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","update",self.own_table.__tablename__,_where,self._rules._bindValuse,data)
                 end
             else
                 BACKTRACE(WARNING, "No data for global update")
@@ -697,9 +697,9 @@ local Select = function(own_table)
                 end
             end
             if deleteWithPrimary then
-                lua.thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","deleteWithPrimaryKey",self.own_table.__tablename__,self._rules.primaryKey)
+                lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","deleteWithPrimaryKey",self.own_table.__tablename__,self._rules.primaryKey)
             else
-                lua.thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","delete",self.own_table.__tablename__,_delete,self._rules._bindValuse)
+                lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","delete",self.own_table.__tablename__,_delete,self._rules._bindValuse)
             end
         end,
 

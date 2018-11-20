@@ -46,7 +46,7 @@ local languagesTable = {
     "be",
 }
 
-local languageCode = lua.language.getLanguageType()
+local languageCode = lua_language.getLanguageType()
 
 return function (word)
     local t = require("language."..languagesTable[languageCode+1])

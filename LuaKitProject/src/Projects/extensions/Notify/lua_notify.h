@@ -3,7 +3,7 @@ extern "C" {
 #include "lua.h"
 }
 #include "LuaNotificationListener.h"
-#define LUA_NOTIFICATION_METATABLE_NAME "lua.notification"
+#define LUA_NOTIFICATION_METATABLE_NAME "lua_notification"
 
 class Notification {
 public:
