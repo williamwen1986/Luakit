@@ -33,7 +33,7 @@ Create thread , [demo code](https://github.com/williamwen1986/Luakit/blob/master
 -- BusinessThreadIO
 -- Param2 is the thread name
 -- Result is new threadId which is the token you should hold to do further action
-local newThreadId = lua.thread.createThread(BusinessThreadLOGIC,"newThread")
+local newThreadId = lua_thread.createThread(BusinessThreadLOGIC,"newThread")
 ```
 
 Perform method on a specified thread async, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
@@ -44,7 +44,7 @@ Perform method on a specified thread async, [demo code](https://github.com/willi
 -- The result is just like you run the below code on a specified thread async
 -- require(modelName).methodName("params", 1.1, {1,2,3}, function (p)
 -- end)
-lua.thread.postToThread(threadId,modelName,methodName,"params", 1.1, {1,2,3}, function (p)
+lua_thread.postToThread(threadId,modelName,methodName,"params", 1.1, {1,2,3}, function (p)
 	-- do something here
 end)
 ```
@@ -57,7 +57,7 @@ Perform method on a specified thread sync, [demo code](https://github.com/willia
 -- The result is just like you run the below code on a specified thread sync
 -- local result = require(modelName).methodName("params", 1.1, {1,2,3}, function (p)
 -- end)
-local result = lua.thread.postToThreadSync(threadId,modelName,methodName,"params", 1.1, {1,2,3}, function (p)
+local result = lua_thread.postToThreadSync(threadId,modelName,methodName,"params", 1.1, {1,2,3}, function (p)
 	-- do something here
 end)
 ```
@@ -188,7 +188,7 @@ Luakit provide a http request interface, it has an internal dispatcher which con
 -- socketWatcherTimeout, int value represent the socketTimeout
 -- onResponse, function value represent the response callback
 -- onProgress, function value represent the onProgress callback
-lua.http.request({ url  = "http://tj.nineton.cn/Heart/index/all?city=CHSH000000",
+lua_http.request({ url  = "http://tj.nineton.cn/Heart/index/all?city=CHSH000000",
 	onResponse = function (response)
 	end})
 ```
@@ -198,7 +198,7 @@ lua.http.request({ url  = "http://tj.nineton.cn/Heart/index/all?city=CHSH000000"
 Luakit provide a non-blocking interface for socket connect , [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/async_socket_test.lua)
 
 ```lua
-local socket = lua.asyncSocket.create("127.0.0.1",4001)
+local socket = lua_asyncSocket.create("127.0.0.1",4001)
 
 socket.connectCallback = function (rv)
     if rv >= 0 then
@@ -209,7 +209,7 @@ end
     
 socket.readCallback = function (str)
     print(str)
-    timer = lua.timer.createTimer(0)
+    timer = lua_timer.createTimer(0)
     timer:start(2000,function ()
         socket:write(str)
     end)
@@ -230,7 +230,7 @@ Luakit provide a notification system by which notifications can transfer through
 Lua register and post notification, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/notification_test.lua)
 
 ```lua
-lua.notification.createListener(function (l)
+lua_notification.createListener(function (l)
 	local listener = l
 	listener:AddObserver(3,
 	    function (data)
@@ -244,7 +244,7 @@ lua.notification.createListener(function (l)
 	)
 end);
 
-lua.notification.postNotification(3,
+lua_notification.postNotification(3,
 {
     lua1 = "lua123",
     lua2 = "lua234"
