@@ -36,10 +36,10 @@ static int CallFstat(int fd, stat_wrapper_t *sb) {
   return fstat(fd, sb);
 }
 #else
-typedef struct stat64 stat_wrapper_t;
+typedef struct stat stat_wrapper_t;
 static int CallFstat(int fd, stat_wrapper_t *sb) {
   base::ThreadRestrictions::AssertIOAllowed();
-  return fstat64(fd, sb);
+  return fstat(fd, sb);
 }
 #endif
 

@@ -34,7 +34,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/./ \
                     $(LOCAL_PATH)/common/ \
                     $(LOCAL_PATH)/lua-5.1.5/lua \
                     $(LOCAL_PATH)/openssl/include/ \
-                    $(LOCAL_PATH)/curl-7.43.0/include \
+                    $(LOCAL_PATH)/curl/include \
                     $(LOCAL_PATH)/sqlite-amalgamation-3210000 \
                     $(LOCAL_PATH)/extensions/HTTP \
                     $(LOCAL_PATH)/extensions/lua-cjson-master \
@@ -55,6 +55,6 @@ LOCAL_STATIC_LIBRARIES += curl \
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module, curl-7.43.0)
+$(call import-module, curl)
 $(call import-module, base)
 $(call import-module, libxml)

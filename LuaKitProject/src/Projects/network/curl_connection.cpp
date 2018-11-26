@@ -671,15 +671,6 @@ namespace network {
     }
   
     void CurlConnection::OnDebugCallback(curl_infotype type, const std::string& log) {
-      if(type == CURLINFO_HEADER_IN){
-      }else if (type == CURLINFO_HEADER_OUT){
-      }else if (type == CURLINFO_DATA_IN){
-      }else if (type == CURLINFO_DATA_OUT){
-      }else if (type == CURLINFO_TEXT){
-      }else if (type == CURLINFO_FAILED){
-        LOG(ERROR) << name_ << " curl failed: " << log;
-        curl_errmsg_ = log;
-      }
     }
   
     void CurlConnection::GetHostAndPort(const std::string &url, std::string& host, std::string& port) {

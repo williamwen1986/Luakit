@@ -47,6 +47,7 @@ static base::android::ScopedJavaLocalRef<jstring>
   return base::android::ScopedJavaLocalRef<jstring>(env, ret);
 }
 
+
 static base::subtle::AtomicWord g_BuildInfo_getDevice = 0;
 static base::android::ScopedJavaLocalRef<jstring>
     Java_BuildInfo_getDevice(JNIEnv* env) {

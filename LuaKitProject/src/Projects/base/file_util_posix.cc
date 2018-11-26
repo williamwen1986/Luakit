@@ -71,19 +71,19 @@ static int CallLstat(const char *path, stat_wrapper_t *sb) {
   return lstat(path, sb);
 }
 #else
-typedef struct stat64 stat_wrapper_t;
+typedef struct stat stat_wrapper_t;
 static int CallStat(const char *path, stat_wrapper_t *sb) {
 //  ThreadRestrictions::AssertIOAllowed();
-  return stat64(path, sb);
+  return stat(path, sb);
 }
 static int CallLstat(const char *path, stat_wrapper_t *sb) {
 //  ThreadRestrictions::AssertIOAllowed();
-  return lstat64(path, sb);
+  return lstat(path, sb);
 }
 #if defined(OS_ANDROID)
 static int CallFstat(int fd, stat_wrapper_t *sb) {
 //  ThreadRestrictions::AssertIOAllowed();
-  return fstat64(fd, sb);
+  return fstat(fd, sb);
 }
 #endif
 #endif

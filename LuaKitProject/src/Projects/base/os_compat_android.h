@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <utime.h>
+#include <sys/file.h>
 
 // Not implemented in Bionic.
 extern "C" int futimes(int fd, const struct timeval tv[2]);
@@ -19,10 +20,11 @@ extern "C" char* mkdtemp(char* path);
 extern "C" time_t timegm(struct tm* const t);
 
 // The lockf() function is not available on Android; we translate to flock().
-#define F_LOCK LOCK_EX
-#define F_ULOCK LOCK_UN
+// #define F_LOCK LOCK_EX
+// #define F_ULOCK LOCK_UN
 inline int lockf(int fd, int cmd, off_t ignored_len) {
-  return flock(fd, cmd);
+
+  return flock((short)fd, (short)cmd);
 }
 
 #endif  // BASE_OS_COMPAT_ANDROID_H_

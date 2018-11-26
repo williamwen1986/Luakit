@@ -12,7 +12,7 @@
 #include "lobject.h"
 #include "ltm.h"
 #include "lzio.h"
-#include <sys/_types.h>
+//#include <sys/_types.h>
 //#include <sys/_types/_pthread_mutex_t.h>
 
 

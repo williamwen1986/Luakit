@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 #include <sys/syscall.h>
 #include <time64.h>
+#include <unistd.h>
 
 #include "base/rand_util.h"
 #include "base/strings/string_piece.h"

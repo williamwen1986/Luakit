@@ -19,8 +19,6 @@
 		2898C88B20C5675B00249775 /* orm in Resources */ = {isa = PBXBuildFile; fileRef = 2898C88820C5675B00249775 /* orm */; };
 		2898C88C20C5675B00249775 /* WeatherManager.lua in Resources */ = {isa = PBXBuildFile; fileRef = 2898C88920C5675B00249775 /* WeatherManager.lua */; };
 		2898C88D20C5675B00249775 /* DB.lua in Resources */ = {isa = PBXBuildFile; fileRef = 2898C88A20C5675B00249775 /* DB.lua */; };
-		2898C8DA20C6373B00249775 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 286F345520BFEFCB000E64CF /* libcrypto.a */; };
-		2898C8DB20C6373B00249775 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 286F345620BFEFCB000E64CF /* libssl.a */; };
 		3C962AEF2199A2BD002B91E7 /* language.lua in Resources */ = {isa = PBXBuildFile; fileRef = 3C962AEE2199A2BD002B91E7 /* language.lua */; };
 		3C962AFD2199A6A5002B91E7 /* language in Resources */ = {isa = PBXBuildFile; fileRef = 3C962AFC2199A6A4002B91E7 /* language */; };
 /* End PBXBuildFile section */
@@ -76,8 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2898C8DA20C6373B00249775 /* libcrypto.a in Frameworks */,
-				2898C8DB20C6373B00249775 /* libssl.a in Frameworks */,
 				286F347220BFF3A0000E64CF /* libLuakit.a in Frameworks */,
 				286F345420BFEF93000E64CF /* libz.tbd in Frameworks */,
 			);
@@ -397,7 +393,6 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../src/Projects",
-					"$(SRCROOT)/../../src/Projects/curl-7.43.0/include",
 					"$(SRCROOT)/../../src/Projects/lua-5.1.5/lua",
 					"$(SRCROOT)/../../src/Projects/common",
 					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
@@ -408,7 +403,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/openssl/lib";
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.WeatherTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -423,7 +418,6 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../src/Projects",
-					"$(SRCROOT)/../../src/Projects/curl-7.43.0/include",
 					"$(SRCROOT)/../../src/Projects/lua-5.1.5/lua",
 					"$(SRCROOT)/../../src/Projects/common",
 					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
@@ -434,7 +428,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/openssl/lib";
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.WeatherTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -24,5 +24,5 @@ APP_CPPFLAGS += -fexceptions \
 
 NDK_TOOLCHAIN_VERSION := 4.9
 #NDK_TOOLCHAIN_VERSION := clang
-APP_PLATFORM := android-9
+APP_PLATFORM := android-18
 

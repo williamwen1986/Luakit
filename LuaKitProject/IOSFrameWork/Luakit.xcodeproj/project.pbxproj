@@ -77,28 +77,14 @@
 		2883AE6520B546C3005E1F54 /* oc_helpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE6320B546C3005E1F54 /* oc_helpers.mm */; };
 		2883AEFD20B55606005E1F54 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2883AD4C20B51D73005E1F54 /* libcommon.a */; };
 		2883AEFE20B5560D005E1F54 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2883AD0A20B50E5E005E1F54 /* libbase.a */; };
-		2883AEFF20B55619005E1F54 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2883ACEE20B44352005E1F54 /* libcurl.a */; };
 		2898C85120C55F2200249775 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2898C84F20C55F2200249775 /* xxtea.cpp */; };
 		2898C85220C55F2200249775 /* LuakitLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2898C85020C55F2200249775 /* LuakitLoader.cpp */; };
+		3C2CC5D621ABE47D00610EAC /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2CC5D521ABE47D00610EAC /* libcurl.a */; };
 		3C962AD621992FF0002B91E7 /* lua_language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C962AC421992FF0002B91E7 /* lua_language.cpp */; };
 		3C962AD921993203002B91E7 /* languageUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3C962AD821993203002B91E7 /* languageUtil.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2883ACED20B44352005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACE920B44352005E1F54 /* curl.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 049252211B79A0CA00D22740;
-			remoteInfo = curl;
-		};
-		2883ACEF20B4436B005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACE920B44352005E1F54 /* curl.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 049252201B79A0CA00D22740;
-			remoteInfo = curl;
-		};
 		2883AD0920B50E5E005E1F54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
@@ -227,7 +213,6 @@
 
 /* Begin PBXFileReference section */
 		2883AC9120B43DFB005E1F54 /* libLuakit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLuakit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2883ACE920B44352005E1F54 /* curl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = curl.xcodeproj; path = "../src/Projects/curl-7.43.0/xcode/curl.xcodeproj"; sourceTree = "<group>"; };
 		2883ACF120B50E5D005E1F54 /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../src/Projects/base/base.xcodeproj; sourceTree = "<group>"; };
 		2883AD3920B51C72005E1F54 /* gtest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gtest.xcodeproj; path = ../src/Projects/testing/gtest.xcodeproj; sourceTree = "<group>"; };
 		2883AD4620B51D73005E1F54 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../src/Projects/common/common/common.xcodeproj; sourceTree = "<group>"; };
@@ -391,6 +376,7 @@
 		2898C84E20C55F2200249775 /* LuakitLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuakitLoader.h; sourceTree = "<group>"; };
 		2898C84F20C55F2200249775 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
 		2898C85020C55F2200249775 /* LuakitLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuakitLoader.cpp; sourceTree = "<group>"; };
+		3C2CC5D521ABE47D00610EAC /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../src/Projects/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
 		3C962AC321992FF0002B91E7 /* lua_language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_language.h; sourceTree = "<group>"; };
 		3C962AC421992FF0002B91E7 /* lua_language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_language.cpp; sourceTree = "<group>"; };
 		3C962AD721993203002B91E7 /* languageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = languageUtil.h; sourceTree = "<group>"; };
@@ -402,7 +388,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2883AEFF20B55619005E1F54 /* libcurl.a in Frameworks */,
+				3C2CC5D621ABE47D00610EAC /* libcurl.a in Frameworks */,
 				2883AEFE20B5560D005E1F54 /* libbase.a in Frameworks */,
 				2883AEFD20B55606005E1F54 /* libcommon.a in Frameworks */,
 			);
@@ -417,7 +403,6 @@
 				2883AD4620B51D73005E1F54 /* common.xcodeproj */,
 				2883AD3920B51C72005E1F54 /* gtest.xcodeproj */,
 				2883ACF120B50E5D005E1F54 /* base.xcodeproj */,
-				2883ACE920B44352005E1F54 /* curl.xcodeproj */,
 				2883AC9320B43DFB005E1F54 /* Luakit */,
 				2883AC9220B43DFB005E1F54 /* Products */,
 				2883AEFC20B55606005E1F54 /* Frameworks */,
@@ -442,14 +427,6 @@
 				2883AD5120B5439B005E1F54 /* lua */,
 			);
 			path = Luakit;
-			sourceTree = "<group>";
-		};
-		2883ACEA20B44352005E1F54 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2883ACEE20B44352005E1F54 /* libcurl.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		2883ACF220B50E5D005E1F54 /* Products */ = {
@@ -783,6 +760,7 @@
 		2883AEFC20B55606005E1F54 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C2CC5D521ABE47D00610EAC /* libcurl.a */,
 				2883AF0420B5565B005E1F54 /* libz.tbd */,
 				2883AF0020B55641005E1F54 /* libcrypto.a */,
 				2883AF0120B55641005E1F54 /* libssl.a */,
@@ -817,7 +795,6 @@
 			dependencies = (
 				2883AD5020B51D7B005E1F54 /* PBXTargetDependency */,
 				2883AD4520B51D02005E1F54 /* PBXTargetDependency */,
-				2883ACF020B4436B005E1F54 /* PBXTargetDependency */,
 			);
 			name = Luakit;
 			productName = Luakit;
@@ -858,10 +835,6 @@
 					ProjectRef = 2883AD4620B51D73005E1F54 /* common.xcodeproj */;
 				},
 				{
-					ProductGroup = 2883ACEA20B44352005E1F54 /* Products */;
-					ProjectRef = 2883ACE920B44352005E1F54 /* curl.xcodeproj */;
-				},
-				{
 					ProductGroup = 2883AD3A20B51C72005E1F54 /* Products */;
 					ProjectRef = 2883AD3920B51C72005E1F54 /* gtest.xcodeproj */;
 				},
@@ -874,13 +847,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		2883ACEE20B44352005E1F54 /* libcurl.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcurl.a;
-			remoteRef = 2883ACED20B44352005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		2883AD0A20B50E5E005E1F54 /* libbase.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1064,11 +1030,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2883ACF020B4436B005E1F54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = curl;
-			targetProxy = 2883ACEF20B4436B005E1F54 /* PBXContainerItemProxy */;
-		};
 		2883AD4520B51D02005E1F54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = base;
@@ -1201,10 +1162,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../src/Projects/lua-5.1.5/lua",
 					"$(SRCROOT)/../src/Projects",
-					"$(SRCROOT)/../src/Projects/curl-7.43.0/include",
 					"$(SRCROOT)/../src/Projects/common",
 					"$(SRCROOT)/../src/Projects/extensions",
+					"$(SRCROOT)/../src/Projects/curl/ios/include",
 				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/Projects/curl/ios/lib";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1221,10 +1183,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../src/Projects/lua-5.1.5/lua",
 					"$(SRCROOT)/../src/Projects",
-					"$(SRCROOT)/../src/Projects/curl-7.43.0/include",
 					"$(SRCROOT)/../src/Projects/common",
 					"$(SRCROOT)/../src/Projects/extensions",
+					"$(SRCROOT)/../src/Projects/curl/ios/include",
 				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/Projects/curl/ios/lib";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
