@@ -1,1 +1,0 @@
-link ../crypto/ec/ectest.c

@@ -1,1 +1,0 @@
-link ../crypto/dh/dhtest.c

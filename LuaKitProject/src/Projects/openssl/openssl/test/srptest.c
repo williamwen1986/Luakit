@@ -1,1 +1,0 @@
-link ../crypto/srp/srptest.c

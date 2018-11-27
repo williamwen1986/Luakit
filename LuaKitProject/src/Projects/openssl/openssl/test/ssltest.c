@@ -1,1 +1,0 @@
-link ../ssl/ssltest.c
