@@ -5,6 +5,7 @@ extern "C" {
 #include "lualib.h"
 #include "lsqlite3.h"
 #include "lua_cjson.h"
+#include "mobdebug.h"
 #ifdef __cplusplus
 }
 #endif
@@ -241,6 +242,7 @@ extern int luaInit(lua_State* L)
     lua_aterr(L, &lua_err);
     luaL_openlibs(L);
     luaopen_file(L);
+    luaopen_mobdebug_scripts(L);
     luaopen_lsqlite3(L);
     luaopen_http(L);
     luaopen_callback(L);
