@@ -99,6 +99,7 @@ local userTable = Table("user")
 ```
 
 Insert data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+
 ```lua
 local userTable = Table("user")
 local user = userTable({
@@ -110,6 +111,7 @@ user:save()
 ```
 
 Update data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+
 ```lua
 local userTable = Table("user")
 local user = userTable.get:primaryKey({"user1"}):first()
@@ -119,6 +121,7 @@ user:save()
 ```
 
 Delete data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+
 ```lua
 local userTable = Table("user")
 local user = userTable.get:primaryKey({"user1"}):first()
@@ -126,18 +129,21 @@ user:delete()
 ```
 
 Batch update, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+
 ```lua
 local userTable = Table("user")
 userTable.get:where({age__gt = 40}):update({age = 45})
 ```
 
 Batch Delete, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+
 ```lua
 local userTable = Table("user")
 userTable.get:where({age__gt = 40}):delete()
 ```
 
 Select, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+
 ```lua
 local userTable = Table("user")
 local users = userTable.get:all()
@@ -291,6 +297,31 @@ Setup
 [Set up Luakit in android](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-android)
 
 [Set up Luakit in IOS](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-IOS)
+
+IDE AndroidStudio
+-----------------------------
+
+We provide an AndroidStudio plugin named Luakit, you can develop with AndroidStudio, we provide many useful features, [demonstrate how to debug Luakit with AndroidStudio](https://github.com/williamwen1986/Luakit/wiki/IDE-AndroidStudio)
+<li>Remote Debugger</li>
+<li>Find usages</li>
+<li>Find usages</li>
+<li>Rename</li>
+<li>Go to definition</li>
+<li>Go to symbol</li>
+<li>Go to file</li>
+<li>Parameter name hints</li>
+<li>Comment in/out</li>
+<li>Postfix completion templates</li>
+<li>Code formatter</li>
+<li>Code intentions</li>
+<li>Code inspections</li>
+<li>Lua Standard Library/API</li>
+<li>Luakit API</li>
+<li>Luayoga API</li>
+<li>Region folding</li>
+<li>Lua Check Tool</li>
+
+
 
 More
 -----------------------------
