@@ -28,14 +28,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResult(Object o) {
                 ArrayList<Object> ret = (ArrayList<Object>)o;
-                adapter.source = ret.toArray();
-                adapter.notifyDataSetChanged();
+                if(ret != null) {
+                    adapter.source = ret.toArray();
+                    adapter.notifyDataSetChanged();
+                }
             }
         };
         LuaHelper.callLuaFunction("WeatherManager","loadWeather", callback);
         ListView lv=(ListView) findViewById(R.id.lv);
         adapter = new MyAdapter(this);
-        adapter.source = ret.toArray();
+        if(ret != null){
+            adapter.source = ret.toArray();
+        }
         lv.setAdapter(adapter);
     }
 
