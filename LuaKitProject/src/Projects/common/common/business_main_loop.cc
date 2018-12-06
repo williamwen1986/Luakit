@@ -6,11 +6,11 @@
 #include "common/business_main_loop.h"
 
 #include "base/bind.h"
-#include "base/debug/trace_event.h"
-#include "base/timer/hi_res_timer_manager.h"
+//#include "base/debug/trace_event.h"
+//#include "base/timer/hi_res_timer_manager.h"
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
-#include "base/metrics/field_trial.h"
+//#include "base/metrics/field_trial.h"
 #include "base/metrics/histogram.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/threading/thread_restrictions.h"
@@ -149,7 +149,7 @@ void BusinessMainLoop::MainMessageLoopStart() {
 
   InitializeMainThread();
 
-  hi_res_timer_manager_.reset(new base::HighResolutionTimerManager);
+//  hi_res_timer_manager_.reset(new base::HighResolutionTimerManager);
 
   if (parts_.get())
     parts_->PostMainMessageLoopStart();
@@ -271,7 +271,7 @@ void BusinessMainLoop::CreateThreads() {
 }
 
 void BusinessMainLoop::RunMainMessageLoopParts() {
-  TRACE_EVENT_BEGIN_ETW("BusinessMain:MESSAGE_LOOP", 0, "");
+//  TRACE_EVENT_BEGIN_ETW("BusinessMain:MESSAGE_LOOP", 0, "");
 
   bool ran_main_loop = false;
   if (parts_.get())
@@ -280,7 +280,7 @@ void BusinessMainLoop::RunMainMessageLoopParts() {
   if (!ran_main_loop)
     MainMessageLoopRun();
 
-  TRACE_EVENT_END_ETW("BusinessMain:MESSAGE_LOOP", 0, "");
+//  TRACE_EVENT_END_ETW("BusinessMain:MESSAGE_LOOP", 0, "");
 }
 
 void BusinessMainLoop::ShutdownThreadsAndCleanUp() {

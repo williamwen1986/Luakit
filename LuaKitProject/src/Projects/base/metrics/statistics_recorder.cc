@@ -5,8 +5,8 @@
 #include "base/metrics/statistics_recorder.h"
 
 #include "base/at_exit.h"
-#include "base/debug/leak_annotations.h"
-#include "base/json/string_escape.h"
+//#include "base/debug/leak_annotations.h"
+//#include "base/json/string_escape.h"
 #include "base/logging.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/metrics/histogram.h"
@@ -49,7 +49,7 @@ HistogramBase* StatisticsRecorder::RegisterOrDeleteDuplicate(
   // Callers are responsible for not calling RegisterOrDeleteDuplicate(ptr)
   // twice if (lock_ == NULL) || (!histograms_).
   if (lock_ == NULL) {
-    ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
+//    ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
     return histogram;
   }
 
@@ -64,7 +64,7 @@ HistogramBase* StatisticsRecorder::RegisterOrDeleteDuplicate(
       HistogramMap::iterator it = histograms_->find(name);
       if (histograms_->end() == it) {
         (*histograms_)[name] = histogram;
-        ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
+//        ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
         histogram_to_return = histogram;
       } else if (histogram == it->second) {
         // The histogram was registered before.
@@ -87,13 +87,13 @@ const BucketRanges* StatisticsRecorder::RegisterOrDeleteDuplicateRanges(
   scoped_ptr<const BucketRanges> ranges_deleter;
 
   if (lock_ == NULL) {
-    ANNOTATE_LEAKING_OBJECT_PTR(ranges);
+//    ANNOTATE_LEAKING_OBJECT_PTR(ranges);
     return ranges;
   }
 
   base::AutoLock auto_lock(*lock_);
   if (ranges_ == NULL) {
-    ANNOTATE_LEAKING_OBJECT_PTR(ranges);
+//    ANNOTATE_LEAKING_OBJECT_PTR(ranges);
     return ranges;
   }
 
@@ -102,7 +102,7 @@ const BucketRanges* StatisticsRecorder::RegisterOrDeleteDuplicateRanges(
   if (ranges_->end() == ranges_it) {
     // Add a new matching list to map.
     checksum_matching_list = new list<const BucketRanges*>();
-    ANNOTATE_LEAKING_OBJECT_PTR(checksum_matching_list);
+//    ANNOTATE_LEAKING_OBJECT_PTR(checksum_matching_list);
     (*ranges_)[ranges->checksum()] = checksum_matching_list;
   } else {
     checksum_matching_list = ranges_it->second;
@@ -165,34 +165,34 @@ void StatisticsRecorder::WriteGraph(const std::string& query,
 }
 
 // static
-std::string StatisticsRecorder::ToJSON(const std::string& query) {
-  if (!IsActive())
-    return std::string();
-
-  std::string output("{");
-  if (!query.empty()) {
-    output += "\"query\":";
-    EscapeJSONString(query, true, &output);
-    output += ",";
-  }
-
-  Histograms snapshot;
-  GetSnapshot(query, &snapshot);
-  output += "\"histograms\":[";
-  bool first_histogram = true;
-  for (Histograms::const_iterator it = snapshot.begin(); it != snapshot.end();
-       ++it) {
-    if (first_histogram)
-      first_histogram = false;
-    else
-      output += ",";
-    std::string json;
-    (*it)->WriteJSON(&json);
-    output += json;
-  }
-  output += "]}";
-  return output;
-}
+//std::string StatisticsRecorder::ToJSON(const std::string& query) {
+//  if (!IsActive())
+//    return std::string();
+//
+//  std::string output("{");
+//  if (!query.empty()) {
+//    output += "\"query\":";
+//    EscapeJSONString(query, true, &output);
+//    output += ",";
+//  }
+//
+//  Histograms snapshot;
+//  GetSnapshot(query, &snapshot);
+//  output += "\"histograms\":[";
+//  bool first_histogram = true;
+//  for (Histograms::const_iterator it = snapshot.begin(); it != snapshot.end();
+//       ++it) {
+//    if (first_histogram)
+//      first_histogram = false;
+//    else
+//      output += ",";
+//    std::string json;
+//    (*it)->WriteJSON(&json);
+//    output += json;
+//  }
+//  output += "]}";
+//  return output;
+//}
 
 // static
 void StatisticsRecorder::GetHistograms(Histograms* output) {

@@ -29,7 +29,7 @@ class BASE_EXPORT Lock {
   bool Try() { return lock_.Try(); }
 
   // Null implementation if not debug.
-  void AssertAcquired() const {}
+  void AssertAcquired() const{}
 #else
   Lock();
   ~Lock();

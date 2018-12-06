@@ -40,7 +40,7 @@
 #include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/basictypes.h"
-#include "base/debug/leak_annotations.h"
+//#include "base/debug/leak_annotations.h"
 #include "base/logging.h"
 #include "base/memory/aligned_memory.h"
 #include "base/third_party/dynamic_annotations/dynamic_annotations.h"
@@ -92,7 +92,7 @@ struct LeakyLazyInstanceTraits {
   static const bool kAllowedToAccessOnNonjoinableThread = true;
 
   static Type* New(void* instance) {
-    ANNOTATE_SCOPED_MEMORY_LEAK;
+//    ANNOTATE_SCOPED_MEMORY_LEAK;
     return DefaultLazyInstanceTraits<Type>::New(instance);
   }
   static void Delete(Type* instance) {

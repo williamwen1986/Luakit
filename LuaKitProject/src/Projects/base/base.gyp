@@ -246,8 +246,6 @@
         'third_party/nspr/prtypes.h',
         'third_party/xdg_user_dirs/xdg_user_dir_lookup.cc',
         'third_party/xdg_user_dirs/xdg_user_dir_lookup.h',
-        'async_socket_io_handler.h',
-        'async_socket_io_handler_posix.cc',
         'async_socket_io_handler_win.cc',
         'auto_reset.h',
         'event_recorder.h',

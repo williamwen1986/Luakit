@@ -8,8 +8,8 @@
 
 #include "base/bind.h"
 #include "base/compiler_specific.h"
-#include "base/debug/alias.h"
-#include "base/debug/trace_event.h"
+//#include "base/debug/alias.h"
+//#include "base/debug/trace_event.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/scoped_ptr.h"
@@ -418,17 +418,17 @@ void MessageLoop::RunTask(const PendingTask& pending_task) {
   tracked_objects::TrackedTime start_time =
       tracked_objects::ThreadData::NowForStartOfRun(pending_task.birth_tally);
 
-  TRACE_EVENT_FLOW_END1("task", "MessageLoop::PostTask",
-      TRACE_ID_MANGLE(GetTaskTraceID(pending_task)),
-      "queue_duration",
-      (start_time - pending_task.EffectiveTimePosted()).InMilliseconds());
+//  TRACE_EVENT_FLOW_END1("task", "MessageLoop::PostTask",
+//      TRACE_ID_MANGLE(GetTaskTraceID(pending_task)),
+//      "queue_duration",
+//      (start_time - pending_task.EffectiveTimePosted()).InMilliseconds());
   // When tracing memory for posted tasks it's more valuable to attribute the
   // memory allocations to the source function than generically to "RunTask".
-  TRACE_EVENT_WITH_MEMORY_TAG2(
-      "task", "MessageLoop::RunTask",
-      pending_task.posted_from.function_name(),  // Name for memory tracking.
-      "src_file", pending_task.posted_from.file_name(),
-      "src_func", pending_task.posted_from.function_name());
+//  TRACE_EVENT_WITH_MEMORY_TAG2(
+//      "task", "MessageLoop::RunTask",
+//      pending_task.posted_from.function_name(),  // Name for memory tracking.
+//      "src_file", pending_task.posted_from.file_name(),
+//      "src_func", pending_task.posted_from.function_name());
 
   DCHECK(nestable_tasks_allowed_);
   // Execute the task and assume the worst: It is probably not reentrant.
@@ -441,7 +441,7 @@ void MessageLoop::RunTask(const PendingTask& pending_task) {
   // Look at a memory dump of the stack.
   const void* program_counter =
       pending_task.posted_from.program_counter();
-  debug::Alias(&program_counter);
+//  debug::Alias(&program_counter);
 
   HistogramEvent(kTaskRunEvent);
 

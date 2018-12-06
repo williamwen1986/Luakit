@@ -21,6 +21,7 @@
 		2898C88D20C5675B00249775 /* DB.lua in Resources */ = {isa = PBXBuildFile; fileRef = 2898C88A20C5675B00249775 /* DB.lua */; };
 		3C962AEF2199A2BD002B91E7 /* language.lua in Resources */ = {isa = PBXBuildFile; fileRef = 3C962AEE2199A2BD002B91E7 /* language.lua */; };
 		3C962AFD2199A6A5002B91E7 /* language in Resources */ = {isa = PBXBuildFile; fileRef = 3C962AFC2199A6A4002B91E7 /* language */; };
+		3CF6F44D21B80F5D00B7A811 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF6F44C21B80F5D00B7A811 /* libcurl.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		2898C88A20C5675B00249775 /* DB.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DB.lua; path = ../../src/Projects/LuaSrc/DB.lua; sourceTree = "<group>"; };
 		3C962AEE2199A2BD002B91E7 /* language.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = language.lua; path = ../../src/Projects/LuaSrc/language.lua; sourceTree = "<group>"; };
 		3C962AFC2199A6A4002B91E7 /* language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = language; path = ../../src/Projects/LuaSrc/language; sourceTree = "<group>"; };
+		3CF6F44C21B80F5D00B7A811 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../src/Projects/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CF6F44D21B80F5D00B7A811 /* libcurl.a in Frameworks */,
 				286F347220BFF3A0000E64CF /* libLuakit.a in Frameworks */,
 				286F345420BFEF93000E64CF /* libz.tbd in Frameworks */,
 			);
@@ -126,6 +129,7 @@
 		286F344B20BFEF89000E64CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3CF6F44C21B80F5D00B7A811 /* libcurl.a */,
 				286F345520BFEFCB000E64CF /* libcrypto.a */,
 				286F345620BFEFCB000E64CF /* libssl.a */,
 				286F345920BFF284000E64CF /* libcrypto.a */,
@@ -403,7 +407,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/curl/ios/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.WeatherTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -428,7 +432,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/curl/ios/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.WeatherTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

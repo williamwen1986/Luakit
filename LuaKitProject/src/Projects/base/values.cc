@@ -10,7 +10,7 @@
 #include <ostream>
 
 #include "base/float_util.h"
-#include "base/json/json_writer.h"
+//#include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/move.h"
 #include "base/strings/string_util.h"
@@ -1132,9 +1132,9 @@ ValueSerializer::~ValueSerializer() {
 
 std::ostream& operator<<(std::ostream& out, const Value& value) {
   std::string json;
-  JSONWriter::WriteWithOptions(&value,
-                               JSONWriter::OPTIONS_PRETTY_PRINT,
-                               &json);
+//  JSONWriter::WriteWithOptions(&value,
+//                               JSONWriter::OPTIONS_PRETTY_PRINT,
+//                               &json);
   return out << json;
 }
 

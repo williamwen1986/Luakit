@@ -7,7 +7,7 @@
 #include "base/bind.h"
 #include "base/containers/hash_tables.h"
 #include "base/containers/mru_cache.h"
-#include "base/debug/trace_event.h"
+//#include "base/debug/trace_event.h"
 #include "base/synchronization/lock.h"
 #include "base/sys_info.h"
 
@@ -184,10 +184,10 @@ void DiscardableMemoryProvider::Purge() {
 
 void DiscardableMemoryProvider::PurgeLRUWithLockAcquiredUntilUsageIsWithin(
     size_t limit) {
-  TRACE_EVENT1(
-      "base",
-      "DiscardableMemoryProvider::PurgeLRUWithLockAcquiredUntilUsageIsWithin",
-      "limit", limit);
+//  TRACE_EVENT1(
+//      "base",
+//      "DiscardableMemoryProvider::PurgeLRUWithLockAcquiredUntilUsageIsWithin",
+//      "limit", limit);
 
   lock_.AssertAcquired();
 

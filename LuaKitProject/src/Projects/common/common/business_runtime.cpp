@@ -5,7 +5,7 @@
 #include "base/at_exit.h"
 #include "base/base_switches.h"
 #include "base/strings/stringprintf.h"
-#include "base/debug/trace_event.h"
+//#include "base/debug/trace_event.h"
 #include "base/logging.h"
 #include "base/mac/scoped_nsautorelease_pool.h"
 #include "base/memory/scoped_ptr.h"

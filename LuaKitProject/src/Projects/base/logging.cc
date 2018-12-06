@@ -46,9 +46,9 @@ typedef pthread_mutex_t* MutexHandle;
 
 #include "base/base_switches.h"
 #include "base/command_line.h"
-#include "base/debug/alias.h"
-#include "base/debug/debugger.h"
-#include "base/debug/stack_trace.h"
+//#include "base/debug/alias.h"
+//#include "base/debug/debugger.h"
+//#include "base/debug/stack_trace.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/utf_string_conversions.h"
@@ -628,9 +628,9 @@ LogMessage::~LogMessage() {
 #if !defined(NDEBUG) && !defined(OS_NACL)
   if (severity_ == LOG_FATAL) {
     // Include a stack trace on a fatal.
-    base::debug::StackTrace trace;
+//    base::debug::StackTrace trace;
     stream_ << std::endl;  // Newline to separate from log message.
-    trace.OutputToStream(&stream_);
+//    trace.OutputToStream(&stream_);
   }
 #endif
   stream_ << std::endl;
@@ -714,12 +714,12 @@ LogMessage::~LogMessage() {
     // are contained in minidumps for diagnostic purposes.
     char str_stack[1024];
     str_newline.copy(str_stack, arraysize(str_stack));
-    base::debug::Alias(str_stack);
+//    base::debug::Alias(str_stack);
 
     // display a message or break into the debugger on a fatal error
-    if (base::debug::BeingDebugged()) {
-      base::debug::BreakDebugger();
-    } else {
+//    if (base::debug::BeingDebugged()) {
+//      base::debug::BreakDebugger();
+//    } else {
       if (log_assert_handler) {
         // make a copy of the string for the handler out of paranoia
         log_assert_handler(std::string(stream_.str()));
@@ -733,9 +733,9 @@ LogMessage::~LogMessage() {
         DisplayDebugMessageInDialog(stream_.str());
 #endif
         // Crash the process to generate a dump.
-        base::debug::BreakDebugger();
+//        base::debug::BreakDebugger();
       }
-    }
+//    }
   } else if (severity_ == LOG_ERROR_REPORT) {
     // We are here only if the user runs with --enable-dcheck in release mode.
     if (log_report_handler) {
@@ -919,8 +919,8 @@ void RawLog(int level, const char* message) {
     }
   }
 
-  if (level == LOG_FATAL)
-    base::debug::BreakDebugger();
+//  if (level == LOG_FATAL)
+//    base::debug::BreakDebugger();
 }
 
 // This was defined at the beginning of this file.

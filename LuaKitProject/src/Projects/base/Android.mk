@@ -34,11 +34,9 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    android/path_utils.cc \
                    android/scoped_java_ref.cc \
                    android/sys_utils.cc \
-                   async_socket_io_handler_posix.cc \
                    at_exit.cc \
                    atomicops_internals_x86_gcc.cc \
                    barrier_closure.cc \
-                   base64.cc \
                    base_paths.cc \
                    base_paths_android.cc \
                    base_paths_posix.cc \
@@ -49,22 +47,6 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    callback_internal.cc \
                    command_line.cc \
                    cpu.cc \
-                   debug/alias.cc \
-                   debug/crash_logging.cc \
-                   debug/debugger.cc \
-                   debug/debugger_posix.cc \
-                   debug/dump_without_crashing.cc \
-                   debug/proc_maps_linux.cc \
-                   debug/profiler.cc \
-                   debug/stack_trace.cc \
-                   debug/stack_trace_android.cc \
-                   debug/trace_event_android.cc \
-                   debug/trace_event_impl.cc \
-                   debug/trace_event_impl_constants.cc \
-                   debug/trace_event_memory.cc \
-                   debug/trace_event_synthetic_delay.cc \
-                   debug/trace_event_system_stats_monitor.cc \
-                   deferred_sequenced_task_runner.cc \
                    environment.cc \
                    event_recorder_stubs.cc \
                    file_util.cc \
@@ -89,12 +71,6 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    guid_posix.cc \
                    hash.cc \
                    ini_parser.cc \
-                   json/json_file_value_serializer.cc \
-                   json/json_parser.cc \
-                   json/json_reader.cc \
-                   json/json_string_value_serializer.cc \
-                   json/json_writer.cc \
-                   json/string_escape.cc \
                    lazy_instance.cc \
                    linux_util.cc \
                    location.cc \
@@ -117,10 +93,8 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    message_loop/message_pump_default.cc \
                    message_loop/message_pump_libevent.cc \
                    metrics/bucket_ranges.cc \
-                   metrics/field_trial.cc \
                    metrics/histogram.cc \
                    metrics/histogram_base.cc \
-                   metrics/histogram_delta_serialization.cc \
                    metrics/histogram_samples.cc \
                    metrics/histogram_snapshot_manager.cc \
                    metrics/sample_map.cc \
@@ -130,8 +104,6 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    metrics/stats_counters.cc \
                    metrics/stats_table.cc \
                    native_library_posix.cc \
-                   nix/mime_util_xdg.cc \
-                   nix/xdg_util.cc \
                    os_compat_android.cc \
                    path_service.cc \
                    pending_task.cc \
@@ -140,32 +112,10 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    platform_file_posix.cc \
                    posix/file_descriptor_shuffle.cc \
                    posix/global_descriptors.cc \
-                   posix/unix_domain_socket_linux.cc \
-                   power_monitor/power_monitor.cc \
-                   power_monitor/power_monitor_device_source.cc \
-                   power_monitor/power_monitor_device_source_android.cc \
-                   power_monitor/power_monitor_device_source_posix.cc \
-                   power_monitor/power_monitor_source.cc \
-                   prefs/default_pref_store.cc \
-                   prefs/json_pref_store.cc \
-                   prefs/overlay_user_pref_store.cc \
-                   prefs/pref_change_registrar.cc \
-                   prefs/pref_member.cc \
-                   prefs/pref_notifier_impl.cc \
-                   prefs/pref_registry.cc \
-                   prefs/pref_registry_simple.cc \
-                   prefs/pref_service.cc \
-                   prefs/pref_service_factory.cc \
-                   prefs/pref_store.cc \
-                   prefs/pref_value_map.cc \
-                   prefs/pref_value_store.cc \
-                   prefs/scoped_user_pref_update.cc \
-                   prefs/value_map_pref_store.cc \
                    process/internal_linux.cc \
                    process/kill.cc \
                    process/kill_posix.cc \
                    process/launch.cc \
-                   process/launch_posix.cc \
                    process/memory_linux.cc \
                    process/memory_stubs.cc \
                    process/process_handle_linux.cc \
@@ -187,7 +137,6 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    scoped_native_library.cc \
                    sequence_checker_impl.cc \
                    sequenced_task_runner.cc \
-                   sha1_portable.cc \
                    strings/latin1_string_conversions.cc \
                    strings/nullable_string16.cc \
                    strings/safe_sprintf.cc \
@@ -202,7 +151,6 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    strings/utf_offset_string_conversions.cc \
                    strings/utf_string_conversion_utils.cc \
                    strings/utf_string_conversions.cc \
-                   supports_user_data.cc \
                    sync_socket_posix.cc \
                    synchronization/cancellation_flag.cc \
                    synchronization/condition_variable_posix.cc \
@@ -214,26 +162,12 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    sys_info_android.cc \
                    sys_info_linux.cc \
                    sys_info_posix.cc \
-                   system_monitor/system_monitor.cc \
                    task_runner.cc \
-                   third_party/ashmem/ashmem.cc \
                    third_party/dmg_fp/dtoa.cc \
                    third_party/dmg_fp/dtoa_wrapper.cc \
                    third_party/dmg_fp/g_fmt.cc \
-                   third_party/dynamic_annotations/dynamic_annotations.c \
                    third_party/icu/icu_utf.cc \
                    third_party/nspr/prtime.cc \
-                   third_party/symbolize/demangle.cc \
-                   third_party/symbolize/symbolize.cc \
-                   third_party/xdg_mime/xdgmime.c \
-                   third_party/xdg_mime/xdgmimealias.c \
-                   third_party/xdg_mime/xdgmimecache.c \
-                   third_party/xdg_mime/xdgmimeglob.c \
-                   third_party/xdg_mime/xdgmimeicon.c \
-                   third_party/xdg_mime/xdgmimeint.c \
-                   third_party/xdg_mime/xdgmimemagic.c \
-                   third_party/xdg_mime/xdgmimeparent.c \
-                   third_party/xdg_user_dirs/xdg_user_dir_lookup.cc \
                    thread_task_runner_handle.cc \
                    threading/non_thread_safe_impl.cc \
                    threading/platform_thread_android.cc \
@@ -259,11 +193,9 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    time/time.cc \
                    time/time_posix.cc \
                    timer/elapsed_timer.cc \
-                   timer/hi_res_timer_manager_posix.cc \
                    timer/timer.cc \
                    tracked_objects.cc \
                    tracking_info.cc \
-                   value_conversions.cc \
                    values.cc \
                    version.cc \
                    vlog.cc

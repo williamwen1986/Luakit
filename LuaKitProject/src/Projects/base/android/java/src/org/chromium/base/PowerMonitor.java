@@ -67,7 +67,7 @@ public class PowerMonitor implements ActivityStatus.StateListener {
         // If we're not plugged, assume we're running on battery power.
         sInstance.mIsBatteryPower = chargePlug != BatteryManager.BATTERY_PLUGGED_USB &&
                                     chargePlug != BatteryManager.BATTERY_PLUGGED_AC;
-        nativeOnBatteryChargingChanged();
+        // nativeOnBatteryChargingChanged();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class PowerMonitor implements ActivityStatus.StateListener {
         return sInstance.mIsBatteryPower;
     }
 
-    private static native void nativeOnBatteryChargingChanged();
+    // private static native void nativeOnBatteryChargingChanged();
     private static native void nativeOnMainActivitySuspended();
     private static native void nativeOnMainActivityResumed();
 }

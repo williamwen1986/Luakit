@@ -2,9 +2,9 @@
 
 #include "base/command_line.h"
 //#include "base/process_util.h"
-#include "base/debug/stack_trace.h"
+//#include "base/debug/stack_trace.h"
 #include "base/message_loop/message_loop.h"
-#include "common/logging_chrome.h"
+//#include "common/logging_chrome.h"
 #include "common/business_switches.h"
 #include "base/metrics/statistics_recorder.h"
 
@@ -28,9 +28,9 @@ bool BusinessMainDelegate::BasicStartupComplete(int *exit_code) {
 }
 
 void BusinessMainDelegate::PreSandboxStartup() {
-#if defined(OS_IOS)
-  base::debug::EnableInProcessStackDumping();
-#endif
+//#if defined(OS_IOS)
+//  base::debug::EnableInProcessStackDumping();
+//#endif
 
   const CommandLine& command_line = *CommandLine::ForCurrentProcess();
 
@@ -43,7 +43,7 @@ void BusinessMainDelegate::PreSandboxStartup() {
   logging::OldFileDeletionState file_state = logging::APPEND_TO_OLD_LOG_FILE;
 
   // 初始化log
-  logging::InitChromeLogging(command_line, file_state);
+//  logging::InitChromeLogging(command_line, file_state);
 
 }
 

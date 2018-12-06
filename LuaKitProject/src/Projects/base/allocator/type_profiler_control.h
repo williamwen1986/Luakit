@@ -5,7 +5,7 @@
 #ifndef BASE_ALLOCATOR_TYPE_PROFILER_CONTROL_H_
 #define BASE_ALLOCATOR_TYPE_PROFILER_CONTROL_H_
 
-#include "base/gtest_prod_util.h"
+//#include "base/gtest_prod_util.h"
 
 namespace base {
 namespace type_profiler {
@@ -16,8 +16,8 @@ class Controller {
   static bool IsProfiling();
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(TypeProfilerTest,
-                           TestProfileNewWithoutProfiledDelete);
+//  FRIEND_TEST_ALL_PREFIXES(TypeProfilerTest,
+//                           TestProfileNewWithoutProfiledDelete);
 
   // It must be used only from allowed unit tests.  The following is only
   // allowed for use in unit tests. Profiling should never be restarted in

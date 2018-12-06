@@ -71,7 +71,7 @@
 #include "base/base_export.h"
 #include "base/basictypes.h"
 #include "base/compiler_specific.h"
-#include "base/gtest_prod_util.h"
+//#include "base/gtest_prod_util.h"
 #include "base/logging.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/metrics/bucket_ranges.h"
@@ -479,11 +479,11 @@ class BASE_EXPORT Histogram : public HistogramBase {
 
  private:
   // Allow tests to corrupt our innards for testing purposes.
-  FRIEND_TEST_ALL_PREFIXES(HistogramTest, BoundsTest);
-  FRIEND_TEST_ALL_PREFIXES(HistogramTest, BucketPlacementTest);
-  FRIEND_TEST_ALL_PREFIXES(HistogramTest, CorruptBucketBounds);
-  FRIEND_TEST_ALL_PREFIXES(HistogramTest, CorruptSampleCounts);
-  FRIEND_TEST_ALL_PREFIXES(HistogramTest, NameMatchTest);
+//  FRIEND_TEST_ALL_PREFIXES(HistogramTest, BoundsTest);
+//  FRIEND_TEST_ALL_PREFIXES(HistogramTest, BucketPlacementTest);
+//  FRIEND_TEST_ALL_PREFIXES(HistogramTest, CorruptBucketBounds);
+//  FRIEND_TEST_ALL_PREFIXES(HistogramTest, CorruptSampleCounts);
+//  FRIEND_TEST_ALL_PREFIXES(HistogramTest, NameMatchTest);
 
   friend class StatisticsRecorder;  // To allow it to delete duplicates.
   friend class StatisticsRecorderTest;

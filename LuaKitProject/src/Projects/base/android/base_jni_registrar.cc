@@ -19,9 +19,9 @@
 #include "base/android/sys_utils.h"
 #include "base/android/thread_utils.h"
 #include "base/basictypes.h"
-#include "base/debug/trace_event.h"
+// #include "base/debug/trace_event.h"
 #include "base/message_loop/message_pump_android.h"
-#include "base/power_monitor/power_monitor_device_source_android.h"
+// #include "base/power_monitor/power_monitor_device_source_android.h"
 
 #if defined(GOOGLE_TV)
 #include "base/android/context_types.h"
@@ -48,12 +48,12 @@ static RegistrationMethod kBaseRegisteredMethods[] = {
   { "PathUtils", base::android::RegisterPathUtils },
   { "SystemMessageHandler", base::MessagePumpForUI::RegisterBindings },
   { "SysUtils", base::android::SysUtils::Register },
-  { "PowerMonitor", base::RegisterPowerMonitor },
+  // { "PowerMonitor", base::RegisterPowerMonitor },
   { "ThreadUtils", base::RegisterThreadUtils },
 };
 
 bool RegisterJni(JNIEnv* env) {
-  TRACE_EVENT0("startup", "base_android::RegisterJni");
+  // TRACE_EVENT0("startup", "base_android::RegisterJni");
   return RegisterNativeMethods(env, kBaseRegisteredMethods,
                                arraysize(kBaseRegisteredMethods));
 }

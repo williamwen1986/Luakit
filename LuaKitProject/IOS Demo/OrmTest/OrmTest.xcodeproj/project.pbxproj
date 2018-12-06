@@ -18,6 +18,7 @@
 		2898CA6B20C6971A00249775 /* db_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 2898CA6820C6971A00249775 /* db_test.lua */; };
 		2898CA6C20C6971A00249775 /* orm in Resources */ = {isa = PBXBuildFile; fileRef = 2898CA6920C6971A00249775 /* orm */; };
 		2898CA6D20C6971A00249775 /* DB.lua in Resources */ = {isa = PBXBuildFile; fileRef = 2898CA6A20C6971A00249775 /* DB.lua */; };
+		3CF6F48221B8C9AC00B7A811 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF6F48121B8C9AC00B7A811 /* libcurl.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		2898CA6820C6971A00249775 /* db_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = db_test.lua; path = ../../src/Projects/LuaSrc/db_test.lua; sourceTree = "<group>"; };
 		2898CA6920C6971A00249775 /* orm */ = {isa = PBXFileReference; lastKnownFileType = folder; name = orm; path = ../../src/Projects/LuaSrc/orm; sourceTree = "<group>"; };
 		2898CA6A20C6971A00249775 /* DB.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DB.lua; path = ../../src/Projects/LuaSrc/DB.lua; sourceTree = "<group>"; };
+		3CF6F48121B8C9AC00B7A811 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../src/Projects/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CF6F48221B8C9AC00B7A811 /* libcurl.a in Frameworks */,
 				2898CA3120C695CE00249775 /* libz.tbd in Frameworks */,
 				2898CA2F20C695C500249775 /* libLuakit.a in Frameworks */,
 			);
@@ -121,6 +124,7 @@
 		2898CA2820C695C500249775 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3CF6F48121B8C9AC00B7A811 /* libcurl.a */,
 				2898CA3220C695DA00249775 /* libcrypto.a */,
 				2898CA3320C695DA00249775 /* libssl.a */,
 				2898CA3020C695CE00249775 /* libz.tbd */,
@@ -385,7 +389,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/curl/ios/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.OrmTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -410,7 +414,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/curl/ios/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.OrmTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

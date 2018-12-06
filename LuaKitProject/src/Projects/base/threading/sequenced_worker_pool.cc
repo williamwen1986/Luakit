@@ -14,7 +14,7 @@
 #include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/critical_closure.h"
-#include "base/debug/trace_event.h"
+//#include "base/debug/trace_event.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/linked_ptr.h"
@@ -29,6 +29,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "base/tracked_objects.h"
+#include "base/tracking_info.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
@@ -593,8 +594,8 @@ bool SequencedWorkerPool::Inner::PostTask(
     // The trace_id is used for identifying the task in about:tracing.
     sequenced.trace_id = trace_id_++;
 
-    TRACE_EVENT_FLOW_BEGIN0("task", "SequencedWorkerPool::PostTask",
-        TRACE_ID_MANGLE(GetTaskTraceID(sequenced, static_cast<void*>(this))));
+//    TRACE_EVENT_FLOW_BEGIN0("task", "SequencedWorkerPool::PostTask",
+//        TRACE_ID_MANGLE(GetTaskTraceID(sequenced, static_cast<void*>(this))));
 
     sequenced.sequence_task_number = LockedGetNextSequenceTaskNumber();
 
@@ -726,11 +727,11 @@ void SequencedWorkerPool::Inner::ThreadLoop(Worker* this_worker) {
       GetWorkStatus status =
           GetWork(&task, &wait_time, &delete_these_outside_lock);
       if (status == GET_WORK_FOUND) {
-        TRACE_EVENT_FLOW_END0("task", "SequencedWorkerPool::PostTask",
-            TRACE_ID_MANGLE(GetTaskTraceID(task, static_cast<void*>(this))));
-        TRACE_EVENT2("task", "SequencedWorkerPool::ThreadLoop",
-                     "src_file", task.posted_from.file_name(),
-                     "src_func", task.posted_from.function_name());
+//        TRACE_EVENT_FLOW_END0("task", "SequencedWorkerPool::PostTask",
+//            TRACE_ID_MANGLE(GetTaskTraceID(task, static_cast<void*>(this))));
+//        TRACE_EVENT2("task", "SequencedWorkerPool::ThreadLoop",
+//                     "src_file", task.posted_from.file_name(),
+//                     "src_func", task.posted_from.function_name());
         int new_thread_id = WillRunWorkerTask(task);
         {
           AutoUnlock unlock(lock_);

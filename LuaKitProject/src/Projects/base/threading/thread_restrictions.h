@@ -9,11 +9,11 @@
 #include "base/basictypes.h"
 
 // See comment at top of thread_checker.h
-#if (!defined(NDEBUG) || defined(DCHECK_ALWAYS_ON))
-#define ENABLE_THREAD_RESTRICTIONS 1
-#else
+//#if (!defined(NDEBUG) || defined(DCHECK_ALWAYS_ON))
+//#define ENABLE_THREAD_RESTRICTIONS 1
+//#else
 #define ENABLE_THREAD_RESTRICTIONS 0
-#endif
+//#endif
 
 class AcceleratedPresenter;
 class BrowserProcessImpl;

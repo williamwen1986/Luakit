@@ -17,7 +17,7 @@
 
 #include "base/base_export.h"
 #include "base/basictypes.h"
-#include "base/gtest_prod_util.h"
+//#include "base/gtest_prod_util.h"
 #include "base/lazy_instance.h"
 
 namespace base {
@@ -57,7 +57,7 @@ class BASE_EXPORT StatisticsRecorder {
 
   // Returns the histograms with |query| as a substring as JSON text (an empty
   // |query| will process all registered histograms).
-  static std::string ToJSON(const std::string& query);
+//  static std::string ToJSON(const std::string& query);
 
   // Method for extracting histograms which were marked for use by UMA.
   static void GetHistograms(Histograms* output);
@@ -90,8 +90,8 @@ class BASE_EXPORT StatisticsRecorder {
   friend class SparseHistogramTest;
   friend class StatisticsDeltaReaderTest;
   friend class StatisticsRecorderTest;
-  FRIEND_TEST_ALL_PREFIXES(HistogramDeltaSerializationTest,
-                           DeserializeHistogramAndAddSamples);
+//  FRIEND_TEST_ALL_PREFIXES(HistogramDeltaSerializationTest,
+//                           DeserializeHistogramAndAddSamples);
 
   // The constructor just initializes static members. Usually client code should
   // use Initialize to do this. But in test code, you can friend this class and

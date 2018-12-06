@@ -79,7 +79,6 @@
 		2883AEFE20B5560D005E1F54 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2883AD0A20B50E5E005E1F54 /* libbase.a */; };
 		2898C85120C55F2200249775 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2898C84F20C55F2200249775 /* xxtea.cpp */; };
 		2898C85220C55F2200249775 /* LuakitLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2898C85020C55F2200249775 /* LuakitLoader.cpp */; };
-		3C2CC5D621ABE47D00610EAC /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2CC5D521ABE47D00610EAC /* libcurl.a */; };
 		3C85519121B00DBA00860F2A /* mobdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 3C85515D21B00DBA00860F2A /* mobdebug.c */; };
 		3C85519221B00DBA00860F2A /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3C85517221B00DBA00860F2A /* buffer.c */; };
 		3C85519321B00DBA00860F2A /* serial.c in Sources */ = {isa = PBXBuildFile; fileRef = 3C85517321B00DBA00860F2A /* serial.c */; };
@@ -172,20 +171,6 @@
 			remoteGlobalIDString = E6CD4BA3BD730DB29CD85148;
 			remoteInfo = test_support_perf;
 		};
-		2883AD4020B51C72005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883AD3920B51C72005E1F54 /* gtest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E0B3F1FB50FAAB76B5E11021;
-			remoteInfo = gtest;
-		};
-		2883AD4220B51C72005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883AD3920B51C72005E1F54 /* gtest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D22CB0E3E1C7BFFE5177D82E;
-			remoteInfo = gtest_main;
-		};
 		2883AD4420B51D02005E1F54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
@@ -231,7 +216,6 @@
 /* Begin PBXFileReference section */
 		2883AC9120B43DFB005E1F54 /* libLuakit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLuakit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2883ACF120B50E5D005E1F54 /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../src/Projects/base/base.xcodeproj; sourceTree = "<group>"; };
-		2883AD3920B51C72005E1F54 /* gtest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gtest.xcodeproj; path = ../src/Projects/testing/gtest.xcodeproj; sourceTree = "<group>"; };
 		2883AD4620B51D73005E1F54 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../src/Projects/common/common/common.xcodeproj; sourceTree = "<group>"; };
 		2883AD5220B5439B005E1F54 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
 		2883AD5320B5439B005E1F54 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
@@ -439,7 +423,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C2CC5D621ABE47D00610EAC /* libcurl.a in Frameworks */,
 				2883AEFE20B5560D005E1F54 /* libbase.a in Frameworks */,
 				2883AEFD20B55606005E1F54 /* libcommon.a in Frameworks */,
 			);
@@ -452,7 +435,6 @@
 			isa = PBXGroup;
 			children = (
 				2883AD4620B51D73005E1F54 /* common.xcodeproj */,
-				2883AD3920B51C72005E1F54 /* gtest.xcodeproj */,
 				2883ACF120B50E5D005E1F54 /* base.xcodeproj */,
 				2883AC9320B43DFB005E1F54 /* Luakit */,
 				2883AC9220B43DFB005E1F54 /* Products */,
@@ -493,15 +475,6 @@
 				2883AD1820B50E5E005E1F54 /* base_unittests.app */,
 				2883AD1A20B50E5E005E1F54 /* libtest_support_base.a */,
 				2883AD1C20B50E5E005E1F54 /* libtest_support_perf.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		2883AD3A20B51C72005E1F54 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2883AD4120B51C72005E1F54 /* libgtest.a */,
-				2883AD4320B51C72005E1F54 /* libgtest_main.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -935,10 +908,6 @@
 					ProductGroup = 2883AD4720B51D73005E1F54 /* Products */;
 					ProjectRef = 2883AD4620B51D73005E1F54 /* common.xcodeproj */;
 				},
-				{
-					ProductGroup = 2883AD3A20B51C72005E1F54 /* Products */;
-					ProjectRef = 2883AD3920B51C72005E1F54 /* gtest.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1016,20 +985,6 @@
 			fileType = archive.ar;
 			path = libtest_support_perf.a;
 			remoteRef = 2883AD1B20B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD4120B51C72005E1F54 /* libgtest.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libgtest.a;
-			remoteRef = 2883AD4020B51C72005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD4320B51C72005E1F54 /* libgtest_main.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libgtest_main.a;
-			remoteRef = 2883AD4220B51C72005E1F54 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		2883AD4C20B51D73005E1F54 /* libcommon.a */ = {
@@ -1194,8 +1149,10 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1252,8 +1209,10 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1284,6 +1243,7 @@
 					"$(SRCROOT)/../src/Projects/extensions",
 					"$(SRCROOT)/../src/Projects/curl/ios/include",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/Projects/curl/ios/lib";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1305,6 +1265,7 @@
 					"$(SRCROOT)/../src/Projects/extensions",
 					"$(SRCROOT)/../src/Projects/curl/ios/include",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/Projects/curl/ios/lib";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -14,7 +14,7 @@
 
 #include "base/base_export.h"
 #include "base/basictypes.h"
-#include "base/gtest_prod_util.h"
+//#include "base/gtest_prod_util.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/profiler/alternate_timer.h"
@@ -492,9 +492,9 @@ class BASE_EXPORT ThreadData {
   // better change of optimizing (inlining? etc.) private methods (knowing that
   // there will be no need for an external entry point).
   friend class TrackedObjectsTest;
-  FRIEND_TEST_ALL_PREFIXES(TrackedObjectsTest, MinimalStartupShutdown);
-  FRIEND_TEST_ALL_PREFIXES(TrackedObjectsTest, TinyStartupShutdown);
-  FRIEND_TEST_ALL_PREFIXES(TrackedObjectsTest, ParentChildTest);
+//  FRIEND_TEST_ALL_PREFIXES(TrackedObjectsTest, MinimalStartupShutdown);
+//  FRIEND_TEST_ALL_PREFIXES(TrackedObjectsTest, TinyStartupShutdown);
+//  FRIEND_TEST_ALL_PREFIXES(TrackedObjectsTest, ParentChildTest);
 
   typedef std::map<const BirthOnThread*, int> BirthCountMap;
 

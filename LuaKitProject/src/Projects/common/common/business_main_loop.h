@@ -93,7 +93,7 @@ class BusinessMainLoop {
   // Members initialized in |MainMessageLoopStart()| ---------------------------
   scoped_ptr<base::MessageLoop> main_message_loop_;
   //scoped_ptr<base::SystemMonitor> system_monitor_;
-  scoped_ptr<base::HighResolutionTimerManager> hi_res_timer_manager_;
+//  scoped_ptr<base::HighResolutionTimerManager> hi_res_timer_manager_;
 
   // Destroy parts_ before main_message_loop_ (required) and before other
   // classes constructed in content (but after main_thread_).
