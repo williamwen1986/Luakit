@@ -20,6 +20,11 @@
 --     ROMANIAN,
 --     BULGARIAN,
 --     BELARUSIAN,
+--     PORTUGUESE_BRASIL,
+--     BURMESE,
+--     INDONESIAN,
+--     HINDI,
+--     MALAY,
 -- };
 
 local languagesTable = {
@@ -44,15 +49,23 @@ local languagesTable = {
     "ro",
     "bg",
     "be",
+    "pt-BR",
+    "my",
+    "id",
+    "hi",
+    "ms",
 }
 
 local languageCode = lua_language.getLanguageType()
 
 return function (word)
-    local t = require("language."..languagesTable[languageCode+1])
-    if t then
-        return t[word]
+    local t = require("language.lan")
+    local lan = languagesTable[languageCode+1]
+    if t[lan] and t[lan][word] then
+        return t[lan][word]
+    elseif t['en'] and t['en'][word] then
+        return t['en'][word]
     else
-        return ""
+        return ''
     end
 end

@@ -30,6 +30,11 @@ enum LanguageType {
     ROMANIAN,
     BULGARIAN,
     BELARUSIAN,
+    PORTUGUESE_BRASIL,
+    BURMESE,
+    INDONESIAN,
+    HINDI,
+    MALAY,
 };
 
 LanguageType getLanguageTypeByISO2(const char* code)
@@ -46,13 +51,25 @@ LanguageType getLanguageTypeByISO2(const char* code)
             ret = LanguageType::CHINESE;
         }
     }
-    else if (strncmp(code, "ja", 2) == 0)
+    else if (language == "pt-BR")
     {
-        ret = LanguageType::JAPANESE;
+        ret = LanguageType::PORTUGUESE_BRASIL;
     }
-    else if (strncmp(code, "fr", 2) == 0)
+    else if (strncmp(code, "my", 2) == 0)
     {
-        ret = LanguageType::FRENCH;
+        ret = LanguageType::BURMESE;
+    }
+    else if (strncmp(code, "id", 2) == 0)
+    {
+        ret = LanguageType::INDONESIAN;
+    }
+    else if (strncmp(code, "hi", 2) == 0)
+    {
+        ret = LanguageType::HINDI;
+    }
+    else if (strncmp(code, "ms", 2) == 0)
+    {
+        ret = LanguageType::MALAY;
     }
     else if (strncmp(code, "it", 2) == 0)
     {
