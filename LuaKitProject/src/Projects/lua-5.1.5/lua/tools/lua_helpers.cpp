@@ -106,6 +106,11 @@ extern void luaSetPackagePath(const char * path)
     packagePath = path;
 }
 
+extern std::string luaGetPackagePath()
+{
+    return packagePath;
+}
+
 #if defined(OS_ANDROID)
 static int androidPrint(lua_State *L) {
     LOG(WARNING)<<"androidPrint:"<<luaL_checkstring(L, 1);

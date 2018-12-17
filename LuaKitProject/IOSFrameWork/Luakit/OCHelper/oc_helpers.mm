@@ -31,7 +31,9 @@ void startLuakit(int argc, char * argv[])
 {
     CommandLine::Init(argc, argv);
     NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-    luaSetPackagePath([bundlePath cStringUsingEncoding:NSUTF8StringEncoding]);
+    if (luaGetPackagePath().size() == 0) {
+        luaSetPackagePath([bundlePath cStringUsingEncoding:NSUTF8StringEncoding]);
+    }
     setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
     BusinessMainDelegate* delegate = new BusinessMainDelegate();
     BusinessRuntime* business_runtime = BusinessRuntime::Create();
