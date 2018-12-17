@@ -64,7 +64,7 @@ LanguageType getLanguageTypeByISO2(const char* code)
     {
         ret = LanguageType::BURMESE;
     }
-    else if (strncmp(code, "id", 2) == 0)
+    else if (strncmp(code, "id", 2) == 0 || strncmp(code, "in", 2) == 0)
     {
         ret = LanguageType::INDONESIAN;
     }
