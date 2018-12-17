@@ -29,7 +29,7 @@
 
 local languagesTable = {
     "en",
-    "ch",
+    "zh",
     "chtw",
     "ja",
     "fr",
@@ -54,6 +54,7 @@ local languagesTable = {
     "id",
     "hi",
     "ms",
+    "th",
 }
 
 local languageCode = lua_language.getLanguageType()

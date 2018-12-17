@@ -35,6 +35,7 @@ enum LanguageType {
     INDONESIAN,
     HINDI,
     MALAY,
+    THAI,
 };
 
 LanguageType getLanguageTypeByISO2(const char* code)
@@ -54,6 +55,10 @@ LanguageType getLanguageTypeByISO2(const char* code)
     else if (language == "pt-BR")
     {
         ret = LanguageType::PORTUGUESE_BRASIL;
+    }
+    else if (strncmp(code, "th", 2) == 0)
+    {
+        ret = LanguageType::THAI;
     }
     else if (strncmp(code, "my", 2) == 0)
     {
