@@ -294,9 +294,13 @@ post_notification(3, @{@"row":@(2)});
 Setup
 -----------------------------
 
-[Set up Luakit in android](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-android)
+[Set up Luakit in android with jitpack](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-android-with-jitpack)
 
-[Set up Luakit in IOS](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-IOS)
+[Set up Luakit in IOS with cocoaPod](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-IOS-with-cocoaPod)
+
+[Set up Luakit in android with source code](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-android-with-source-code)
+
+[Set up Luakit in IOS with source code](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-IOS-with-source-code)
 
 IDE AndroidStudio
 -----------------------------
