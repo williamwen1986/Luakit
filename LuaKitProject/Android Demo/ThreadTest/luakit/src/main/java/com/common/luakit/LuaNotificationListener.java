@@ -36,6 +36,10 @@ public class LuaNotificationListener extends NativeHandleHolder {
 
     //called by jni
     private void onObserve(int type, Object info) {
+        WeakObserverList<INotificationObserver> allObservers = mTypedObservers.get(0);
+        if (allObservers != null) {
+            allObservers.Notify("onObserve", type, info);
+        }
         WeakObserverList<INotificationObserver> observers = mTypedObservers.get(type);
         if (observers != null) {
             observers.Notify("onObserve", type, info);
