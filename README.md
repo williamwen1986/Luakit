@@ -294,6 +294,8 @@ post_notification(3, @{@"row":@(2)});
 Setup
 -----------------------------
 
+[Set up Luakit in flutter project](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-flutter-project)
+
 [Set up Luakit in android with jitpack](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-android-with-jitpack)
 
 [Set up Luakit in IOS with cocoaPod](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-IOS-with-cocoaPod)
