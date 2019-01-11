@@ -10,6 +10,8 @@ extern "C" {
 
 lua_State *getCurrentThreadLuaState();
 
+void setLuaError(void (*func)(const char *));
+
 void startLuakit(int argc, char * argv[]);
 
 void oc_fromObjc(lua_State *L, id object);

@@ -10,7 +10,15 @@
 #import "AppDelegate.h"
 #import "oc_helpers.h"
 
+void luaError (const char * info)
+{
+    if (info != NULL) {
+        NSLog(@"%@",[NSString stringWithUTF8String:info]);
+    }
+}
+
 int main(int argc, char * argv[]) {
+    setLuaError(luaError);
     startLuakit(argc, argv);
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));

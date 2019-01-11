@@ -7,6 +7,9 @@ extern "C" {
 #endif
 #include <string>
 
+typedef void (*LuaErrorFun)(const char *);
+
+
 #define BEGIN_STACK_MODIFY(L)    int __startStackIndex = lua_gettop((L));
 #define END_STACK_MODIFY(L, i) while(lua_gettop((L)) > (__startStackIndex + (i))) lua_remove((L), __startStackIndex + 1);
 
@@ -16,6 +19,7 @@ extern void pushUserdataInStrongTable(lua_State *L, void * object);
 extern void pushUserdataInWeakTable(lua_State *L, void * object);
 extern int  luaInit(lua_State* L);
 extern void luaSetPackagePath(const char * path);
+extern void setLuaErrorFun(LuaErrorFun func);
 extern std::string luaGetPackagePath();
 extern void doString(lua_State* L,const char * s);
 extern void luaError (lua_State *L, const char *error);

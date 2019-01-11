@@ -28,6 +28,8 @@ static int   _xxteaKeyLen = 0;
 static char* _xxteaSign = NULL;
 static int   _xxteaSignLen = 0;
 
+typedef void (*LuaErrorFun)(const char *);
+
 #if defined(OS_IOS)
 static const int PATH_SERVICE_KEY = base::DIR_DOCUMENTS;
 #elif defined(OS_ANDROID)
@@ -35,6 +37,8 @@ static const int PATH_SERVICE_KEY = base::DIR_ANDROID_APP_DATA;
 #endif
 
 static std::string packagePath = "";
+
+static LuaErrorFun luaErrorFun = NULL;
 
 extern void pushWeakUserdataTable(lua_State *L)
 {
@@ -54,6 +58,11 @@ extern void pushWeakUserdataTable(lua_State *L)
         lua_setfield(L, -2, "__mode");  // Make weak table
     }
     END_STACK_MODIFY(L, 1)
+}
+
+extern void setLuaErrorFun(LuaErrorFun fun)
+{
+    luaErrorFun = fun;
 }
 
 extern void pushStrongUserdataTable(lua_State *L)
@@ -82,11 +91,17 @@ extern void pushUserdataInStrongTable(lua_State *L, void * object) {
 }
 
 int lua_panic(lua_State *L) {
+    if(luaErrorFun != NULL){
+        luaErrorFun(luaL_checkstring(L, -1));
+    }
     LOG(ERROR)<<"Lua panicked and quit:\n"<<luaL_checkstring(L, -1);
     return 0;
 }
 
 int lua_err(const char *result) {
+    if(luaErrorFun != NULL){
+        luaErrorFun(result);
+    }
     LOG(ERROR)<<"lua_err \n"<<result;
     return 0;
 }

@@ -27,6 +27,12 @@ lua_State *getCurrentThreadLuaState(){
     return BusinessThread::GetCurrentThreadLuaState();
 }
 
+void setLuaError(void (*func)(const char *))
+{
+    setLuaErrorFun(func);
+}
+
+
 void startLuakit(int argc, char * argv[])
 {
     CommandLine::Init(argc, argv);
