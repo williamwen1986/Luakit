@@ -99,7 +99,8 @@ void pushOneObject(lua_State *L, id object)
         }
     } else if([object isKindOfClass:[NSString class]]) {
         NSString * s = (NSString *)object;
-        lua_pushlstring(L, [s cStringUsingEncoding:NSUTF8StringEncoding], s.length);
+        std::string stds = [s cStringUsingEncoding:NSUTF8StringEncoding];
+        lua_pushlstring(L, stds.c_str(), stds.size());
     } else if([object isKindOfClass:[NSData class]]) {
         NSData * d = (NSData *)object;
         lua_pushlstring(L, (const char *)d.bytes, d.length);
