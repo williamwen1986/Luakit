@@ -115,7 +115,7 @@ namespace JNIModel
 				target = 0;
 			} else {
 				JniEnvWrapper envw(env);
-				target = envw.CallIntMethod(source, classSig, floatValue.name, floatValue.sig);
+				target = envw.CallFloatMethod(source, classSig, floatValue.name, floatValue.sig);
 			}
 		}
 		IMPLEMENT_DIRECT_CONVERT_TO_NATIVE(float)
@@ -144,7 +144,7 @@ namespace JNIModel
 				target = 0;
 			} else {
 				JniEnvWrapper envw(env);
-				target = envw.CallIntMethod(source, classSig, doubleValue.name, doubleValue.sig);
+				target = envw.CallDoubleMethod(source, classSig, doubleValue.name, doubleValue.sig);
 			}
 		}
 		IMPLEMENT_DIRECT_CONVERT_TO_NATIVE(double)
