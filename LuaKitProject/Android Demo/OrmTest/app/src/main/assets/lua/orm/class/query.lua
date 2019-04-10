@@ -138,7 +138,14 @@ function Query(own_table, data)
         end,
 
         getPureData = function (self)
-            return self._pureData
+            local ret = {}
+            for i, v in pairs(self._pureData) do
+                ret[i] = v
+            end
+            for i, v in pairs(self._readonly) do
+                ret[i] = v:getPureData()
+            end
+            return ret
         end ,
 
         -- save row

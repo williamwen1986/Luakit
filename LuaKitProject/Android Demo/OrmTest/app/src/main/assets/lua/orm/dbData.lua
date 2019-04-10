@@ -42,6 +42,10 @@ local dbData = {
         _data[k] = v
     end,
 
+	setDBParams = function (k,v)
+		_tableParams[k] = v
+	end,
+
     get = function (k)
     	return _data[k]
     end,

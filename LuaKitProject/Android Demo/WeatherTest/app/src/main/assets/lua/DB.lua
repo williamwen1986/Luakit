@@ -54,7 +54,7 @@ function DB.query(sql,params,columName)
 	if not stmt then
 		local ret, code = _db:prepare(sql);
 		if not ret then
-			error("db:prepare error code = ".. code)
+			error("db:prepare error code = ".. code..sql)
 		else
 			stmt = ret;
 		end
@@ -121,7 +121,7 @@ function DB.update(sql,params,needLastInsertId)
 	if not stmt then
 		local ret, code = _db:prepare(sql);
 		if not ret then
-			error("db:prepare error code = ".. "unknon error ",2)
+			error("db:prepare error code = ".. "unknon error " .. sql,2)
 		else
 			stmt = ret;
 		end

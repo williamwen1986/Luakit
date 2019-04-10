@@ -95,7 +95,9 @@ _cache = {
             local t = Table(k)
             for _,instance in ipairs(v) do
                 _instanceCache[k] = _instanceCache[k] or {}
-                _instanceCache[k][instance[t.__primary_key.name]] = instance
+                if t.__primary_key.name ~= null and instance[t.__primary_key.name] ~= null then
+                    _instanceCache[k][instance[t.__primary_key.name]] = instance
+                end
             end
         end
 
@@ -129,7 +131,7 @@ _cache = {
         local values = ""
         local bindValues = {}
         for _, table_column in pairs(t.__colnames) do
-            if needPrimaryKey and table_column.name == self.own_table.__primary_key.name then
+            if needPrimaryKey and table_column.name == t.__primary_key.name then
             else
                 local colname = table_column.name
                 local value = kv[colname]

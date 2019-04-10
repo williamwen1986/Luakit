@@ -165,6 +165,151 @@ function Table:create_table(table_instance)
     lua_thread.postToThreadSync(self.cacheThreadId,"orm.cache","execute",create_query)
 end
 
+function Table.addTableInfo(params,callback)
+    local tableName = params.name
+    local info = params.args
+    local threadId = lua_thread.createThread(BusinessThreadLOGIC,"DB_DATA")
+    lua_thread.postToThreadSync(threadId,"orm.dbData","setDBParams",tableName, info)
+    Table(tableName)
+    callback(nil);
+end
+
+function Table.saveOrm(params,callback)
+    local tableName = params.name
+    local orm = params.args
+    local t = Table(tableName)
+    local data = t(orm)
+    data:save();
+    callback(nil);
+end
+
+function Table.batchSaveOrms(params,callback)
+    local tableName = params.name
+    local data = params.args
+    local t = Table(tableName)
+    if data ~= nil then
+        for _,orm in ipairs(data) do
+            local data = t(orm)
+            data:save();
+        end
+    end
+    callback(nil);
+end
+
+function Table.prepareQuery(t,params)
+    local tableGet =  t.get
+    for _,v in ipairs(params) do
+        local type = v.type
+        local value = v.value
+        if type == "WHERE_COLUMS" then
+            local wt = {}
+            for _,p in ipairs(value) do
+                local columName = p.columName;
+                local pv = p.value;
+                local ptype = p.type;
+                local key;
+                if ptype == "LESS_THEN" then
+                    key = columName.."__lt"
+                elseif ptype == "EQ_OR_LESS_THEN" then
+                    key = columName.."__lte"
+                elseif ptype == "MORE_THEN" then
+                    key = columName.."__gt"
+                elseif ptype == "EQ_OR_MORE_THEN" then
+                    key = columName.."__gte"
+                elseif ptype == "IN" then
+                    key = columName.."__in"
+                elseif ptype == "NOT_IN" then
+                    key = columName.."__notin"
+                elseif ptype == "IS_NULL" then
+                    key = columName.."__null"
+                elseif ptype == "LIKE" then
+                    key = columName.."__like"
+                end
+                wt[key] = pv
+            end
+            tableGet:where(wt)
+        elseif type == "WHERE_SQL" then
+            local sql = value.sql
+            local args = value.args
+            tableGet:where(args,sql)
+        elseif type == "PRIMARY_KEY" then
+            tableGet:primaryKey(value)
+        elseif type == "LIMIT" then
+            tableGet:limit(value)
+        elseif type == "OFFSET" then
+            tableGet:offset(value)
+        elseif type == "ORDER_BY" then
+            tableGet:order_by(value)
+        elseif type == "GROUP_BY" then
+            tableGet:group_by(value)
+        elseif type == "HAVING" then
+            tableGet:having(value)
+        elseif type == "HAVING_BY_BINDS" then
+            local sql = value.sql
+            local args = value.args
+            tableGet:having(args, sql)
+        elseif type == "NEED_COLUMNS" then
+            tableGet:needColumns(value)
+        elseif type == "JOIN" then
+            local tableName = value.tableName
+            local joinType = value.type
+            local where = value.where
+            local whereBindingValues = value.whereBindingValues
+            local needColumns = value.needColumns
+            local matchColumns = value.matchColumns
+            local t = Table(tableName)
+            if joinType == "INNER" then
+                tableGet:join(t,where,whereBindingValues,needColumns,matchColumns)
+            elseif joinType == "FULL" then
+                tableGet:full_join(t,where,whereBindingValues,needColumns,matchColumns)
+            elseif joinType == "LEFT" then
+                tableGet:left_join(t,where,whereBindingValues,needColumns,matchColumns)
+            elseif joinType == "RIGHT" then
+                tableGet:right_join(t,where,whereBindingValues,needColumns,matchColumns)
+            end
+        end
+    end
+    return tableGet
+end
+
+function Table.getAllByParams(params,callback)
+    local tableName = params.name
+    local data = params.args
+    local t = Table(tableName)
+    local selectItem = Table.prepareQuery(t,data)
+    local d = selectItem:all():getPureData()
+    callback(d)
+end
+
+function Table.getFirstByParams(params,callback)
+    local tableName = params.name
+    local data = params.args
+    local t = Table(tableName)
+    local selectItem = Table.prepareQuery(t,data)
+    callback(selectItem:first():getPureData())
+end
+
+function Table.deleteByParams(params,callback)
+    local tableName = params.name
+    local data = params.args
+    local t = Table(tableName)
+    local selectItem = Table.prepareQuery(t,data)
+    selectItem:delete()
+    callback(nil);
+end
+
+function Table.updateByParams(params,callback)
+    local tableName = params.name
+    local data = params.args
+    local updateValue = params.updateValue
+    local t = Table(tableName)
+    local selectItem = Table.prepareQuery(t,data)
+    selectItem:update(updateValue);
+    callback(nil);
+end
+
+
+
 -- Create new table instance
 --------------------------------------
 -- @args {table} must have __tablename__ key
@@ -308,7 +453,6 @@ function Table.new(self, tableName)
         coltype.__table__ = Table_instance
 
         table.insert(Table_instance.__colnames, coltype)
-
         if coltype.settings.foreign_key then
             table.insert(Table_instance.__foreign_keys, coltype)
         end

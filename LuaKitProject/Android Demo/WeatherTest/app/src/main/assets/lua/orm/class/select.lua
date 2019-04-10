@@ -228,6 +228,7 @@ local Select = function(own_table)
             local tablename
 
             for _, value in pairs(self._rules.columns.join) do
+
                 left_table = value[1]
                 right_table = value[2]
                 mode = value[3]
@@ -392,7 +393,6 @@ local Select = function(own_table)
 
                 join = self:_build_join()
             end
-
             -- Check agregators in select
             if table.getn(self._rules.columns.include) > 0 then
                 local aggregators = {}
@@ -435,20 +435,20 @@ local Select = function(own_table)
 
             -- Build GROUP BY
             if table.getn(self._rules.group) > 0 then
-                rule = self:_update_col_names(self._rules.group)
-                rule = table.join(rule)
+                rule = table.join(self._rules.group)
                 _select = _select .. " \nGROUP BY " .. rule
             end
 
             -- Build HAVING
-            if self._rules.havingStr then
-                condition = "\nHAVING".. self._rules.havingStr
+            if self._rules.havingStr and #self._rules.havingStr>0  then
+                condition = "\nHAVING ".. self._rules.havingStr
+                _select = _select .. " " .. condition
                 for _,v in ipairs(self._rules.havingBindValues) do
                     table.insert(self._rules._bindValuse,v)
                 end
             else
                 if next(self._rules.having) and self._rules.group then
-                    condition = self:_condition(self._rules.having, "\nHAVING")
+                    condition = self:_condition(self._rules.having, "\nHAVING ")
                     _select = _select .. " " .. condition
                 end
             end
@@ -456,8 +456,7 @@ local Select = function(own_table)
 
             -- Build ORDER BY
             if table.getn(self._rules.order) > 0 then
-                rule = self:_update_col_names(self._rules.order)
-                rule = table.join(rule)
+                rule = table.join(self._rules.order)
                 _select = _select .. " \nORDER BY " .. rule
             end
 
@@ -486,7 +485,7 @@ local Select = function(own_table)
                 for _, column in pairs(colname) do
                     if (Type.is.table(column) and column.__classtype__ == AGGREGATOR
                     and self.own_table:has_column(column.colname))
-                    or self.own_table:has_column(column) then
+                    or self.own_table:has_column(column) or Type.is.str(column) then
                         table.insert(col_table, column)
                     end
                 end
