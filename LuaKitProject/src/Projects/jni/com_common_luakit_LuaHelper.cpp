@@ -20,13 +20,18 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_common_luakit_LuaHelper_startLuaKitNative
   (JNIEnv *env, jclass c, jobject context)
 {
-	base::android::InitApplicationContext(env, base::android::ScopedJavaLocalRef<jobject>(env, context));
-  	LOG(ERROR) << "nativeNewObject support ";
-  	setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
-    BusinessMainDelegate* delegate(new BusinessMainDelegate());
-    BusinessRuntime* Business_runtime(BusinessRuntime::Create());
-    Business_runtime->Initialize(delegate);
-    Business_runtime->Run();
+    static bool hasStartLuakit = false;
+    if (!hasStartLuakit) {
+    	base::android::InitApplicationContext(env, base::android::ScopedJavaLocalRef<jobject>(env, context));
+      	LOG(ERROR) << "nativeNewObject support ... ";
+      	setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
+        BusinessMainDelegate* delegate(new BusinessMainDelegate());
+        BusinessRuntime* Business_runtime(BusinessRuntime::Create());
+        Business_runtime->Initialize(delegate);
+        Business_runtime->Run();
+    } else {
+        assert(0);
+    }
 }
 
 void pushLuaModule(std::string moduleName)

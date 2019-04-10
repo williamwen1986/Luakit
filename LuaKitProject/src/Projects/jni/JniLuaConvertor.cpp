@@ -7,6 +7,7 @@ extern "C" {
 }
 #endif
 #include <mutex>
+#include "base/logging.h"
 #include "JniEnvWrapper.h"
 #include "JniLuaConvertor.h"
 #include "JNIModel.h"
@@ -198,6 +199,7 @@ static jobject getTableObject(lua_State *L, JNIEnv *env, int stackIndex) {
         instance = env->NewObject(clazz, methodid);
         lua_pushnil(L);  /* first key */
         while (lua_next(L, -2)) {
+            env->PushLocalFrame(0);
             jobject key = object_copyToJava(L, env, -2);
             jobject val = object_copyToJava(L, env, -1);
             jobject ret = envw.CallObjectMethod(instance, JNIModel::HashMap::classSig, JNIModel::HashMap::put.name, JNIModel::HashMap::put.sig, key, val);
@@ -205,7 +207,9 @@ static jobject getTableObject(lua_State *L, JNIEnv *env, int stackIndex) {
             env->DeleteLocalRef(key);
             env->DeleteLocalRef(val);
             env->DeleteLocalRef(ret);
+            env->PopLocalFrame(NULL);
         } 
+        env->DeleteLocalRef(clazz);
     } else {
         JniEnvWrapper envw(env);
         int length = (int)lua_objlen(L,-1);
@@ -218,11 +222,14 @@ static jobject getTableObject(lua_State *L, JNIEnv *env, int stackIndex) {
         instance = env->NewObject(clazz, methodid, length);
         lua_pushnil(L);  /* first key */
         while (lua_next(L, -2)) {
+            env->PushLocalFrame(0);
             jobject element = object_copyToJava(L, env, -1);
             envw.CallBooleanMethod(instance, JNIModel::ArrayList::classSig, JNIModel::ArrayList::add.name, JNIModel::ArrayList::add.sig, element);
             env->DeleteLocalRef(element);
+            env->PopLocalFrame(NULL);
             lua_pop(L, 1);
         }
+        env->DeleteLocalRef(clazz);
     }
     lua_pop(L, 1);
     return instance;
@@ -259,7 +266,8 @@ extern jobject object_copyToJava(lua_State *L, JNIEnv *env, int stackIndex)
         }
         break;
         case LUA_TTABLE:{
-            return getTableObject(L, env ,stackIndex);
+            jobject o = getTableObject(L, env ,stackIndex);
+            return o;
         }
         break;
         default:

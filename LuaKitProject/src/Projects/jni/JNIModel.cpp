@@ -15,11 +15,13 @@ namespace JNIModel
                 jclass clazz = env->FindClass(classSig);
                 jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
                 jobject obj = env->NewObject(clazz, methodid, JNI_TRUE);
+                env->DeleteLocalRef(clazz);
                 return obj;
 			} else {
                 jclass clazz = env->FindClass(classSig);
                 jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
                 jobject obj = env->NewObject(clazz, methodid, JNI_FALSE);
+                env->DeleteLocalRef(clazz);
                 return obj;
 			}
 		}
@@ -44,12 +46,15 @@ namespace JNIModel
 					jobject obj = env->NewObject(clazz, methodid, 0);
 					ZERO = env->NewGlobalRef(obj);
 					env->DeleteLocalRef(obj);
+					env->DeleteLocalRef(clazz);
 				}
 				return env->NewLocalRef(ZERO);
 			} else {
 				jclass clazz = env->FindClass(classSig);
 				jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
-				return env->NewObject(clazz, methodid, source);
+				jobject o = env->NewObject(clazz, methodid, source);
+				env->DeleteLocalRef(clazz);
+				return o;
 			}
 		}
 		void ConvertToNative(JNIEnv* env, jobject source, unsigned char& target) {
@@ -73,12 +78,15 @@ namespace JNIModel
 					jobject obj = env->NewObject(clazz, methodid, 0);
 					ZERO = env->NewGlobalRef(obj);
 					env->DeleteLocalRef(obj);
+					env->DeleteLocalRef(clazz);
 				}
 				return env->NewLocalRef(ZERO);
 			} else {
 				jclass clazz = env->FindClass(classSig);
 				jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
-				return env->NewObject(clazz, methodid, source);
+				jobject o = env->NewObject(clazz, methodid, source);
+				env->DeleteLocalRef(clazz);
+				return o;
 			}
 		}
 		void ConvertToNative(JNIEnv* env, jobject source, int& target) {
@@ -102,12 +110,15 @@ namespace JNIModel
 					jobject obj = env->NewObject(clazz, methodid, 0);
 					ZERO = env->NewGlobalRef(obj);
 					env->DeleteLocalRef(obj);
+					env->DeleteLocalRef(clazz);
 				}
 				return env->NewLocalRef(ZERO);
 			} else {
 				jclass clazz = env->FindClass(classSig);
 				jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
-				return env->NewObject(clazz, methodid, source);
+				jobject o = env->NewObject(clazz, methodid, source);
+				env->DeleteLocalRef(clazz);
+				return o;
 			}
 		}
 		void ConvertToNative(JNIEnv* env, jobject source, float& target) {
@@ -131,12 +142,15 @@ namespace JNIModel
 					jobject obj = env->NewObject(clazz, methodid, 0);
 					ZERO = env->NewGlobalRef(obj);
 					env->DeleteLocalRef(obj);
+					env->DeleteLocalRef(clazz);
 				}
 				return env->NewLocalRef(ZERO);
 			} else {
 				jclass clazz = env->FindClass(classSig);
 				jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
-				return env->NewObject(clazz, methodid, source);
+				jobject o = env->NewObject(clazz, methodid, source);
+				env->DeleteLocalRef(clazz);
+				return o;
 			}
 		}
 		void ConvertToNative(JNIEnv* env, jobject source, double& target) {
@@ -161,12 +175,15 @@ namespace JNIModel
 					jobject obj = env->NewObject(clazz, methodid, 0);
 					ZERO = env->NewGlobalRef(obj);
 					env->DeleteLocalRef(obj);
+					env->DeleteLocalRef(clazz);
 				}
 				return env->NewLocalRef(ZERO);
 			} else {
 				jclass clazz = env->FindClass(classSig);
 				jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
-				return env->NewObject(clazz, methodid, source);
+				jobject o = env->NewObject(clazz, methodid, source);
+				env->DeleteLocalRef(clazz);
+				return o;
 			}
 		}
 		void ConvertToNative(JNIEnv* env, jobject source, long long& target) {

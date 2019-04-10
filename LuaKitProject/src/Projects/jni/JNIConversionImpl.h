@@ -329,6 +329,7 @@ namespace JNIConversion {
 			env->DeleteLocalRef(val);
 			env->DeleteLocalRef(ret);
 		}
+		env->DeleteLocalRef(clazz);
 		return map;
 	}
 

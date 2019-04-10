@@ -35,16 +35,22 @@ void setLuaError(void (*func)(const char *))
 
 void startLuakit(int argc, char * argv[])
 {
-    CommandLine::Init(argc, argv);
-    NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-    if (luaGetPackagePath().size() == 0) {
-        luaSetPackagePath([bundlePath cStringUsingEncoding:NSUTF8StringEncoding]);
+    static bool hasStartLuakit = false;
+    if (!hasStartLuakit) {
+        CommandLine::Init(argc, argv);
+        NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+        if (luaGetPackagePath().size() == 0) {
+            luaSetPackagePath([bundlePath cStringUsingEncoding:NSUTF8StringEncoding]);
+        }
+        setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
+        BusinessMainDelegate* delegate = new BusinessMainDelegate();
+        BusinessRuntime* business_runtime = BusinessRuntime::Create();
+        business_runtime->Initialize(delegate);
+        business_runtime->Run();
+        hasStartLuakit = true;
+    } else {
+        assert(0);
     }
-    setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
-    BusinessMainDelegate* delegate = new BusinessMainDelegate();
-    BusinessRuntime* business_runtime = BusinessRuntime::Create();
-    business_runtime->Initialize(delegate);
-    business_runtime->Run();
 }
 
 void pushOneObject(lua_State *L, id object);
@@ -143,7 +149,10 @@ id getTableObject(lua_State *L, int stackIndex){
     }
     else {
         instance = [NSMutableArray array];
-        
+        int length = (int)lua_objlen(L,-1);
+        if (length == 0) {
+            return nil;
+        }
         lua_pushnil(L);  /* first key */
         while (lua_next(L, -2)) {
             int index = lua_tonumber(L, -2) - 1;
