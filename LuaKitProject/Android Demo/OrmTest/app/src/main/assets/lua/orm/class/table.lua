@@ -166,24 +166,48 @@ function Table:create_table(table_instance)
 end
 
 function Table.addTableInfo(params,callback)
+    local function c()
+        callback(nil)
+    end
+    local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
+    lua_thread.postToThread(threadId,"orm.class.table","addTableInfoOnLogicThread",params, c);
+end
+
+function Table.addTableInfoOnLogicThread(params,callback)
     local tableName = params.name
     local info = params.args
     local threadId = lua_thread.createThread(BusinessThreadLOGIC,"DB_DATA")
     lua_thread.postToThreadSync(threadId,"orm.dbData","setDBParams",tableName, info)
     Table(tableName)
-    callback(nil);
+    callback();
 end
 
 function Table.saveOrm(params,callback)
+    local function c()
+        callback(nil)
+    end
+    local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
+    lua_thread.postToThread(threadId,"orm.class.table","saveOrmOnLogicThread",params, c);
+end
+
+function Table.saveOrmOnLogicThread(params,callback)
     local tableName = params.name
     local orm = params.args
     local t = Table(tableName)
     local data = t(orm)
     data:save();
-    callback(nil);
+    callback();
 end
 
 function Table.batchSaveOrms(params,callback)
+    local function c()
+        callback(nil)
+    end
+    local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
+    lua_thread.postToThread(threadId,"orm.class.table","batchSaveOrmsOnLogicThread",params, c);
+end
+
+function Table.batchSaveOrmsOnLogicThread(params,callback)
     local tableName = params.name
     local data = params.args
     local t = Table(tableName)
@@ -193,7 +217,7 @@ function Table.batchSaveOrms(params,callback)
             data:save();
         end
     end
-    callback(nil);
+    callback();
 end
 
 function Table.prepareQuery(t,params)
@@ -273,6 +297,14 @@ function Table.prepareQuery(t,params)
 end
 
 function Table.getAllByParams(params,callback)
+    local function c(d)
+        callback(d)
+    end
+    local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
+    lua_thread.postToThread(threadId,"orm.class.table","getAllByParamsOnLogicThread",params, c);
+end
+
+function Table.getAllByParamsOnLogicThread(params,callback)
     local tableName = params.name
     local data = params.args
     local t = Table(tableName)
@@ -282,6 +314,14 @@ function Table.getAllByParams(params,callback)
 end
 
 function Table.getFirstByParams(params,callback)
+    local function c(d)
+        callback(d)
+    end
+    local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
+    lua_thread.postToThread(threadId,"orm.class.table","getFirstOnLogicThread",params, c);
+end
+
+function Table.getFirstOnLogicThread(params,callback)
     local tableName = params.name
     local data = params.args
     local t = Table(tableName)
@@ -290,22 +330,40 @@ function Table.getFirstByParams(params,callback)
 end
 
 function Table.deleteByParams(params,callback)
+    local function c()
+        callback(nil)
+    end
+    local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
+    lua_thread.postToThread(threadId,"orm.class.table","deleteByParamsOnLogicThread",params, c);
+
+end
+
+function Table.deleteByParamsOnLogicThread(params,callback)
     local tableName = params.name
     local data = params.args
     local t = Table(tableName)
     local selectItem = Table.prepareQuery(t,data)
     selectItem:delete()
-    callback(nil);
+    callback();
 end
 
 function Table.updateByParams(params,callback)
+    local function c()
+        callback(nil)
+    end
+    local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
+    lua_thread.postToThread(threadId,"orm.class.table","updateByParamsOnLogicThread",params, c);
+
+end
+
+function Table.updateByParamsOnLogicThread(params,callback)
     local tableName = params.name
     local data = params.args
     local updateValue = params.updateValue
     local t = Table(tableName)
     local selectItem = Table.prepareQuery(t,data)
     selectItem:update(updateValue);
-    callback(nil);
+    callback();
 end
 
 
