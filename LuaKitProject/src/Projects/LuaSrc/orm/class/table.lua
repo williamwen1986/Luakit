@@ -211,12 +211,8 @@ function Table.batchSaveOrmsOnLogicThread(params,callback)
     local tableName = params.name
     local data = params.args
     local t = Table(tableName)
-    if data ~= nil then
-        for _,orm in ipairs(data) do
-            local data = t(orm)
-            data:save();
-        end
-    end
+    local list = require('orm.class.query_list')(t,data)
+    list:save()
     callback();
 end
 
@@ -373,11 +369,19 @@ end
 -- @args {table} must have __tablename__ key
 -- and other must be a column names
 --------------------------------------
-function Table.new(self, tableName)
-    local args = lua_thread.postToThreadSync(self.DBDataThreadId,"orm.dbData","tableParams",tableName)
+argsCache = {}
 
-    local colnames = {}
-    local create_query
+function Table.new(self, tableName)
+
+    local args = argsCache[tableName] or lua_thread.postToThreadSync(self.DBDataThreadId,"orm.dbData","tableParams",tableName)
+
+    if args then
+        argsCache[tableName] = args;
+    end
+
+    if _G.All_Tables[args.__dbname__.."_"..args.__tablename__] then
+        return _G.All_Tables[args.__dbname__.."_"..args.__tablename__]
+    end
 
     self.__tablename__ = args.__tablename__
     self.__dbname__ = args.__dbname__
@@ -395,10 +399,6 @@ function Table.new(self, tableName)
         lua_thread.postToThreadSync(dbInfo.threadId,"orm.cache","initWithDB",self.__dbname__)
         self.cacheThreadId = dbInfo.threadId
     end)
-
-    if _G.All_Tables[self.__dbname__.."_"..self.__tablename__] then
-        return _G.All_Tables[self.__dbname__.."_"..self.__tablename__]
-    end
 
     args.__tablename__ = nil
     args.__dbname__ = nil

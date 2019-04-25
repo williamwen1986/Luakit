@@ -56,6 +56,25 @@ function QueryList(own_table, rows)
             table.insert(self._stack, QueryInstance)
         end,
 
+        save = function(self)
+            local params = {}
+
+            for _, query in pairs(self._stack) do
+                local kv,needPrimaryKey = query:getSaveKv()
+                local param = {}
+                param["kv"] = kv
+                param["needPrimaryKey"] = needPrimaryKey
+                table.insert(params, param)
+            end
+
+            local results = lua_thread.postToThreadSync(own_table.cacheThreadId,"orm.cache","batchInsert",own_table.__tablename__,params)
+
+            for i, query in ipairs(self._stack) do
+                query:setPrimaryKey(params[i]["needPrimaryKey"],results[i]["rowId"]);
+            end
+
+        end,
+
         -- Get count of values in stack
         count = function (self)
             return #self._stack

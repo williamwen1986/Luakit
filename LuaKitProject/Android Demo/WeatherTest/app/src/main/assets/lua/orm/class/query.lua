@@ -91,11 +91,27 @@ function Query(own_table, data)
 
         -- Add new row to table
         _add = function (self)
+            local kv,needPrimaryKey =  self:getSaveKv();
+            local result,rowId = lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","insert",self.own_table.__tablename__,kv,needPrimaryKey)
+            self:setPrimaryKey(needPrimaryKey,rowId)
+        end,
+
+        setPrimaryKey = function(self,needPrimaryKey,rowId)
+            if needPrimaryKey and rowId ~= nil then
+                self._data[self.own_table.__primary_key.name] = {
+                    new = rowId,
+                    old = rowId
+                }
+                self._pureData[self.own_table.__primary_key.name] = rowId
+            end
+        end,
+
+        getSaveKv = function(self)
             local value
             local colname
             local needPrimaryKey = false
             if self.own_table.__primary_key and self.own_table.__primary_key.field.__type__ == "integer" and (not self[self.own_table.__primary_key.name])   then
-                    needPrimaryKey = true
+                needPrimaryKey = true
             end
 
             local kv = {}
@@ -112,29 +128,21 @@ function Query(own_table, data)
                             value = table_column.field.as(value)
                         else
                             BACKTRACE(WARNING, "Wrong type for table '" ..
-                                                self.own_table.__tablename__ ..
-                                                "' in column '" .. tostring(colname) .. "'")
+                                    self.own_table.__tablename__ ..
+                                    "' in column '" .. tostring(colname) .. "'")
                             return false
                         end
 
-                    -- Set default value
+                        -- Set default value
                     elseif table_column.settings.default then
                         value = table_column.field.as(table_column.settings.default)
                     else
                         value = nil
                     end
                     kv[colname] = value
-                end 
+                end
             end
-
-            local result,rowId = lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","insert",self.own_table.__tablename__,kv,needPrimaryKey)
-            if needPrimaryKey and rowId ~= nil then
-                self._data[self.own_table.__primary_key.name] = {
-                    new = rowId,
-                    old = rowId
-                }
-                self._pureData[self.own_table.__primary_key.name] = rowId
-            end
+            return kv,needPrimaryKey
         end,
 
         getPureData = function (self)
@@ -147,6 +155,8 @@ function Query(own_table, data)
             end
             return ret
         end ,
+
+
 
         -- save row
         save = function (self)

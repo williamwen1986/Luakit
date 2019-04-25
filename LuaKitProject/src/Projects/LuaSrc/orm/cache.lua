@@ -112,6 +112,33 @@ _cache = {
 
 
     insert = function (tablename, kv, needPrimaryKey)
+        local insert , bindValues = _cache._getInsertSqlAndBindValues(tablename, kv, needPrimaryKey)
+        if not needPrimaryKey then
+            lua_thread.postToThread(_dbThreadId,"orm.model","insert",insert,bindValues)
+            _cache._saveKVtoCache(tablename,kv)
+        else
+            local result,rowId
+            result,rowId = lua_thread.postToThreadSync(_dbThreadId,"orm.model","insert",insert,bindValues,needPrimaryKey)
+            local t = Table(tablename)
+            if t.__primary_key and  kv[t.__primary_key.name] ~= nil then
+                kv[t.__primary_key.name] = rowId
+            end
+            _cache._saveKVtoCache(tablename,kv)
+            return
+        end
+    end,
+
+    _saveKVtoCache = function(tablename,kv)
+        local t = Table(tablename)
+        if t.__primary_key and  kv[t.__primary_key.name] ~= nil then
+            if not _instanceCache[tablename] then
+                _instanceCache[tablename] = {}
+            end
+            _instanceCache[tablename][kv[t.__primary_key.name]] = kv
+        end
+    end,
+
+    _getInsertSqlAndBindValues = function (tablename, kv, needPrimaryKey)
         local t = Table(tablename)
         local hasCacheSql = false
         local needPrimaryKeyNum = 0
@@ -157,25 +184,45 @@ _cache = {
         end
 
         if not hasCacheSql then
-            insert = insert .. ") \n\t    VALUES (" 
+            insert = insert .. ") \n\t    VALUES ("
             _cache.setCacheSql(tablename, sqlKey, insert)
         end
         insert = insert .. values .. ")"
+        return insert , bindValues
+    end,
 
-        
-        if not needPrimaryKey then
-            lua_thread.postToThread(_dbThreadId,"orm.model","insert",insert,bindValues)
-            if t.__primary_key and  kv[t.__primary_key.name] ~= nil then
-                if not _instanceCache[tablename] then
-                    _instanceCache[tablename] = {}
-                end
-                _instanceCache[tablename][kv[t.__primary_key.name]] = kv
-            end
-        else
-            local result,rowId
-            result,rowId = lua_thread.postToThreadSync(_dbThreadId,"orm.model","insert",insert,bindValues,needPrimaryKey)
-            return  
+
+    batchInsert = function(tablename, params)
+        local saveParams = {}
+        for _, param in ipairs(params) do
+            local kv = param["kv"];
+            local needPrimaryKey = param["needPrimaryKey"];
+            local insert , bindValues = _cache._getInsertSqlAndBindValues(tablename, kv, needPrimaryKey)
+            local saveParam = {}
+            saveParam["insert"] = insert
+            saveParam["bindValues"] = bindValues
+            saveParam["needPrimaryKey"] = needPrimaryKey
+            table.insert(saveParams, saveParam)
         end
+
+        local result = lua_thread.postToThreadSync(_dbThreadId,"orm.model","batchInsert",saveParams)
+
+        for i, param in ipairs(params) do
+            local kv = param["kv"];
+            local needPrimaryKey = param["needPrimaryKey"];
+            if not needPrimaryKey then
+                _cache._saveKVtoCache(tablename,kv)
+            else
+                local rowId = result[i]["rowId"];
+                local t = Table(tablename)
+                if t.__primary_key and  kv[t.__primary_key.name] ~= nil then
+                    kv[t.__primary_key.name] = rowId
+                end
+                _cache._saveKVtoCache(tablename,kv)
+            end
+        end
+
+        return result
     end,
 
     update = function (tablename, whereSql, whereBindingValues, data)

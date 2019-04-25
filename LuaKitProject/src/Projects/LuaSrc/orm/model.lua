@@ -61,6 +61,21 @@ db = {
         return result, rowId
     end,
 
+    batchInsert = function (saveParams)
+        local results = {}
+        for _, saveParam in ipairs(saveParams) do
+            local insert = saveParam["insert"]
+            local bindValues = saveParam["bindValues"]
+            local needPrimaryKey = saveParam["needPrimaryKey"]
+            local result, rowId = db.execute(insert, bindValues, needPrimaryKey)
+            local r = {}
+            r["result"] = result
+            r["rowId"] = rowId
+            table.insert(results, r)
+        end
+        return results
+    end,
+
     query = function (query, params, name)
         params = params or {}
         local data = _db.query(query,params,name)
