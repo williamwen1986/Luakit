@@ -167,7 +167,6 @@ LOCAL_SRC_FILES += android/activity_status.cc \
                    third_party/dmg_fp/dtoa_wrapper.cc \
                    third_party/dmg_fp/g_fmt.cc \
                    third_party/icu/icu_utf.cc \
-                   third_party/nspr/prtime.cc \
                    thread_task_runner_handle.cc \
                    threading/non_thread_safe_impl.cc \
                    threading/platform_thread_android.cc \
@@ -202,7 +201,9 @@ LOCAL_SRC_FILES += android/activity_status.cc \
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ \
                     $(LOCAL_PATH)/../../ \
-                    $(LOCAL_PATH)/android/
+                    $(LOCAL_PATH)/android/ \
+                    $(LOCAL_PATH)/../extensions/timer \
+                    $(LOCAL_PATH)/../lua-5.1.5/lua \
 
 LOCAL_LDFLAGS += -fPIC
 

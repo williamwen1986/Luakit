@@ -16,7 +16,6 @@ LOCAL_CFLAGS := \
 LOCAL_SRC_FILES := \
 				buffer.c \
 				epoll.c \
-				epoll_sub.c \
 				evbuffer.c \
 				evdns.c \
 				event.c \

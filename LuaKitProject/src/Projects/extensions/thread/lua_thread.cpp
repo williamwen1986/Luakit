@@ -10,6 +10,9 @@ extern "C" {
 #include "common/business_runtime.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread_restrictions.h"
+#include <iostream>
+#include <time.h>
+
 
 static int unpack(lua_State *L);
 static int postToThread(lua_State *L);
@@ -85,6 +88,26 @@ static int currentThread(lua_State *L)
     return 1;
 }
 
+static void limitedGc(lua_State *L)
+{
+    BEGIN_STACK_MODIFY(L)
+    lua_getglobal(L, "lastGcTime");
+    time_t lt = 0;
+    if (!lua_isnil(L, -1)) {
+        lt = lua_tointeger(L, -1);
+    }
+    time_t nt = time(0);
+    if (nt - lt >= 1) {
+        // std::cout<<"limitedGc"<<1<<"time"<<clock()*1000.0/CLOCKS_PER_SEC<<"thread"<<0<<"\n";
+        lua_gc(L, LUA_GCCOLLECT, 0);
+        lua_pushinteger(L, nt);
+        lua_setglobal(L, "lastGcTime");
+    } else {
+        // std::cout<<"limitedGc not"<<1<<"time"<<clock()*1000.0/CLOCKS_PER_SEC<<"thread"<<0<<"\n";
+    }
+    END_STACK_MODIFY(L, 0)
+}
+
 static int threadCount(lua_State *L)
 {
     BEGIN_STACK_MODIFY(L)
@@ -116,10 +139,12 @@ static int createThread(lua_State *L)
 
 
 static int postToThreadSync(lua_State *L){
+    
     BEGIN_STACK_MODIFY(L)
     int toThread = luaL_checknumber(L, 1);
     BusinessThreadID from_thread_identifier;
     BusinessThread::GetCurrentThreadIdentifier(&from_thread_identifier);
+//    std::cout<<"postToThreadSync"<<0<<"time"<<clock()*1000.0/CLOCKS_PER_SEC<<"thread"<<from_thread_identifier<<"\n";
     lua_remove(L, 1);
     std::string moduleName = luaL_checkstring(L, 1);
     //只允许数据库模型内部使用，业务逻辑使用要注意死锁的问题，这里不开放给普通业务
@@ -273,6 +298,7 @@ static int postToThreadSync(lua_State *L){
         
         //所有callbackContexts也暂时不能回收，等真正调用完才能回收，从weak表copy到strong表
         BusinessThread::PostTask((BusinessThreadID)toThread, FROM_HERE, base::BindLambda([=](){
+//            std::cout<<"postToThreadSync"<<1<<"time"<<clock()*1000.0/CLOCKS_PER_SEC<<"thread"<<from_thread_identifier<<"\n";
             std::string lua;
             lua_State * state = BusinessThread::GetCurrentThreadLuaState();
             if (params != NULL) {
@@ -283,6 +309,9 @@ static int postToThreadSync(lua_State *L){
                 lua = "LUA_SYNC_RESULT = {require('"+moduleName+"')." + methodName +"()}";
             }
             luaL_dostring(state, lua.c_str());
+            
+//            std::cout<<"postToThreadSync"<<11<<"time"<<clock()*1000.0/CLOCKS_PER_SEC<<"thread"<<from_thread_identifier<<"\n";
+            
             if (params != NULL) {
                 lua_pushnil(state);
                 lua_setglobal(state, "cParams");
@@ -317,8 +346,11 @@ static int postToThreadSync(lua_State *L){
             } else {
                 lua_pop(state, 1);
             }
-            lua_gc(state, LUA_GCCOLLECT, 0);
+//            std::cout<<"postToThreadSync"<<12<<"time"<<clock()*1000.0/CLOCKS_PER_SEC<<"thread"<<from_thread_identifier<<"\n";
+            limitedGc(state);
+//            std::cout<<"postToThreadSync"<<21<<"time"<<clock()*1000.0/CLOCKS_PER_SEC<<"thread"<<from_thread_identifier<<"\n";
             event->Signal();
+//            std::cout<<"postToThreadSync"<<22<<"time"<<clock()*1000.0/CLOCKS_PER_SEC<<"thread"<<from_thread_identifier<<"\n";
             if (hasAddParamToStrongTable) {
                 BusinessThread::PostTask(from_thread_identifier, FROM_HERE, base::BindLambda([=](){
                     //把param 从强表移除
@@ -352,15 +384,16 @@ static int postToThreadSync(lua_State *L){
                     } else {
                         lua_pop(fromState, 3);
                     }
-                    lua_gc(fromState, LUA_GCCOLLECT, 0);
+                    limitedGc(fromState);
                     BusinessThread::PostTask((BusinessThreadID)toThread, FROM_HERE, base::BindLambda([=](){
                         lua_State * s = BusinessThread::GetCurrentThreadLuaState();
-                        lua_gc(s, LUA_GCCOLLECT, 0);
+                        limitedGc(s);
                     }));
                 }));
             }
         }));
         event->Wait();
+//        std::cout<<"postToThreadSync"<<3<<"time"<<clock()*1000.0/CLOCKS_PER_SEC<<"thread"<<from_thread_identifier<<"\n";
         delete event;
         while (lua_gettop(L)>0) {
             lua_pop(L, 1);
@@ -501,7 +534,7 @@ static int postToThread(lua_State *L)
             lua_pushnil(state);
             lua_setglobal(state, "cParams");
         }
-        lua_gc(state, LUA_GCCOLLECT, 0);
+        limitedGc(state);
         if (hasAddParamToStrongTable) {
             BusinessThread::PostTask(from_thread_identifier, FROM_HERE, base::BindLambda([=](){
                 //把param 从强表移除
@@ -535,10 +568,10 @@ static int postToThread(lua_State *L)
                 } else {
                     lua_pop(fromState, 3);
                 }
-                lua_gc(fromState, LUA_GCCOLLECT, 0);
+                limitedGc(fromState);
                 BusinessThread::PostTask((BusinessThreadID)toThread, FROM_HERE, base::BindLambda([=](){
                      lua_State * s = BusinessThread::GetCurrentThreadLuaState();
-                     lua_gc(s, LUA_GCCOLLECT, 0);
+                     limitedGc(s);
                 }));
             }));
         }
@@ -794,10 +827,10 @@ static int callbackCall(lua_State *L) {
                         lua_pop(nowState, 1);
                     }
                 }
-                lua_gc(nowState, LUA_GCCOLLECT, 0);
+                limitedGc(nowState);
                 BusinessThread::PostTask(from_thread_identifier, FROM_HERE, base::BindLambda([=](){
                     lua_State * S = BusinessThread::GetCurrentThreadLuaState();
-                    lua_gc(S, LUA_GCCOLLECT, 0);
+                    limitedGc(S);
                 }));
             }));
         }));

@@ -341,11 +341,11 @@ void SharedMemory::Close() {
 
 void SharedMemory::Lock() {
   g_thread_lock_.Get().Acquire();
-  LockOrUnlockCommon(F_LOCK);
+  LockOrUnlockCommon(1);
 }
 
 void SharedMemory::Unlock() {
-  LockOrUnlockCommon(F_ULOCK);
+  LockOrUnlockCommon(0);
   g_thread_lock_.Get().Release();
 }
 

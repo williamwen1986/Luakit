@@ -94,7 +94,7 @@ void ConditionVariable::TimedWait(const TimeDelta& max_time) {
   absolute_time.tv_nsec %= Time::kNanosecondsPerSecond;
   DCHECK_GE(absolute_time.tv_sec, now.tv_sec);  // Overflow paranoia
 
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) && !defined(__LP64__)
   int rv = pthread_cond_timedwait_monotonic_np(
       &condition_, user_mutex_, &absolute_time);
 #else

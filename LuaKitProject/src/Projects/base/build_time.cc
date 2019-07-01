@@ -16,9 +16,9 @@ Time GetBuildTime() {
   //
   // __DATE__ is exactly "Mmm DD YYYY".
   // __TIME__ is exactly "hh:mm:ss".
-  const char kDateTime[] = __DATE__ " " __TIME__ " PST";
-  bool result = Time::FromString(kDateTime, &integral_build_time);
-  DCHECK(result);
+//  const char kDateTime[] = __DATE__ " " __TIME__ " PST";
+//  bool result = Time::FromString(kDateTime, &integral_build_time);
+//  DCHECK(result);
   return integral_build_time;
 }
 

@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <sys/time.h>
 #include <time.h>
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) && !defined(__LP64__)
 #include <time64.h>
 #endif
 #include <unistd.h>
@@ -33,20 +33,45 @@ namespace {
 // a time64_t depending on the host system, and associated convertion.
 // See crbug.com/162007
 #if defined(OS_ANDROID)
+
+#if defined(__LP64__)
+typedef time_t SysTime;
+#else
 typedef time64_t SysTime;
+#endif
+//#else
+//typedef time_t SysTime;
 
 SysTime SysTimeFromTimeStruct(struct tm* timestruct, bool is_local) {
   if (is_local)
+    #if defined(__LP64__)
+    return mktime(timestruct);
+    #else
     return mktime64(timestruct);
+    #endif
   else
+    #if defined(__LP64__)
+    return timegm(timestruct);
+    #else
     return timegm64(timestruct);
+    #endif
 }
 
 void SysTimeToTimeStruct(SysTime t, struct tm* timestruct, bool is_local) {
-  if (is_local)
+  if (is_local) {
+    #if defined(__LP64__)
+    localtime_r(&t, timestruct);
+    #else
     localtime64_r(&t, timestruct);
-  else
+    #endif
+  }
+  else {
+    #if defined(__LP64__)
+    gmtime_r(&t, timestruct);
+    #else
     gmtime64_r(&t, timestruct);
+    #endif
+  }
 }
 
 #else  // OS_ANDROID

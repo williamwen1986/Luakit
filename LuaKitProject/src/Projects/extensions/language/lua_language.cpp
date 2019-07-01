@@ -5,7 +5,7 @@ extern "C" {
 }
 #include "lua_helpers.h"
 #include "lua_language.h"
-#include <string>
+#include <string.h>
 #include "languageUtil.h"
 
 enum LanguageType {
@@ -44,7 +44,7 @@ LanguageType getLanguageTypeByISO2(const char* code)
     // except windows: cocos/platform/win32/CCApplication-win32.cpp
     LanguageType ret = LanguageType::ENGLISH;
     std::string language = code;
-    if (strncmp(code, "zh", 2) == 0)
+    if (strncmp(code, "zh", (size_t)2) == 0)
     {
         if (language=="zh-HK"||language=="zh-TW"||language=="zh-Hant-CN"||language=="zh-Hant") {
             ret = LanguageType::CHINESE_TW;

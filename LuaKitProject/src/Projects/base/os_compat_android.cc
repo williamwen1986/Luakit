@@ -9,7 +9,12 @@
 #include <math.h>
 #include <sys/stat.h>
 #include <sys/syscall.h>
+
+#if defined(__LP64__)
+#else
 #include <time64.h>
+#endif
+
 #include <unistd.h>
 
 #include "base/rand_util.h"
@@ -44,7 +49,11 @@ time_t timegm(struct tm* const t) {
   // time_t is signed on Android.
   static const time_t kTimeMax = ~(1 << (sizeof(time_t) * CHAR_BIT - 1));
   static const time_t kTimeMin = (1 << (sizeof(time_t) * CHAR_BIT - 1));
+  #if defined(__LP64__)
+  time_t result = timegm(t);
+  #else
   time64_t result = timegm64(t);
+  #endif
   if (result < kTimeMin || result > kTimeMax)
     return -1;
   return result;

@@ -19,6 +19,8 @@
 #include "base/android/sys_utils.h"
 #include "base/android/thread_utils.h"
 #include "base/basictypes.h"
+#include "base/basictypes.h"
+#include "lua_timer.h"
 // #include "base/debug/trace_event.h"
 #include "base/message_loop/message_pump_android.h"
 // #include "base/power_monitor/power_monitor_device_source_android.h"
@@ -50,6 +52,7 @@ static RegistrationMethod kBaseRegisteredMethods[] = {
   { "SysUtils", base::android::SysUtils::Register },
   // { "PowerMonitor", base::RegisterPowerMonitor },
   { "ThreadUtils", base::RegisterThreadUtils },
+  { "TimerUtil", RegisterTimerUtil },
 };
 
 bool RegisterJni(JNIEnv* env) {
