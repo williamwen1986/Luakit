@@ -21,7 +21,17 @@ android {
             jniLibs.srcDir '../../../src/Projects/jni/libs'
         }
     }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a', 'armeabi'
+            universalApk false
+        }
+    }
 }
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
