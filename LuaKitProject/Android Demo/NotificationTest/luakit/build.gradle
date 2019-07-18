@@ -49,9 +49,6 @@ android {
             universalApk false
         }
     }
-
-
-
 }
 
 dependencies {
