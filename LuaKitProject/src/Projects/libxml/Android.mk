@@ -24,8 +24,6 @@ LOCAL_EXPORT_C_INCLUDES += $(common_C_INCLUDES)
 
 LOCAL_STATIC_LIBRARIES += iconv \
 
-LOCAL_LDFLAGS += -fPIC
-
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module, libiconv-1.14)

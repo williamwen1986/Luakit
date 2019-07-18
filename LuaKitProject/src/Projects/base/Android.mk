@@ -205,15 +205,17 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ \
                     $(LOCAL_PATH)/../extensions/timer \
                     $(LOCAL_PATH)/../lua-5.1.5/lua \
 
-LOCAL_LDFLAGS += -fPIC
-
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_PATH)/../
 LOCAL_STATIC_LIBRARIES += cpufeatures \
                           event \
                           modp_b64
 
+LOCAL_CFLAGS += -DUSE_HISTORICAL_STRERRO_R \
+
+
 include $(BUILD_STATIC_LIBRARY)
 
+$(call import-add-path,$(LOCAL_PATH)/..)
 $(call import-module, modp_b64)
 $(call import-module, android/cpufeatures)
 $(call import-module, libevent)

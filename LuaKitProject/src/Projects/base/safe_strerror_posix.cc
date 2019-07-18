@@ -9,7 +9,11 @@
 #include <stdio.h>
 #include <string.h>
 
+// Patch [LARPOUX] : 'Need USE_HISTORICAL_STRERRO_R on my MacOS'
+//#define USE_HISTORICAL_STRERRO_R (defined(__GLIBC__) || defined(OS_NACL))
+#ifndef USE_HISTORICAL_STRERRO_R
 #define USE_HISTORICAL_STRERRO_R (defined(__GLIBC__) || defined(OS_NACL))
+#endif
 
 #if USE_HISTORICAL_STRERRO_R && defined(__GNUC__)
 // GCC will complain about the unused second wrap function unless we tell it

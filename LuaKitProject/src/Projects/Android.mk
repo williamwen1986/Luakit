@@ -9,7 +9,7 @@ LOCAL_CFLAGS := -DANDROID -DOS_ANDROID
 
 MY_FILES_PATH  :=  $(LOCAL_PATH)/common \
 				   $(LOCAL_PATH)/lua-5.1.5/lua \
-				   $(LOCAL_PATH)/sqlite-amalgamation-3210000 \
+				   $(LOCAL_PATH)/sqlite-amalgamation-3290000 \
 				   $(LOCAL_PATH)/extensions \
 				   $(LOCAL_PATH)/network \
 				   $(LOCAL_PATH)/network/net \
@@ -26,8 +26,6 @@ MY_SRC_LIST  := $(MY_SRC_LIST:$(LOCAL_PATH)/%=%)
       
 LOCAL_SRC_FILES += $(MY_SRC_LIST)
 
-LOCAL_LDFLAGS += -fPIC
-
 #$(warning "the value of LOCAL_SRC_FILES is $(LOCAL_SRC_FILES)")
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/./ \
@@ -35,7 +33,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/./ \
                     $(LOCAL_PATH)/lua-5.1.5/lua \
                     $(LOCAL_PATH)/openssl/include/ \
                     $(LOCAL_PATH)/curl/include \
-                    $(LOCAL_PATH)/sqlite-amalgamation-3210000 \
+                    $(LOCAL_PATH)/sqlite-amalgamation-3290000 \
                     $(LOCAL_PATH)/extensions/HTTP \
                     $(LOCAL_PATH)/extensions/lua-cjson-master \
                     $(LOCAL_PATH)/extensions/thread \
@@ -57,6 +55,7 @@ LOCAL_STATIC_LIBRARIES += curl \
 
 include $(BUILD_STATIC_LIBRARY)
 
+$(call import-add-path,$(LOCAL_PATH)/)
 $(call import-module, curl)
 $(call import-module, base)
 $(call import-module, libxml)

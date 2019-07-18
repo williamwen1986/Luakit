@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     defaultConfig {
-        applicationId "luakit.com.threadtest"
+        applicationId "luakit.com.notificationtest"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -18,18 +18,32 @@ android {
     }
     sourceSets{
         main{
-            jniLibs.srcDir '../../../src/Projects/jni/libs'
+            //jniLibs.srcDir ['libs']
+            main.jni.srcDirs = []
+            main.jniLibs.srcDirs = ['../../../src/Projects/libs']
+    }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a', 'armeabi', 'x86_64', 'arm64-v8a'
+            universalApk false
         }
     }
+
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar', '*.so'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':lib_chromium')
+
     implementation project(':luakit')
+    //implementation 'com.github.williamwen1986:LuakitJitpack:1.0.9'
+
 }

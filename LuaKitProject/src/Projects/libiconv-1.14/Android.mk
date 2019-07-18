@@ -21,8 +21,6 @@ LOCAL_C_INCLUDES += \
   $(LOCAL_PATH)/libcharset/include \
   $(LOCAL_PATH)/srclib
 
-LOCAL_LDFLAGS += -fPIC
-
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/include
 
 include $(BUILD_STATIC_LIBRARY)

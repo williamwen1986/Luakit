@@ -48,13 +48,23 @@
 #undef __DEPRECATED
 #endif
 
-#if defined(OS_ANDROID)
+
+// Patch [LARPOUX] : 'Need <ext/hash_map> on MacOS'
+#if defined __GNUC__ || defined __APPLE__
+#include <ext/hash_map>
+#include <ext/hash_set>
+#else
+
+#if defined(OS_ANDROID) // Is it really that ? [LARPOUX]
 #include <hash_map>
 #include <hash_set>
 #else
 #include <ext/hash_map>
 #include <ext/hash_set>
 #endif
+
+#endif
+
 
 #include <string>
 

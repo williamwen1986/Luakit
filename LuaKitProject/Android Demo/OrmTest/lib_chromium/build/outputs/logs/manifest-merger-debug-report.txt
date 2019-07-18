@@ -1,37 +1,37 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
+ADDED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
 	package
-		ADDED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:11-38
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		ADDED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:11-38
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-		ADDED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		ADDED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
 	android:versionCode
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-		ADDED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		ADDED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:1:1-4:12
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:2:11-69
+		ADDED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml:2:11-69
 uses-sdk
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-		ADDED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		ADDED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-		ADDED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
-		INJECTED from /Users/williamwen/Desktop/luakit_github/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		ADDED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml
+		INJECTED from /Users/larpoux/projmac/Luakit/LuaKitProject/Android Demo/OrmTest/lib_chromium/src/main/AndroidManifest.xml

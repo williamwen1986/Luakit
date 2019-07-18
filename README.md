@@ -72,6 +72,22 @@ Luakit provide a orm solution which has below features
 * Timing auto transaction
 * Thread safe
 
+**android orm test**
+
+![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/android数据1.png)
+
+![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/android数据2.png)
+
+![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/android数据3.png)
+
+**ios orm test**
+
+![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/ios数据1.png)
+
+![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/ios数据2.png)
+
+![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/ios数据3.png)
+
 Define your model, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 ```lua
 -- Add the define table to dbData.lua
