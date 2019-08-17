@@ -1,0 +1,3 @@
+/Users/larpoux/projmac/luakit/LuaKitProject/Android Demo/NotificationTest/app/src/main/cpp/CMakeFiles/rebuild_cache.dir
+/Users/larpoux/projmac/luakit/LuaKitProject/Android Demo/NotificationTest/app/src/main/cpp/CMakeFiles/edit_cache.dir
+/Users/larpoux/projmac/luakit/LuaKitProject/Android Demo/NotificationTest/app/src/main/cpp/CMakeFiles/luaFramework2.dir

@@ -1,0 +1,3 @@
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libxml/CMakeFiles/rebuild_cache.dir
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libxml/CMakeFiles/edit_cache.dir
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libxml/CMakeFiles/libxml.dir

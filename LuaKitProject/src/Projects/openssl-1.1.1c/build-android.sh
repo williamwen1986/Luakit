@@ -48,7 +48,6 @@ popd > /dev/null
 
 rm -r obj 2>/dev/null
 
-
 if [ -f "lib/arm64-v8a/libcrypto.a" ] && [ -f "lib/armeabi-v7a/libcrypto.a" ] && [ -f "lib/x86/libcrypto.a" ] && [ -f "lib/x86_64/libcrypto.a" ] && [ -f "lib/arm64-v8a/libssl.a" ] && [ -f "lib/armeabi-v7a/libssl.a" ] && [ -f "lib/x86/libssl.a" ] && [ -f "lib/x86_64/libssl.a" ]; then
         echo "lib exists. Skipping openssl compilation"
 else

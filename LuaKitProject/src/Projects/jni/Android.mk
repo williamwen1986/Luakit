@@ -56,4 +56,4 @@ LOCAL_STATIC_LIBRARIES += common \
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-add-path,$(LOCAL_PATH)/..)
-$(call import-module, ../Projects)
+$(call import-module, common)

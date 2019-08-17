@@ -2,7 +2,7 @@
 
 #-----------------------
 ifndef ANDROID_API
-ANDROID_API := 18
+ANDROID_API := 28
 endif
 
 ifndef CONFIG
@@ -12,7 +12,7 @@ endif
 
 APP_PROJECT_PATH := $(call my-dir)
 APP_ABI := armeabi-v7a arm64-v8a x86 x86_64
-TARGET_ARCH_ABI := arm64-v8a x86 x86_64 armeabi-v7a
+#TARGET_ARCH_ABI := arm64-v8a x86 x86_64 armeabi-v7a
 APP_OPTIM := $(CONFIG)
 
 APP_BUILD_SCRIPT := Android.mk

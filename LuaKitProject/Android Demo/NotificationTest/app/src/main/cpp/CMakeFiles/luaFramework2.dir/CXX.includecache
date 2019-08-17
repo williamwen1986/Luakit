@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/larpoux/projmac/luakit/LuaKitProject/Android Demo/NotificationTest/app/src/main/cpp/native-lib.cpp
+jni.h
+-
+string
+-
+
