@@ -3174,8 +3174,6 @@ our %unified_info = (
                 {
                     "deps" =>
                         [
-                            "ssl/packet.o",
-                            "ssl/tls13_enc.o",
                             "ssl/bio_ssl.o",
                             "ssl/d1_lib.o",
                             "ssl/d1_msg.o",
@@ -3205,6 +3203,8 @@ our %unified_info = (
                             "ssl/t1_trce.o",
                             "ssl/tls13_enc.o",
                             "ssl/tls_srp.o",
+                            "ssl/packet.o",
+                            "ssl/tls13_enc.o",
                         ],
                     "products" =>
                         {

@@ -221,11 +221,20 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 //No help, variable specified on the command line.
 LIBRARY_OUTPUT_DIRECTORY:UNINITIALIZED=debug
 
-//Value Computed by CMake
-luakit_BINARY_DIR:STATIC=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libxml
+//No help, variable specified on the command line.
+OPENSSL_LIBRARIES:UNINITIALIZED=../openssl-1.1.1c/lib
+
+//No help, variable specified on the command line.
+OPENSSL_ROOT_DIR:UNINITIALIZED=../openssl-1.1.1c
 
 //Value Computed by CMake
-luakit_SOURCE_DIR:STATIC=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libxml
+luakit_BINARY_DIR:STATIC=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/outputs/arm64-v8a
+
+//Value Computed by CMake
+luakit_SOURCE_DIR:STATIC=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14
+
+//Dependencies for the target
+xml_LIB_DEPENDS:STATIC=general;iconv;
 
 
 ########################
@@ -328,7 +337,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

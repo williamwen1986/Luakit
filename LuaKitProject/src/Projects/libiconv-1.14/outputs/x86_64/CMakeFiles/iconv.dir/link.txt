@@ -1,0 +1,2 @@
+/MacosExt/Users/larpoux/android-sdk-macosx/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/x86_64-linux-android-ar qc /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/x86_64/libiconv.a  CMakeFiles/iconv.dir/libcharset/lib/localcharset.c.o CMakeFiles/iconv.dir/lib/iconv.c.o CMakeFiles/iconv.dir/lib/relocatable.c.o
+/MacosExt/Users/larpoux/android-sdk-macosx/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/x86_64-linux-android-ranlib /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/x86_64/libiconv.a

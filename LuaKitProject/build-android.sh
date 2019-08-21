@@ -53,10 +53,16 @@ pushd "$OUTPUT_DIR" > /dev/null
 dir=$(pwd)
 export OUTPUT_DIR=$dir
 popd > /dev/null
+#---------------------------------------------
+cd src/Projects/openssl-1.1.1c
+./build-android-openssl.sh
+checkError
+cp -v -a lib/* $OUTPUT_DIR
+cd ../../..
 
-#------------------------------------------------
+#---------------------------------------------
 if [ .$BUILD = ."CMAKE" ]; then
-
+#---------------------------------------------
 cd src/Projects/libevent
 ../../../bin/build-android.sh
 checkError
@@ -77,26 +83,27 @@ cd src/Projects/modp_b64
 checkError
 cd ../../..
 
-cd src/Projects/openssl-1.1.1c
-./build-android-openssl.sh
+cd src/Projects/curl
+../../../bin/build-android.sh
 checkError
-cp -v -a lib/* $OUTPUT_DIR
 cd ../../..
-#----------------------------------------------
+
+cd src/Projects/base
+../../../bin/build-android.sh
+checkError
+cd ../../..
+
+cd src/Projects/common
+../../../bin/build-android.sh
+checkError
+cd ../../..
+#---------------------------------------------
 else
-
-cd src/Projects/openssl-1.1.1c
-./build-android-openssl.sh
-checkError
-cp -v -a lib/* $OUTPUT_DIR
-./build-android.sh
-checkError
-cd ../../..
-
+#---------------------------------------------
 cd src/Projects/jni
 ./build-android.sh
 checkError
 cd ../../..
-
+#---------------------------------------------
 fi
 #---------------------------------------------

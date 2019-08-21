@@ -14,7 +14,7 @@ project(luakit)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_SYS_TIME_H -DANDROID -Wno-multichar -DHAVE_CONFIG_H -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DOS_ANDROID")
 
 
-add_library(      
+add_library(
                 # Sets the name of the library.
                 event
 

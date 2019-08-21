@@ -16,7 +16,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-multichar -DANDROID -DLIBDIR=c -DBUILDI
 
 add_library(      
                 # Sets the name of the library.
-                libiconv
+                iconv
 
                 # Sets the library as a shared library.
                 STATIC

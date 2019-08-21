@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named libiconv
+# Target rules for targets named iconv
 
 # Build rule for target.
-libiconv: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 libiconv
-.PHONY : libiconv
+iconv: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 iconv
+.PHONY : iconv
 
 # fast build rule for target.
-libiconv/fast:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/build
-.PHONY : libiconv/fast
+iconv/fast:
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/build
+.PHONY : iconv/fast
 
 lib/iconv.o: lib/iconv.c.o
 
@@ -129,7 +129,7 @@ lib/iconv.o: lib/iconv.c.o
 
 # target to build an object file
 lib/iconv.c.o:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/lib/iconv.c.o
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/lib/iconv.c.o
 .PHONY : lib/iconv.c.o
 
 lib/iconv.i: lib/iconv.c.i
@@ -138,7 +138,7 @@ lib/iconv.i: lib/iconv.c.i
 
 # target to preprocess a source file
 lib/iconv.c.i:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/lib/iconv.c.i
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/lib/iconv.c.i
 .PHONY : lib/iconv.c.i
 
 lib/iconv.s: lib/iconv.c.s
@@ -147,7 +147,7 @@ lib/iconv.s: lib/iconv.c.s
 
 # target to generate assembly for a file
 lib/iconv.c.s:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/lib/iconv.c.s
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/lib/iconv.c.s
 .PHONY : lib/iconv.c.s
 
 lib/relocatable.o: lib/relocatable.c.o
@@ -156,7 +156,7 @@ lib/relocatable.o: lib/relocatable.c.o
 
 # target to build an object file
 lib/relocatable.c.o:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/lib/relocatable.c.o
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/lib/relocatable.c.o
 .PHONY : lib/relocatable.c.o
 
 lib/relocatable.i: lib/relocatable.c.i
@@ -165,7 +165,7 @@ lib/relocatable.i: lib/relocatable.c.i
 
 # target to preprocess a source file
 lib/relocatable.c.i:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/lib/relocatable.c.i
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/lib/relocatable.c.i
 .PHONY : lib/relocatable.c.i
 
 lib/relocatable.s: lib/relocatable.c.s
@@ -174,7 +174,7 @@ lib/relocatable.s: lib/relocatable.c.s
 
 # target to generate assembly for a file
 lib/relocatable.c.s:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/lib/relocatable.c.s
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/lib/relocatable.c.s
 .PHONY : lib/relocatable.c.s
 
 libcharset/lib/localcharset.o: libcharset/lib/localcharset.c.o
@@ -183,7 +183,7 @@ libcharset/lib/localcharset.o: libcharset/lib/localcharset.c.o
 
 # target to build an object file
 libcharset/lib/localcharset.c.o:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/libcharset/lib/localcharset.c.o
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/libcharset/lib/localcharset.c.o
 .PHONY : libcharset/lib/localcharset.c.o
 
 libcharset/lib/localcharset.i: libcharset/lib/localcharset.c.i
@@ -192,7 +192,7 @@ libcharset/lib/localcharset.i: libcharset/lib/localcharset.c.i
 
 # target to preprocess a source file
 libcharset/lib/localcharset.c.i:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/libcharset/lib/localcharset.c.i
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/libcharset/lib/localcharset.c.i
 .PHONY : libcharset/lib/localcharset.c.i
 
 libcharset/lib/localcharset.s: libcharset/lib/localcharset.c.s
@@ -201,7 +201,7 @@ libcharset/lib/localcharset.s: libcharset/lib/localcharset.c.s
 
 # target to generate assembly for a file
 libcharset/lib/localcharset.c.s:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/libcharset/lib/localcharset.c.s
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/libcharset/lib/localcharset.c.s
 .PHONY : libcharset/lib/localcharset.c.s
 
 # Help Target
@@ -212,7 +212,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... libiconv"
+	@echo "... iconv"
 	@echo "... lib/iconv.o"
 	@echo "... lib/iconv.i"
 	@echo "... lib/iconv.s"

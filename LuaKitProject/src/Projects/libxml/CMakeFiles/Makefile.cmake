@@ -9,6 +9,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "/MacosExt/Users/larpoux/android-sdk-macosx/ndk-bundle/build/cmake/android.toolchain.cmake"
   "/MacosExt/Users/larpoux/android-sdk-macosx/ndk-bundle/build/cmake/platforms.cmake"
+  "/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/CMakeLists.txt"
   "CMakeFiles/3.15.0/CMakeCCompiler.cmake"
   "CMakeFiles/3.15.0/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.15.0/CMakeSystem.cmake"
@@ -77,9 +78,11 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/3.15.0/CMakeCCompiler.cmake"
   "CMakeFiles/3.15.0/CMakeCXXCompiler.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
+  "/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/outputs/arm64-v8a/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/libxml.dir/DependInfo.cmake"
+  "CMakeFiles/xml.dir/DependInfo.cmake"
+  "/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/outputs/arm64-v8a/CMakeFiles/iconv.dir/DependInfo.cmake"
   )

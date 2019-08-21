@@ -53,12 +53,12 @@ CMAKE_BINARY_DIR = /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Proj
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/libiconv.dir/all
+all: CMakeFiles/iconv.dir/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
-clean: CMakeFiles/libiconv.dir/clean
+clean: CMakeFiles/iconv.dir/clean
 
 .PHONY : clean
 
@@ -68,31 +68,31 @@ preinstall:
 .PHONY : preinstall
 
 #=============================================================================
-# Target rules for target CMakeFiles/libiconv.dir
+# Target rules for target CMakeFiles/iconv.dir
 
 # All Build rule for target.
-CMakeFiles/libiconv.dir/all:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/depend
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/CMakeFiles --progress-num=1,2,3,4 "Built target libiconv"
-.PHONY : CMakeFiles/libiconv.dir/all
+CMakeFiles/iconv.dir/all:
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/depend
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/CMakeFiles --progress-num=1,2,3,4 "Built target iconv"
+.PHONY : CMakeFiles/iconv.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/libiconv.dir/rule: cmake_check_build_system
+CMakeFiles/iconv.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/CMakeFiles 4
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/libiconv.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/iconv.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/CMakeFiles 0
-.PHONY : CMakeFiles/libiconv.dir/rule
+.PHONY : CMakeFiles/iconv.dir/rule
 
 # Convenience name for target.
-libiconv: CMakeFiles/libiconv.dir/rule
+iconv: CMakeFiles/iconv.dir/rule
 
-.PHONY : libiconv
+.PHONY : iconv
 
 # clean rule for target.
-CMakeFiles/libiconv.dir/clean:
-	$(MAKE) -f CMakeFiles/libiconv.dir/build.make CMakeFiles/libiconv.dir/clean
-.PHONY : CMakeFiles/libiconv.dir/clean
+CMakeFiles/iconv.dir/clean:
+	$(MAKE) -f CMakeFiles/iconv.dir/build.make CMakeFiles/iconv.dir/clean
+.PHONY : CMakeFiles/iconv.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

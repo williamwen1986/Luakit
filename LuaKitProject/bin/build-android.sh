@@ -50,7 +50,7 @@ make_abi() {
                 -DANDROID_ABI=$ABI \
                 -DANDROID_NATIVE_API_LEVEL=$ANDROID_API \
                 -DANDROID_STL=c++_static \
-                -DLIBRARY_OUTPUT_DIRECTORY=$CONFIG \
+                -DLIBRARY_OUTPUT_DIRECTORY=$OUTPUT_DIR/$ABI \
                 -DCMAKE_BUILD_TYPE=$CONFIG \
                 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=$OUTPUT_DIR/$ABI \
                 -DOPENSSL_ROOT_DIR=../openssl-1.1.1c \

@@ -11,27 +11,67 @@ project(luakit)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DANDROID -fvisibility=hidden")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DANDROID -DHAVE_CONFIG_H -DUSE_OPENSSL -DUSE_SSLEAY -DHAVE_LIBZ -DHAVE_ZLIB_H")
 
+set(outputDir $ENV{OUTPUT_DIR})
 
-add_library(      
-                # Sets the name of the library.
-                libxml
+file(GLOB all_SRCS
+        "${PROJECT_SOURCE_DIR}/lib/*.cpp"
+        "${PROJECT_SOURCE_DIR}/lib/*.c"
+        "${PROJECT_SOURCE_DIR}/lib/vtls/*.c"
+        "${PROJECT_SOURCE_DIR}/lib/vauth/*.c"
+        )
+
+add_library(
+               # Sets the name of the library.
+                curl
 
                 # Sets the library as a shared library.
                 STATIC
 
-                # Provides a relative path to your source file(s).
-	src/c14n.c src/catalog.c src/chvalid.c src/debugXML.c src/dict.c src/DOCBparser.c
-	src/encoding.c src/entities.c src/error.c src/globals.c src/hash.c src/HTMLparser.c
-	src/HTMLtree.c src/legacy.c src/list.c src/nanoftp.c src/nanohttp.c src/parser.c
-	src/parserInternals.c src/pattern.c src/relaxng.c src/SAX.c src/SAX2.c
-	src/threads.c src/tree.c src/trionan.c src/triostr.c src/uri.c src/valid.c
-	src/xinclude.c src/xlink.c src/xmlIO.c src/xmlmemory.c src/xmlmodule.c
-	src/xmlreader.c src/xmlregexp.c src/xmlsave.c src/xmlschemas.c src/xmlschemastypes.c src/xmlstring.c
-	src/xmlunicode.c src/xmlwriter.c src/xpath.c src/xpointer.c src/buf.c)
+		${all_SRCS}
+)
 
-# Specifies a path to native header files.
+#set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/outputs/${ANDROID_ABI})
+#file(MAKE_DIRECTORY ${lib_build_DIR})
+#add_subdirectory( "${PROJECT_SOURCE_DIR}/../openssl-1.1.1c" ${lib_build_DIR} )
+#set_target_properties( ssl PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libssl.a)
+
+link_directories(${outputDir}/${ANDROID_ABI})
+
+
+add_library( ssl
+             STATIC
+             IMPORTED )
+set_target_properties( # Specifies the target library.
+                       ssl
+
+                       # Specifies the parameter you want to define.
+                       PROPERTIES IMPORTED_LOCATION
+
+                       # Provides the path to the library you want to import.
+                       ${outputDir}/${ANDROID_ABI}/libssl.a )
+####target_link_libraries(base modp_b64 event ssl crypto)
+
+add_library( crypto
+             STATIC
+             IMPORTED )
+set_target_properties( # Specifies the target library.
+                       crypto
+
+                       # Specifies the parameter you want to define.
+                       PROPERTIES IMPORTED_LOCATION
+
+                       # Provides the path to the library you want to import.
+                       ${outputDir}/${ANDROID_ABI}/libcrypto.a )
+
+
+
+target_link_libraries( curl ssl crypto)
+  # Specifies a path to native header files.
 include_directories(
-	$(PROJECT_SOURCE_DIR)/src/include
+	$(PROJECT_SOURCE_DIR)/include
+	$(PROJECT_SOURCE_DIR)/lib
+	$(PROJECT_SOURCE_DIR)/../openssl-1.1.1c/include
+	/usr/local/Cellar/node/11.5.0/include/node
 )

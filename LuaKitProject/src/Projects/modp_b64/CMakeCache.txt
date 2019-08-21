@@ -221,6 +221,12 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 //No help, variable specified on the command line.
 LIBRARY_OUTPUT_DIRECTORY:UNINITIALIZED=debug
 
+//No help, variable specified on the command line.
+OPENSSL_LIBRARIES:UNINITIALIZED=../openssl-1.1.1c/lib
+
+//No help, variable specified on the command line.
+OPENSSL_ROOT_DIR:UNINITIALIZED=../openssl-1.1.1c
+
 //Value Computed by CMake
 luakit_BINARY_DIR:STATIC=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/modp_b64
 

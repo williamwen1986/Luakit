@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/lazy_instance.cc
+base/lazy_instance.h
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/base/lazy_instance.h
+base/at_exit.h
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/base/at_exit.h
+base/atomicops.h
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/base/atomicops.h
+base/basictypes.h
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/base/basictypes.h
+base/threading/platform_thread.h
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/base/threading/platform_thread.h
+base/third_party/dynamic_annotations/dynamic_annotations.h
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/base/third_party/dynamic_annotations/dynamic_annotations.h
+

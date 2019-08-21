@@ -11,7 +11,7 @@ project(luakit)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-add_library(      
+add_library(
                 # Sets the name of the library.
                 modp_b64
 
@@ -19,7 +19,7 @@ add_library(
                 STATIC
 
                 # Provides a relative path to your source file(s).
-                modp_b64.cc 
+                modp_b64.cc
 )
 
 # Specifies a path to native header files.

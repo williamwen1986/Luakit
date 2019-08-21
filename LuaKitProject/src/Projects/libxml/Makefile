@@ -111,17 +111,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named libxml
+# Target rules for targets named xml
 
 # Build rule for target.
-libxml: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 libxml
-.PHONY : libxml
+xml: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 xml
+.PHONY : xml
 
 # fast build rule for target.
-libxml/fast:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/build
-.PHONY : libxml/fast
+xml/fast:
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/build
+.PHONY : xml/fast
+
+#=============================================================================
+# Target rules for targets named iconv
+
+# Build rule for target.
+iconv: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 iconv
+.PHONY : iconv
+
+# fast build rule for target.
+iconv/fast:
+	$(MAKE) -f /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/outputs/arm64-v8a/CMakeFiles/iconv.dir/build.make /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/outputs/arm64-v8a/CMakeFiles/iconv.dir/build
+.PHONY : iconv/fast
 
 src/DOCBparser.o: src/DOCBparser.c.o
 
@@ -129,7 +142,7 @@ src/DOCBparser.o: src/DOCBparser.c.o
 
 # target to build an object file
 src/DOCBparser.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/DOCBparser.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/DOCBparser.c.o
 .PHONY : src/DOCBparser.c.o
 
 src/DOCBparser.i: src/DOCBparser.c.i
@@ -138,7 +151,7 @@ src/DOCBparser.i: src/DOCBparser.c.i
 
 # target to preprocess a source file
 src/DOCBparser.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/DOCBparser.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/DOCBparser.c.i
 .PHONY : src/DOCBparser.c.i
 
 src/DOCBparser.s: src/DOCBparser.c.s
@@ -147,7 +160,7 @@ src/DOCBparser.s: src/DOCBparser.c.s
 
 # target to generate assembly for a file
 src/DOCBparser.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/DOCBparser.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/DOCBparser.c.s
 .PHONY : src/DOCBparser.c.s
 
 src/HTMLparser.o: src/HTMLparser.c.o
@@ -156,7 +169,7 @@ src/HTMLparser.o: src/HTMLparser.c.o
 
 # target to build an object file
 src/HTMLparser.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/HTMLparser.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/HTMLparser.c.o
 .PHONY : src/HTMLparser.c.o
 
 src/HTMLparser.i: src/HTMLparser.c.i
@@ -165,7 +178,7 @@ src/HTMLparser.i: src/HTMLparser.c.i
 
 # target to preprocess a source file
 src/HTMLparser.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/HTMLparser.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/HTMLparser.c.i
 .PHONY : src/HTMLparser.c.i
 
 src/HTMLparser.s: src/HTMLparser.c.s
@@ -174,7 +187,7 @@ src/HTMLparser.s: src/HTMLparser.c.s
 
 # target to generate assembly for a file
 src/HTMLparser.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/HTMLparser.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/HTMLparser.c.s
 .PHONY : src/HTMLparser.c.s
 
 src/HTMLtree.o: src/HTMLtree.c.o
@@ -183,7 +196,7 @@ src/HTMLtree.o: src/HTMLtree.c.o
 
 # target to build an object file
 src/HTMLtree.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/HTMLtree.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/HTMLtree.c.o
 .PHONY : src/HTMLtree.c.o
 
 src/HTMLtree.i: src/HTMLtree.c.i
@@ -192,7 +205,7 @@ src/HTMLtree.i: src/HTMLtree.c.i
 
 # target to preprocess a source file
 src/HTMLtree.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/HTMLtree.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/HTMLtree.c.i
 .PHONY : src/HTMLtree.c.i
 
 src/HTMLtree.s: src/HTMLtree.c.s
@@ -201,7 +214,7 @@ src/HTMLtree.s: src/HTMLtree.c.s
 
 # target to generate assembly for a file
 src/HTMLtree.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/HTMLtree.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/HTMLtree.c.s
 .PHONY : src/HTMLtree.c.s
 
 src/SAX.o: src/SAX.c.o
@@ -210,7 +223,7 @@ src/SAX.o: src/SAX.c.o
 
 # target to build an object file
 src/SAX.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/SAX.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/SAX.c.o
 .PHONY : src/SAX.c.o
 
 src/SAX.i: src/SAX.c.i
@@ -219,7 +232,7 @@ src/SAX.i: src/SAX.c.i
 
 # target to preprocess a source file
 src/SAX.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/SAX.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/SAX.c.i
 .PHONY : src/SAX.c.i
 
 src/SAX.s: src/SAX.c.s
@@ -228,7 +241,7 @@ src/SAX.s: src/SAX.c.s
 
 # target to generate assembly for a file
 src/SAX.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/SAX.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/SAX.c.s
 .PHONY : src/SAX.c.s
 
 src/SAX2.o: src/SAX2.c.o
@@ -237,7 +250,7 @@ src/SAX2.o: src/SAX2.c.o
 
 # target to build an object file
 src/SAX2.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/SAX2.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/SAX2.c.o
 .PHONY : src/SAX2.c.o
 
 src/SAX2.i: src/SAX2.c.i
@@ -246,7 +259,7 @@ src/SAX2.i: src/SAX2.c.i
 
 # target to preprocess a source file
 src/SAX2.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/SAX2.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/SAX2.c.i
 .PHONY : src/SAX2.c.i
 
 src/SAX2.s: src/SAX2.c.s
@@ -255,7 +268,7 @@ src/SAX2.s: src/SAX2.c.s
 
 # target to generate assembly for a file
 src/SAX2.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/SAX2.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/SAX2.c.s
 .PHONY : src/SAX2.c.s
 
 src/buf.o: src/buf.c.o
@@ -264,7 +277,7 @@ src/buf.o: src/buf.c.o
 
 # target to build an object file
 src/buf.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/buf.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/buf.c.o
 .PHONY : src/buf.c.o
 
 src/buf.i: src/buf.c.i
@@ -273,7 +286,7 @@ src/buf.i: src/buf.c.i
 
 # target to preprocess a source file
 src/buf.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/buf.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/buf.c.i
 .PHONY : src/buf.c.i
 
 src/buf.s: src/buf.c.s
@@ -282,7 +295,7 @@ src/buf.s: src/buf.c.s
 
 # target to generate assembly for a file
 src/buf.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/buf.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/buf.c.s
 .PHONY : src/buf.c.s
 
 src/c14n.o: src/c14n.c.o
@@ -291,7 +304,7 @@ src/c14n.o: src/c14n.c.o
 
 # target to build an object file
 src/c14n.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/c14n.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/c14n.c.o
 .PHONY : src/c14n.c.o
 
 src/c14n.i: src/c14n.c.i
@@ -300,7 +313,7 @@ src/c14n.i: src/c14n.c.i
 
 # target to preprocess a source file
 src/c14n.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/c14n.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/c14n.c.i
 .PHONY : src/c14n.c.i
 
 src/c14n.s: src/c14n.c.s
@@ -309,7 +322,7 @@ src/c14n.s: src/c14n.c.s
 
 # target to generate assembly for a file
 src/c14n.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/c14n.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/c14n.c.s
 .PHONY : src/c14n.c.s
 
 src/catalog.o: src/catalog.c.o
@@ -318,7 +331,7 @@ src/catalog.o: src/catalog.c.o
 
 # target to build an object file
 src/catalog.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/catalog.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/catalog.c.o
 .PHONY : src/catalog.c.o
 
 src/catalog.i: src/catalog.c.i
@@ -327,7 +340,7 @@ src/catalog.i: src/catalog.c.i
 
 # target to preprocess a source file
 src/catalog.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/catalog.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/catalog.c.i
 .PHONY : src/catalog.c.i
 
 src/catalog.s: src/catalog.c.s
@@ -336,7 +349,7 @@ src/catalog.s: src/catalog.c.s
 
 # target to generate assembly for a file
 src/catalog.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/catalog.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/catalog.c.s
 .PHONY : src/catalog.c.s
 
 src/chvalid.o: src/chvalid.c.o
@@ -345,7 +358,7 @@ src/chvalid.o: src/chvalid.c.o
 
 # target to build an object file
 src/chvalid.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/chvalid.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/chvalid.c.o
 .PHONY : src/chvalid.c.o
 
 src/chvalid.i: src/chvalid.c.i
@@ -354,7 +367,7 @@ src/chvalid.i: src/chvalid.c.i
 
 # target to preprocess a source file
 src/chvalid.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/chvalid.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/chvalid.c.i
 .PHONY : src/chvalid.c.i
 
 src/chvalid.s: src/chvalid.c.s
@@ -363,7 +376,7 @@ src/chvalid.s: src/chvalid.c.s
 
 # target to generate assembly for a file
 src/chvalid.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/chvalid.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/chvalid.c.s
 .PHONY : src/chvalid.c.s
 
 src/debugXML.o: src/debugXML.c.o
@@ -372,7 +385,7 @@ src/debugXML.o: src/debugXML.c.o
 
 # target to build an object file
 src/debugXML.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/debugXML.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/debugXML.c.o
 .PHONY : src/debugXML.c.o
 
 src/debugXML.i: src/debugXML.c.i
@@ -381,7 +394,7 @@ src/debugXML.i: src/debugXML.c.i
 
 # target to preprocess a source file
 src/debugXML.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/debugXML.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/debugXML.c.i
 .PHONY : src/debugXML.c.i
 
 src/debugXML.s: src/debugXML.c.s
@@ -390,7 +403,7 @@ src/debugXML.s: src/debugXML.c.s
 
 # target to generate assembly for a file
 src/debugXML.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/debugXML.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/debugXML.c.s
 .PHONY : src/debugXML.c.s
 
 src/dict.o: src/dict.c.o
@@ -399,7 +412,7 @@ src/dict.o: src/dict.c.o
 
 # target to build an object file
 src/dict.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/dict.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/dict.c.o
 .PHONY : src/dict.c.o
 
 src/dict.i: src/dict.c.i
@@ -408,7 +421,7 @@ src/dict.i: src/dict.c.i
 
 # target to preprocess a source file
 src/dict.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/dict.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/dict.c.i
 .PHONY : src/dict.c.i
 
 src/dict.s: src/dict.c.s
@@ -417,7 +430,7 @@ src/dict.s: src/dict.c.s
 
 # target to generate assembly for a file
 src/dict.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/dict.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/dict.c.s
 .PHONY : src/dict.c.s
 
 src/encoding.o: src/encoding.c.o
@@ -426,7 +439,7 @@ src/encoding.o: src/encoding.c.o
 
 # target to build an object file
 src/encoding.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/encoding.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/encoding.c.o
 .PHONY : src/encoding.c.o
 
 src/encoding.i: src/encoding.c.i
@@ -435,7 +448,7 @@ src/encoding.i: src/encoding.c.i
 
 # target to preprocess a source file
 src/encoding.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/encoding.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/encoding.c.i
 .PHONY : src/encoding.c.i
 
 src/encoding.s: src/encoding.c.s
@@ -444,7 +457,7 @@ src/encoding.s: src/encoding.c.s
 
 # target to generate assembly for a file
 src/encoding.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/encoding.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/encoding.c.s
 .PHONY : src/encoding.c.s
 
 src/entities.o: src/entities.c.o
@@ -453,7 +466,7 @@ src/entities.o: src/entities.c.o
 
 # target to build an object file
 src/entities.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/entities.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/entities.c.o
 .PHONY : src/entities.c.o
 
 src/entities.i: src/entities.c.i
@@ -462,7 +475,7 @@ src/entities.i: src/entities.c.i
 
 # target to preprocess a source file
 src/entities.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/entities.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/entities.c.i
 .PHONY : src/entities.c.i
 
 src/entities.s: src/entities.c.s
@@ -471,7 +484,7 @@ src/entities.s: src/entities.c.s
 
 # target to generate assembly for a file
 src/entities.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/entities.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/entities.c.s
 .PHONY : src/entities.c.s
 
 src/error.o: src/error.c.o
@@ -480,7 +493,7 @@ src/error.o: src/error.c.o
 
 # target to build an object file
 src/error.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/error.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/error.c.o
 .PHONY : src/error.c.o
 
 src/error.i: src/error.c.i
@@ -489,7 +502,7 @@ src/error.i: src/error.c.i
 
 # target to preprocess a source file
 src/error.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/error.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/error.c.i
 .PHONY : src/error.c.i
 
 src/error.s: src/error.c.s
@@ -498,7 +511,7 @@ src/error.s: src/error.c.s
 
 # target to generate assembly for a file
 src/error.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/error.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/error.c.s
 .PHONY : src/error.c.s
 
 src/globals.o: src/globals.c.o
@@ -507,7 +520,7 @@ src/globals.o: src/globals.c.o
 
 # target to build an object file
 src/globals.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/globals.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/globals.c.o
 .PHONY : src/globals.c.o
 
 src/globals.i: src/globals.c.i
@@ -516,7 +529,7 @@ src/globals.i: src/globals.c.i
 
 # target to preprocess a source file
 src/globals.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/globals.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/globals.c.i
 .PHONY : src/globals.c.i
 
 src/globals.s: src/globals.c.s
@@ -525,7 +538,7 @@ src/globals.s: src/globals.c.s
 
 # target to generate assembly for a file
 src/globals.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/globals.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/globals.c.s
 .PHONY : src/globals.c.s
 
 src/hash.o: src/hash.c.o
@@ -534,7 +547,7 @@ src/hash.o: src/hash.c.o
 
 # target to build an object file
 src/hash.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/hash.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/hash.c.o
 .PHONY : src/hash.c.o
 
 src/hash.i: src/hash.c.i
@@ -543,7 +556,7 @@ src/hash.i: src/hash.c.i
 
 # target to preprocess a source file
 src/hash.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/hash.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/hash.c.i
 .PHONY : src/hash.c.i
 
 src/hash.s: src/hash.c.s
@@ -552,7 +565,7 @@ src/hash.s: src/hash.c.s
 
 # target to generate assembly for a file
 src/hash.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/hash.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/hash.c.s
 .PHONY : src/hash.c.s
 
 src/legacy.o: src/legacy.c.o
@@ -561,7 +574,7 @@ src/legacy.o: src/legacy.c.o
 
 # target to build an object file
 src/legacy.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/legacy.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/legacy.c.o
 .PHONY : src/legacy.c.o
 
 src/legacy.i: src/legacy.c.i
@@ -570,7 +583,7 @@ src/legacy.i: src/legacy.c.i
 
 # target to preprocess a source file
 src/legacy.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/legacy.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/legacy.c.i
 .PHONY : src/legacy.c.i
 
 src/legacy.s: src/legacy.c.s
@@ -579,7 +592,7 @@ src/legacy.s: src/legacy.c.s
 
 # target to generate assembly for a file
 src/legacy.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/legacy.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/legacy.c.s
 .PHONY : src/legacy.c.s
 
 src/list.o: src/list.c.o
@@ -588,7 +601,7 @@ src/list.o: src/list.c.o
 
 # target to build an object file
 src/list.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/list.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/list.c.o
 .PHONY : src/list.c.o
 
 src/list.i: src/list.c.i
@@ -597,7 +610,7 @@ src/list.i: src/list.c.i
 
 # target to preprocess a source file
 src/list.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/list.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/list.c.i
 .PHONY : src/list.c.i
 
 src/list.s: src/list.c.s
@@ -606,7 +619,7 @@ src/list.s: src/list.c.s
 
 # target to generate assembly for a file
 src/list.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/list.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/list.c.s
 .PHONY : src/list.c.s
 
 src/nanoftp.o: src/nanoftp.c.o
@@ -615,7 +628,7 @@ src/nanoftp.o: src/nanoftp.c.o
 
 # target to build an object file
 src/nanoftp.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/nanoftp.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/nanoftp.c.o
 .PHONY : src/nanoftp.c.o
 
 src/nanoftp.i: src/nanoftp.c.i
@@ -624,7 +637,7 @@ src/nanoftp.i: src/nanoftp.c.i
 
 # target to preprocess a source file
 src/nanoftp.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/nanoftp.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/nanoftp.c.i
 .PHONY : src/nanoftp.c.i
 
 src/nanoftp.s: src/nanoftp.c.s
@@ -633,7 +646,7 @@ src/nanoftp.s: src/nanoftp.c.s
 
 # target to generate assembly for a file
 src/nanoftp.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/nanoftp.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/nanoftp.c.s
 .PHONY : src/nanoftp.c.s
 
 src/nanohttp.o: src/nanohttp.c.o
@@ -642,7 +655,7 @@ src/nanohttp.o: src/nanohttp.c.o
 
 # target to build an object file
 src/nanohttp.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/nanohttp.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/nanohttp.c.o
 .PHONY : src/nanohttp.c.o
 
 src/nanohttp.i: src/nanohttp.c.i
@@ -651,7 +664,7 @@ src/nanohttp.i: src/nanohttp.c.i
 
 # target to preprocess a source file
 src/nanohttp.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/nanohttp.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/nanohttp.c.i
 .PHONY : src/nanohttp.c.i
 
 src/nanohttp.s: src/nanohttp.c.s
@@ -660,7 +673,7 @@ src/nanohttp.s: src/nanohttp.c.s
 
 # target to generate assembly for a file
 src/nanohttp.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/nanohttp.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/nanohttp.c.s
 .PHONY : src/nanohttp.c.s
 
 src/parser.o: src/parser.c.o
@@ -669,7 +682,7 @@ src/parser.o: src/parser.c.o
 
 # target to build an object file
 src/parser.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/parser.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/parser.c.o
 .PHONY : src/parser.c.o
 
 src/parser.i: src/parser.c.i
@@ -678,7 +691,7 @@ src/parser.i: src/parser.c.i
 
 # target to preprocess a source file
 src/parser.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/parser.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/parser.c.i
 .PHONY : src/parser.c.i
 
 src/parser.s: src/parser.c.s
@@ -687,7 +700,7 @@ src/parser.s: src/parser.c.s
 
 # target to generate assembly for a file
 src/parser.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/parser.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/parser.c.s
 .PHONY : src/parser.c.s
 
 src/parserInternals.o: src/parserInternals.c.o
@@ -696,7 +709,7 @@ src/parserInternals.o: src/parserInternals.c.o
 
 # target to build an object file
 src/parserInternals.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/parserInternals.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/parserInternals.c.o
 .PHONY : src/parserInternals.c.o
 
 src/parserInternals.i: src/parserInternals.c.i
@@ -705,7 +718,7 @@ src/parserInternals.i: src/parserInternals.c.i
 
 # target to preprocess a source file
 src/parserInternals.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/parserInternals.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/parserInternals.c.i
 .PHONY : src/parserInternals.c.i
 
 src/parserInternals.s: src/parserInternals.c.s
@@ -714,7 +727,7 @@ src/parserInternals.s: src/parserInternals.c.s
 
 # target to generate assembly for a file
 src/parserInternals.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/parserInternals.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/parserInternals.c.s
 .PHONY : src/parserInternals.c.s
 
 src/pattern.o: src/pattern.c.o
@@ -723,7 +736,7 @@ src/pattern.o: src/pattern.c.o
 
 # target to build an object file
 src/pattern.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/pattern.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/pattern.c.o
 .PHONY : src/pattern.c.o
 
 src/pattern.i: src/pattern.c.i
@@ -732,7 +745,7 @@ src/pattern.i: src/pattern.c.i
 
 # target to preprocess a source file
 src/pattern.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/pattern.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/pattern.c.i
 .PHONY : src/pattern.c.i
 
 src/pattern.s: src/pattern.c.s
@@ -741,7 +754,7 @@ src/pattern.s: src/pattern.c.s
 
 # target to generate assembly for a file
 src/pattern.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/pattern.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/pattern.c.s
 .PHONY : src/pattern.c.s
 
 src/relaxng.o: src/relaxng.c.o
@@ -750,7 +763,7 @@ src/relaxng.o: src/relaxng.c.o
 
 # target to build an object file
 src/relaxng.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/relaxng.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/relaxng.c.o
 .PHONY : src/relaxng.c.o
 
 src/relaxng.i: src/relaxng.c.i
@@ -759,7 +772,7 @@ src/relaxng.i: src/relaxng.c.i
 
 # target to preprocess a source file
 src/relaxng.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/relaxng.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/relaxng.c.i
 .PHONY : src/relaxng.c.i
 
 src/relaxng.s: src/relaxng.c.s
@@ -768,7 +781,7 @@ src/relaxng.s: src/relaxng.c.s
 
 # target to generate assembly for a file
 src/relaxng.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/relaxng.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/relaxng.c.s
 .PHONY : src/relaxng.c.s
 
 src/threads.o: src/threads.c.o
@@ -777,7 +790,7 @@ src/threads.o: src/threads.c.o
 
 # target to build an object file
 src/threads.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/threads.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/threads.c.o
 .PHONY : src/threads.c.o
 
 src/threads.i: src/threads.c.i
@@ -786,7 +799,7 @@ src/threads.i: src/threads.c.i
 
 # target to preprocess a source file
 src/threads.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/threads.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/threads.c.i
 .PHONY : src/threads.c.i
 
 src/threads.s: src/threads.c.s
@@ -795,7 +808,7 @@ src/threads.s: src/threads.c.s
 
 # target to generate assembly for a file
 src/threads.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/threads.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/threads.c.s
 .PHONY : src/threads.c.s
 
 src/tree.o: src/tree.c.o
@@ -804,7 +817,7 @@ src/tree.o: src/tree.c.o
 
 # target to build an object file
 src/tree.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/tree.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/tree.c.o
 .PHONY : src/tree.c.o
 
 src/tree.i: src/tree.c.i
@@ -813,7 +826,7 @@ src/tree.i: src/tree.c.i
 
 # target to preprocess a source file
 src/tree.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/tree.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/tree.c.i
 .PHONY : src/tree.c.i
 
 src/tree.s: src/tree.c.s
@@ -822,7 +835,7 @@ src/tree.s: src/tree.c.s
 
 # target to generate assembly for a file
 src/tree.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/tree.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/tree.c.s
 .PHONY : src/tree.c.s
 
 src/trionan.o: src/trionan.c.o
@@ -831,7 +844,7 @@ src/trionan.o: src/trionan.c.o
 
 # target to build an object file
 src/trionan.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/trionan.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/trionan.c.o
 .PHONY : src/trionan.c.o
 
 src/trionan.i: src/trionan.c.i
@@ -840,7 +853,7 @@ src/trionan.i: src/trionan.c.i
 
 # target to preprocess a source file
 src/trionan.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/trionan.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/trionan.c.i
 .PHONY : src/trionan.c.i
 
 src/trionan.s: src/trionan.c.s
@@ -849,7 +862,7 @@ src/trionan.s: src/trionan.c.s
 
 # target to generate assembly for a file
 src/trionan.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/trionan.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/trionan.c.s
 .PHONY : src/trionan.c.s
 
 src/triostr.o: src/triostr.c.o
@@ -858,7 +871,7 @@ src/triostr.o: src/triostr.c.o
 
 # target to build an object file
 src/triostr.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/triostr.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/triostr.c.o
 .PHONY : src/triostr.c.o
 
 src/triostr.i: src/triostr.c.i
@@ -867,7 +880,7 @@ src/triostr.i: src/triostr.c.i
 
 # target to preprocess a source file
 src/triostr.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/triostr.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/triostr.c.i
 .PHONY : src/triostr.c.i
 
 src/triostr.s: src/triostr.c.s
@@ -876,7 +889,7 @@ src/triostr.s: src/triostr.c.s
 
 # target to generate assembly for a file
 src/triostr.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/triostr.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/triostr.c.s
 .PHONY : src/triostr.c.s
 
 src/uri.o: src/uri.c.o
@@ -885,7 +898,7 @@ src/uri.o: src/uri.c.o
 
 # target to build an object file
 src/uri.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/uri.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/uri.c.o
 .PHONY : src/uri.c.o
 
 src/uri.i: src/uri.c.i
@@ -894,7 +907,7 @@ src/uri.i: src/uri.c.i
 
 # target to preprocess a source file
 src/uri.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/uri.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/uri.c.i
 .PHONY : src/uri.c.i
 
 src/uri.s: src/uri.c.s
@@ -903,7 +916,7 @@ src/uri.s: src/uri.c.s
 
 # target to generate assembly for a file
 src/uri.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/uri.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/uri.c.s
 .PHONY : src/uri.c.s
 
 src/valid.o: src/valid.c.o
@@ -912,7 +925,7 @@ src/valid.o: src/valid.c.o
 
 # target to build an object file
 src/valid.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/valid.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/valid.c.o
 .PHONY : src/valid.c.o
 
 src/valid.i: src/valid.c.i
@@ -921,7 +934,7 @@ src/valid.i: src/valid.c.i
 
 # target to preprocess a source file
 src/valid.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/valid.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/valid.c.i
 .PHONY : src/valid.c.i
 
 src/valid.s: src/valid.c.s
@@ -930,7 +943,7 @@ src/valid.s: src/valid.c.s
 
 # target to generate assembly for a file
 src/valid.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/valid.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/valid.c.s
 .PHONY : src/valid.c.s
 
 src/xinclude.o: src/xinclude.c.o
@@ -939,7 +952,7 @@ src/xinclude.o: src/xinclude.c.o
 
 # target to build an object file
 src/xinclude.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xinclude.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xinclude.c.o
 .PHONY : src/xinclude.c.o
 
 src/xinclude.i: src/xinclude.c.i
@@ -948,7 +961,7 @@ src/xinclude.i: src/xinclude.c.i
 
 # target to preprocess a source file
 src/xinclude.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xinclude.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xinclude.c.i
 .PHONY : src/xinclude.c.i
 
 src/xinclude.s: src/xinclude.c.s
@@ -957,7 +970,7 @@ src/xinclude.s: src/xinclude.c.s
 
 # target to generate assembly for a file
 src/xinclude.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xinclude.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xinclude.c.s
 .PHONY : src/xinclude.c.s
 
 src/xlink.o: src/xlink.c.o
@@ -966,7 +979,7 @@ src/xlink.o: src/xlink.c.o
 
 # target to build an object file
 src/xlink.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xlink.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xlink.c.o
 .PHONY : src/xlink.c.o
 
 src/xlink.i: src/xlink.c.i
@@ -975,7 +988,7 @@ src/xlink.i: src/xlink.c.i
 
 # target to preprocess a source file
 src/xlink.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xlink.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xlink.c.i
 .PHONY : src/xlink.c.i
 
 src/xlink.s: src/xlink.c.s
@@ -984,7 +997,7 @@ src/xlink.s: src/xlink.c.s
 
 # target to generate assembly for a file
 src/xlink.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xlink.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xlink.c.s
 .PHONY : src/xlink.c.s
 
 src/xmlIO.o: src/xmlIO.c.o
@@ -993,7 +1006,7 @@ src/xmlIO.o: src/xmlIO.c.o
 
 # target to build an object file
 src/xmlIO.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlIO.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlIO.c.o
 .PHONY : src/xmlIO.c.o
 
 src/xmlIO.i: src/xmlIO.c.i
@@ -1002,7 +1015,7 @@ src/xmlIO.i: src/xmlIO.c.i
 
 # target to preprocess a source file
 src/xmlIO.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlIO.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlIO.c.i
 .PHONY : src/xmlIO.c.i
 
 src/xmlIO.s: src/xmlIO.c.s
@@ -1011,7 +1024,7 @@ src/xmlIO.s: src/xmlIO.c.s
 
 # target to generate assembly for a file
 src/xmlIO.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlIO.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlIO.c.s
 .PHONY : src/xmlIO.c.s
 
 src/xmlmemory.o: src/xmlmemory.c.o
@@ -1020,7 +1033,7 @@ src/xmlmemory.o: src/xmlmemory.c.o
 
 # target to build an object file
 src/xmlmemory.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlmemory.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlmemory.c.o
 .PHONY : src/xmlmemory.c.o
 
 src/xmlmemory.i: src/xmlmemory.c.i
@@ -1029,7 +1042,7 @@ src/xmlmemory.i: src/xmlmemory.c.i
 
 # target to preprocess a source file
 src/xmlmemory.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlmemory.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlmemory.c.i
 .PHONY : src/xmlmemory.c.i
 
 src/xmlmemory.s: src/xmlmemory.c.s
@@ -1038,7 +1051,7 @@ src/xmlmemory.s: src/xmlmemory.c.s
 
 # target to generate assembly for a file
 src/xmlmemory.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlmemory.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlmemory.c.s
 .PHONY : src/xmlmemory.c.s
 
 src/xmlmodule.o: src/xmlmodule.c.o
@@ -1047,7 +1060,7 @@ src/xmlmodule.o: src/xmlmodule.c.o
 
 # target to build an object file
 src/xmlmodule.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlmodule.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlmodule.c.o
 .PHONY : src/xmlmodule.c.o
 
 src/xmlmodule.i: src/xmlmodule.c.i
@@ -1056,7 +1069,7 @@ src/xmlmodule.i: src/xmlmodule.c.i
 
 # target to preprocess a source file
 src/xmlmodule.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlmodule.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlmodule.c.i
 .PHONY : src/xmlmodule.c.i
 
 src/xmlmodule.s: src/xmlmodule.c.s
@@ -1065,7 +1078,7 @@ src/xmlmodule.s: src/xmlmodule.c.s
 
 # target to generate assembly for a file
 src/xmlmodule.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlmodule.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlmodule.c.s
 .PHONY : src/xmlmodule.c.s
 
 src/xmlreader.o: src/xmlreader.c.o
@@ -1074,7 +1087,7 @@ src/xmlreader.o: src/xmlreader.c.o
 
 # target to build an object file
 src/xmlreader.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlreader.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlreader.c.o
 .PHONY : src/xmlreader.c.o
 
 src/xmlreader.i: src/xmlreader.c.i
@@ -1083,7 +1096,7 @@ src/xmlreader.i: src/xmlreader.c.i
 
 # target to preprocess a source file
 src/xmlreader.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlreader.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlreader.c.i
 .PHONY : src/xmlreader.c.i
 
 src/xmlreader.s: src/xmlreader.c.s
@@ -1092,7 +1105,7 @@ src/xmlreader.s: src/xmlreader.c.s
 
 # target to generate assembly for a file
 src/xmlreader.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlreader.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlreader.c.s
 .PHONY : src/xmlreader.c.s
 
 src/xmlregexp.o: src/xmlregexp.c.o
@@ -1101,7 +1114,7 @@ src/xmlregexp.o: src/xmlregexp.c.o
 
 # target to build an object file
 src/xmlregexp.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlregexp.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlregexp.c.o
 .PHONY : src/xmlregexp.c.o
 
 src/xmlregexp.i: src/xmlregexp.c.i
@@ -1110,7 +1123,7 @@ src/xmlregexp.i: src/xmlregexp.c.i
 
 # target to preprocess a source file
 src/xmlregexp.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlregexp.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlregexp.c.i
 .PHONY : src/xmlregexp.c.i
 
 src/xmlregexp.s: src/xmlregexp.c.s
@@ -1119,7 +1132,7 @@ src/xmlregexp.s: src/xmlregexp.c.s
 
 # target to generate assembly for a file
 src/xmlregexp.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlregexp.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlregexp.c.s
 .PHONY : src/xmlregexp.c.s
 
 src/xmlsave.o: src/xmlsave.c.o
@@ -1128,7 +1141,7 @@ src/xmlsave.o: src/xmlsave.c.o
 
 # target to build an object file
 src/xmlsave.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlsave.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlsave.c.o
 .PHONY : src/xmlsave.c.o
 
 src/xmlsave.i: src/xmlsave.c.i
@@ -1137,7 +1150,7 @@ src/xmlsave.i: src/xmlsave.c.i
 
 # target to preprocess a source file
 src/xmlsave.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlsave.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlsave.c.i
 .PHONY : src/xmlsave.c.i
 
 src/xmlsave.s: src/xmlsave.c.s
@@ -1146,7 +1159,7 @@ src/xmlsave.s: src/xmlsave.c.s
 
 # target to generate assembly for a file
 src/xmlsave.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlsave.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlsave.c.s
 .PHONY : src/xmlsave.c.s
 
 src/xmlschemas.o: src/xmlschemas.c.o
@@ -1155,7 +1168,7 @@ src/xmlschemas.o: src/xmlschemas.c.o
 
 # target to build an object file
 src/xmlschemas.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlschemas.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlschemas.c.o
 .PHONY : src/xmlschemas.c.o
 
 src/xmlschemas.i: src/xmlschemas.c.i
@@ -1164,7 +1177,7 @@ src/xmlschemas.i: src/xmlschemas.c.i
 
 # target to preprocess a source file
 src/xmlschemas.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlschemas.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlschemas.c.i
 .PHONY : src/xmlschemas.c.i
 
 src/xmlschemas.s: src/xmlschemas.c.s
@@ -1173,7 +1186,7 @@ src/xmlschemas.s: src/xmlschemas.c.s
 
 # target to generate assembly for a file
 src/xmlschemas.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlschemas.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlschemas.c.s
 .PHONY : src/xmlschemas.c.s
 
 src/xmlschemastypes.o: src/xmlschemastypes.c.o
@@ -1182,7 +1195,7 @@ src/xmlschemastypes.o: src/xmlschemastypes.c.o
 
 # target to build an object file
 src/xmlschemastypes.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlschemastypes.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlschemastypes.c.o
 .PHONY : src/xmlschemastypes.c.o
 
 src/xmlschemastypes.i: src/xmlschemastypes.c.i
@@ -1191,7 +1204,7 @@ src/xmlschemastypes.i: src/xmlschemastypes.c.i
 
 # target to preprocess a source file
 src/xmlschemastypes.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlschemastypes.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlschemastypes.c.i
 .PHONY : src/xmlschemastypes.c.i
 
 src/xmlschemastypes.s: src/xmlschemastypes.c.s
@@ -1200,7 +1213,7 @@ src/xmlschemastypes.s: src/xmlschemastypes.c.s
 
 # target to generate assembly for a file
 src/xmlschemastypes.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlschemastypes.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlschemastypes.c.s
 .PHONY : src/xmlschemastypes.c.s
 
 src/xmlstring.o: src/xmlstring.c.o
@@ -1209,7 +1222,7 @@ src/xmlstring.o: src/xmlstring.c.o
 
 # target to build an object file
 src/xmlstring.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlstring.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlstring.c.o
 .PHONY : src/xmlstring.c.o
 
 src/xmlstring.i: src/xmlstring.c.i
@@ -1218,7 +1231,7 @@ src/xmlstring.i: src/xmlstring.c.i
 
 # target to preprocess a source file
 src/xmlstring.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlstring.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlstring.c.i
 .PHONY : src/xmlstring.c.i
 
 src/xmlstring.s: src/xmlstring.c.s
@@ -1227,7 +1240,7 @@ src/xmlstring.s: src/xmlstring.c.s
 
 # target to generate assembly for a file
 src/xmlstring.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlstring.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlstring.c.s
 .PHONY : src/xmlstring.c.s
 
 src/xmlunicode.o: src/xmlunicode.c.o
@@ -1236,7 +1249,7 @@ src/xmlunicode.o: src/xmlunicode.c.o
 
 # target to build an object file
 src/xmlunicode.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlunicode.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlunicode.c.o
 .PHONY : src/xmlunicode.c.o
 
 src/xmlunicode.i: src/xmlunicode.c.i
@@ -1245,7 +1258,7 @@ src/xmlunicode.i: src/xmlunicode.c.i
 
 # target to preprocess a source file
 src/xmlunicode.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlunicode.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlunicode.c.i
 .PHONY : src/xmlunicode.c.i
 
 src/xmlunicode.s: src/xmlunicode.c.s
@@ -1254,7 +1267,7 @@ src/xmlunicode.s: src/xmlunicode.c.s
 
 # target to generate assembly for a file
 src/xmlunicode.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlunicode.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlunicode.c.s
 .PHONY : src/xmlunicode.c.s
 
 src/xmlwriter.o: src/xmlwriter.c.o
@@ -1263,7 +1276,7 @@ src/xmlwriter.o: src/xmlwriter.c.o
 
 # target to build an object file
 src/xmlwriter.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlwriter.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlwriter.c.o
 .PHONY : src/xmlwriter.c.o
 
 src/xmlwriter.i: src/xmlwriter.c.i
@@ -1272,7 +1285,7 @@ src/xmlwriter.i: src/xmlwriter.c.i
 
 # target to preprocess a source file
 src/xmlwriter.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlwriter.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlwriter.c.i
 .PHONY : src/xmlwriter.c.i
 
 src/xmlwriter.s: src/xmlwriter.c.s
@@ -1281,7 +1294,7 @@ src/xmlwriter.s: src/xmlwriter.c.s
 
 # target to generate assembly for a file
 src/xmlwriter.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xmlwriter.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xmlwriter.c.s
 .PHONY : src/xmlwriter.c.s
 
 src/xpath.o: src/xpath.c.o
@@ -1290,7 +1303,7 @@ src/xpath.o: src/xpath.c.o
 
 # target to build an object file
 src/xpath.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xpath.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xpath.c.o
 .PHONY : src/xpath.c.o
 
 src/xpath.i: src/xpath.c.i
@@ -1299,7 +1312,7 @@ src/xpath.i: src/xpath.c.i
 
 # target to preprocess a source file
 src/xpath.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xpath.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xpath.c.i
 .PHONY : src/xpath.c.i
 
 src/xpath.s: src/xpath.c.s
@@ -1308,7 +1321,7 @@ src/xpath.s: src/xpath.c.s
 
 # target to generate assembly for a file
 src/xpath.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xpath.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xpath.c.s
 .PHONY : src/xpath.c.s
 
 src/xpointer.o: src/xpointer.c.o
@@ -1317,7 +1330,7 @@ src/xpointer.o: src/xpointer.c.o
 
 # target to build an object file
 src/xpointer.c.o:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xpointer.c.o
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xpointer.c.o
 .PHONY : src/xpointer.c.o
 
 src/xpointer.i: src/xpointer.c.i
@@ -1326,7 +1339,7 @@ src/xpointer.i: src/xpointer.c.i
 
 # target to preprocess a source file
 src/xpointer.c.i:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xpointer.c.i
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xpointer.c.i
 .PHONY : src/xpointer.c.i
 
 src/xpointer.s: src/xpointer.c.s
@@ -1335,7 +1348,7 @@ src/xpointer.s: src/xpointer.c.s
 
 # target to generate assembly for a file
 src/xpointer.c.s:
-	$(MAKE) -f CMakeFiles/libxml.dir/build.make CMakeFiles/libxml.dir/src/xpointer.c.s
+	$(MAKE) -f CMakeFiles/xml.dir/build.make CMakeFiles/xml.dir/src/xpointer.c.s
 .PHONY : src/xpointer.c.s
 
 # Help Target
@@ -1346,7 +1359,8 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... libxml"
+	@echo "... xml"
+	@echo "... iconv"
 	@echo "... src/DOCBparser.o"
 	@echo "... src/DOCBparser.i"
 	@echo "... src/DOCBparser.s"

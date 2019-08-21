@@ -56,9 +56,3 @@ fi
 
 . ../../../bin/build-android.sh
 checkError
-
-cp -a lib/* "$OUTPUT_DIR"
-
-echo
-echo "Your ouputs are in " "$OUTPUT_DIR"
-echo

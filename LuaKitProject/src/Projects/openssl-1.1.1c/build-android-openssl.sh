@@ -61,6 +61,9 @@ cp libssl.a lib/armeabi-v7a
 make clean
 checkError
 
+
+cp -a lib/* "$OUTPUT_DIR"
+
 echo
-echo "Your ouputs are in lib/"
+echo "Your ouputs are in " "$OUTPUT_DIR"
 echo
