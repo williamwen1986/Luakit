@@ -114,6 +114,9 @@ CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=OFF
 //Install path prefix, prepended onto install directories.
 CMAKE_INSTALL_PREFIX:PATH=/usr/local
 
+//No help, variable specified on the command line.
+CMAKE_LIBRARY_OUTPUT_DIRECTORY:UNINITIALIZED=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a
+
 //Path to a program.
 CMAKE_LINKER:FILEPATH=/MacosExt/Users/larpoux/android-sdk-macosx/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/x86_64-linux-android-ld
 
@@ -233,9 +236,6 @@ base_LIB_DEPENDS:STATIC=general;modp_b64;general;event;
 //Dependencies for the target
 common_LIB_DEPENDS:STATIC=general;curl;general;base;general;xml;
 
-//Path to a library.
-cpufeatures:FILEPATH=cpufeatures-NOTFOUND
-
 //Dependencies for the target
 curl_LIB_DEPENDS:STATIC=general;ssl;general;crypto;
 
@@ -247,9 +247,6 @@ luakit_BINARY_DIR:STATIC=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/sr
 
 //Value Computed by CMake
 luakit_SOURCE_DIR:STATIC=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14
-
-//Path to a library.
-mylib:FILEPATH=mylib-NOTFOUND
 
 //Dependencies for the target
 xml_LIB_DEPENDS:STATIC=general;iconv;

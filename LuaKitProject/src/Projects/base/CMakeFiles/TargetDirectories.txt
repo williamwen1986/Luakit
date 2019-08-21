@@ -1,9 +1,0 @@
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/CMakeFiles/rebuild_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/CMakeFiles/edit_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/CMakeFiles/base.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libevent/outputs/arm64-v8a/CMakeFiles/rebuild_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libevent/outputs/arm64-v8a/CMakeFiles/edit_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libevent/outputs/arm64-v8a/CMakeFiles/event.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/modp_b64/outputs/arm64-v8a/CMakeFiles/rebuild_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/modp_b64/outputs/arm64-v8a/CMakeFiles/edit_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/modp_b64/outputs/arm64-v8a/CMakeFiles/modp_b64.dir

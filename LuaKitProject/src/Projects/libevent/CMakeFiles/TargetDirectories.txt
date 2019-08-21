@@ -1,3 +1,0 @@
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libevent/CMakeFiles/rebuild_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libevent/CMakeFiles/edit_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libevent/CMakeFiles/event.dir

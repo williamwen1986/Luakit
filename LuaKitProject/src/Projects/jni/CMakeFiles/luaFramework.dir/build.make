@@ -259,36 +259,36 @@ luaFramework_OBJECTS = \
 # External object files for target luaFramework
 luaFramework_EXTERNAL_OBJECTS =
 
-libluaFramework.so: CMakeFiles/luaFramework.dir/JNIConversionImpl.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/JNIModel.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/JniCallbackHelper.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/JniClassMember.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/JniEnvWrapper.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/JniLuaConvertor.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/LogicModel.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/com_common_luakit_LuaHelper.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/com_common_luakit_LuaNotificationListener.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/com_common_luakit_NativeHandleHolder.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/com_common_luakit_NotificationHelper.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/java_weak_ref.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/model_util.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/notification_listener_impl.cpp.o
-libluaFramework.so: CMakeFiles/luaFramework.dir/build.make
-libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libcommon.a
-libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libcurl.a
-libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libssl.a
-libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libcrypto.a
-libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libbase.a
-libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libmodp_b64.a
-libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libevent.a
-libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libxml.a
-libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libiconv.a
-libluaFramework.so: CMakeFiles/luaFramework.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/jni/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX shared library libluaFramework.so"
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/JNIConversionImpl.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/JNIModel.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/JniCallbackHelper.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/JniClassMember.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/JniEnvWrapper.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/JniLuaConvertor.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/LogicModel.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/com_common_luakit_LuaHelper.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/com_common_luakit_LuaNotificationListener.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/com_common_luakit_NativeHandleHolder.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/com_common_luakit_NotificationHelper.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/java_weak_ref.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/model_util.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/notification_listener_impl.cpp.o
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/build.make
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libcommon.a
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libcurl.a
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libssl.a
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libcrypto.a
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libbase.a
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libmodp_b64.a
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libevent.a
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libxml.a
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libiconv.a
+/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so: CMakeFiles/luaFramework.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/jni/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX shared library /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/luaFramework.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/luaFramework.dir/build: libluaFramework.so
+CMakeFiles/luaFramework.dir/build: /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so
 
 .PHONY : CMakeFiles/luaFramework.dir/build
 

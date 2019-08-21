@@ -1,6 +1,0 @@
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libxml/CMakeFiles/rebuild_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libxml/CMakeFiles/edit_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libxml/CMakeFiles/xml.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/outputs/arm64-v8a/CMakeFiles/rebuild_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/outputs/arm64-v8a/CMakeFiles/edit_cache.dir
-/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/libiconv-1.14/outputs/arm64-v8a/CMakeFiles/iconv.dir

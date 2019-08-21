@@ -48,62 +48,18 @@ then
      export OUTPUT_DIR="$DEFAULT_OUTPUT"
 fi
 mkdir -p $OUTPUT_DIR 2>/dev/null
-
 pushd "$OUTPUT_DIR" > /dev/null
 dir=$(pwd)
 export OUTPUT_DIR=$dir
 popd > /dev/null
-#---------------------------------------------
+
 cd src/Projects/openssl-1.1.1c
 ./build-android-openssl.sh
 checkError
 cp -v -a lib/* $OUTPUT_DIR
 cd ../../..
 
-#---------------------------------------------
-if [ .$BUILD = ."CMAKE" ]; then
-#---------------------------------------------
-cd src/Projects/libevent
-../../../bin/build-android.sh
-checkError
-cd ../../..
-
-cd src/Projects/libiconv-1.14
-../../../bin/build-android.sh
-checkError
-cd ../../..
-
-cd src/Projects/libxml
-../../../bin/build-android.sh
-checkError
-cd ../../..
-
-cd src/Projects/modp_b64
-../../../bin/build-android.sh
-checkError
-cd ../../..
-
-cd src/Projects/curl
-../../../bin/build-android.sh
-checkError
-cd ../../..
-
-cd src/Projects/base
-../../../bin/build-android.sh
-checkError
-cd ../../..
-
-cd src/Projects/common
-../../../bin/build-android.sh
-checkError
-cd ../../..
-#---------------------------------------------
-else
-#---------------------------------------------
 cd src/Projects/jni
 ./build-android.sh
 checkError
 cd ../../..
-#---------------------------------------------
-fi
-#---------------------------------------------

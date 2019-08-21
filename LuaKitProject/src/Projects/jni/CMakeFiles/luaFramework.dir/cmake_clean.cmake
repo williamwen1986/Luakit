@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.pdb"
+  "/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/libs/android28-debug/arm64-v8a/libluaFramework.so"
   "CMakeFiles/luaFramework.dir/JNIConversionImpl.cpp.o"
   "CMakeFiles/luaFramework.dir/JNIModel.cpp.o"
   "CMakeFiles/luaFramework.dir/JniCallbackHelper.cpp.o"
@@ -13,8 +15,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/luaFramework.dir/java_weak_ref.cpp.o"
   "CMakeFiles/luaFramework.dir/model_util.cpp.o"
   "CMakeFiles/luaFramework.dir/notification_listener_impl.cpp.o"
-  "libluaFramework.pdb"
-  "libluaFramework.so"
 )
 
 # Per-language clean rules from dependency scanning.
