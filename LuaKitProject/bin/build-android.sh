@@ -3,12 +3,12 @@
 #-------------------------------------------------------------------
 if [ -z "$CONFIG" ]
 then
-    export CONFIG=debug
+    export CONFIG=Debug
 fi
 
 if [ -z "$ANDROID_API" ]
 then
-    export ANDROID_API=28
+    export ANDROID_API=24
 fi
 
 DEFAULT_OUTPUT=../../../libs/android"$ANDROID_API"-$CONFIG
@@ -57,7 +57,7 @@ make_abi() {
                 -DOPENSSL_LIBRARIES=../openssl-1.1.1c/lib \
 
             checkError
-            make
+            make -j4
             checkError
 }
 
@@ -88,8 +88,8 @@ rm -r obj CMakeFiles 2>/dev/null
 if [ .$BUILD = ."NDK_BUILD" ]; then
 $ANDROID_NDK_HOME/ndk-build    NDK_APPLICATION_MK=Application.mk
 cp -a obj/local/* "$OUTPUT_DIR"
-#rm -r obj 2>/dev/null
-#find "$OUTPUT_DIR" -name "objs*" -exec rm -rf {} \; 2>/dev/null
+rm -r obj 2>/dev/null
+find "$OUTPUT_DIR" -name "objs*" -exec rm -rf {} \; 2>/dev/null
 else
 
 make_abi x86_64

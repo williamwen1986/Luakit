@@ -7,8 +7,8 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/MacosExt/Users/larpoux/android-sdk-macosx/ndk-bundle/build/cmake/android.toolchain.cmake"
-  "/MacosExt/Users/larpoux/android-sdk-macosx/ndk-bundle/build/cmake/platforms.cmake"
+  "/MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/build/cmake/android.toolchain.cmake"
+  "/MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/build/cmake/platforms.cmake"
   "/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/base/CMakeLists.txt"
   "/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/common/CMakeLists.txt"
   "/MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/curl/CMakeLists.txt"

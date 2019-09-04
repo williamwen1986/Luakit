@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (ILjava/lang/Object;)V
  */
 JNIEXPORT jlong JNICALL Java_com_common_luakit_NotificationHelper_postNotificationNative
-  (JNIEnv *, jclass, jint ,jobject);
+  (JNIEnv *, jclass, jint , jobject);
 
 #ifdef __cplusplus
 }

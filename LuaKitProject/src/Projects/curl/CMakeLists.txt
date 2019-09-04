@@ -1,7 +1,7 @@
 # For more information about using CMake with Android Studio, read the
 # documentation: https://d.android.com/studio/projects/add-native-code.html
 
-# Sets the minimum version of CMake required to build the native library.
+# Sets the minimum version/lib of CMake required to build the native library.
 
 cmake_minimum_required(VERSION 3.4.1)
 project(luakit)
@@ -11,9 +11,7 @@ project(luakit)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DANDROID -DHAVE_CONFIG_H -DUSE_OPENSSL -DUSE_SSLEAY -DHAVE_LIBZ -DHAVE_ZLIB_H")
-
-set(outputDir $ENV{OUTPUT_DIR})
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DANDROID -DHAVE_CONFIG_H -DUSE_OPENSSL -DUSE_SSLEAY -DHAVE_LIBZ -DHAVE_ZLIB_H -DOPENSSL_NO_STDIO -DOPENSSL_NO_UI_CONSOLE -DOPENSSL_NO_ENGINE")
 
 file(GLOB all_SRCS
         "${PROJECT_SOURCE_DIR}/lib/*.cpp"
@@ -32,12 +30,8 @@ add_library(
 		${all_SRCS}
 )
 
-#set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/outputs/${ANDROID_ABI})
-#file(MAKE_DIRECTORY ${lib_build_DIR})
-#add_subdirectory( "${PROJECT_SOURCE_DIR}/../openssl-1.1.1c" ${lib_build_DIR} )
-#set_target_properties( ssl PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libssl.a)
 
-link_directories(${outputDir}/${ANDROID_ABI})
+link_directories(${outputDir}/${ANDROID_ABI} ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/lib)
 
 
 add_library( ssl
@@ -50,8 +44,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                        # Provides the path to the library you want to import.
-                       ${outputDir}/${ANDROID_ABI}/libssl.a )
-####target_link_libraries(base modp_b64 event ssl crypto)
+                       ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/lib/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libssl.a )
 
 add_library( crypto
              STATIC
@@ -63,15 +56,15 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                        # Provides the path to the library you want to import.
-                       ${outputDir}/${ANDROID_ABI}/libcrypto.a )
+                       ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/lib/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libcrypto.a )
 
 
 
 target_link_libraries( curl ssl crypto)
   # Specifies a path to native header files.
 include_directories(
-	$(PROJECT_SOURCE_DIR)/include
-	$(PROJECT_SOURCE_DIR)/lib
-	$(PROJECT_SOURCE_DIR)/../openssl-1.1.1c/include
+	${PROJECT_SOURCE_DIR}/include
+	${PROJECT_SOURCE_DIR}/lib
+	${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/include
 	/usr/local/Cellar/node/11.5.0/include/node
 )

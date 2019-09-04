@@ -224,10 +224,11 @@ target_link_libraries(base modp_b64 event)
 
 # Specifies a path to native header files.
 include_directories(
-                    $(LOCAL_PATH)/../
-                    $(PROJECT_SOURCE_DIR)/android/
-                    $(PROJECT_SOURCE_DIR)/../extensions/timer/
-                    $(PROJECT_SOURCE_DIR)/../lua-5.1.5/lua/
-		    $(PROJECT_SOURCE_DIR)/
+                    ${LOCAL_PATH}/../
+                    ${PROJECT_SOURCE_DIR}/../
+                    ${PROJECT_SOURCE_DIR}/../base/android/
+                    ${PROJECT_SOURCE_DIR}/../extensions/timer/
+                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/
+		    ${PROJECT_SOURCE_DIR}/
 
 )

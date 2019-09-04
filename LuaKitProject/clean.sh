@@ -10,6 +10,11 @@ rm -rf src/Projects/libiconv-1.14/CMakeFiles src/Projects/libiconv-1.14/outputs 
 rm -rf src/Projects/libxml/CMakeFiles        src/Projects/libxml/outputs        src/Projects/libxml/CMakeCache.txt
 rm -rf src/Projects/modp_b64/CMakeFiles      src/Projects/modp_b64/outputs      src/Projects/modp_b64/CMakeCache.txt
 rm -rf src/Projects/jni/CMakefiles           src/Projects/jni/outputs           src/Projects/jni/CMakeCache.txt
-rm -rf src/Projects/openssl-1.1.1c/lib
-rm -rf src/Projects/jni/libluaFramework.so
-rm -rf libs/android*
+#rm -rf src/Projects/openssl-1.1.1c/lib
+rm -rf AndroidDemo/AsyncSocketTest/app/.cxx     AndroidDemo/AsyncSocketTest/app/.externalNativeBuild    AndroidDemo/AsyncSocketTest/app/build
+rm -rf AndroidDemo/NotificationTest/app/.cxx    AndroidDemo/NotificationTest/app/.externalNativeBuild   AndroidDemo/NotificationTest/app/build
+rm -rf AndroidDemo/OrmTest/app/.cxx             AndroidDemo/OrmTest/app/.externalNativeBuild            AndroidDemo/OrmTest/app/build
+rm -rf AndroidDemo/ThreadTest/app/.cxx          AndroidDemo/ThreadTest/app/.externalNativeBuild         AndroidDemo/ThreadTest/app/build
+rm -rf AndroidDemo/WeatherTest/app/.cxx         AndroidDemo/WeatherTest/app/.externalNativeBuild        AndroidDemo/WeatherTest/app/build
+rm -rf src/Projects/jni/libluaFramework.so   src/Projects/jni/libs              src/Projects/jni/obj
+rm -rf AndroidFrameWork/luakit/build AndroidFrameWork/lib_chromium/build

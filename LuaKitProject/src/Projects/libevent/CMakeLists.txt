@@ -53,15 +53,16 @@ add_library(
 
 # Specifies a path to native header files.
 include_directories(
-                		$(PROJECT_SOURCE_DIR)
-				$(PROJECT_SOURCE_DIR)/android
-				$(PROJECT_SOURCE_DIR)/compat
-				$(PROJECT_SOURCE_DIR)/compat/sys
-				$(PROJECT_SOURCE_DIR)/freebsd
-				$(PROJECT_SOURCE_DIR)/linux
-				$(PROJECT_SOURCE_DIR)/mac
-				$(PROJECT_SOURCE_DIR)/sample
-				$(PROJECT_SOURCE_DIR)/solaris
-				$(PROJECT_SOURCE_DIR)/test
+                		${PROJECT_SOURCE_DIR}
+				${PROJECT_SOURCE_DIR}/../
+				${PROJECT_SOURCE_DIR}/android
+				${PROJECT_SOURCE_DIR}/compat
+				${PROJECT_SOURCE_DIR}/compat/sys
+				${PROJECT_SOURCE_DIR}/freebsd
+				${PROJECT_SOURCE_DIR}/linux
+				${PROJECT_SOURCE_DIR}/mac
+				${PROJECT_SOURCE_DIR}/sample
+				${PROJECT_SOURCE_DIR}/solaris
+				${PROJECT_SOURCE_DIR}/test
 
 )

@@ -29,9 +29,10 @@ add_library(
 
 # Specifies a path to native header files.
 include_directories(
- 				$(PROJECT_SOURCE_DIR)/include
-				$(PROJECT_SOURCE_DIR)/libcharset
-				$(PROJECT_SOURCE_DIR)/lib
-				$(PROJECT_SOURCE_DIR)/libcharset/include
-				$(PROJECT_SOURCE_DIR)/srclib
+				${PROJECT_SOURCE_DIR}/../
+ 				${PROJECT_SOURCE_DIR}/include
+				${PROJECT_SOURCE_DIR}/libcharset
+				${PROJECT_SOURCE_DIR}/lib
+				${PROJECT_SOURCE_DIR}/libcharset/include
+				${PROJECT_SOURCE_DIR}/srclib
 )

@@ -105,19 +105,16 @@ add_library(
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../curl/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/../curl" ${lib_build_DIR} )
-###add_library( curl STATIC IMPORTED )
 set_target_properties( curl PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libcurl.a)
 
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../base/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( ${PROJECT_SOURCE_DIR}/../base ${lib_build_DIR} )
-###add_library( base STATIC IMPORTED )
 set_target_properties( base    PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libbase.a)
 
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../libxml/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( ${PROJECT_SOURCE_DIR}/../libxml ${lib_build_DIR} )
-###add_library( xml STATIC IMPORTED )
 set_target_properties( xml PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libxml.a)
 
 target_link_libraries(common curl base xml)
@@ -126,23 +123,23 @@ target_link_libraries(common curl base xml)
 
 # Specifies a path to native header files.
 include_directories(
-                    $(PROJECT_SOURCE_DIR)/../
-                    $(PROJECT_SOURCE_DIR)
-                    $(PROJECT_SOURCE_DIR)/../lua-5.1.5/lua
-                    $(PROJECT_SOURCE_DIR)/../openssl/include/
-                    $(PROJECT_SOURCE_DIR)/../curl/include
-                    $(PROJECT_SOURCE_DIR)/../qlite-amalgamation-3290000
-                    $(PROJECT_SOURCE_DIR)/../extensions/HTTP
-                    $(PROJECT_SOURCE_DIR)/../extensions/lua-cjson-master
-                    $(PROJECT_SOURCE_DIR)/../extensions/thread
-                    $(PROJECT_SOURCE_DIR)/../extensions/timer
-                    $(PROJECT_SOURCE_DIR)/../extensions/AsyncSocket
-                    $(PROJECT_SOURCE_DIR)/../extensions/File
-                    $(PROJECT_SOURCE_DIR)/../extensions/debug
-                    $(PROJECT_SOURCE_DIR)/../extensions/luasocket
-                    $(PROJECT_SOURCE_DIR)/../extensions/Notify
-                    $(PROJECT_SOURCE_DIR)/../extensions/language
-                    $(PROJECT_SOURCE_DIR)/../jni
-                    $(PROJECT_SOURCE_DIR)/../lua-5.1.5/lua/tools
-                    $(PROJECT_SOURCE_DIR)/../sqlite-amalgamation-3290000
+                    ${PROJECT_SOURCE_DIR}/../
+                    ${PROJECT_SOURCE_DIR}
+                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua
+                    ${PROJECT_SOURCE_DIR}/../openssl/include/
+                    ${PROJECT_SOURCE_DIR}/../curl/include
+                    ${PROJECT_SOURCE_DIR}/../qlite-amalgamation-3290000
+                    ${PROJECT_SOURCE_DIR}/../extensions/HTTP
+                    ${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master
+                    ${PROJECT_SOURCE_DIR}/../extensions/thread
+                    ${PROJECT_SOURCE_DIR}/../extensions/timer
+                    ${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket
+                    ${PROJECT_SOURCE_DIR}/../extensions/File
+                    ${PROJECT_SOURCE_DIR}/../extensions/debug
+                    ${PROJECT_SOURCE_DIR}/../extensions/luasocket
+                    ${PROJECT_SOURCE_DIR}/../extensions/Notify
+                    ${PROJECT_SOURCE_DIR}/../extensions/language
+                    ${PROJECT_SOURCE_DIR}/../jni
+                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/tools
+                    ${PROJECT_SOURCE_DIR}/../sqlite-amalgamation-3290000
 )

@@ -43,5 +43,5 @@ target_link_libraries(xml iconv)
 
 # Specifies a path to native header files.
 include_directories(
-	$(PROJECT_SOURCE_DIR)/src/include
+	${PROJECT_SOURCE_DIR}/src/include
 )

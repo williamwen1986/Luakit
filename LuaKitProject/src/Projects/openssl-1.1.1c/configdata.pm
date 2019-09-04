@@ -14,12 +14,12 @@ our %config = (
   AR => "llvm-ar",
   ARFLAGS => [ "rs" ],
   CC => "clang",
-  CFLAGS => [ "-Wall -O3" ],
-  CPPDEFINES => [ "__ANDROID_API__=28" ],
+  CFLAGS => [ "-Wall -O3", "-fPIC" ],
+  CPPDEFINES => [ "__ANDROID_API__=24" ],
   CPPFLAGS => [  ],
   CPPINCLUDES => [  ],
   CXX => "g++",
-  CXXFLAGS => [ "-Wall -O3" ],
+  CXXFLAGS => [ "-Wall -O3", "-fPIC" ],
   HASHBANGPERL => "/usr/bin/env perl",
   LDFLAGS => [  ],
   LDLIBS => [  ],
@@ -27,14 +27,13 @@ our %config = (
   RANLIB => ":",
   RC => "windres",
   RCFLAGS => [  ],
-  afalgeng => "",
   b32 => "1",
   b64 => "0",
   b64l => "0",
   bn_ll => "1",
   build_file => "Makefile",
   build_file_templates => [ "Configurations/common0.tmpl", "Configurations/unix-Makefile.tmpl", "Configurations/common.tmpl" ],
-  build_infos => [ "./build.info", "crypto/build.info", "ssl/build.info", "engines/build.info", "apps/build.info", "test/build.info", "util/build.info", "tools/build.info", "fuzz/build.info", "crypto/objects/build.info", "crypto/md4/build.info", "crypto/md5/build.info", "crypto/sha/build.info", "crypto/mdc2/build.info", "crypto/hmac/build.info", "crypto/ripemd/build.info", "crypto/whrlpool/build.info", "crypto/poly1305/build.info", "crypto/blake2/build.info", "crypto/siphash/build.info", "crypto/sm3/build.info", "crypto/des/build.info", "crypto/aes/build.info", "crypto/rc2/build.info", "crypto/rc4/build.info", "crypto/idea/build.info", "crypto/aria/build.info", "crypto/bf/build.info", "crypto/cast/build.info", "crypto/camellia/build.info", "crypto/seed/build.info", "crypto/sm4/build.info", "crypto/chacha/build.info", "crypto/modes/build.info", "crypto/bn/build.info", "crypto/ec/build.info", "crypto/rsa/build.info", "crypto/dsa/build.info", "crypto/dh/build.info", "crypto/sm2/build.info", "crypto/dso/build.info", "crypto/engine/build.info", "crypto/buffer/build.info", "crypto/bio/build.info", "crypto/stack/build.info", "crypto/lhash/build.info", "crypto/rand/build.info", "crypto/err/build.info", "crypto/evp/build.info", "crypto/asn1/build.info", "crypto/pem/build.info", "crypto/x509/build.info", "crypto/x509v3/build.info", "crypto/conf/build.info", "crypto/txt_db/build.info", "crypto/pkcs7/build.info", "crypto/pkcs12/build.info", "crypto/comp/build.info", "crypto/ocsp/build.info", "crypto/ui/build.info", "crypto/cms/build.info", "crypto/ts/build.info", "crypto/srp/build.info", "crypto/cmac/build.info", "crypto/ct/build.info", "crypto/async/build.info", "crypto/kdf/build.info", "crypto/store/build.info", "test/ossl_shim/build.info" ],
+  build_infos => [ "./build.info", "crypto/build.info", "ssl/build.info", "apps/build.info", "test/build.info", "util/build.info", "tools/build.info", "fuzz/build.info", "crypto/objects/build.info", "crypto/md4/build.info", "crypto/md5/build.info", "crypto/sha/build.info", "crypto/mdc2/build.info", "crypto/hmac/build.info", "crypto/ripemd/build.info", "crypto/poly1305/build.info", "crypto/blake2/build.info", "crypto/siphash/build.info", "crypto/sm3/build.info", "crypto/des/build.info", "crypto/aes/build.info", "crypto/rc2/build.info", "crypto/rc4/build.info", "crypto/idea/build.info", "crypto/aria/build.info", "crypto/bf/build.info", "crypto/cast/build.info", "crypto/camellia/build.info", "crypto/seed/build.info", "crypto/sm4/build.info", "crypto/chacha/build.info", "crypto/modes/build.info", "crypto/bn/build.info", "crypto/ec/build.info", "crypto/rsa/build.info", "crypto/dsa/build.info", "crypto/dh/build.info", "crypto/sm2/build.info", "crypto/dso/build.info", "crypto/buffer/build.info", "crypto/bio/build.info", "crypto/stack/build.info", "crypto/lhash/build.info", "crypto/rand/build.info", "crypto/err/build.info", "crypto/evp/build.info", "crypto/asn1/build.info", "crypto/pem/build.info", "crypto/x509/build.info", "crypto/x509v3/build.info", "crypto/conf/build.info", "crypto/txt_db/build.info", "crypto/pkcs7/build.info", "crypto/pkcs12/build.info", "crypto/comp/build.info", "crypto/ocsp/build.info", "crypto/ui/build.info", "crypto/cms/build.info", "crypto/ts/build.info", "crypto/srp/build.info", "crypto/cmac/build.info", "crypto/ct/build.info", "crypto/async/build.info", "crypto/kdf/build.info", "crypto/store/build.info", "test/ossl_shim/build.info" ],
   build_type => "release",
   builddir => ".",
   cflags => [  ],
@@ -42,7 +41,7 @@ our %config = (
   cppflags => [  ],
   cxxflags => [  ],
   defines => [ "NDEBUG" ],
-  dirs => [ "crypto", "ssl", "engines", "apps", "test", "util", "tools", "fuzz" ],
+  dirs => [ "crypto", "ssl", "apps", "test", "util", "tools", "fuzz" ],
   dynamic_engines => "1",
   engdirs => [  ],
   ex_libs => [  ],
@@ -54,17 +53,17 @@ our %config = (
   major => "1",
   makedepprog => "\$(CROSS_COMPILE)clang",
   minor => "1.1",
-  openssl_algorithm_defines => [ "OPENSSL_NO_MD2", "OPENSSL_NO_RC5" ],
+  openssl_algorithm_defines => [ "OPENSSL_NO_MD2", "OPENSSL_NO_RC5", "OPENSSL_NO_WHIRLPOOL" ],
   openssl_api_defines => [  ],
-  openssl_other_defines => [ "OPENSSL_RAND_SEED_OS", "OPENSSL_NO_ASAN", "OPENSSL_NO_CRYPTO_MDEBUG", "OPENSSL_NO_CRYPTO_MDEBUG_BACKTRACE", "OPENSSL_NO_DEVCRYPTOENG", "OPENSSL_NO_EC_NISTP_64_GCC_128", "OPENSSL_NO_EGD", "OPENSSL_NO_EXTERNAL_TESTS", "OPENSSL_NO_FUZZ_AFL", "OPENSSL_NO_FUZZ_LIBFUZZER", "OPENSSL_NO_HEARTBEATS", "OPENSSL_NO_MSAN", "OPENSSL_NO_SCTP", "OPENSSL_NO_SSL_TRACE", "OPENSSL_NO_SSL3", "OPENSSL_NO_SSL3_METHOD", "OPENSSL_NO_UBSAN", "OPENSSL_NO_UNIT_TEST", "OPENSSL_NO_WEAK_SSL_CIPHERS", "OPENSSL_NO_STATIC_ENGINE", "OPENSSL_NO_AFALGENG" ],
+  openssl_other_defines => [ "OPENSSL_RAND_SEED_OS", "OPENSSL_NO_AFALGENG", "OPENSSL_NO_ASAN", "OPENSSL_NO_CRYPTO_MDEBUG", "OPENSSL_NO_CRYPTO_MDEBUG_BACKTRACE", "OPENSSL_NO_DEVCRYPTOENG", "OPENSSL_NO_EC_NISTP_64_GCC_128", "OPENSSL_NO_EGD", "OPENSSL_NO_ENGINE", "OPENSSL_NO_EXTERNAL_TESTS", "OPENSSL_NO_FUZZ_AFL", "OPENSSL_NO_FUZZ_LIBFUZZER", "OPENSSL_NO_HEARTBEATS", "OPENSSL_NO_MSAN", "OPENSSL_NO_SCTP", "OPENSSL_NO_SSL_TRACE", "OPENSSL_NO_SSL3", "OPENSSL_NO_SSL3_METHOD", "OPENSSL_NO_UBSAN", "OPENSSL_NO_UI_CONSOLE", "OPENSSL_NO_UNIT_TEST", "OPENSSL_NO_WEAK_SSL_CIPHERS", "OPENSSL_NO_STATIC_ENGINE", "OPENSSL_NO_AFALGENG" ],
   openssl_sys_defines => [  ],
   openssl_thread_defines => [ "OPENSSL_THREADS" ],
   openssldir => "",
-  options => "-D__ANDROID_API__=28 no-asan no-buildtest-c++ no-crypto-mdebug no-crypto-mdebug-backtrace no-devcryptoeng no-ec_nistp_64_gcc_128 no-egd no-external-tests no-fuzz-afl no-fuzz-libfuzzer no-heartbeats no-md2 no-msan no-rc5 no-sctp no-ssl-trace no-ssl3 no-ssl3-method no-ubsan no-unit-test no-weak-ssl-ciphers no-zlib no-zlib-dynamic",
+  options => "-D__ANDROID_API__=24 -fPIC no-afalgeng no-asan no-buildtest-c++ no-crypto-mdebug no-crypto-mdebug-backtrace no-devcryptoeng no-ec_nistp_64_gcc_128 no-egd no-engine no-external-tests no-fuzz-afl no-fuzz-libfuzzer no-heartbeats no-md2 no-msan no-rc5 no-sctp no-ssl-trace no-ssl3 no-ssl3-method no-ubsan no-ui-console no-unit-test no-weak-ssl-ciphers no-whirlpool no-zlib no-zlib-dynamic",
   perl_archname => "darwin-thread-multi-2level",
   perl_cmd => "perl",
   perl_version => "5.18.4",
-  perlargv => [ "android-arm", "-D__ANDROID_API__=28" ],
+  perlargv => [ "android-arm", "-D__ANDROID_API__=24", "no-whirlpool", "no-ui", "no-engine", "-fPIC" ],
   perlenv => {
       "AR" => undef,
       "BUILDFILE" => undef,
@@ -94,7 +93,7 @@ our %config = (
   prefix => "",
   processor => "",
   rc4_int => "unsigned char",
-  sdirs => [ "objects", "md4", "md5", "sha", "mdc2", "hmac", "ripemd", "whrlpool", "poly1305", "blake2", "siphash", "sm3", "des", "aes", "rc2", "rc4", "idea", "aria", "bf", "cast", "camellia", "seed", "sm4", "chacha", "modes", "bn", "ec", "rsa", "dsa", "dh", "sm2", "dso", "engine", "buffer", "bio", "stack", "lhash", "rand", "err", "evp", "asn1", "pem", "x509", "x509v3", "conf", "txt_db", "pkcs7", "pkcs12", "comp", "ocsp", "ui", "cms", "ts", "srp", "cmac", "ct", "async", "kdf", "store" ],
+  sdirs => [ "objects", "md4", "md5", "sha", "mdc2", "hmac", "ripemd", "poly1305", "blake2", "siphash", "sm3", "des", "aes", "rc2", "rc4", "idea", "aria", "bf", "cast", "camellia", "seed", "sm4", "chacha", "modes", "bn", "ec", "rsa", "dsa", "dh", "sm2", "dso", "buffer", "bio", "stack", "lhash", "rand", "err", "evp", "asn1", "pem", "x509", "x509v3", "conf", "txt_db", "pkcs7", "pkcs12", "comp", "ocsp", "ui", "cms", "ts", "srp", "cmac", "ct", "async", "kdf", "store" ],
   shlib_major => "1",
   shlib_minor => "1",
   shlib_version_history => "",
@@ -132,15 +131,15 @@ our %target = (
   build_scheme => [ "unified", "unix" ],
   cast_asm_src => "c_enc.c",
   cast_obj => "c_enc.o",
-  cflags => "-pthread  -target armv7a-linux-androideabi -gcc-toolchain \$(ANDROID_NDK_HOME)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 --sysroot=\$(ANDROID_NDK_HOME)/platforms/android-28/arch-arm",
+  cflags => "-pthread  -target armv7a-linux-androideabi -gcc-toolchain \$(ANDROID_NDK_HOME)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 --sysroot=\$(ANDROID_NDK_HOME)/platforms/android-24/arch-arm",
   chacha_asm_src => "chacha-armv4.S",
   chacha_obj => "chacha-armv4.o",
   cmll_asm_src => "camellia.c cmll_misc.c cmll_cbc.c",
   cmll_obj => "camellia.o cmll_misc.o cmll_cbc.o",
-  cppflags => "-D__ANDROID_API__=28 -isystem \$(ANDROID_NDK_HOME)/sysroot/usr/include/arm-linux-androideabi -isystem \$(ANDROID_NDK_HOME)/sysroot/usr/include",
+  cppflags => "-D__ANDROID_API__=24 -isystem \$(ANDROID_NDK_HOME)/sysroot/usr/include/arm-linux-androideabi -isystem \$(ANDROID_NDK_HOME)/sysroot/usr/include",
   cpuid_asm_src => "armcap.c armv4cpuid.S",
   cpuid_obj => "armcap.o armv4cpuid.o",
-  cxxflags => "-std=c++11 -pthread  -target armv7a-linux-androideabi -gcc-toolchain \$(ANDROID_NDK_HOME)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 --sysroot=\$(ANDROID_NDK_HOME)/platforms/android-28/arch-arm",
+  cxxflags => "-std=c++11 -pthread  -target armv7a-linux-androideabi -gcc-toolchain \$(ANDROID_NDK_HOME)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 --sysroot=\$(ANDROID_NDK_HOME)/platforms/android-24/arch-arm",
   defines => [  ],
   des_asm_src => "des_enc.c fcrypt_b.c",
   des_obj => "des_enc.o fcrypt_b.o",
@@ -312,7 +311,7 @@ our @disablables = (
 );
 
 our %disabled = (
-  "afalgeng" => "not-linux",
+  "afalgeng" => "cascade",
   "asan" => "default",
   "buildtest-c++" => "default",
   "crypto-mdebug" => "default",
@@ -320,6 +319,7 @@ our %disabled = (
   "devcryptoeng" => "default",
   "ec_nistp_64_gcc_128" => "default",
   "egd" => "default",
+  "engine" => "option",
   "external-tests" => "default",
   "fuzz-afl" => "default",
   "fuzz-libfuzzer" => "default",
@@ -332,8 +332,10 @@ our %disabled = (
   "ssl3" => "default",
   "ssl3-method" => "default",
   "ubsan" => "default",
+  "ui-console" => "option",
   "unit-test" => "default",
   "weak-ssl-ciphers" => "default",
+  "whirlpool" => "option",
   "zlib" => "default",
   "zlib-dynamic" => "default",
 );
@@ -643,29 +645,9 @@ our %unified_info = (
                 [
                     "crypto/perlasm/x86asm.pl",
                 ],
-            "crypto/whrlpool/wp-mmx.s" =>
-                [
-                    "crypto/perlasm/x86asm.pl",
-                ],
             "crypto/x86cpuid.s" =>
                 [
                     "crypto/perlasm/x86asm.pl",
-                ],
-            "engines/capi" =>
-                [
-                    "libcrypto",
-                ],
-            "engines/dasync" =>
-                [
-                    "libcrypto",
-                ],
-            "engines/ossltest" =>
-                [
-                    "libcrypto",
-                ],
-            "engines/padlock" =>
-                [
-                    "libcrypto",
                 ],
             "fuzz/asn1-test" =>
                 [
@@ -936,11 +918,6 @@ our %unified_info = (
                     "libssl",
                 ],
             "test/buildtest_c_ecdsa" =>
-                [
-                    "libcrypto",
-                    "libssl",
-                ],
-            "test/buildtest_c_engine" =>
                 [
                     "libcrypto",
                     "libssl",
@@ -2320,41 +2297,6 @@ our %unified_info = (
                                 ],
                         },
                 },
-            "crypto/engine" =>
-                {
-                    "deps" =>
-                        [
-                            "crypto/engine/eng_all.o",
-                            "crypto/engine/eng_cnf.o",
-                            "crypto/engine/eng_ctrl.o",
-                            "crypto/engine/eng_dyn.o",
-                            "crypto/engine/eng_err.o",
-                            "crypto/engine/eng_fat.o",
-                            "crypto/engine/eng_init.o",
-                            "crypto/engine/eng_lib.o",
-                            "crypto/engine/eng_list.o",
-                            "crypto/engine/eng_openssl.o",
-                            "crypto/engine/eng_pkey.o",
-                            "crypto/engine/eng_rdrand.o",
-                            "crypto/engine/eng_table.o",
-                            "crypto/engine/tb_asnmth.o",
-                            "crypto/engine/tb_cipher.o",
-                            "crypto/engine/tb_dh.o",
-                            "crypto/engine/tb_digest.o",
-                            "crypto/engine/tb_dsa.o",
-                            "crypto/engine/tb_eckey.o",
-                            "crypto/engine/tb_pkmeth.o",
-                            "crypto/engine/tb_rand.o",
-                            "crypto/engine/tb_rsa.o",
-                        ],
-                    "products" =>
-                        {
-                            "lib" =>
-                                [
-                                    "libcrypto",
-                                ],
-                        },
-                },
             "crypto/err" =>
                 {
                     "deps" =>
@@ -3023,21 +2965,6 @@ our %unified_info = (
                                 ],
                         },
                 },
-            "crypto/whrlpool" =>
-                {
-                    "deps" =>
-                        [
-                            "crypto/whrlpool/wp_block.o",
-                            "crypto/whrlpool/wp_dgst.o",
-                        ],
-                    "products" =>
-                        {
-                            "lib" =>
-                                [
-                                    "libcrypto",
-                                ],
-                        },
-                },
             "crypto/x509" =>
                 {
                     "deps" =>
@@ -3137,19 +3064,6 @@ our %unified_info = (
                                 ],
                         },
                 },
-            "engines" =>
-                {
-                    "products" =>
-                        {
-                            "dso" =>
-                                [
-                                    "engines/capi",
-                                    "engines/dasync",
-                                    "engines/ossltest",
-                                    "engines/padlock",
-                                ],
-                        },
-                },
             "fuzz" =>
                 {
                     "products" =>
@@ -3174,8 +3088,6 @@ our %unified_info = (
                 {
                     "deps" =>
                         [
-                            "ssl/packet.o",
-                            "ssl/tls13_enc.o",
                             "ssl/bio_ssl.o",
                             "ssl/d1_lib.o",
                             "ssl/d1_msg.o",
@@ -3205,6 +3117,8 @@ our %unified_info = (
                             "ssl/t1_trce.o",
                             "ssl/tls13_enc.o",
                             "ssl/tls_srp.o",
+                            "ssl/packet.o",
+                            "ssl/tls13_enc.o",
                         ],
                     "products" =>
                         {
@@ -3306,10 +3220,6 @@ our %unified_info = (
         },
     "engines" =>
         [
-            "engines/capi",
-            "engines/dasync",
-            "engines/ossltest",
-            "engines/padlock",
         ],
     "extra" =>
         [
@@ -4185,19 +4095,6 @@ our %unified_info = (
                     "ms/uplink-x86_64.pl",
                     "\$(PERLASM_SCHEME)",
                 ],
-            "crypto/whrlpool/wp-mmx.s" =>
-                [
-                    "crypto/whrlpool/asm/wp-mmx.pl",
-                    "\$(PERLASM_SCHEME)",
-                    "\$(LIB_CFLAGS)",
-                    "\$(LIB_CPPFLAGS)",
-                    "\$(PROCESSOR)",
-                ],
-            "crypto/whrlpool/wp-x86_64.s" =>
-                [
-                    "crypto/whrlpool/asm/wp-x86_64.pl",
-                    "\$(PERLASM_SCHEME)",
-                ],
             "crypto/x86_64cpuid.s" =>
                 [
                     "crypto/x86_64cpuid.pl",
@@ -4210,19 +4107,6 @@ our %unified_info = (
                     "\$(LIB_CFLAGS)",
                     "\$(LIB_CPPFLAGS)",
                     "\$(PROCESSOR)",
-                ],
-            "engines/e_padlock-x86.s" =>
-                [
-                    "engines/asm/e_padlock-x86.pl",
-                    "\$(PERLASM_SCHEME)",
-                    "\$(LIB_CFLAGS)",
-                    "\$(LIB_CPPFLAGS)",
-                    "\$(PROCESSOR)",
-                ],
-            "engines/e_padlock-x86_64.s" =>
-                [
-                    "engines/asm/e_padlock-x86_64.pl",
-                    "\$(PERLASM_SCHEME)",
                 ],
             "include/openssl/opensslconf.h" =>
                 [
@@ -4369,11 +4253,6 @@ our %unified_info = (
                 [
                     "test/generate_buildtest.pl",
                     "ecdsa",
-                ],
-            "test/buildtest_engine.c" =>
-                [
-                    "test/generate_buildtest.pl",
-                    "engine",
                 ],
             "test/buildtest_evp.c" =>
                 [
@@ -6794,138 +6673,6 @@ our %unified_info = (
                     "crypto/include",
                     "include",
                 ],
-            "crypto/engine/eng_all.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_cnf.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_ctrl.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_dyn.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_err.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_fat.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_init.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_lib.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_list.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_openssl.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_pkey.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_rdrand.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/eng_table.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/tb_asnmth.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/tb_cipher.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/tb_dh.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/tb_digest.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/tb_dsa.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/tb_eckey.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/tb_pkmeth.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/tb_rand.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/engine/tb_rsa.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
             "crypto/err/err.o" =>
                 [
                     ".",
@@ -8561,18 +8308,6 @@ our %unified_info = (
                     "crypto/include",
                     "include",
                 ],
-            "crypto/whrlpool/wp_block.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
-            "crypto/whrlpool/wp_dgst.o" =>
-                [
-                    ".",
-                    "crypto/include",
-                    "include",
-                ],
             "crypto/x509/by_dir.o" =>
                 [
                     ".",
@@ -9009,22 +8744,6 @@ our %unified_info = (
                 [
                     ".",
                     "crypto/include",
-                    "include",
-                ],
-            "engines/e_capi.o" =>
-                [
-                    "include",
-                ],
-            "engines/e_dasync.o" =>
-                [
-                    "include",
-                ],
-            "engines/e_ossltest.o" =>
-                [
-                    "include",
-                ],
-            "engines/e_padlock.o" =>
-                [
                     "include",
                 ],
             "fuzz/asn1.o" =>
@@ -9466,10 +9185,6 @@ our %unified_info = (
                     "include",
                 ],
             "test/buildtest_ecdsa.o" =>
-                [
-                    "include",
-                ],
-            "test/buildtest_engine.o" =>
                 [
                     "include",
                 ],
@@ -10119,11 +9834,6 @@ our %unified_info = (
         },
     "install" =>
         {
-            "engines" =>
-                [
-                    "engines/capi",
-                    "engines/padlock",
-                ],
             "libraries" =>
                 [
                     "libcrypto",
@@ -10209,7 +9919,6 @@ our %unified_info = (
             "test/buildtest_c_ec",
             "test/buildtest_c_ecdh",
             "test/buildtest_c_ecdsa",
-            "test/buildtest_c_engine",
             "test/buildtest_c_evp",
             "test/buildtest_c_hmac",
             "test/buildtest_c_idea",
@@ -11881,94 +11590,6 @@ our %unified_info = (
                 [
                     "crypto/ec/ecx_meth.c",
                 ],
-            "crypto/engine/eng_all.o" =>
-                [
-                    "crypto/engine/eng_all.c",
-                ],
-            "crypto/engine/eng_cnf.o" =>
-                [
-                    "crypto/engine/eng_cnf.c",
-                ],
-            "crypto/engine/eng_ctrl.o" =>
-                [
-                    "crypto/engine/eng_ctrl.c",
-                ],
-            "crypto/engine/eng_dyn.o" =>
-                [
-                    "crypto/engine/eng_dyn.c",
-                ],
-            "crypto/engine/eng_err.o" =>
-                [
-                    "crypto/engine/eng_err.c",
-                ],
-            "crypto/engine/eng_fat.o" =>
-                [
-                    "crypto/engine/eng_fat.c",
-                ],
-            "crypto/engine/eng_init.o" =>
-                [
-                    "crypto/engine/eng_init.c",
-                ],
-            "crypto/engine/eng_lib.o" =>
-                [
-                    "crypto/engine/eng_lib.c",
-                ],
-            "crypto/engine/eng_list.o" =>
-                [
-                    "crypto/engine/eng_list.c",
-                ],
-            "crypto/engine/eng_openssl.o" =>
-                [
-                    "crypto/engine/eng_openssl.c",
-                ],
-            "crypto/engine/eng_pkey.o" =>
-                [
-                    "crypto/engine/eng_pkey.c",
-                ],
-            "crypto/engine/eng_rdrand.o" =>
-                [
-                    "crypto/engine/eng_rdrand.c",
-                ],
-            "crypto/engine/eng_table.o" =>
-                [
-                    "crypto/engine/eng_table.c",
-                ],
-            "crypto/engine/tb_asnmth.o" =>
-                [
-                    "crypto/engine/tb_asnmth.c",
-                ],
-            "crypto/engine/tb_cipher.o" =>
-                [
-                    "crypto/engine/tb_cipher.c",
-                ],
-            "crypto/engine/tb_dh.o" =>
-                [
-                    "crypto/engine/tb_dh.c",
-                ],
-            "crypto/engine/tb_digest.o" =>
-                [
-                    "crypto/engine/tb_digest.c",
-                ],
-            "crypto/engine/tb_dsa.o" =>
-                [
-                    "crypto/engine/tb_dsa.c",
-                ],
-            "crypto/engine/tb_eckey.o" =>
-                [
-                    "crypto/engine/tb_eckey.c",
-                ],
-            "crypto/engine/tb_pkmeth.o" =>
-                [
-                    "crypto/engine/tb_pkmeth.c",
-                ],
-            "crypto/engine/tb_rand.o" =>
-                [
-                    "crypto/engine/tb_rand.c",
-                ],
-            "crypto/engine/tb_rsa.o" =>
-                [
-                    "crypto/engine/tb_rsa.c",
-                ],
             "crypto/err/err.o" =>
                 [
                     "crypto/err/err.c",
@@ -12989,14 +12610,6 @@ our %unified_info = (
                 [
                     "crypto/uid.c",
                 ],
-            "crypto/whrlpool/wp_block.o" =>
-                [
-                    "crypto/whrlpool/wp_block.c",
-                ],
-            "crypto/whrlpool/wp_dgst.o" =>
-                [
-                    "crypto/whrlpool/wp_dgst.c",
-                ],
             "crypto/x509/by_dir.o" =>
                 [
                     "crypto/x509/by_dir.c",
@@ -13288,38 +12901,6 @@ our %unified_info = (
             "crypto/x509v3/v3err.o" =>
                 [
                     "crypto/x509v3/v3err.c",
-                ],
-            "engines/capi" =>
-                [
-                    "engines/e_capi.o",
-                ],
-            "engines/dasync" =>
-                [
-                    "engines/e_dasync.o",
-                ],
-            "engines/e_capi.o" =>
-                [
-                    "engines/e_capi.c",
-                ],
-            "engines/e_dasync.o" =>
-                [
-                    "engines/e_dasync.c",
-                ],
-            "engines/e_ossltest.o" =>
-                [
-                    "engines/e_ossltest.c",
-                ],
-            "engines/e_padlock.o" =>
-                [
-                    "engines/e_padlock.c",
-                ],
-            "engines/ossltest" =>
-                [
-                    "engines/e_ossltest.o",
-                ],
-            "engines/padlock" =>
-                [
-                    "engines/e_padlock.o",
                 ],
             "fuzz/asn1-test" =>
                 [
@@ -13724,28 +13305,6 @@ our %unified_info = (
                     "crypto/ec/ecp_oct.o",
                     "crypto/ec/ecp_smpl.o",
                     "crypto/ec/ecx_meth.o",
-                    "crypto/engine/eng_all.o",
-                    "crypto/engine/eng_cnf.o",
-                    "crypto/engine/eng_ctrl.o",
-                    "crypto/engine/eng_dyn.o",
-                    "crypto/engine/eng_err.o",
-                    "crypto/engine/eng_fat.o",
-                    "crypto/engine/eng_init.o",
-                    "crypto/engine/eng_lib.o",
-                    "crypto/engine/eng_list.o",
-                    "crypto/engine/eng_openssl.o",
-                    "crypto/engine/eng_pkey.o",
-                    "crypto/engine/eng_rdrand.o",
-                    "crypto/engine/eng_table.o",
-                    "crypto/engine/tb_asnmth.o",
-                    "crypto/engine/tb_cipher.o",
-                    "crypto/engine/tb_dh.o",
-                    "crypto/engine/tb_digest.o",
-                    "crypto/engine/tb_dsa.o",
-                    "crypto/engine/tb_eckey.o",
-                    "crypto/engine/tb_pkmeth.o",
-                    "crypto/engine/tb_rand.o",
-                    "crypto/engine/tb_rsa.o",
                     "crypto/err/err.o",
                     "crypto/err/err_all.o",
                     "crypto/err/err_prn.o",
@@ -14001,8 +13560,6 @@ our %unified_info = (
                     "crypto/ui/ui_openssl.o",
                     "crypto/ui/ui_util.o",
                     "crypto/uid.o",
-                    "crypto/whrlpool/wp_block.o",
-                    "crypto/whrlpool/wp_dgst.o",
                     "crypto/x509/by_dir.o",
                     "crypto/x509/by_file.o",
                     "crypto/x509/t_crl.o",
@@ -14565,10 +14122,6 @@ our %unified_info = (
                 [
                     "test/buildtest_ecdsa.o",
                 ],
-            "test/buildtest_c_engine" =>
-                [
-                    "test/buildtest_engine.o",
-                ],
             "test/buildtest_c_evp" =>
                 [
                     "test/buildtest_evp.o",
@@ -14808,10 +14361,6 @@ our %unified_info = (
             "test/buildtest_ecdsa.o" =>
                 [
                     "test/buildtest_ecdsa.c",
-                ],
-            "test/buildtest_engine.o" =>
-                [
-                    "test/buildtest_engine.c",
                 ],
             "test/buildtest_evp.o" =>
                 [
@@ -15870,6 +15419,9 @@ my @makevars = (
     'RM',
 );
 my %disabled_info = (
+    'afalgeng' => {
+        macro => 'OPENSSL_NO_AFALGENG',
+    },
     'asan' => {
         macro => 'OPENSSL_NO_ASAN',
     },
@@ -15887,6 +15439,10 @@ my %disabled_info = (
     },
     'egd' => {
         macro => 'OPENSSL_NO_EGD',
+    },
+    'engine' => {
+        macro => 'OPENSSL_NO_ENGINE',
+        skipped => [ 'crypto/engine', 'engines' ],
     },
     'external-tests' => {
         macro => 'OPENSSL_NO_EXTERNAL_TESTS',
@@ -15926,11 +15482,18 @@ my %disabled_info = (
     'ubsan' => {
         macro => 'OPENSSL_NO_UBSAN',
     },
+    'ui-console' => {
+        macro => 'OPENSSL_NO_UI_CONSOLE',
+    },
     'unit-test' => {
         macro => 'OPENSSL_NO_UNIT_TEST',
     },
     'weak-ssl-ciphers' => {
         macro => 'OPENSSL_NO_WEAK_SSL_CIPHERS',
+    },
+    'whrlpool' => {
+        macro => 'OPENSSL_NO_WHIRLPOOL',
+        skipped => [ 'crypto/whrlpool' ],
     },
 );
 my @user_crossable = qw( AR AS CC CXX CPP LD MT RANLIB RC );

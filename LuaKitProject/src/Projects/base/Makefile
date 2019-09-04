@@ -149,6 +149,33 @@ modp_b64/fast:
 	$(MAKE) -f /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/modp_b64/outputs/arm64-v8a/CMakeFiles/modp_b64.dir/build.make /MacosExt/Users/larpoux/projmac/luakit/LuaKitProject/src/Projects/modp_b64/outputs/arm64-v8a/CMakeFiles/modp_b64.dir/build
 .PHONY : modp_b64/fast
 
+MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.o: MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.o
+
+.PHONY : MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.o
+
+# target to build an object file
+MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.o:
+	$(MAKE) -f CMakeFiles/base.dir/build.make CMakeFiles/base.dir/MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.o
+.PHONY : MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.o
+
+MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.i: MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.i
+
+.PHONY : MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.i
+
+# target to preprocess a source file
+MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.i:
+	$(MAKE) -f CMakeFiles/base.dir/build.make CMakeFiles/base.dir/MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.i
+.PHONY : MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.i
+
+MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.s: MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.s
+
+.PHONY : MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.s
+
+# target to generate assembly for a file
+MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.s:
+	$(MAKE) -f CMakeFiles/base.dir/build.make CMakeFiles/base.dir/MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.s
+.PHONY : MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.c.s
+
 android/activity_status.o: android/activity_status.cc.o
 
 .PHONY : android/activity_status.o
@@ -5101,6 +5128,9 @@ help:
 	@echo "... base"
 	@echo "... event"
 	@echo "... modp_b64"
+	@echo "... MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.o"
+	@echo "... MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.i"
+	@echo "... MacosExt/Users/larpoux/android-sdk-macosx/ndk/20.0.5594570/sources/android/cpufeatures/cpu-features.s"
 	@echo "... android/activity_status.o"
 	@echo "... android/activity_status.i"
 	@echo "... android/activity_status.s"
