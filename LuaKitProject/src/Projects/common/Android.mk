@@ -7,7 +7,7 @@ LOCAL_MODULE := common
 LOCAL_CFLAGS := -DANDROID -DOS_ANDROID
 
 
-MY_FILES_PATH  :=  $(LOCAL_PATH) \
+MY_FILES_PATH  :=  $(LOCAL_PATH)/common \
 				   $(LOCAL_PATH)/../lua-5.1.5/lua \
 				   $(LOCAL_PATH)/../sqlite-amalgamation-3290000 \
 				   $(LOCAL_PATH)/../extensions \
@@ -26,7 +26,7 @@ MY_SRC_LIST  := $(MY_SRC_LIST:$(LOCAL_PATH)/%=%)
 
 LOCAL_SRC_FILES += $(MY_SRC_LIST)
 
-#$(warning "the value of LOCAL_SRC_FILES is $(LOCAL_SRC_FILES)")
+$(warning "the value of LOCAL_SRC_FILES is $(LOCAL_SRC_FILES)")
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ \
                     $(LOCAL_PATH) \

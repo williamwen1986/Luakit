@@ -61,6 +61,9 @@ LOCAL_CFLAGS += -DHAVE_CONFIG_H \
                 -DUSE_SSLEAY \
                 -DHAVE_LIBZ \
                 -DHAVE_ZLIB_H \
+                -DOPENSSL_NO_STDIO \
+                -DOPENSSL_NO_UI_CONSOLE \
+                -DOPENSSL_NO_ENGINE
 
 include $(LOCAL_PATH)/lib/Makefile.inc
 CURL_HEADERS := \

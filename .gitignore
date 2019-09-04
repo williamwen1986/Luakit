@@ -9,11 +9,11 @@ AndroidDemo/NotificationTest/app/build
 AndroidDemo/OrmTest/app/build
 AndroidDemo/ThreadTest/app/build
 AndroidDemo/WeatherTest/app/build
-
 generateDebugRFile
 fileChanges
 fileHashes
 local.properties
+**/libs
 **/obj/
 **/CMakeFiles/
 **/outputs/

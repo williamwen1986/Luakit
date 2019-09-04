@@ -1,12 +1,22 @@
  #!/bin/sh
 #------------------------------ 
+if [ -z "$BUILD" ]
+then
 #export BUILD=NDK_BUILD
  export BUILD=CMAKE
+ fi
 
+if [ -z "$CONFIG" ]
+then
  export CONFIG=Debug
-#export CONFIG=Release
+#export CONFIG=debug
+fi
 
-export ANDROID_API=24
+if [ -z "$ANDROID_API" ]
+then
+  export ANDROID_API=24
+fi
+
 DEFAULT_OUTPUT=libs/android"$ANDROID_API"-$CONFIG
 #------------------------------
 
