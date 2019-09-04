@@ -66,6 +66,6 @@ include_directories(
 	${PROJECT_SOURCE_DIR}/include
 	${PROJECT_SOURCE_DIR}/lib
 	${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/include
-    ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/lib/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/include
+        ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/lib/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/include
 	/usr/local/Cellar/node/11.5.0/include/node
 )
