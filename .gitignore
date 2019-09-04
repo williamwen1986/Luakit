@@ -9,6 +9,7 @@ AndroidDemo/NotificationTest/app/build
 AndroidDemo/OrmTest/app/build
 AndroidDemo/ThreadTest/app/build
 AndroidDemo/WeatherTest/app/build
+LuaKitProject/src/Projects/openssl-1.1.1c/lib
 generateDebugRFile
 fileChanges
 fileHashes
