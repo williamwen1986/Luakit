@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #-------------------------------------------------------------------
 if [ -z "$CONFIG" ]
@@ -46,7 +46,7 @@ make_abi() {
             rm -r obj CMakeFiles 2>/dev/null
             mkdir -p $OUTPUT_DIR/$ABI
             cmake .\
-                -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
+                -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake \
                 -DANDROID_ABI=$ABI \
                 -DANDROID_NATIVE_API_LEVEL=$ANDROID_API \
                 -DANDROID_STL=c++_static \
@@ -83,6 +83,14 @@ popd > /dev/null
 
 export NDK_MODULE_PATH="$path"
 export NDK_PROJECT_PATH="$path"
+if [ -z "$NDK_ROOT" ]
+then
+	export NDK_ROOT=$ANDROID_NDK_HOME
+fi
+if [ -z "$ANDROID_NDK_HOME" ]
+then
+	export ANDROID_NDK_HOME=$NDK_ROOT
+fi
 
 rm -r obj CMakeFiles 2>/dev/null
 if [ .$BUILD = ."NDK_BUILD" ]; then

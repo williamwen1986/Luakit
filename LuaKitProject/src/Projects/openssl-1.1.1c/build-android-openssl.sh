@@ -44,6 +44,14 @@ rm -r obj 2>/dev/null
 #       
 #fi
 
+if [ -z "$NDK_ROOT" ]
+then
+        export NDK_ROOT=$ANDROID_NDK_HOME
+fi
+if [ -z "$ANDROID_NDK_HOME" ]
+then
+        export ANDROID_NDK_HOME=$NDK_ROOT
+fi
 
 if [ ! ${ANDROID_NDK_HOME} ]; then
      echo "ANDROID_NDK_HOME environment variable not set, set and rerun"
@@ -84,6 +92,7 @@ case ${HOST_INFO} in
 esac
 
 #./Configure dist
+export PATH=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${TOOLCHAIN_SYSTEM}/bin:$PATH
 
 for ANDROID_TARGET_PLATFORM in x86 x86_64 arm64-v8a armeabi-v7a
  do
@@ -141,8 +150,6 @@ for ANDROID_TARGET_PLATFORM in x86 x86_64 arm64-v8a armeabi-v7a
          exit 1
      fi
 
-     export PATH=${ANDROID_NDK}/toolchains/llvm/prebuilt/${TOOLCHAIN_SYSTEM}/bin:$PATH
-     #export PATH=$ANDROID_NDK/toolchains/llvm/prebuilt/darwin-x86_64/bin:$PATH
 
      #export CROSS_SYSROOT=${ANDROID_TOOLCHAIN_DIR}/sysroot
 

@@ -1,12 +1,12 @@
 
   const char features[] = {"\n"
 "CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __cplusplus >= 199711L
+#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_aggregate_nsdmi)
 "1"
 #else
 "0"
 #endif
-"cxx_template_template_parameters\n"
+"cxx_aggregate_default_initializers\n"
 "CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_alias_templates)
 "1"
@@ -36,12 +36,26 @@
 #endif
 "cxx_attributes\n"
 "CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
+"1"
+#else
+"0"
+#endif
+"cxx_attribute_deprecated\n"
+"CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_auto_type)
 "1"
 #else
 "0"
 #endif
 "cxx_auto_type\n"
+"CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_binary_literals)
+"1"
+#else
+"0"
+#endif
+"cxx_binary_literals\n"
 "CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_constexpr)
 "1"
@@ -50,12 +64,26 @@
 #endif
 "cxx_constexpr\n"
 "CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_contextual_conversions)
+"1"
+#else
+"0"
+#endif
+"cxx_contextual_conversions\n"
+"CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_decltype)
 "1"
 #else
 "0"
 #endif
 "cxx_decltype\n"
+"CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
+"1"
+#else
+"0"
+#endif
+"cxx_decltype_auto\n"
 "CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_decltype_incomplete_return_types)
 "1"
@@ -98,6 +126,13 @@
 "0"
 #endif
 "cxx_deleted_functions\n"
+"CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
+"1"
+#else
+"0"
+#endif
+"cxx_digit_separators\n"
 "CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __cplusplus >= 201103L
 "1"
@@ -148,6 +183,13 @@
 #endif
 "cxx_generalized_initializers\n"
 "CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
+"1"
+#else
+"0"
+#endif
+"cxx_generic_lambdas\n"
+"CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_inheriting_constructors)
 "1"
 #else
@@ -168,6 +210,13 @@
 "0"
 #endif
 "cxx_lambdas\n"
+"CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_init_captures)
+"1"
+#else
+"0"
+#endif
+"cxx_lambda_init_captures\n"
 "CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_local_type_template_args)
 "1"
@@ -232,6 +281,20 @@
 #endif
 "cxx_reference_qualified_functions\n"
 "CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_relaxed_constexpr)
+"1"
+#else
+"0"
+#endif
+"cxx_relaxed_constexpr\n"
+"CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_return_type_deduction)
+"1"
+#else
+"0"
+#endif
+"cxx_return_type_deduction\n"
+"CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __cplusplus >= 201103L
 "1"
 #else
@@ -266,6 +329,13 @@
 "0"
 #endif
 "cxx_strong_enums\n"
+"CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __cplusplus >= 199711L
+"1"
+#else
+"0"
+#endif
+"cxx_template_template_parameters\n"
 "CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_thread_local)
 "1"
@@ -309,6 +379,13 @@
 #endif
 "cxx_user_literals\n"
 "CXX_FEATURE:"
+#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_variable_templates)
+"1"
+#else
+"0"
+#endif
+"cxx_variable_templates\n"
+"CXX_FEATURE:"
 #if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __cplusplus >= 201103L
 "1"
 #else
@@ -322,83 +399,6 @@
 "0"
 #endif
 "cxx_variadic_templates\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_aggregate_nsdmi)
-"1"
-#else
-"0"
-#endif
-"cxx_aggregate_default_initializers\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
-"1"
-#else
-"0"
-#endif
-"cxx_attribute_deprecated\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_binary_literals)
-"1"
-#else
-"0"
-#endif
-"cxx_binary_literals\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_contextual_conversions)
-"1"
-#else
-"0"
-#endif
-"cxx_contextual_conversions\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
-"1"
-#else
-"0"
-#endif
-"cxx_decltype_auto\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
-"1"
-#else
-"0"
-#endif
-"cxx_digit_separators\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
-"1"
-#else
-"0"
-#endif
-"cxx_generic_lambdas\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_init_captures)
-"1"
-#else
-"0"
-#endif
-"cxx_lambda_init_captures\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_relaxed_constexpr)
-"1"
-#else
-"0"
-#endif
-"cxx_relaxed_constexpr\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_return_type_deduction)
-"1"
-#else
-"0"
-#endif
-"cxx_return_type_deduction\n"
-"CXX_FEATURE:"
-#if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_variable_templates)
-"1"
-#else
-"0"
-#endif
-"cxx_variable_templates\n"
 
 };
 

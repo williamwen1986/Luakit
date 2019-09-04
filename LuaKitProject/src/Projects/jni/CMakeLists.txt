@@ -40,7 +40,7 @@ target_link_libraries(luaFramework  common)
 include_directories(
                     $ENV{OUTPUT_DIR}/${ANDROID_ABI}
                     ${PROJECT_SOURCE_DIR}/.././
-		    ${PROJECT_SOURCE_DIR}/../jni
+		            ${PROJECT_SOURCE_DIR}/../jni
                     ${PROJECT_SOURCE_DIR}/../common/
                     ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua
                     ${PROJECT_SOURCE_DIR}/../openssl/include/
