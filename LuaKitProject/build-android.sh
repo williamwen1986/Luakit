@@ -1,8 +1,9 @@
- #!/bin/sh
+#!/bin/sh
 #------------------------------
 #
 # To build LuaKit for Android :
 #
+#    $ export ANDROID_NDK_HOME=....
 #    $ cd luakit/LuaKitProject
 #    $ export CONFIG=Debug
 #    $ export ANDROID_API=24
