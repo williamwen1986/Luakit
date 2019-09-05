@@ -26,4 +26,5 @@ LOCAL_STATIC_LIBRARIES += iconv \
 
 include $(BUILD_STATIC_LIBRARY)
 
+$(call import-add-path,$(LOCAL_PATH)/..)
 $(call import-module, libiconv-1.14)
