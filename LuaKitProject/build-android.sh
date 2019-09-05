@@ -1,4 +1,13 @@
  #!/bin/sh
+#------------------------------
+#
+# To build LuaKit for Android :
+#
+#    $ cd luakit/LuaKitProject
+#    $ export CONFIG=Debug
+#    $ export ANDROID_API=24
+#    $ ./build-android.sh
+#
 #------------------------------ 
 if [ -z "$BUILD" ]
 then
