@@ -14,11 +14,11 @@ generateDebugRFile
 fileChanges
 fileHashes
 local.properties
-**/libs
+**/libs/
 **/obj/
 **/CMakeFiles/
 **/outputs/
-**/CMakeCache.txt
+CMakeCache.txt
 **/.cxx
 **/.externalNativeBuild
 **/.gradle
