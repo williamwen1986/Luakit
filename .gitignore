@@ -28,4 +28,6 @@ local.properties
 *.iml
 LuaKitProject/src/Projects/openssl-1.1.1c/test/
 *.tmp
-**/cmake_install.cmake
+cmake_install.cmake
+Makefile
+LuaKitProject/src/Projects/openssl-1.1.1c/configdata.pm
