@@ -21,11 +21,11 @@ local.properties
 **/CMakeCache.txt
 **/.cxx
 **/.externalNativeBuild
+**/.gradle
 *.o
 *.a
 *.d
 *.iml
-**/Makefile
 LuaKitProject/src/Projects/openssl-1.1.1c/test/
 *.tmp
 **/cmake_install.cmake
