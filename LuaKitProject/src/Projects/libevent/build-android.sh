@@ -1,3 +1,3 @@
 #!/bin/sh
-. ../../../bin/build-android.sh
+. ../../../bin/build-android.bash
 checkError

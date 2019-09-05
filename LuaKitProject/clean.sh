@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Android
 # -------
@@ -19,3 +19,7 @@ rm -rf AndroidDemo/WeatherTest/app/.cxx         AndroidDemo/WeatherTest/app/.ext
 rm -rf src/Projects/jni/libluaFramework.so   src/Projects/jni/libs              src/Projects/jni/obj
 rm -rf AndroidFrameWork/luakit/build AndroidFrameWork/lib_chromium/build
 rm src/Projects/openssl-1.1.1c/Makefile
+
+# iOS
+# ---
+# TODO!

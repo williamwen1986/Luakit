@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #------------------------------
 #
 # To build LuaKit for Android :
@@ -8,6 +8,9 @@
 #    $ export CONFIG=Debug
 #    $ export ANDROID_API=24
 #    $ ./build-android.sh
+#
+# Note : CONFIG=Debug or Release (with an uppercase character) for a CMAKE build.
+#      : CONFIG=debug or release (with a lowercase character) for a NDK_BUILD build
 #
 #------------------------------ 
 if [ -z "$BUILD" ]
