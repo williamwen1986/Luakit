@@ -30,4 +30,5 @@ LuaKitProject/src/Projects/openssl-1.1.1c/test/
 *.tmp
 cmake_install.cmake
 Makefile
+configdata.pm
 LuaKitProject/src/Projects/openssl-1.1.1c/configdata.pm
