@@ -2,42 +2,83 @@ Create a new project with Android Studio
 -----------------------------
 If you have your own project , skip this step
 
-Copy the src code and framework
+Build the OpenSSL library
 -----------------------------
-Copy [source code folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/src) and [android framework folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/AndroidFrameWork) to the rootPath of your project
+You need to build the openSSL library for your target API version, such as:
+
+```sh
+export CONFIG=Debug
+export ANDROID_API=24
+cd LuaKitProject/src/Projects/openssl-1.1.1c/
+./build-android.sh
+```
+
+The $CONFIG environment variable must be "Debug" or "Release".
+The $ANDROID_API environment variable is your target API version.
+
+You will get your library in LuaKitProject/libs/
+
+
+Build the Luakit library (optional)
+-----------------------------
+If you want to build the complete Luakit library (libluaFramework.so) and not just Open SSL, you can do the following instead of the previous step :
+
+```sh
+export CONFIG=Debug
+export ANDROID_API=24
+cd LuaKitProject/
+./build-android.sh
+```
+
+The $CONFIG environment variable must be "Debug" or "Release".
+The $ANDROID_API environment variable is your target API version.
+
+You will get your library in LuaKitProject/libs/
+
 
 Add dependence
 -----------------------------
 Open your project, add jniLibs.srcDir to your app build.gradle, such as below
 
+
 ```	
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     defaultConfig {
+                minSdkVersion 24
+                targetSdkVersion 28
 		...
     }
     buildTypes {
        ...
     }
+
+    externalNativeBuild {
+        cmake {
+            version "3.10.2"
+            path file('../../../src/Projects/jni/CMakeLists.txt')
+        }
+    }
+
     //add jniLibs.srcDir
     sourceSets{
         main{
-            jniLibs.srcDir '../src/Projects/jni/libs'
+            main.jni.srcDirs = [ '../../../src/Projects/jni' ]
+
         }
     }
 }
 ```
 
+Create a setting.gradle file into your Project Directory, with the following :
 
-Add two modules in [AndroidFrameWork folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/AndroidFrameWork) [lib_chromium](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/AndroidFrameWork/lib_chromium) and [luakit](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/AndroidFrameWork/luakit) to your project. 
-
-File->New->Import Module
-
-Modify Project stucture to add dependence
-
-File->Project Stucture->select your app->Dependencies-> + -> Module Dependency ->  select lib_chromium and luakit
+```
+include ':app', ':luakit', ':lib_chromium'
+project(':luakit').projectDir = new File(settingsDir, '../../AndroidFrameWork/luakit')
+project(':lib_chromium').projectDir = new File(settingsDir, '../../AndroidFrameWork/lib_chromium')
+```
 
 Copy your lua source code to android assets/lua folder
 -----------------------------
@@ -127,11 +168,11 @@ return _weatherManager
 Maintain your own jni project
 -----------------------------
 
-Luakit is provide a integrated jni project in [the folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/src/Projects/jni), you can go to this path in the console, and type the below command. Luakit is compile with [android-ndk-r16b](https://developer.android.com/ndk/downloads/older_releases#ndk-16b-downloads)
+Luakit is provide a integrated jni project in [the folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/src/Projects/jni), you can go to this path in the console, and type the below command.
 
 ```
-ndk-build clean  NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk NDK_MODULE_PATH=../../Projects
-
-ndk-build  NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk NDK_MODULE_PATH=../../Projects 
-
+export CONFIG=Debug
+export ANDROID_API=24
+cd LuaKitProject/
+./build-android.sh
 ```
