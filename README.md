@@ -17,7 +17,7 @@ I will say Luakit is the most effective tool to develop apps on more than one pl
 Examples
 -----------------------------
 
-For some simple Luakit apps, check out the [source folder](tree/master/LuaKitProject).
+For some simple Luakit apps, check out the [source folder](LuaKitProject).
 
 **Multithreading**
 
