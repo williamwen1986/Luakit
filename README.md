@@ -295,7 +295,7 @@ map.put("row", new Integer(2));
 NotificationHelper.postNotification(3, map);
 ```
 
-IOS register and post notification,, [demo code](LuaKitProject/IOS%20Demo/NotificationTest/NotificationTest/ViewController.mm)
+IOS register and post notification,, [demo code](LuaKitProject/IOSDemo/NotificationTest/NotificationTest/ViewController.mm)
 
 ```	objective-c
 _notification_observer.reset(new NotificationProxyObserver(self));
