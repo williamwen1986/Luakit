@@ -310,15 +310,15 @@ post_notification(3, @{@"row":@(2)});
 Setup
 -----------------------------
 
-[Set up Luakit in flutter project](doc/Set-up-Luakit-in-flutter-project)
+[Set up Luakit in flutter project](doc/Set-up-Luakit-in-flutter-project.md)
 
-[Set up Luakit in android with jitpack](doc/Set-up-Luakit-in-android-with-jitpack)
+[Set up Luakit in android with jitpack](doc/Set-up-Luakit-in-android-with-jitpack.md)
 
-[Set up Luakit in IOS with cocoaPod](doc/Set-up-Luakit-in-IOS-with-cocoaPod)
+[Set up Luakit in IOS with cocoaPod](doc/Set-up-Luakit-in-IOS-with-cocoaPod.md)
 
-[Set up Luakit in android with source code](doc/Set-up-Luakit-in-android-with-source-code)
+[Set up Luakit in android with source code](doc/Set-up-Luakit-in-android-with-source-code.md)
 
-[Set up Luakit in IOS with source code](doc/Set-up-Luakit-in-IOS-with-source-code)
+[Set up Luakit in IOS with source code](doc/Set-up-Luakit-in-IOS-with-source-code.md)
 
 IDE AndroidStudio
 -----------------------------
