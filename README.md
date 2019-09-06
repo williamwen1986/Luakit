@@ -17,13 +17,13 @@ I will say Luakit is the most effective tool to develop apps on more than one pl
 Examples
 -----------------------------
 
-For some simple Luakit apps, check out the [source folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject).
+For some simple Luakit apps, check out the [source folder](LuaKitProject).
 
 **Multithreading**
 
 We provide some powerful multi-threading api in lua , you can see ThreadTest in Android Demo folder and IOS Demo folder. Notice , It is not only thread safety multithreading model, but also really competition multithreading model. It is the unique solution to perform competition multithreading in lua or js.
 
-Create thread , [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
+Create thread , [demo code](LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
 ```lua
 -- Parma1 is the thread type ,there are five types of thread you can create.
 -- BusinessThreadUI
@@ -36,7 +36,7 @@ Create thread , [demo code](https://github.com/williamwen1986/Luakit/blob/master
 local newThreadId = lua_thread.createThread(BusinessThreadLOGIC,"newThread")
 ```
 
-Perform method on a specified thread async, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
+Perform method on a specified thread async, [demo code](LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
 ```lua
 -- Parma1 is the threadId for which you want to perform method
 -- Parma2 is the modelName
@@ -49,7 +49,7 @@ lua_thread.postToThread(threadId,modelName,methodName,"params", 1.1, {1,2,3}, fu
 end)
 ```
 
-Perform method on a specified thread sync, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
+Perform method on a specified thread sync, [demo code](LuaKitProject/src/Projects/LuaSrc/thread_test.lua)
 ```lua
 -- Parma1 is the threadId for which you want to perform method
 -- Parma2 is the modelName
@@ -88,7 +88,7 @@ Luakit provide a orm solution which has below features
 
 ![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/ios数据3.png)
 
-Define your model, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+Define your model, [demo code](LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 ```lua
 -- Add the define table to dbData.lua
 -- Luakit provide 7 colum types
@@ -114,7 +114,7 @@ local Table = require('orm.class.table')
 local userTable = Table("user")
 ```
 
-Insert data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+Insert data, [demo code](LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 
 ```lua
 local userTable = Table("user")
@@ -126,7 +126,7 @@ local user = userTable({
 user:save()
 ```
 
-Update data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+Update data, [demo code](LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 
 ```lua
 local userTable = Table("user")
@@ -136,7 +136,7 @@ user.time_create = os.time()
 user:save()
 ```
 
-Delete data, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+Delete data, [demo code](LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 
 ```lua
 local userTable = Table("user")
@@ -144,21 +144,21 @@ local user = userTable.get:primaryKey({"user1"}):first()
 user:delete()
 ```
 
-Batch update, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+Batch update, [demo code](LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 
 ```lua
 local userTable = Table("user")
 userTable.get:where({age__gt = 40}):update({age = 45})
 ```
 
-Batch Delete, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+Batch Delete, [demo code](LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 
 ```lua
 local userTable = Table("user")
 userTable.get:where({age__gt = 40}):delete()
 ```
 
-Select, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+Select, [demo code](LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 
 ```lua
 local userTable = Table("user")
@@ -185,7 +185,7 @@ users = userTable.get:primaryKey({"first","randomusername"}):all()
 print("select primaryKey -----------")
 ```
 
-Join, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/db_test.lua)
+Join, [demo code](LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 ```lua
 local userTable = Table("user")
 local newsTable = Table("news")
@@ -199,7 +199,7 @@ print("join matchColumns ")
 
 **Http request**
 
-Luakit provide a http request interface, it has an internal dispatcher which contains a FIFO queue , here is the [source code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/network/async_task_dispatcher.h), [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/WeatherManager.lua)
+Luakit provide a http request interface, it has an internal dispatcher which contains a FIFO queue , here is the [source code](LuaKitProject/src/Projects/network/async_task_dispatcher.h), [demo code](LuaKitProject/src/Projects/LuaSrc/WeatherManager.lua)
 ```lua
 -- url , the request url
 -- isPost, boolean value represent post or get
@@ -217,7 +217,7 @@ lua_http.request({ url  = "http://tj.nineton.cn/Heart/index/all?city=CHSH000000"
 
 **Async socket**
 
-Luakit provide a non-blocking interface for socket connect , [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/async_socket_test.lua)
+Luakit provide a non-blocking interface for socket connect , [demo code](LuaKitProject/src/Projects/LuaSrc/async_socket_test.lua)
 
 ```lua
 local socket = lua_asyncSocket.create("127.0.0.1",4001)
@@ -249,7 +249,7 @@ socket:connect()
 
 Luakit provide a notification system by which notifications can transfer through the lua environment and native environment
 
-Lua register and post notification, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/notification_test.lua)
+Lua register and post notification, [demo code](LuaKitProject/src/Projects/LuaSrc/notification_test.lua)
 
 ```lua
 lua_notification.createListener(function (l)
@@ -273,7 +273,7 @@ lua_notification.postNotification(3,
 })
 ```
 
-Android register and post notification,, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/Android%20Demo/NotificationTest/app/src/main/java/luakit/com/notificationtest/MainActivity.java)
+Android register and post notification,, [demo code](LuaKitProject/Android%20Demo/NotificationTest/app/src/main/java/luakit/com/notificationtest/MainActivity.java)
 
 ```java
 LuaNotificationListener  listener = new LuaNotificationListener();
@@ -295,7 +295,7 @@ map.put("row", new Integer(2));
 NotificationHelper.postNotification(3, map);
 ```
 
-IOS register and post notification,, [demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/IOS%20Demo/NotificationTest/NotificationTest/ViewController.mm)
+IOS register and post notification,, [demo code](LuaKitProject/IOS%20Demo/NotificationTest/NotificationTest/ViewController.mm)
 
 ```	objective-c
 _notification_observer.reset(new NotificationProxyObserver(self));
@@ -310,20 +310,20 @@ post_notification(3, @{@"row":@(2)});
 Setup
 -----------------------------
 
-[Set up Luakit in flutter project](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-flutter-project)
+[Set up Luakit in flutter project](doc/Set-up-Luakit-in-flutter-project)
 
-[Set up Luakit in android with jitpack](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-android-with-jitpack)
+[Set up Luakit in android with jitpack](doc/Set-up-Luakit-in-android-with-jitpack)
 
-[Set up Luakit in IOS with cocoaPod](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-IOS-with-cocoaPod)
+[Set up Luakit in IOS with cocoaPod](doc/Set-up-Luakit-in-IOS-with-cocoaPod)
 
-[Set up Luakit in android with source code](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-android-with-source-code)
+[Set up Luakit in android with source code](doc/Set-up-Luakit-in-android-with-source-code)
 
-[Set up Luakit in IOS with source code](https://github.com/williamwen1986/Luakit/wiki/Set-up-Luakit-in-IOS-with-source-code)
+[Set up Luakit in IOS with source code](doc/Set-up-Luakit-in-IOS-with-source-code)
 
 IDE AndroidStudio
 -----------------------------
 
-We provide an AndroidStudio plugin named Luakit, you can develop with AndroidStudio, we provide many useful features, [demonstrate how to debug Luakit with AndroidStudio](https://github.com/williamwen1986/Luakit/wiki/IDE-AndroidStudio)
+We provide an AndroidStudio plugin named Luakit, you can develop with AndroidStudio, we provide many useful features, [demonstrate how to debug Luakit with AndroidStudio](doc/IDE-AndroidStudio)
 <li>Remote Debugger</li>
 <li>Find usages</li>
 <li>Find usages</li>
