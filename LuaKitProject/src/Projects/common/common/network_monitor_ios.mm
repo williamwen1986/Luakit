@@ -1,9 +1,9 @@
-#import "common/Reachability.h"
+#import "common/LReachability.h"
 
 #include "base/bind.h"
 #include "network_monitor.h"
 
-NetworkStatus CURRENT_NETWORK_STATUS = ReachableViaWiFi;
+LNetworkStatus CURRENT_NETWORK_STATUS = LReachableViaWiFi;
 
 enum NetType {
     NETTYPE_UNKNOWN = 0,
@@ -15,13 +15,13 @@ static std::atomic<NetType> g_net_type;
 
 void updateNetType() {
     switch (CURRENT_NETWORK_STATUS) {
-        case ReachableViaWiFi:
+        case LReachableViaWiFi:
             g_net_type = NETTYPE_WIFI;
             break;
-        case ReachableViaWWAN:
-        case ReachableVia2G:
-        case ReachableVia3G:
-        case ReachableVia4G:
+        case LReachableViaWWAN:
+        case LReachableVia2G:
+        case LReachableVia3G:
+        case LReachableVia4G:
             g_net_type = NETTYPE_CELL;
             break;
         default:
@@ -31,7 +31,7 @@ void updateNetType() {
 }
 
 @interface WWNetworkMonitor : NSObject {
-  Reachability *reachability_;
+  LReachability *reachability_;
   NetworkMonitor* monitor_;
 }
 @end
@@ -41,14 +41,14 @@ void updateNetType() {
   self = [super init];
   if(self != nil) {
     monitor_ = cdnMonitor;
-    reachability_ = [Reachability reachabilityForInternetConnection];
-    CURRENT_NETWORK_STATUS = reachability_.currentReachabilityStatus;
+    reachability_ = [LReachability reachabilityForInternetConnection];
+    CURRENT_NETWORK_STATUS = reachability_.currentLReachabilityStatus;
     updateNetType();
   }
   
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(reachabilityChanged:)
-                                               name:kReachabilityChangedNotification
+                                               name:kLReachabilityChangedNotification
                                              object:reachability_];
   [reachability_ startNotifier];
   
@@ -62,7 +62,7 @@ void updateNetType() {
 
 -(void)reachabilityChanged:(NSNotification*)notification {
   NSNumber* reachable = [[notification userInfo] objectForKey:@"reachable"];
-  CURRENT_NETWORK_STATUS = reachability_.currentReachabilityStatus;
+  CURRENT_NETWORK_STATUS = reachability_.currentLReachabilityStatus;
   updateNetType();
   monitor_->SetNetworkChanged(reachable.boolValue);
 }

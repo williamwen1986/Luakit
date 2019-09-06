@@ -18,7 +18,7 @@
 		04A4FA741D74683D00E42FE3 /* business_switches.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A4FA691D74683D00E42FE3 /* business_switches.cpp */; };
 		04FD79291D75884D00038474 /* network_monitor_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04FD791C1D75884D00038474 /* network_monitor_ios.mm */; };
 		04FD792A1D75884D00038474 /* network_monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FD791D1D75884D00038474 /* network_monitor.cpp */; };
-		BA2DE9FA1DAD0BE9008E68A2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2DE9F91DAD0BE9008E68A2 /* Reachability.m */; };
+		BA2DE9FA1DAD0BE9008E68A2 /* LReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2DE9F91DAD0BE9008E68A2 /* LReachability.m */; };
 		BA9AEAB51DB7B2750065AA6E /* network_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9AEAB31DB7B2750065AA6E /* network_util.cpp */; };
 		BA9AEAB71DB7B3120065AA6E /* network_util_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BA9AEAB61DB7B3120065AA6E /* network_util_ios.mm */; };
 /* End PBXBuildFile section */
@@ -89,8 +89,8 @@
 		04FD791C1D75884D00038474 /* network_monitor_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = network_monitor_ios.mm; sourceTree = "<group>"; };
 		04FD791D1D75884D00038474 /* network_monitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = network_monitor.cpp; sourceTree = "<group>"; };
 		04FD791E1D75884D00038474 /* network_monitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = network_monitor.h; sourceTree = "<group>"; };
-		BA2DE9F81DAD0BE9008E68A2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../Reachability.h; sourceTree = "<group>"; };
-		BA2DE9F91DAD0BE9008E68A2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../Reachability.m; sourceTree = "<group>"; };
+		BA2DE9F81DAD0BE9008E68A2 /* LReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LReachability.h; path = ../LReachability.h; sourceTree = "<group>"; };
+		BA2DE9F91DAD0BE9008E68A2 /* LReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LReachability.m; path = ../LReachability.m; sourceTree = "<group>"; };
 		BA4685D21DD1C8A200A8CCB4 /* libcommon_unittests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_unittests.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9AEAB31DB7B2750065AA6E /* network_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = network_util.cpp; sourceTree = "<group>"; };
 		BA9AEAB41DB7B2750065AA6E /* network_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = network_util.h; sourceTree = "<group>"; };
@@ -153,8 +153,8 @@
 				04A4FA571D74683D00E42FE3 /* notification_service.h */,
 				04A4FA581D74683D00E42FE3 /* notification_source.h */,
 				04FD79111D7584C700038474 /* observer_wrapper.hpp */,
-				BA2DE9F81DAD0BE9008E68A2 /* Reachability.h */,
-				BA2DE9F91DAD0BE9008E68A2 /* Reachability.m */,
+				BA2DE9F81DAD0BE9008E68A2 /* LReachability.h */,
+				BA2DE9F91DAD0BE9008E68A2 /* LReachability.m */,
 				04A4FA591D74683D00E42FE3 /* result_codes.h */,
 				04A4FA5A1D74683D00E42FE3 /* business_client_main_parts.cc */,
 				04A4FA5B1D74683D00E42FE3 /* business_client_main_parts.h */,
@@ -238,6 +238,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -266,7 +267,7 @@
 				04A4FA731D74683D00E42FE3 /* business_runtime.cpp in Sources */,
 				04FD79291D75884D00038474 /* network_monitor_ios.mm in Sources */,
 				04A4FA6C1D74683D00E42FE3 /* notification_registrar.cc in Sources */,
-				BA2DE9FA1DAD0BE9008E68A2 /* Reachability.m in Sources */,
+				BA2DE9FA1DAD0BE9008E68A2 /* LReachability.m in Sources */,
 				BA9AEAB71DB7B3120065AA6E /* network_util_ios.mm in Sources */,
 				BA9AEAB51DB7B2750065AA6E /* network_util.cpp in Sources */,
 				04A4FA711D74683D00E42FE3 /* business_main_delegate.cpp in Sources */,
@@ -311,9 +312,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEPLOYMENT_POSTPROCESSING = YES;
+				DEPLOYMENT_POSTPROCESSING = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

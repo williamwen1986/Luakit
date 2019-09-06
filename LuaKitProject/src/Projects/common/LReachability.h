@@ -56,24 +56,24 @@
 #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
 #endif
 
-extern NSString *const kReachabilityChangedNotification;
+extern NSString *const kLReachabilityChangedNotification;
 
-typedef NS_ENUM(NSInteger, NetworkStatus) {
-    // Apple NetworkStatus Compatible Names.
-    NotReachable = 0,
-    ReachableViaWiFi = 2,
-    ReachableViaWWAN = 1,
-    ReachableVia2G = 3,
-    ReachableVia3G = 4,
-    ReachableVia4G = 5
+typedef NS_ENUM(NSInteger, LNetworkStatus) {
+    // Apple LNetworkStatus Compatible Names.
+    NotLReachable = 0,
+    LReachableViaWiFi = 2,
+    LReachableViaWWAN = 1,
+    LReachableVia2G = 3,
+    LReachableVia3G = 4,
+    LReachableVia4G = 5
 };
 
-@class Reachability;
+@class LReachability;
 
-typedef void (^NetworkReachable)(Reachability * reachability);
-typedef void (^NetworkUnreachable)(Reachability * reachability);
+typedef void (^NetworkReachable)(LReachability * reachability);
+typedef void (^NetworkUnreachable)(LReachability * reachability);
 
-@interface Reachability : NSObject
+@interface LReachability : NSObject
 
 @property (nonatomic, copy) NetworkReachable    reachableBlock;
 @property (nonatomic, copy) NetworkUnreachable  unreachableBlock;
@@ -81,19 +81,19 @@ typedef void (^NetworkUnreachable)(Reachability * reachability);
 
 @property (nonatomic, assign) BOOL reachableOnWWAN;
 
-+(Reachability*)reachabilityWithHostname:(NSString*)hostname;
-+(Reachability*)reachabilityForInternetConnection;
-+(Reachability*)reachabilityWithAddress:(const struct sockaddr_in*)hostAddress;
-+(Reachability*)reachabilityForLocalWiFi;
++(LReachability*)reachabilityWithHostname:(NSString*)hostname;
++(LReachability*)reachabilityForInternetConnection;
++(LReachability*)reachabilityWithAddress:(const struct sockaddr_in*)hostAddress;
++(LReachability*)reachabilityForLocalWiFi;
 
--(Reachability *)initWithReachabilityRef:(SCNetworkReachabilityRef)ref;
+-(LReachability *)initWithLReachabilityRef:(SCNetworkReachabilityRef)ref;
 
 -(BOOL)startNotifier;
 -(void)stopNotifier;
 
 -(BOOL)isReachable;
--(BOOL)isReachableViaWWAN;
--(BOOL)isReachableViaWiFi;
+-(BOOL)isLReachableViaWWAN;
+-(BOOL)isLReachableViaWiFi;
 
 // WWAN may be available, but not active until a connection has been established.
 // WiFi may require a connection for VPN on Demand.
@@ -104,9 +104,9 @@ typedef void (^NetworkUnreachable)(Reachability * reachability);
 // Is user intervention required?
 -(BOOL)isInterventionRequired;
 
--(NetworkStatus)currentReachabilityStatus;
+-(LNetworkStatus)currentLReachabilityStatus;
 -(SCNetworkReachabilityFlags)reachabilityFlags;
--(NSString*)currentReachabilityString;
--(NSString*)currentReachabilityFlags;
+-(NSString*)currentLReachabilityString;
+-(NSString*)currentLReachabilityFlags;
 
 @end

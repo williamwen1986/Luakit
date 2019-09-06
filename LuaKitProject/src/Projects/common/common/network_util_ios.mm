@@ -2,9 +2,9 @@
 
 #include "network_util.h"
 
-#import "Reachability.h"
+#import "LReachability.h"
 
-extern NetworkStatus CURRENT_NETWORK_STATUS;
+extern LNetworkStatus CURRENT_NETWORK_STATUS;
 
 int NetworkUtil::NetWorkType() {
   const int k2G = 1;
@@ -14,13 +14,13 @@ int NetworkUtil::NetWorkType() {
   const int k4G = 5;
   
   //客户端网络类型(1=2G,2=非wifi,3=3G,4=wifi,5=4G)
-  NetworkStatus status = CURRENT_NETWORK_STATUS;
+  LNetworkStatus status = CURRENT_NETWORK_STATUS;
   
-  if(status == NotReachable) {
+  if(status == NotLReachable) {
     return kNonWiFi;
-  } else if (status == ReachableViaWiFi) {
+  } else if (status == LReachableViaWiFi) {
     return kWiFi;
-  } else if (status == ReachableViaWWAN) {
+  } else if (status == LReachableViaWWAN) {
     CTTelephonyNetworkInfo *netinfo = [[CTTelephonyNetworkInfo alloc] init];
     if ([netinfo.currentRadioAccessTechnology isEqualToString:CTRadioAccessTechnologyGPRS])
       return k2G;
