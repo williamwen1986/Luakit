@@ -72,7 +72,7 @@ android {
 }
 ```
 
-Create a setting.gradle file into your Project Directory, with the following :
+Create a "setting.gradle" file into your Project Directory, with the following :
 
 ```
 include ':app', ':luakit', ':lib_chromium'
