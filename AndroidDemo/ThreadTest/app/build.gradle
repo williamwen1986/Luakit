@@ -19,13 +19,13 @@ android {
     externalNativeBuild {
         cmake {
             version "3.10.2"
-            path file('../../../src/Projects/jni/CMakeLists.txt')
+            path file('../../../src/jni/CMakeLists.txt')
         }
     }
     sourceSets{
         main{
-            main.jni.srcDirs = [    '../../../src/Projects/jni' ]
-            main.jniLibs.srcDirs = ['../../../src/Projects/libs', '../../../src/Projects/jni']
+            main.jni.srcDirs = [    '../../../src/jni' ]
+            main.jniLibs.srcDirs = ['../../../src/libs', '../../../src/jni']
         }
     }
 

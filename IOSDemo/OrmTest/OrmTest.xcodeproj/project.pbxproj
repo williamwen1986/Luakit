@@ -54,12 +54,12 @@
 		2898CA2B20C695C500249775 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2898CA2D20C695C500249775 /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2898CA3020C695CE00249775 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		2898CA3220C695DA00249775 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../src/Projects/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
-		2898CA3320C695DA00249775 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../src/Projects/openssl/lib/libssl.a; sourceTree = "<group>"; };
-		2898CA6820C6971A00249775 /* db_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = db_test.lua; path = ../../src/Projects/LuaSrc/db_test.lua; sourceTree = "<group>"; };
-		2898CA6920C6971A00249775 /* orm */ = {isa = PBXFileReference; lastKnownFileType = folder; name = orm; path = ../../src/Projects/LuaSrc/orm; sourceTree = "<group>"; };
-		2898CA6A20C6971A00249775 /* DB.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DB.lua; path = ../../src/Projects/LuaSrc/DB.lua; sourceTree = "<group>"; };
-		3CF6F48121B8C9AC00B7A811 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../src/Projects/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
+		2898CA3220C695DA00249775 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../src/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
+		2898CA3320C695DA00249775 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../src/openssl/lib/libssl.a; sourceTree = "<group>"; };
+		2898CA6820C6971A00249775 /* db_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = db_test.lua; path = OrmTest/lua/db_test.lua; sourceTree = "<group>"; };
+		2898CA6920C6971A00249775 /* orm */ = {isa = PBXFileReference; lastKnownFileType = folder; name = orm; path = OrmTest/lua/orm; sourceTree = "<group>"; };
+		2898CA6A20C6971A00249775 /* DB.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DB.lua; path = OrmTest/lua/DB.lua; sourceTree = "<group>"; };
+		3CF6F48121B8C9AC00B7A811 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../src/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,10 +378,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../src/Projects",
+					"$(SRCROOT)/../../src",
 					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
-					"$(SRCROOT)/../../src/Projects/common",
-					"$(SRCROOT)/../../src/Projects/lua-5.1.5/lua",
+					"$(SRCROOT)/../../src/common",
+					"$(SRCROOT)/../../src/lua-5.1.5/lua",
 				);
 				INFOPLIST_FILE = OrmTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -389,7 +389,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/curl/ios/lib";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/curl/ios/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.OrmTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -403,10 +403,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../src/Projects",
+					"$(SRCROOT)/../../src",
 					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
-					"$(SRCROOT)/../../src/Projects/common",
-					"$(SRCROOT)/../../src/Projects/lua-5.1.5/lua",
+					"$(SRCROOT)/../../src/common",
+					"$(SRCROOT)/../../src/lua-5.1.5/lua",
 				);
 				INFOPLIST_FILE = OrmTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -414,7 +414,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/curl/ios/lib";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/curl/ios/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.OrmTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

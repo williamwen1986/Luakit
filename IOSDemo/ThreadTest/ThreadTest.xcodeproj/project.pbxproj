@@ -52,10 +52,10 @@
 		2898C8CF20C6342200249775 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2898C8D120C6342200249775 /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2898C8D420C6342E00249775 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		2898C8D620C6347E00249775 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../src/Projects/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
-		2898C8D720C6347E00249775 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../src/Projects/openssl/lib/libssl.a; sourceTree = "<group>"; };
-		2898C8DC20C6385400249775 /* thread_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = thread_test.lua; path = ../../src/Projects/LuaSrc/thread_test.lua; sourceTree = "<group>"; };
-		3CF6F46F21B8C8E400B7A811 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../src/Projects/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
+		2898C8D620C6347E00249775 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../src/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
+		2898C8D720C6347E00249775 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../src/openssl/lib/libssl.a; sourceTree = "<group>"; };
+		2898C8DC20C6385400249775 /* thread_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = thread_test.lua; path = ThreadTest/lua/thread_test.lua; sourceTree = "<group>"; };
+		3CF6F46F21B8C8E400B7A811 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../src/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,9 +371,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../src/Projects",
-					"$(SRCROOT)/../../src/Projects/lua-5.1.5/lua",
-					"$(SRCROOT)/../../src/Projects/common",
+					"$(SRCROOT)/../../src",
+					"$(SRCROOT)/../../src/lua-5.1.5/lua",
+					"$(SRCROOT)/../../src/common",
 					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
 				);
 				INFOPLIST_FILE = ThreadTest/Info.plist;
@@ -382,7 +382,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/curl/ios/lib";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/curl/ios/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.ThreadTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -395,9 +395,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../src/Projects",
-					"$(SRCROOT)/../../src/Projects/lua-5.1.5/lua",
-					"$(SRCROOT)/../../src/Projects/common",
+					"$(SRCROOT)/../../src",
+					"$(SRCROOT)/../../src/lua-5.1.5/lua",
+					"$(SRCROOT)/../../src/common",
 					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
 				);
 				INFOPLIST_FILE = ThreadTest/Info.plist;
@@ -406,7 +406,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/Projects/curl/ios/lib";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/curl/ios/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.ThreadTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

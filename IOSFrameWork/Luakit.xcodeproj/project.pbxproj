@@ -214,8 +214,8 @@
 
 /* Begin PBXFileReference section */
 		2883AC9120B43DFB005E1F54 /* libLuakit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLuakit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2883ACF120B50E5D005E1F54 /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../src/Projects/base/base.xcodeproj; sourceTree = "<group>"; };
-		2883AD4620B51D73005E1F54 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../src/Projects/common/common/common.xcodeproj; sourceTree = "<group>"; };
+		2883ACF120B50E5D005E1F54 /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../src/base/base.xcodeproj; sourceTree = "<group>"; };
+		2883AD4620B51D73005E1F54 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../src/common/common/common.xcodeproj; sourceTree = "<group>"; };
 		2883AD5220B5439B005E1F54 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
 		2883AD5320B5439B005E1F54 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
 		2883AD5420B5439B005E1F54 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
@@ -363,14 +363,14 @@
 		2883AE6120B546C3005E1F54 /* oc_callback.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_callback.mm; sourceTree = "<group>"; };
 		2883AE6220B546C3005E1F54 /* oc_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oc_helpers.h; sourceTree = "<group>"; };
 		2883AE6320B546C3005E1F54 /* oc_helpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_helpers.mm; sourceTree = "<group>"; };
-		2883AF0020B55641005E1F54 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../src/Projects/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
-		2883AF0120B55641005E1F54 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../src/Projects/openssl/lib/libssl.a; sourceTree = "<group>"; };
+		2883AF0020B55641005E1F54 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../src/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
+		2883AF0120B55641005E1F54 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../src/openssl/lib/libssl.a; sourceTree = "<group>"; };
 		2883AF0420B5565B005E1F54 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2898C83C20C55F2100249775 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		2898C84E20C55F2200249775 /* LuakitLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuakitLoader.h; sourceTree = "<group>"; };
 		2898C84F20C55F2200249775 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
 		2898C85020C55F2200249775 /* LuakitLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuakitLoader.cpp; sourceTree = "<group>"; };
-		3C2CC5D521ABE47D00610EAC /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../src/Projects/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
+		3C2CC5D521ABE47D00610EAC /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../src/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
 		3C85515D21B00DBA00860F2A /* mobdebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mobdebug.c; sourceTree = "<group>"; };
 		3C85515E21B00DBA00860F2A /* mobdebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mobdebug.h; sourceTree = "<group>"; };
 		3C85517121B00DBA00860F2A /* tcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tcp.h; sourceTree = "<group>"; };
@@ -554,7 +554,7 @@
 				2883AD9020B5439B005E1F54 /* tools */,
 			);
 			name = lua;
-			path = "../../src/Projects/lua-5.1.5/lua";
+			path = "../../src/lua-5.1.5/lua";
 			sourceTree = "<group>";
 		};
 		2883AD9020B5439B005E1F54 /* tools */ = {
@@ -591,7 +591,7 @@
 				2883ADDD20B54516005E1F54 /* socket_watcher.h */,
 			);
 			name = network;
-			path = ../../src/Projects/network;
+			path = ../../src/network;
 			sourceTree = "<group>";
 		};
 		2883ADD320B54516005E1F54 /* net */ = {
@@ -622,7 +622,7 @@
 				2883AE4020B5457A005E1F54 /* timer */,
 			);
 			name = extensions;
-			path = ../../src/Projects/extensions;
+			path = ../../src/extensions;
 			sourceTree = "<group>";
 		};
 		2883ADFE20B5457A005E1F54 /* AsyncSocket */ = {
@@ -847,7 +847,7 @@
 				C51B857E22E0D6E200BE82A6 /* sqlite3ext.h */,
 			);
 			name = "sqlite-amalgamation-3290000";
-			path = "../../src/Projects/sqlite-amalgamation-3290000";
+			path = "../../src/sqlite-amalgamation-3290000";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1233,14 +1233,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../src/Projects/lua-5.1.5/lua",
-					"$(SRCROOT)/../src/Projects",
-					"$(SRCROOT)/../src/Projects/common",
-					"$(SRCROOT)/../src/Projects/extensions",
-					"$(SRCROOT)/../src/Projects/curl/ios/include",
+					"$(SRCROOT)/../src/lua-5.1.5/lua",
+					"$(SRCROOT)/../src",
+					"$(SRCROOT)/../src/common",
+					"$(SRCROOT)/../src/extensions",
+					"$(SRCROOT)/../src/curl/ios/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/Projects/curl/ios/lib";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/curl/ios/lib";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1255,14 +1255,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../src/Projects/lua-5.1.5/lua",
-					"$(SRCROOT)/../src/Projects",
-					"$(SRCROOT)/../src/Projects/common",
-					"$(SRCROOT)/../src/Projects/extensions",
-					"$(SRCROOT)/../src/Projects/curl/ios/include",
+					"$(SRCROOT)/../src/lua-5.1.5/lua",
+					"$(SRCROOT)/../src",
+					"$(SRCROOT)/../src/common",
+					"$(SRCROOT)/../src/extensions",
+					"$(SRCROOT)/../src/curl/ios/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/Projects/curl/ios/lib";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/curl/ios/lib";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

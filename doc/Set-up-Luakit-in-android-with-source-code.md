@@ -30,14 +30,14 @@ You need to build the openSSL library for your target API version, such as:
 ```sh
 export CONFIG=Debug
 export ANDROID_API=24
-cd LuaKitProject/src/Projects/openssl-1.1.1c/
+cd src/openssl-1.1.1c/
 ./build-android.sh
 ```
 
 The $CONFIG environment variable must be "Debug" or "Release".
 The $ANDROID_API environment variable is your target API version.
 
-You will get your library in LuaKitProject/libs/
+You will get your library in luakit/libs/
 
 
 Build the Luakit library (optional)
@@ -47,14 +47,14 @@ If you want to build the complete Luakit library (libluaFramework.so) and not ju
 ```sh
 export CONFIG=Debug
 export ANDROID_API=24
-cd LuaKitProject/
+cd luakit/
 ./build-android.sh
 ```
 
 The $CONFIG environment variable must be "Debug" or "Release".
 The $ANDROID_API environment variable is your target API version.
 
-You will get your library in LuaKitProject/libs/
+You will get your library in luakit/libs/
 
 
 Add dependence
@@ -79,14 +79,14 @@ android {
     externalNativeBuild {
         cmake {
             version "3.10.2"
-            path file('../../../src/Projects/jni/CMakeLists.txt')
+            path file('../../../src/jni/CMakeLists.txt')
         }
     }
 
     //add jniLibs.srcDir
     sourceSets{
         main{
-            main.jni.srcDirs = [ '../../../src/Projects/jni' ]
+            main.jni.srcDirs = [ '../../../src/jni' ]
 
         }
     }
@@ -103,7 +103,7 @@ project(':lib_chromium').projectDir = new File(settingsDir, '../../AndroidFrameW
 
 Copy your lua source code to android assets/lua folder
 -----------------------------
-Our demo lua source code is in the [luaSrc folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/src/Projects/LuaSrc), you need to copy the source code your need to assets/lua folder, you can also add your own lua file to assets/lua folder.
+Our demo lua source code is in the [luaSrc folder](../AndroidDemo/WeatherTest/app/src/main/assets/lua), you need to copy the source code your need to assets/lua folder, you can also add your own lua file to assets/lua folder.
 
 Initialization Luakit
 -----------------------------
@@ -114,7 +114,7 @@ LuaHelper.startLuaKit(this);
 ```
 Create your own business model
 -----------------------------
-Luakit provide general interface to connect java and lua ,Refer to [LuaHelper.java](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/AndroidFrameWork/luakit/src/main/java/com/common/luakit/LuaHelper.java.java) 
+Luakit provide general interface to connect java and lua ,Refer to [LuaHelper.java](../src/main/java/com/common/luakit/LuaHelper.java.java) 
 
 ```java
 Object[] ret =  (Object[]) LuaHelper.callLuaFunction("WeatherManager","getWeather");
@@ -130,7 +130,7 @@ ILuaCallback callback = new ILuaCallback() {
 
 LuaHelper.callLuaFunction("WeatherManager","loadWeather", callback);
 ```
-The goal of the above code is to connect the [lua file](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/src/Projects/LuaSrc/WeatherManager.lua) , the lua code is the finally working code
+The goal of the above code is to connect the [lua file](../AndroidDemo/WeatherTest/app/src/main/assets/lua/WeatherManager.lua) , the lua code is the finally working code
 
 ```lua
 local _weatherManager = {}
@@ -189,11 +189,11 @@ return _weatherManager
 Maintain your own jni project
 -----------------------------
 
-Luakit is provide a integrated jni project in [the folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/src/Projects/jni), you can go to this path in the console, and type the below command.
+Luakit is provide a integrated jni project in [the folder](../src/jni), you can go to this path in the console, and type the below command.
 
 ```
 export CONFIG=Debug
 export ANDROID_API=24
-cd LuaKitProject/
+cd luakit/
 ./build-android.sh
 ```

@@ -11,7 +11,7 @@ then
     export ANDROID_API=24
 fi
 
-DEFAULT_OUTPUT=../../../libs/android"$ANDROID_API"-$CONFIG
+DEFAULT_OUTPUT=../../libs/android"$ANDROID_API"-$CONFIG
 
 if [ -z "$1" ]
 then
