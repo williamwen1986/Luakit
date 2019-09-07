@@ -1,3 +1,24 @@
+Prerequisite
+-----------------------------
+You can develop your application, using Android Studio on :
+- Linux
+- Macos
+- Windows, using WSL (Windows subsystem for Linux)
+
+You must install :
+* Android Studio
+* Cmake
+* The Android SDKs
+* The Android NDK
+
+Note : Windows users must install a Linux subsystem like Ubuntu or Kali. They will also have to install the Android NDK onto this subsystem (A Linux NDK). It means that Windows users will need to have two NDKs. One on Linux, and one on Windows. C'est la vie.
+
+Now, set the needed environment variables. In your ~/.bashrc add the following two variables :
+```sh
+export ANDROID_HOME=...
+export ANDROID_NDK_HOME=...
+```
+
 Create a new project with Android Studio
 -----------------------------
 If you have your own project , skip this step
