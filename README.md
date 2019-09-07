@@ -74,19 +74,19 @@ Luakit provide a orm solution which has below features
 
 **android orm test**
 
-![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/android数据1.png)
+![image](image/android数据1.png)
 
-![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/android数据2.png)
+![image](image/android数据2.png)
 
-![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/android数据3.png)
+![image](image/android数据3.png)
 
 **ios orm test**
 
-![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/ios数据1.png)
+![image](image/ios数据1.png)
 
-![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/ios数据2.png)
+![image](image/ios数据2.png)
 
-![image](https://raw.githubusercontent.com/williamwen1986/Luakit/master/image/ios数据3.png)
+![image](image/ios数据3.png)
 
 Define your model, [demo code](LuaKitProject/src/Projects/LuaSrc/db_test.lua)
 ```lua
