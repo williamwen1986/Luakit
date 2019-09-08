@@ -5,7 +5,7 @@
 #ifndef BASE_SYNCHRONIZATION_LOCK_IMPL_H_
 #define BASE_SYNCHRONIZATION_LOCK_IMPL_H_
 
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_WIN)
 #include <windows.h>

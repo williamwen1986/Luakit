@@ -8,7 +8,7 @@
 #include "base/base_export.h"
 #include "base/basictypes.h"
 #include "base/files/file_path.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #include <sys/types.h>
 #if defined(OS_WIN)

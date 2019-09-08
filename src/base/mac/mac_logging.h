@@ -6,7 +6,7 @@
 #define BASE_MAC_MAC_LOGGING_H_
 
 #include "base/logging.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_IOS)
 #include <MacTypes.h>

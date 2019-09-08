@@ -11,7 +11,7 @@
 #include "base/base_export.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/strings/string16.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 namespace base {
 

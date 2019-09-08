@@ -8,7 +8,7 @@
 #include "base/base_export.h"
 #include "base/basictypes.h"
 #include "base/process/process_handle.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_WIN)
 #include <windows.h>

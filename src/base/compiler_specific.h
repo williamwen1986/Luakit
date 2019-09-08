@@ -5,7 +5,7 @@
 #ifndef BASE_COMPILER_SPECIFIC_H_
 #define BASE_COMPILER_SPECIFIC_H_
 
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(COMPILER_MSVC)
 

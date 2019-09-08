@@ -5,7 +5,7 @@
 #ifndef BASE_MEMORY_SHARED_MEMORY_H_
 #define BASE_MEMORY_SHARED_MEMORY_H_
 
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #include <string>
 

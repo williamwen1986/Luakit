@@ -4,7 +4,7 @@
 
 #include "base/profiler/tracked_time.h"
 
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_WIN)
 #include <mmsystem.h>  // Declare timeGetTime()... after including build_config.

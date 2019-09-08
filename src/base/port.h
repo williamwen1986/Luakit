@@ -6,7 +6,7 @@
 #define BASE_PORT_H_
 
 #include <stdarg.h>
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #ifdef COMPILER_MSVC
 #define GG_LONGLONG(x) x##I64

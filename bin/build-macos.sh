@@ -5,7 +5,7 @@ if [ -z "$CONFIG" ]
 then
     export CONFIG=Debug
 fi
-DEFAULT_OUTPUT=../../libs/android"$ANDROID_API"-$CONFIG
+DEFAULT_OUTPUT=../../libs/macos-$CONFIG
 #-------------------------------------------------------------------
 
 path=$(dirname "$0")

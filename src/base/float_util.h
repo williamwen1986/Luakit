@@ -5,7 +5,7 @@
 #ifndef BASE_FLOAT_UTIL_H_
 #define BASE_FLOAT_UTIL_H_
 
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #include <float.h>
 

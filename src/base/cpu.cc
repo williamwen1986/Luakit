@@ -9,7 +9,7 @@
 #include <algorithm>
 
 #include "base/basictypes.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(ARCH_CPU_X86_FAMILY)
 #if defined(_MSC_VER)

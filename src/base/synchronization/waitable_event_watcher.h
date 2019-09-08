@@ -6,7 +6,7 @@
 #define BASE_SYNCHRONIZATION_WAITABLE_EVENT_WATCHER_H_
 
 #include "base/base_export.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_WIN)
 #include "base/win/object_watcher.h"

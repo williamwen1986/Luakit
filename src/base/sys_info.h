@@ -12,7 +12,7 @@
 #include "base/basictypes.h"
 #include "base/files/file_path.h"
 #include "base/time/time.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 namespace base {
 

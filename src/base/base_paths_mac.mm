@@ -17,7 +17,7 @@
 #include "base/mac/foundation_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 namespace {
 

@@ -10,7 +10,7 @@
 
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
