@@ -5,7 +5,6 @@
 // This is a simple allocator based on the windows heap.
 
 extern "C" {
-
 HANDLE win_heap;
 
 bool win_heap_init(bool use_lfh) {

@@ -22,45 +22,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		03310D6ADE04C9B33FF0DEB9 /* common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04155245F4321FBD8010207B /* common.cc */; };
-		049B1235BBACD0582B439F82 /* system-alloc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62A3FAC17AE3FCA36F0BB495 /* system-alloc.cc */; };
-		1EF31F05EAFAD7D437B09830 /* profiler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 620F8912070B3A1A9AE6F87E /* profiler.cc */; };
-		2389DFDBB68161BBB27AA35D /* profiledata.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46EB82876D0B14B17CFC8390 /* profiledata.cc */; };
-		3443F185D2B3836ED50642B1 /* thread_lister.c in Sources */ = {isa = PBXBuildFile; fileRef = B39822E924A91A827887F860 /* thread_lister.c */; };
-		38ABCE2B4FE8334374D6B07E /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = B7E21C15B984450FB6B07BE8 /* logging.cc */; };
-		3DB043918F53FE7F4E5C5A6D /* spinlock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4CF93DCEDB7219084B903DE0 /* spinlock.cc */; };
-		41E3E4D01BF07F93C56086BE /* profile-handler.cc in Sources */ = {isa = PBXBuildFile; fileRef = C0352C9897662E98A7733AAE /* profile-handler.cc */; };
-		422D88D70E436A822AF03D63 /* stack_trace_table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5C638174ADEB77DE302954BF /* stack_trace_table.cc */; };
 		4444F9C033EC20EB8291C32C /* allocator_shim.cc in Sources */ = {isa = PBXBuildFile; fileRef = C37DDAD911BF5B84DC494EB6 /* allocator_shim.cc */; };
-		48173BEB5FA7D587ECA91F75 /* thread_cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8BF92979402AE2638194B9C9 /* thread_cache.cc */; };
 		5077E99F862462ACD59C1504 /* debugallocation_shim.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8345AF51056721066BC83AD4 /* debugallocation_shim.cc */; };
-		5B9EBF46FC2433B203012C75 /* elf_mem_image.cc in Sources */ = {isa = PBXBuildFile; fileRef = B47F5939C95DA78D0D498A57 /* elf_mem_image.cc */; };
 		5E17C8F139F53B55F3C7A62B /* allocator_extension_thunks.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2008074A812E0A8F49F1C0A0 /* allocator_extension_thunks.cc */; };
-		5FC3E940F5DF450EF243336F /* malloc_extension.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1B3DB8475F3589078AD9CEC1 /* malloc_extension.cc */; };
-		6B10856B511E284159D2861A /* internal_logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 82F7AD631B9C007AFFE32F46 /* internal_logging.cc */; };
-		6FC08E831566EE4582100447 /* memory_region_map.cc in Sources */ = {isa = PBXBuildFile; fileRef = F9FDBC73885DB9AFF277EED9 /* memory_region_map.cc */; };
-		7118CF5D4AB088F9A166E036 /* vdso_support.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9079CB6A9DB74EFC299C8F4D /* vdso_support.cc */; };
-		7E10F420CAE14F98B36AEA81 /* heap-profiler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3985CAF3EBB977E851814D2F /* heap-profiler.cc */; };
-		82A7D7E2841002BC136E973E /* central_freelist.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2C1D915BE56124F7B0B45B4A /* central_freelist.cc */; };
-		83847D916074864D1E9C80BE /* symbolize.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A1EFA010A6ABC5A4AD65313 /* symbolize.cc */; };
-		846ED5A6960E243E185D302C /* span.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4531FAECD96DBDC8ADAECEFD /* span.cc */; };
-		886E9A97328671AC28F03709 /* sysinfo.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5BDDABBED62A1666791724E /* sysinfo.cc */; };
-		95A2BBA76FE071791FCC60F3 /* abort.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6B52E6AA17942C6F5B8AB7A2 /* abort.cc */; };
-		9FFC5DBC2B5F4461FE3C95F3 /* heap-profile-table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 79E80B728DEE16D2E12CEDBD /* heap-profile-table.cc */; };
-		A02C29808E16CB02C014346F /* port.cc in Sources */ = {isa = PBXBuildFile; fileRef = CBD7042BE5E42B8CAA661407 /* port.cc */; };
-		A65E79256123FB320F05E43D /* jemalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 80C65AE75695C3EC152CC074 /* jemalloc.c */; };
-		A7636B7A695137422297E071 /* low_level_alloc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 822F59A509BEE83B3E9BAEEE /* low_level_alloc.cc */; };
-		A8A89583C541084A18CE03E4 /* stacktrace.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F9428841D3521BE44178A /* stacktrace.cc */; };
-		BFC752A4DA6CA4EEEE495AB4 /* static_vars.cc in Sources */ = {isa = PBXBuildFile; fileRef = B398C5CD5D53D0F5FC92ACEC /* static_vars.cc */; };
-		C64B74750CE3A711E0F906B1 /* malloc_hook.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4D17634B54639EEB8B118EBA /* malloc_hook.cc */; };
-		CB2C6907FC157C9CD769035D /* linuxthreads.cc in Sources */ = {isa = PBXBuildFile; fileRef = 788F1C6F6CD0A3019F5A2A59 /* linuxthreads.cc */; };
-		D3BA653B4F7339AAC448C089 /* sampler.cc in Sources */ = {isa = PBXBuildFile; fileRef = FD4665514053FD320ED39E32 /* sampler.cc */; };
-		D6162C32DB618D21B7DDB5A6 /* page_heap.cc in Sources */ = {isa = PBXBuildFile; fileRef = CFB4C8EA374024EEBE8AFA63 /* page_heap.cc */; };
-		DFF4ACF607D4FBC3524A8F98 /* free_list.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C2397C89C3C4DBE35CC0 /* free_list.cc */; };
-		EB3D0FE1B45CF5CB5FD74E5B /* spinlock_internal.cc in Sources */ = {isa = PBXBuildFile; fileRef = B93A0668848BF3DE8920886D /* spinlock_internal.cc */; };
-		F040F39397D1ECA2299D2177 /* deep-heap-profile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1594608A541E3DC7E56538E0 /* deep-heap-profile.cc */; };
-		F6E368A21779A89004E6E05D /* maybe_threads.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E40EB4F02C1450D5700E4 /* maybe_threads.cc */; };
-		FEFC7D8BC9C52FB84DE835BE /* raw_printer.cc in Sources */ = {isa = PBXBuildFile; fileRef = BF889160284C6AF5C16F1DA1 /* raw_printer.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,170 +45,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		032003E3EB63099969EC2072 /* patch_functions.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = patch_functions.cc; sourceTree = "<group>"; };
-		04155245F4321FBD8010207B /* common.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = common.cc; sourceTree = "<group>"; };
-		0AA8055870DBCBE08C66BBC6 /* preamble_patcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = preamble_patcher.h; sourceTree = "<group>"; };
-		0BC61A989852EB51D1F2B170 /* stack_trace_table.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stack_trace_table.h; sourceTree = "<group>"; };
-		0BFB0D1325ADA936F39AA07B /* stacktrace_with_context.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stacktrace_with_context.cc; sourceTree = "<group>"; };
-		10F9B7D0F913D74E0F26CBEF /* heap-checker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "heap-checker.h"; sourceTree = "<group>"; };
-		1219AE819DCABC237D6A4FF3 /* mini_disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mini_disassembler.h; sourceTree = "<group>"; };
-		123DC3FC5F6941E4A4E944E5 /* spinlock_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spinlock_internal.h; sourceTree = "<group>"; };
-		142FAE49B5FF608B11D64407 /* basictypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = basictypes.h; sourceTree = "<group>"; };
-		14326DC64EB1126ABF1DD8D3 /* profiledata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = profiledata.h; sourceTree = "<group>"; };
-		1589512017EC8DBA4EFB0B92 /* page_heap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = page_heap.h; sourceTree = "<group>"; };
-		1594608A541E3DC7E56538E0 /* deep-heap-profile.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "deep-heap-profile.cc"; sourceTree = "<group>"; };
-		15D4066D95E5D3A47959192A /* profiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = profiler.h; sourceTree = "<group>"; };
-		16F018469E0696FDD467065F /* atomicops.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = atomicops.h; sourceTree = "<group>"; };
-		183F5304D9C4FCA087D43E3D /* packed-cache-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "packed-cache-inl.h"; sourceTree = "<group>"; };
-		19D32CB1CAB9118AD75A475E /* qr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = qr.h; sourceTree = "<group>"; };
-		1B3DB8475F3589078AD9CEC1 /* malloc_extension.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = malloc_extension.cc; sourceTree = "<group>"; };
-		1B7F9428841D3521BE44178A /* stacktrace.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stacktrace.cc; sourceTree = "<group>"; };
-		1BBBB8EB4ADF14CBBEF8F176 /* jemalloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jemalloc.h; sourceTree = "<group>"; };
-		1D96F97F0D3496603DE45EAC /* free_list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = free_list.h; sourceTree = "<group>"; };
-		1F48AE212AF374C496991D30 /* atomicops-internals-arm-generic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "atomicops-internals-arm-generic.h"; sourceTree = "<group>"; };
 		2008074A812E0A8F49F1C0A0 /* allocator_extension_thunks.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = allocator_extension_thunks.cc; sourceTree = "<group>"; };
-		20FA5B21D7C55ED0ECCFFA65 /* memory_region_map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memory_region_map.h; sourceTree = "<group>"; };
-		21F91476D245AACC35FA6999 /* stacktrace_config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stacktrace_config.h; sourceTree = "<group>"; };
-		23E197E9CA20EA8814DA482E /* system-alloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "system-alloc.h"; sourceTree = "<group>"; };
 		24F9C4F927B4577DCA167F3D /* allocator_shim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = allocator_shim.h; sourceTree = "<group>"; };
-		24FA26FD008F02C485FFF322 /* abort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = abort.h; sourceTree = "<group>"; };
-		25A214C8316F3A3FC124633A /* get_mangled_names.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = get_mangled_names.cc; sourceTree = "<group>"; };
-		28F63D132B1E3A7E9110A23F /* atomicops-internals-arm-v6plus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "atomicops-internals-arm-v6plus.h"; sourceTree = "<group>"; };
-		2927C719E5899DF9A3CC34A8 /* deep-heap-profile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "deep-heap-profile.h"; sourceTree = "<group>"; };
 		29F397EA8B4B6CD4CDBE271E /* release.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release.gypi; path = ../../build/release.gypi; sourceTree = "<group>"; };
-		2A10B4D1C47931972B78F948 /* libc_override.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libc_override.h; sourceTree = "<group>"; };
-		2A9F10D82DD994AB2A836EDB /* thread_lister.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_lister.h; sourceTree = "<group>"; };
-		2C1D915BE56124F7B0B45B4A /* central_freelist.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = central_freelist.cc; sourceTree = "<group>"; };
-		2F0D1E0EB1843C8D862D52DD /* dynamic_annotations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dynamic_annotations.h; sourceTree = "<group>"; };
-		332F1E7DD7B07DAF80EDD7FF /* libc_override_glibc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libc_override_glibc.h; sourceTree = "<group>"; };
-		335C1DB80E7BBB8057AFDE77 /* symbolize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = symbolize.h; sourceTree = "<group>"; };
-		36EBB8F380E82255F26F30BA /* config_win.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config_win.h; sourceTree = "<group>"; };
-		3985CAF3EBB977E851814D2F /* heap-profiler.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "heap-profiler.cc"; sourceTree = "<group>"; };
-		39E49653767CD9249045820B /* malloc_hook-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "malloc_hook-inl.h"; sourceTree = "<group>"; };
-		39EA8DFC5AB472E35C119B6C /* thread_cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_cache.h; sourceTree = "<group>"; };
-		3A1EFA010A6ABC5A4AD65313 /* symbolize.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = symbolize.cc; sourceTree = "<group>"; };
-		3D7066A73394CE98508F2F3F /* atomicops-internals-linuxppc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "atomicops-internals-linuxppc.h"; sourceTree = "<group>"; };
-		3D85342979271828D2D3502E /* heap-checker.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "heap-checker.cc"; sourceTree = "<group>"; };
-		40B3EA721B094B6A600A8F26 /* addressmap-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "addressmap-inl.h"; sourceTree = "<group>"; };
-		4531FAECD96DBDC8ADAECEFD /* span.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = span.cc; sourceTree = "<group>"; };
-		45BD3359C7D0C3C5998FFD64 /* cycleclock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cycleclock.h; sourceTree = "<group>"; };
-		46EB82876D0B14B17CFC8390 /* profiledata.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = profiledata.cc; sourceTree = "<group>"; };
-		4877AEC77FDA5F8B85B8FBD3 /* memfs_malloc.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = memfs_malloc.cc; sourceTree = "<group>"; };
-		4CA0C2397C89C3C4DBE35CC0 /* free_list.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = free_list.cc; sourceTree = "<group>"; };
-		4CCBDA5FDC1E25173DC51FC6 /* stacktrace_generic-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stacktrace_generic-inl.h"; sourceTree = "<group>"; };
-		4CF93DCEDB7219084B903DE0 /* spinlock.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = spinlock.cc; sourceTree = "<group>"; };
-		4D17634B54639EEB8B118EBA /* malloc_hook.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = malloc_hook.cc; sourceTree = "<group>"; };
-		4F83654478F7FFB793491FAD /* heap-profile-table.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "heap-profile-table.h"; sourceTree = "<group>"; };
 		516F09B7A497DBC91F713810 /* filename_rules.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = filename_rules.gypi; path = ../../build/filename_rules.gypi; sourceTree = "<group>"; };
-		5C638174ADEB77DE302954BF /* stack_trace_table.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stack_trace_table.cc; sourceTree = "<group>"; };
-		5F00DDEAFC685CE702FCC1A3 /* thread_annotations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_annotations.h; sourceTree = "<group>"; };
-		6004082BD3E7A17D0E3EE65E /* simple_mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = simple_mutex.h; sourceTree = "<group>"; };
-		6151FAF6DEDA1104CB08963C /* spinlock_win32-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "spinlock_win32-inl.h"; sourceTree = "<group>"; };
-		615E0D93B709400BD80CC729 /* ia32_opcode_map.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ia32_opcode_map.cc; sourceTree = "<group>"; };
-		61D57A6CFF6FCEFE479A7D50 /* config_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config_linux.h; sourceTree = "<group>"; };
-		620F8912070B3A1A9AE6F87E /* profiler.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = profiler.cc; sourceTree = "<group>"; };
-		62A3FAC17AE3FCA36F0BB495 /* system-alloc.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "system-alloc.cc"; sourceTree = "<group>"; };
-		62CAD4528647B828C5E4A97D /* vdso_support.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vdso_support.h; sourceTree = "<group>"; };
 		62E9D59510AE513113AEAB7B /* allocator_extension_thunks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = allocator_extension_thunks.h; sourceTree = "<group>"; };
-		646D8D07D291CDED4EE142B8 /* tcmalloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcmalloc.h; sourceTree = "<group>"; };
-		654554F8B15BA45ABF284F1D /* stl_allocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stl_allocator.h; sourceTree = "<group>"; };
-		6A3E00768556641817C37431 /* atomicops-internals-x86.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "atomicops-internals-x86.h"; sourceTree = "<group>"; };
-		6A9E40EB4F02C1450D5700E4 /* maybe_threads.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = maybe_threads.cc; sourceTree = "<group>"; };
-		6B52E6AA17942C6F5B8AB7A2 /* abort.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = abort.cc; sourceTree = "<group>"; };
-		6B5DBE770A532B49E5A452D4 /* malloc_hook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = malloc_hook.h; sourceTree = "<group>"; };
-		6B5F2C3FD64BF3C63615105A /* rb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rb.h; sourceTree = "<group>"; };
-		7009D15B55B6D022DCE3C16A /* spinlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spinlock.h; sourceTree = "<group>"; };
 		711BEB3D366CF4A2A536D567 /* liballocator_extension_thunks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liballocator_extension_thunks.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		721610D6F9AA6089BF020914 /* mini_disassembler.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mini_disassembler.cc; sourceTree = "<group>"; };
-		73DA5EC078ADB6C79246B998 /* profile-handler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "profile-handler.h"; sourceTree = "<group>"; };
-		74593A8A5176BEA8FA267638 /* stacktrace_libunwind-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stacktrace_libunwind-inl.h"; sourceTree = "<group>"; };
-		7459851C0C3BFD213FEE75AF /* central_freelist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = central_freelist.h; sourceTree = "<group>"; };
-		750644AA16326E54D0CA4A7E /* libc_override_gcc_and_weak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libc_override_gcc_and_weak.h; sourceTree = "<group>"; };
-		788F1C6F6CD0A3019F5A2A59 /* linuxthreads.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = linuxthreads.cc; sourceTree = "<group>"; };
-		79E80B728DEE16D2E12CEDBD /* heap-profile-table.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "heap-profile-table.cc"; sourceTree = "<group>"; };
-		7E220FFB69A4A9C8B6FC783A /* override_functions.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = override_functions.cc; sourceTree = "<group>"; };
-		80C65AE75695C3EC152CC074 /* jemalloc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = jemalloc.c; sourceTree = "<group>"; };
-		81D6FDB16F3CDB59341F18F7 /* malloc_hook_mmap_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = malloc_hook_mmap_linux.h; sourceTree = "<group>"; };
-		81D75859C346E3F03519C86D /* preamble_patcher_with_stub.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = preamble_patcher_with_stub.cc; sourceTree = "<group>"; };
-		822F59A509BEE83B3E9BAEEE /* low_level_alloc.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = low_level_alloc.cc; sourceTree = "<group>"; };
-		82F7AD631B9C007AFFE32F46 /* internal_logging.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = internal_logging.cc; sourceTree = "<group>"; };
 		8345AF51056721066BC83AD4 /* debugallocation_shim.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = debugallocation_shim.cc; sourceTree = "<group>"; };
-		85A028EB3D424E72EC9F460C /* internal_logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = internal_logging.h; sourceTree = "<group>"; };
 		860871BA0CF8E3A9A6FA8E78 /* win_allocator.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = win_allocator.cc; sourceTree = "<group>"; };
-		863E7AC2DE5847A0EB9D4220 /* page_heap_allocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = page_heap_allocator.h; sourceTree = "<group>"; };
-		8BF92979402AE2638194B9C9 /* thread_cache.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_cache.cc; sourceTree = "<group>"; };
-		8F6F1CA7B35304010C5E1D21 /* linked_list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = linked_list.h; sourceTree = "<group>"; };
-		9079CB6A9DB74EFC299C8F4D /* vdso_support.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vdso_support.cc; sourceTree = "<group>"; };
-		92C7C3CDE8D08585BF1531BA /* spinlock_posix-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "spinlock_posix-inl.h"; sourceTree = "<group>"; };
-		95D968C6FF40818C4ACA734C /* ql.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ql.h; sourceTree = "<group>"; };
 		96616F9EA4AA78EF146C445E /* liballocator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liballocator.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		968D5D2C3C544F5B38CAFCB2 /* stacktrace_x86-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stacktrace_x86-inl.h"; sourceTree = "<group>"; };
-		98A58BFDB4716EA53CCD50FA /* tcmalloc.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tcmalloc.cc; sourceTree = "<group>"; };
-		9906100FB5CD4622F7F4015C /* port.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = port.h; sourceTree = "<group>"; };
-		9BA0EB7E2C19DD36381E3E8D /* low_level_alloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = low_level_alloc.h; sourceTree = "<group>"; };
-		9C6C140E5357E1488DB59F12 /* arm_instruction_set_select.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = arm_instruction_set_select.h; sourceTree = "<group>"; };
-		9E44713C3437405E8EF996BB /* elfcore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = elfcore.h; sourceTree = "<group>"; };
-		9E5CA2D7AE35ED99A3A8F1BA /* googleinit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = googleinit.h; sourceTree = "<group>"; };
-		9F951490AFC9C1ECD19209FB /* spinlock_linux-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "spinlock_linux-inl.h"; sourceTree = "<group>"; };
-		A12221A3B59782F38044781E /* linux_syscall_support.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = linux_syscall_support.h; sourceTree = "<group>"; };
-		A1FAA53CC545AE2E1483785F /* stacktrace_arm-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stacktrace_arm-inl.h"; sourceTree = "<group>"; };
-		A2A95CFD4937B50E97174577 /* sampler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sampler.h; sourceTree = "<group>"; };
-		A65BAE9B3D5AE2DEDBC3739F /* libc_override_redefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libc_override_redefine.h; sourceTree = "<group>"; };
-		A871A218E9CAA9A823FE201F /* preamble_patcher.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = preamble_patcher.cc; sourceTree = "<group>"; };
 		A9D3015329C01C6B83B47D13 /* release_impl_official.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_impl_official.gypi; path = ../../build/internal/release_impl_official.gypi; sourceTree = "<group>"; };
-		AD50BB6FB8DAFE410F425B7F /* atomicops-internals-macosx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "atomicops-internals-macosx.h"; sourceTree = "<group>"; };
-		ADAD1CD4968BFAC268CC20E3 /* tcmalloc_guard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcmalloc_guard.h; sourceTree = "<group>"; };
-		AF7E802B977D14EED8AE7510 /* maybe_threads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = maybe_threads.h; sourceTree = "<group>"; };
-		B18A9CAFBBCB44C076E38DF5 /* malloc_extension_c.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = malloc_extension_c.h; sourceTree = "<group>"; };
-		B28D618C1D21DB2B8B755248 /* pagemap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pagemap.h; sourceTree = "<group>"; };
-		B39822E924A91A827887F860 /* thread_lister.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = thread_lister.c; sourceTree = "<group>"; };
-		B398C5CD5D53D0F5FC92ACEC /* static_vars.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = static_vars.cc; sourceTree = "<group>"; };
-		B47F5939C95DA78D0D498A57 /* elf_mem_image.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = elf_mem_image.cc; sourceTree = "<group>"; };
-		B53938844C0509659A448102 /* elf_mem_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = elf_mem_image.h; sourceTree = "<group>"; };
-		B68782763A43C05AC5227B15 /* debugallocation.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = debugallocation.cc; sourceTree = "<group>"; };
-		B7E21C15B984450FB6B07BE8 /* logging.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = logging.cc; sourceTree = "<group>"; };
 		B855DD9FDDDC010E4643EDF8 /* release_impl.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_impl.gypi; path = ../../build/internal/release_impl.gypi; sourceTree = "<group>"; };
-		B93A0668848BF3DE8920886D /* spinlock_internal.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = spinlock_internal.cc; sourceTree = "<group>"; };
-		BA5A8C627C4B43157F109C97 /* sysinfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sysinfo.h; sourceTree = "<group>"; };
-		BB5D00F943B71168279C1AA8 /* mini_disassembler_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mini_disassembler_types.h; sourceTree = "<group>"; };
-		BD4392F48600A131B7AEC6D2 /* atomicops-internals-x86.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "atomicops-internals-x86.cc"; sourceTree = "<group>"; };
 		BE845F58B7C0A5E768F38BFF /* allocator.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = allocator.gyp; sourceTree = "<group>"; };
-		BF889160284C6AF5C16F1DA1 /* raw_printer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = raw_printer.cc; sourceTree = "<group>"; };
-		C0352C9897662E98A7733AAE /* profile-handler.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "profile-handler.cc"; sourceTree = "<group>"; };
-		C0AEC5BB0DF7A603CCFC8D5B /* mingw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mingw.h; sourceTree = "<group>"; };
-		C114375AE80F0BFEF64097C8 /* libc_override_osx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libc_override_osx.h; sourceTree = "<group>"; };
 		C37DDAD911BF5B84DC494EB6 /* allocator_shim.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = allocator_shim.cc; sourceTree = "<group>"; };
-		C88815B2381EE149B86E1A54 /* heap-checker-bcad.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "heap-checker-bcad.cc"; sourceTree = "<group>"; };
-		C8C3EBE5BE9C465C8F134D5E /* malloc_hook_mmap_freebsd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = malloc_hook_mmap_freebsd.h; sourceTree = "<group>"; };
-		CA3E84DF51E21F19FD8D66D7 /* linuxthreads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = linuxthreads.h; sourceTree = "<group>"; };
 		CBB51DDCE5B5259670C6793B /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../build/common.gypi; sourceTree = "<group>"; };
-		CBD7042BE5E42B8CAA661407 /* port.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = port.cc; sourceTree = "<group>"; };
-		CFB4C8EA374024EEBE8AFA63 /* page_heap.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = page_heap.cc; sourceTree = "<group>"; };
-		D058181FE36E0D2B73205313 /* span.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = span.h; sourceTree = "<group>"; };
-		D445258B7F54FF05200279D3 /* commandlineflags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commandlineflags.h; sourceTree = "<group>"; };
-		D476991CB30318D15B353C68 /* malloc_extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = malloc_extension.h; sourceTree = "<group>"; };
-		DAECF62919793B7ECDE563A1 /* tcmalloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcmalloc.h; sourceTree = "<group>"; };
-		DB665D8BB1A32856FB260A38 /* stacktrace_win32-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stacktrace_win32-inl.h"; sourceTree = "<group>"; };
-		DBA24C12C78A55CDFA5E3B60 /* stacktrace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stacktrace.h; sourceTree = "<group>"; };
-		DBF1EC6E922CD68E1FDD5224 /* synchronization_profiling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = synchronization_profiling.h; sourceTree = "<group>"; };
-		DFF1B1CF10148A45D490D4A7 /* getpc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = getpc.h; sourceTree = "<group>"; };
-		E5BDDABBED62A1666791724E /* sysinfo.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sysinfo.cc; sourceTree = "<group>"; };
-		E6F404C02388F39B844893AC /* raw_printer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = raw_printer.h; sourceTree = "<group>"; };
-		E78195CCF80F0B2630595D44 /* config_android.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config_android.h; sourceTree = "<group>"; };
-		E8A643825A65E0B1C58BF4CE /* static_vars.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = static_vars.h; sourceTree = "<group>"; };
 		EF874637448CC870ED67FE18 /* generic_allocators.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = generic_allocators.cc; sourceTree = "<group>"; };
-		F08D2F0B961172E96E813F8C /* logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
-		F1A9C2238B252F9989CFC016 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
-		F25D2C54C5796005AD3BF4DB /* stacktrace_powerpc-inl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stacktrace_powerpc-inl.h"; sourceTree = "<group>"; };
-		F315279AD3CB6D7A3EB87F56 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		F31934771BC58EDDF94782E7 /* ia32_modrm_map.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ia32_modrm_map.cc; sourceTree = "<group>"; };
 		F439A06E3AC8D87C7D0A6548 /* release_defaults.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_defaults.gypi; path = ../../build/internal/release_defaults.gypi; sourceTree = "<group>"; };
-		F6E97F8975772551B3D28F6C /* malloc_hook_c.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = malloc_hook_c.h; sourceTree = "<group>"; };
-		F7422C5791142B9515E1A097 /* heap-profiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "heap-profiler.h"; sourceTree = "<group>"; };
-		F9FDBC73885DB9AFF277EED9 /* memory_region_map.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = memory_region_map.cc; sourceTree = "<group>"; };
-		FCDC302868C7E87AA8C8A4EF /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		FD4665514053FD320ED39E32 /* sampler.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sampler.cc; sourceTree = "<group>"; };
-		FFB7897E36D001D453A5DEB6 /* atomicops-internals-windows.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "atomicops-internals-windows.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,22 +81,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0129855E6B02F99B2544FCFB /* gperftools */ = {
-			isa = PBXGroup;
-			children = (
-				10F9B7D0F913D74E0F26CBEF /* heap-checker.h */,
-				F7422C5791142B9515E1A097 /* heap-profiler.h */,
-				D476991CB30318D15B353C68 /* malloc_extension.h */,
-				B18A9CAFBBCB44C076E38DF5 /* malloc_extension_c.h */,
-				6B5DBE770A532B49E5A452D4 /* malloc_hook.h */,
-				F6E97F8975772551B3D28F6C /* malloc_hook_c.h */,
-				15D4066D95E5D3A47959192A /* profiler.h */,
-				DBA24C12C78A55CDFA5E3B60 /* stacktrace.h */,
-				DAECF62919793B7ECDE563A1 /* tcmalloc.h */,
-			);
-			path = gperftools;
-			sourceTree = "<group>";
-		};
 		02F73ADB763C9E3A226602D9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,103 +88,6 @@
 				711BEB3D366CF4A2A536D567 /* liballocator_extension_thunks.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0BB976626682E02595443C86 /* tcmalloc/chromium/src */ = {
-			isa = PBXGroup;
-			children = (
-				443CE9D1845F5778BE8AD920 /* base */,
-				0129855E6B02F99B2544FCFB /* gperftools */,
-				4FE9FB6AE5F0097ACA61DBE5 /* windows */,
-				40B3EA721B094B6A600A8F26 /* addressmap-inl.h */,
-				2C1D915BE56124F7B0B45B4A /* central_freelist.cc */,
-				7459851C0C3BFD213FEE75AF /* central_freelist.h */,
-				04155245F4321FBD8010207B /* common.cc */,
-				F1A9C2238B252F9989CFC016 /* common.h */,
-				F315279AD3CB6D7A3EB87F56 /* config.h */,
-				E78195CCF80F0B2630595D44 /* config_android.h */,
-				61D57A6CFF6FCEFE479A7D50 /* config_linux.h */,
-				36EBB8F380E82255F26F30BA /* config_win.h */,
-				B68782763A43C05AC5227B15 /* debugallocation.cc */,
-				1594608A541E3DC7E56538E0 /* deep-heap-profile.cc */,
-				2927C719E5899DF9A3CC34A8 /* deep-heap-profile.h */,
-				4CA0C2397C89C3C4DBE35CC0 /* free_list.cc */,
-				1D96F97F0D3496603DE45EAC /* free_list.h */,
-				DFF1B1CF10148A45D490D4A7 /* getpc.h */,
-				C88815B2381EE149B86E1A54 /* heap-checker-bcad.cc */,
-				3D85342979271828D2D3502E /* heap-checker.cc */,
-				79E80B728DEE16D2E12CEDBD /* heap-profile-table.cc */,
-				4F83654478F7FFB793491FAD /* heap-profile-table.h */,
-				3985CAF3EBB977E851814D2F /* heap-profiler.cc */,
-				82F7AD631B9C007AFFE32F46 /* internal_logging.cc */,
-				85A028EB3D424E72EC9F460C /* internal_logging.h */,
-				2A10B4D1C47931972B78F948 /* libc_override.h */,
-				750644AA16326E54D0CA4A7E /* libc_override_gcc_and_weak.h */,
-				332F1E7DD7B07DAF80EDD7FF /* libc_override_glibc.h */,
-				C114375AE80F0BFEF64097C8 /* libc_override_osx.h */,
-				A65BAE9B3D5AE2DEDBC3739F /* libc_override_redefine.h */,
-				8F6F1CA7B35304010C5E1D21 /* linked_list.h */,
-				1B3DB8475F3589078AD9CEC1 /* malloc_extension.cc */,
-				39E49653767CD9249045820B /* malloc_hook-inl.h */,
-				4D17634B54639EEB8B118EBA /* malloc_hook.cc */,
-				C8C3EBE5BE9C465C8F134D5E /* malloc_hook_mmap_freebsd.h */,
-				81D6FDB16F3CDB59341F18F7 /* malloc_hook_mmap_linux.h */,
-				6A9E40EB4F02C1450D5700E4 /* maybe_threads.cc */,
-				AF7E802B977D14EED8AE7510 /* maybe_threads.h */,
-				4877AEC77FDA5F8B85B8FBD3 /* memfs_malloc.cc */,
-				F9FDBC73885DB9AFF277EED9 /* memory_region_map.cc */,
-				20FA5B21D7C55ED0ECCFFA65 /* memory_region_map.h */,
-				183F5304D9C4FCA087D43E3D /* packed-cache-inl.h */,
-				CFB4C8EA374024EEBE8AFA63 /* page_heap.cc */,
-				1589512017EC8DBA4EFB0B92 /* page_heap.h */,
-				863E7AC2DE5847A0EB9D4220 /* page_heap_allocator.h */,
-				B28D618C1D21DB2B8B755248 /* pagemap.h */,
-				C0352C9897662E98A7733AAE /* profile-handler.cc */,
-				73DA5EC078ADB6C79246B998 /* profile-handler.h */,
-				46EB82876D0B14B17CFC8390 /* profiledata.cc */,
-				14326DC64EB1126ABF1DD8D3 /* profiledata.h */,
-				620F8912070B3A1A9AE6F87E /* profiler.cc */,
-				BF889160284C6AF5C16F1DA1 /* raw_printer.cc */,
-				E6F404C02388F39B844893AC /* raw_printer.h */,
-				FD4665514053FD320ED39E32 /* sampler.cc */,
-				A2A95CFD4937B50E97174577 /* sampler.h */,
-				4531FAECD96DBDC8ADAECEFD /* span.cc */,
-				D058181FE36E0D2B73205313 /* span.h */,
-				5C638174ADEB77DE302954BF /* stack_trace_table.cc */,
-				0BC61A989852EB51D1F2B170 /* stack_trace_table.h */,
-				1B7F9428841D3521BE44178A /* stacktrace.cc */,
-				A1FAA53CC545AE2E1483785F /* stacktrace_arm-inl.h */,
-				21F91476D245AACC35FA6999 /* stacktrace_config.h */,
-				4CCBDA5FDC1E25173DC51FC6 /* stacktrace_generic-inl.h */,
-				74593A8A5176BEA8FA267638 /* stacktrace_libunwind-inl.h */,
-				F25D2C54C5796005AD3BF4DB /* stacktrace_powerpc-inl.h */,
-				DB665D8BB1A32856FB260A38 /* stacktrace_win32-inl.h */,
-				0BFB0D1325ADA936F39AA07B /* stacktrace_with_context.cc */,
-				968D5D2C3C544F5B38CAFCB2 /* stacktrace_x86-inl.h */,
-				B398C5CD5D53D0F5FC92ACEC /* static_vars.cc */,
-				E8A643825A65E0B1C58BF4CE /* static_vars.h */,
-				3A1EFA010A6ABC5A4AD65313 /* symbolize.cc */,
-				335C1DB80E7BBB8057AFDE77 /* symbolize.h */,
-				62A3FAC17AE3FCA36F0BB495 /* system-alloc.cc */,
-				23E197E9CA20EA8814DA482E /* system-alloc.h */,
-				98A58BFDB4716EA53CCD50FA /* tcmalloc.cc */,
-				ADAD1CD4968BFAC268CC20E3 /* tcmalloc_guard.h */,
-				8BF92979402AE2638194B9C9 /* thread_cache.cc */,
-				39EA8DFC5AB472E35C119B6C /* thread_cache.h */,
-			);
-			path = tcmalloc/chromium/src;
-			sourceTree = "<group>";
-		};
-		1081A523AEDEDBDC007FFCE6 /* jemalloc/chromium */ = {
-			isa = PBXGroup;
-			children = (
-				80C65AE75695C3EC152CC074 /* jemalloc.c */,
-				1BBBB8EB4ADF14CBBEF8F176 /* jemalloc.h */,
-				95D968C6FF40818C4ACA734C /* ql.h */,
-				19D32CB1CAB9118AD75A475E /* qr.h */,
-				6B5F2C3FD64BF3C63615105A /* rb.h */,
-			);
-			path = jemalloc/chromium;
 			sourceTree = "<group>";
 		};
 		12025C7CBD810FB58D6FE692 /* Build */ = {
@@ -401,96 +104,6 @@
 			name = Build;
 			sourceTree = "<group>";
 		};
-		289351443034F707E3BDCFC0 /* gperftools */ = {
-			isa = PBXGroup;
-			children = (
-				646D8D07D291CDED4EE142B8 /* tcmalloc.h */,
-			);
-			path = gperftools;
-			sourceTree = "<group>";
-		};
-		3A39A7F6B320E78B1AB5FBE5 /* ../../third_party */ = {
-			isa = PBXGroup;
-			children = (
-				1081A523AEDEDBDC007FFCE6 /* jemalloc/chromium */,
-				0BB976626682E02595443C86 /* tcmalloc/chromium/src */,
-			);
-			path = ../../third_party;
-			sourceTree = "<group>";
-		};
-		443CE9D1845F5778BE8AD920 /* base */ = {
-			isa = PBXGroup;
-			children = (
-				6B52E6AA17942C6F5B8AB7A2 /* abort.cc */,
-				24FA26FD008F02C485FFF322 /* abort.h */,
-				9C6C140E5357E1488DB59F12 /* arm_instruction_set_select.h */,
-				1F48AE212AF374C496991D30 /* atomicops-internals-arm-generic.h */,
-				28F63D132B1E3A7E9110A23F /* atomicops-internals-arm-v6plus.h */,
-				3D7066A73394CE98508F2F3F /* atomicops-internals-linuxppc.h */,
-				AD50BB6FB8DAFE410F425B7F /* atomicops-internals-macosx.h */,
-				FFB7897E36D001D453A5DEB6 /* atomicops-internals-windows.h */,
-				BD4392F48600A131B7AEC6D2 /* atomicops-internals-x86.cc */,
-				6A3E00768556641817C37431 /* atomicops-internals-x86.h */,
-				16F018469E0696FDD467065F /* atomicops.h */,
-				142FAE49B5FF608B11D64407 /* basictypes.h */,
-				D445258B7F54FF05200279D3 /* commandlineflags.h */,
-				45BD3359C7D0C3C5998FFD64 /* cycleclock.h */,
-				2F0D1E0EB1843C8D862D52DD /* dynamic_annotations.h */,
-				B47F5939C95DA78D0D498A57 /* elf_mem_image.cc */,
-				B53938844C0509659A448102 /* elf_mem_image.h */,
-				9E44713C3437405E8EF996BB /* elfcore.h */,
-				9E5CA2D7AE35ED99A3A8F1BA /* googleinit.h */,
-				A12221A3B59782F38044781E /* linux_syscall_support.h */,
-				788F1C6F6CD0A3019F5A2A59 /* linuxthreads.cc */,
-				CA3E84DF51E21F19FD8D66D7 /* linuxthreads.h */,
-				B7E21C15B984450FB6B07BE8 /* logging.cc */,
-				F08D2F0B961172E96E813F8C /* logging.h */,
-				822F59A509BEE83B3E9BAEEE /* low_level_alloc.cc */,
-				9BA0EB7E2C19DD36381E3E8D /* low_level_alloc.h */,
-				6004082BD3E7A17D0E3EE65E /* simple_mutex.h */,
-				4CF93DCEDB7219084B903DE0 /* spinlock.cc */,
-				7009D15B55B6D022DCE3C16A /* spinlock.h */,
-				B93A0668848BF3DE8920886D /* spinlock_internal.cc */,
-				123DC3FC5F6941E4A4E944E5 /* spinlock_internal.h */,
-				9F951490AFC9C1ECD19209FB /* spinlock_linux-inl.h */,
-				92C7C3CDE8D08585BF1531BA /* spinlock_posix-inl.h */,
-				6151FAF6DEDA1104CB08963C /* spinlock_win32-inl.h */,
-				654554F8B15BA45ABF284F1D /* stl_allocator.h */,
-				DBF1EC6E922CD68E1FDD5224 /* synchronization_profiling.h */,
-				E5BDDABBED62A1666791724E /* sysinfo.cc */,
-				BA5A8C627C4B43157F109C97 /* sysinfo.h */,
-				5F00DDEAFC685CE702FCC1A3 /* thread_annotations.h */,
-				B39822E924A91A827887F860 /* thread_lister.c */,
-				2A9F10D82DD994AB2A836EDB /* thread_lister.h */,
-				9079CB6A9DB74EFC299C8F4D /* vdso_support.cc */,
-				62CAD4528647B828C5E4A97D /* vdso_support.h */,
-			);
-			path = base;
-			sourceTree = "<group>";
-		};
-		4FE9FB6AE5F0097ACA61DBE5 /* windows */ = {
-			isa = PBXGroup;
-			children = (
-				289351443034F707E3BDCFC0 /* gperftools */,
-				FCDC302868C7E87AA8C8A4EF /* config.h */,
-				25A214C8316F3A3FC124633A /* get_mangled_names.cc */,
-				F31934771BC58EDDF94782E7 /* ia32_modrm_map.cc */,
-				615E0D93B709400BD80CC729 /* ia32_opcode_map.cc */,
-				C0AEC5BB0DF7A603CCFC8D5B /* mingw.h */,
-				721610D6F9AA6089BF020914 /* mini_disassembler.cc */,
-				1219AE819DCABC237D6A4FF3 /* mini_disassembler.h */,
-				BB5D00F943B71168279C1AA8 /* mini_disassembler_types.h */,
-				7E220FFB69A4A9C8B6FC783A /* override_functions.cc */,
-				032003E3EB63099969EC2072 /* patch_functions.cc */,
-				CBD7042BE5E42B8CAA661407 /* port.cc */,
-				9906100FB5CD4622F7F4015C /* port.h */,
-				A871A218E9CAA9A823FE201F /* preamble_patcher.cc */,
-				0AA8055870DBCBE08C66BBC6 /* preamble_patcher.h */,
-				81D75859C346E3F03519C86D /* preamble_patcher_with_stub.cc */,
-			);
-			path = windows;
-			sourceTree = "<group>";
-		};
 		78EE4E1466C10A0688232A07 = {
 			isa = PBXGroup;
 			children = (
@@ -503,7 +116,6 @@
 		B5305867AAB5D966AE0AF357 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				3A39A7F6B320E78B1AB5FBE5 /* ../../third_party */,
 				2008074A812E0A8F49F1C0A0 /* allocator_extension_thunks.cc */,
 				62E9D59510AE513113AEAB7B /* allocator_extension_thunks.h */,
 				C37DDAD911BF5B84DC494EB6 /* allocator_shim.cc */,
@@ -583,42 +195,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95A2BBA76FE071791FCC60F3 /* abort.cc in Sources */,
-				5B9EBF46FC2433B203012C75 /* elf_mem_image.cc in Sources */,
-				CB2C6907FC157C9CD769035D /* linuxthreads.cc in Sources */,
-				38ABCE2B4FE8334374D6B07E /* logging.cc in Sources */,
-				A7636B7A695137422297E071 /* low_level_alloc.cc in Sources */,
-				3DB043918F53FE7F4E5C5A6D /* spinlock.cc in Sources */,
-				EB3D0FE1B45CF5CB5FD74E5B /* spinlock_internal.cc in Sources */,
-				886E9A97328671AC28F03709 /* sysinfo.cc in Sources */,
-				3443F185D2B3836ED50642B1 /* thread_lister.c in Sources */,
-				7118CF5D4AB088F9A166E036 /* vdso_support.cc in Sources */,
-				82A7D7E2841002BC136E973E /* central_freelist.cc in Sources */,
-				03310D6ADE04C9B33FF0DEB9 /* common.cc in Sources */,
-				F040F39397D1ECA2299D2177 /* deep-heap-profile.cc in Sources */,
-				DFF4ACF607D4FBC3524A8F98 /* free_list.cc in Sources */,
-				9FFC5DBC2B5F4461FE3C95F3 /* heap-profile-table.cc in Sources */,
-				7E10F420CAE14F98B36AEA81 /* heap-profiler.cc in Sources */,
-				6B10856B511E284159D2861A /* internal_logging.cc in Sources */,
-				5FC3E940F5DF450EF243336F /* malloc_extension.cc in Sources */,
-				C64B74750CE3A711E0F906B1 /* malloc_hook.cc in Sources */,
-				F6E368A21779A89004E6E05D /* maybe_threads.cc in Sources */,
-				6FC08E831566EE4582100447 /* memory_region_map.cc in Sources */,
-				D6162C32DB618D21B7DDB5A6 /* page_heap.cc in Sources */,
-				41E3E4D01BF07F93C56086BE /* profile-handler.cc in Sources */,
-				2389DFDBB68161BBB27AA35D /* profiledata.cc in Sources */,
-				1EF31F05EAFAD7D437B09830 /* profiler.cc in Sources */,
-				FEFC7D8BC9C52FB84DE835BE /* raw_printer.cc in Sources */,
-				D3BA653B4F7339AAC448C089 /* sampler.cc in Sources */,
-				846ED5A6960E243E185D302C /* span.cc in Sources */,
-				422D88D70E436A822AF03D63 /* stack_trace_table.cc in Sources */,
-				A8A89583C541084A18CE03E4 /* stacktrace.cc in Sources */,
-				BFC752A4DA6CA4EEEE495AB4 /* static_vars.cc in Sources */,
-				83847D916074864D1E9C80BE /* symbolize.cc in Sources */,
-				049B1235BBACD0582B439F82 /* system-alloc.cc in Sources */,
-				48173BEB5FA7D587ECA91F75 /* thread_cache.cc in Sources */,
-				A02C29808E16CB02C014346F /* port.cc in Sources */,
-				A65E79256123FB320F05E43D /* jemalloc.c in Sources */,
 				4444F9C033EC20EB8291C32C /* allocator_shim.cc in Sources */,
 				5077E99F862462ACD59C1504 /* debugallocation_shim.cc in Sources */,
 			);

@@ -240,13 +240,6 @@
 			remoteGlobalIDString = B78E79DD534E18A557220584;
 			remoteInfo = base_i18n;
 		};
-		952F7CC280373697687A9217 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 98311FEB93031D0E87AC7482 /* allocator.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 96616F9EA4AA78EF146C445E;
-			remoteInfo = allocator;
-		};
 		A661ECFC0E2AAC1FDB1F464D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 96602B44726A979D89FF5E71 /* dynamic_annotations.xcodeproj */;
@@ -267,13 +260,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5272CB5A73F54B4A0E227C3D;
 			remoteInfo = base;
-		};
-		E780CEA476377693D4F0AFE7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 98311FEB93031D0E87AC7482 /* allocator.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 711BEB3D366CF4A2A536D567;
-			remoteInfo = allocator_extension_thunks;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -800,7 +786,6 @@
 		96C83633E16F7F21F8F93FEC /* default_pref_store.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = default_pref_store.cc; sourceTree = "<group>"; };
 		975BE714F38EB97E311586E1 /* pref_filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pref_filter.h; sourceTree = "<group>"; };
 		981686B7E84E9F26D05DE29E /* manual_constructor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = manual_constructor.h; sourceTree = "<group>"; };
-		98311FEB93031D0E87AC7482 /* allocator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = allocator.xcodeproj; path = allocator/allocator.xcodeproj; sourceTree = SOURCE_ROOT; };
 		983F4A5CC5713AC48ABBA176 /* linux_util.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = linux_util.cc; sourceTree = "<group>"; };
 		98563FA2FC24522CB4C80F3E /* sequenced_task_runner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sequenced_task_runner.h; sourceTree = "<group>"; };
 		9883C529DBF12583295B66F7 /* base_switches.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = base_switches.cc; sourceTree = "<group>"; };
@@ -1524,7 +1509,6 @@
 				2883AD2B20B511E7005E1F54 /* modp_b64.xcodeproj */,
 				2883AD2520B511D7005E1F54 /* libxml.xcodeproj */,
 				2883AD1D20B51143005E1F54 /* libevent.xcodeproj */,
-				98311FEB93031D0E87AC7482 /* allocator.xcodeproj */,
 				96602B44726A979D89FF5E71 /* dynamic_annotations.xcodeproj */,
 			);
 			name = Projects;
@@ -2321,15 +2305,6 @@
 			path = posix;
 			sourceTree = "<group>";
 		};
-		E6CF89449981E43CAD84D5E6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BD67EF0D3F08A7855EC169C8 /* liballocator.a */,
-				3A86BA2E84F354FF91DE5535 /* liballocator_extension_thunks.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		E946129C1EDD13975BD1ABE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2418,10 +2393,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E6CF89449981E43CAD84D5E6 /* Products */;
-					ProjectRef = 98311FEB93031D0E87AC7482 /* allocator.xcodeproj */;
-				},
-				{
 					ProductGroup = 4876106E8A8D4B9142430E91 /* Products */;
 					ProjectRef = 96602B44726A979D89FF5E71 /* dynamic_annotations.xcodeproj */;
 				},
@@ -2470,25 +2441,11 @@
 			remoteRef = 2883AD2F20B511E7005E1F54 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3A86BA2E84F354FF91DE5535 /* liballocator_extension_thunks.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liballocator_extension_thunks.a;
-			remoteRef = E780CEA476377693D4F0AFE7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		869BECB394E517B87DDEA1C9 /* libdynamic_annotations.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libdynamic_annotations.a;
 			remoteRef = A661ECFC0E2AAC1FDB1F464D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BD67EF0D3F08A7855EC169C8 /* liballocator.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liballocator.a;
-			remoteRef = 952F7CC280373697687A9217 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
