@@ -6,33 +6,12 @@
 	objectVersion = 50;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		C533E39323241D130058C80E /* modp_b64.h in Headers */ = {isa = PBXBuildFile; fileRef = C533E39023241D130058C80E /* modp_b64.h */; };
-		C533E39423241D130058C80E /* modp_b64.cc in Sources */ = {isa = PBXBuildFile; fileRef = C533E39123241D130058C80E /* modp_b64.cc */; };
-		C533E39523241D130058C80E /* modp_b64_data.h in Headers */ = {isa = PBXBuildFile; fileRef = C533E39223241D130058C80E /* modp_b64_data.h */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXBuildRule section */
-		C533E38D23241B620058C80E /* PBXBuildRule */ = {
-			isa = PBXBuildRule;
-			compilerSpec = com.apple.compilers.proxy.script;
-			fileType = pattern.proxy;
-			isEditable = 1;
-			outputFiles = (
-			);
-			script = "# Type a script or drag a script file from your workspace to insert its path.\necho $(CONFIGURATION_BUILD_DIR)\n";
-		};
-/* End PBXBuildRule section */
-
 /* Begin PBXFileReference section */
-		C533E386232419C20058C80E /* libmodp_b64_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmodp_b64_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C533E39023241D130058C80E /* modp_b64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modp_b64.h; sourceTree = "<group>"; };
-		C533E39123241D130058C80E /* modp_b64.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modp_b64.cc; sourceTree = "<group>"; };
-		C533E39223241D130058C80E /* modp_b64_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modp_b64_data.h; sourceTree = "<group>"; };
+		C533E40B2324FC200058C80E /* libbase-macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbase-macos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C533E384232419C20058C80E /* Frameworks */ = {
+		C533E4092324FC200058C80E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,20 +21,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C533E37D232419C20058C80E = {
+		C533E4022324FC200058C80E = {
 			isa = PBXGroup;
 			children = (
-				C533E39223241D130058C80E /* modp_b64_data.h */,
-				C533E39123241D130058C80E /* modp_b64.cc */,
-				C533E39023241D130058C80E /* modp_b64.h */,
-				C533E387232419C20058C80E /* Products */,
+				C533E40C2324FC200058C80E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		C533E387232419C20058C80E /* Products */ = {
+		C533E40C2324FC200058C80E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C533E386232419C20058C80E /* libmodp_b64_macos.a */,
+				C533E40B2324FC200058C80E /* libbase-macos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,101 +39,76 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		C533E382232419C20058C80E /* Headers */ = {
+		C533E4072324FC200058C80E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C533E39323241D130058C80E /* modp_b64.h in Headers */,
-				C533E39523241D130058C80E /* modp_b64_data.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C533E385232419C20058C80E /* modp_b64_macos */ = {
+		C533E40A2324FC200058C80E /* base-macos */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C533E38A232419C20058C80E /* Build configuration list for PBXNativeTarget "modp_b64_macos" */;
+			buildConfigurationList = C533E40F2324FC200058C80E /* Build configuration list for PBXNativeTarget "base-macos" */;
 			buildPhases = (
-				C533E382232419C20058C80E /* Headers */,
-				C533E383232419C20058C80E /* Sources */,
-				C533E384232419C20058C80E /* Frameworks */,
-				C533E38F23241C780058C80E /* ShellScript */,
+				C533E4072324FC200058C80E /* Headers */,
+				C533E4082324FC200058C80E /* Sources */,
+				C533E4092324FC200058C80E /* Frameworks */,
 			);
 			buildRules = (
-				C533E38D23241B620058C80E /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
-			name = modp_b64_macos;
-			productName = modp_b64_macos;
-			productReference = C533E386232419C20058C80E /* libmodp_b64_macos.a */;
+			name = "base-macos";
+			productName = "base-macos";
+			productReference = C533E40B2324FC200058C80E /* libbase-macos.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		C533E37E232419C20058C80E /* Project object */ = {
+		C533E4032324FC200058C80E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = larpoux;
 				TargetAttributes = {
-					C533E385232419C20058C80E = {
+					C533E40A2324FC200058C80E = {
 						CreatedOnToolsVersion = 10.3;
 					};
 				};
 			};
-			buildConfigurationList = C533E381232419C20058C80E /* Build configuration list for PBXProject "modp_b64_macos" */;
+			buildConfigurationList = C533E4062324FC200058C80E /* Build configuration list for PBXProject "base-macos" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = C533E37D232419C20058C80E;
-			productRefGroup = C533E387232419C20058C80E /* Products */;
+			mainGroup = C533E4022324FC200058C80E;
+			productRefGroup = C533E40C2324FC200058C80E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C533E385232419C20058C80E /* modp_b64_macos */,
+				C533E40A2324FC200058C80E /* base-macos */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		C533E38F23241C780058C80E /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/macos-$CONFIGURATION\nfi\n\nmkdir -p $OUTPUT_DIR/\ncp -v $TARGET_BUILD_DIR/$FULL_PRODUCT_NAME $OUTPUT_DIR/\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		C533E383232419C20058C80E /* Sources */ = {
+		C533E4082324FC200058C80E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C533E39423241D130058C80E /* modp_b64.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		C533E388232419C20058C80E /* Debug */ = {
+		C533E40D2324FC200058C80E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -216,7 +167,7 @@
 			};
 			name = Debug;
 		};
-		C533E389232419C20058C80E /* Release */ = {
+		C533E40E2324FC200058C80E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -268,7 +219,7 @@
 			};
 			name = Release;
 		};
-		C533E38B232419C20058C80E /* Debug */ = {
+		C533E4102324FC200058C80E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -279,7 +230,7 @@
 			};
 			name = Debug;
 		};
-		C533E38C232419C20058C80E /* Release */ = {
+		C533E4112324FC200058C80E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -293,25 +244,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C533E381232419C20058C80E /* Build configuration list for PBXProject "modp_b64_macos" */ = {
+		C533E4062324FC200058C80E /* Build configuration list for PBXProject "base-macos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C533E388232419C20058C80E /* Debug */,
-				C533E389232419C20058C80E /* Release */,
+				C533E40D2324FC200058C80E /* Debug */,
+				C533E40E2324FC200058C80E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C533E38A232419C20058C80E /* Build configuration list for PBXNativeTarget "modp_b64_macos" */ = {
+		C533E40F2324FC200058C80E /* Build configuration list for PBXNativeTarget "base-macos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C533E38B232419C20058C80E /* Debug */,
-				C533E38C232419C20058C80E /* Release */,
+				C533E4102324FC200058C80E /* Debug */,
+				C533E4112324FC200058C80E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = C533E37E232419C20058C80E /* Project object */;
+	rootObject = C533E4032324FC200058C80E /* Project object */;
 }

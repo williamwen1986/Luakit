@@ -7,32 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C533E39323241D130058C80E /* modp_b64.h in Headers */ = {isa = PBXBuildFile; fileRef = C533E39023241D130058C80E /* modp_b64.h */; };
-		C533E39423241D130058C80E /* modp_b64.cc in Sources */ = {isa = PBXBuildFile; fileRef = C533E39123241D130058C80E /* modp_b64.cc */; };
-		C533E39523241D130058C80E /* modp_b64_data.h in Headers */ = {isa = PBXBuildFile; fileRef = C533E39223241D130058C80E /* modp_b64_data.h */; };
+		C533E4302324FE410058C80E /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E4232324FE410058C80E /* log.c */; };
+		C533E4312324FE410058C80E /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E4242324FE410058C80E /* select.c */; };
+		C533E4322324FE410058C80E /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E4252324FE410058C80E /* buffer.c */; };
+		C533E4332324FE410058C80E /* evdns.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E4262324FE410058C80E /* evdns.c */; };
+		C533E4342324FE410058C80E /* strlcpy.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E4272324FE410058C80E /* strlcpy.c */; };
+		C533E4352324FE410058C80E /* signal.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E4282324FE410058C80E /* signal.c */; };
+		C533E4362324FE410058C80E /* event_tagging.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E4292324FE410058C80E /* event_tagging.c */; };
+		C533E4372324FE410058C80E /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E42A2324FE410058C80E /* http.c */; };
+		C533E4382324FE410058C80E /* poll.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E42B2324FE410058C80E /* poll.c */; };
+		C533E4392324FE410058C80E /* kqueue.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E42C2324FE410058C80E /* kqueue.c */; };
+		C533E43A2324FE410058C80E /* evrpc.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E42D2324FE410058C80E /* evrpc.c */; };
+		C533E43B2324FE410058C80E /* evutil.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E42E2324FE410058C80E /* evutil.c */; };
+		C533E43C2324FE410058C80E /* evbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E42F2324FE410058C80E /* evbuffer.c */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXBuildRule section */
-		C533E38D23241B620058C80E /* PBXBuildRule */ = {
-			isa = PBXBuildRule;
-			compilerSpec = com.apple.compilers.proxy.script;
-			fileType = pattern.proxy;
-			isEditable = 1;
-			outputFiles = (
-			);
-			script = "# Type a script or drag a script file from your workspace to insert its path.\necho $(CONFIGURATION_BUILD_DIR)\n";
-		};
-/* End PBXBuildRule section */
-
 /* Begin PBXFileReference section */
-		C533E386232419C20058C80E /* libmodp_b64_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmodp_b64_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C533E39023241D130058C80E /* modp_b64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modp_b64.h; sourceTree = "<group>"; };
-		C533E39123241D130058C80E /* modp_b64.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modp_b64.cc; sourceTree = "<group>"; };
-		C533E39223241D130058C80E /* modp_b64_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modp_b64_data.h; sourceTree = "<group>"; };
+		C533E41B2324FD5F0058C80E /* liblibevent_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibevent_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C533E4232324FE410058C80E /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
+		C533E4242324FE410058C80E /* select.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = select.c; sourceTree = "<group>"; };
+		C533E4252324FE410058C80E /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
+		C533E4262324FE410058C80E /* evdns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evdns.c; sourceTree = "<group>"; };
+		C533E4272324FE410058C80E /* strlcpy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = strlcpy.c; sourceTree = "<group>"; };
+		C533E4282324FE410058C80E /* signal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = signal.c; sourceTree = "<group>"; };
+		C533E4292324FE410058C80E /* event_tagging.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = event_tagging.c; sourceTree = "<group>"; };
+		C533E42A2324FE410058C80E /* http.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = http.c; sourceTree = "<group>"; };
+		C533E42B2324FE410058C80E /* poll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = poll.c; sourceTree = "<group>"; };
+		C533E42C2324FE410058C80E /* kqueue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kqueue.c; sourceTree = "<group>"; };
+		C533E42D2324FE410058C80E /* evrpc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evrpc.c; sourceTree = "<group>"; };
+		C533E42E2324FE410058C80E /* evutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evutil.c; sourceTree = "<group>"; };
+		C533E42F2324FE410058C80E /* evbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evbuffer.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C533E384232419C20058C80E /* Frameworks */ = {
+		C533E4192324FD5F0058C80E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,20 +50,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C533E37D232419C20058C80E = {
+		C533E4122324FD5F0058C80E = {
 			isa = PBXGroup;
 			children = (
-				C533E39223241D130058C80E /* modp_b64_data.h */,
-				C533E39123241D130058C80E /* modp_b64.cc */,
-				C533E39023241D130058C80E /* modp_b64.h */,
-				C533E387232419C20058C80E /* Products */,
+				C533E4252324FE410058C80E /* buffer.c */,
+				C533E42F2324FE410058C80E /* evbuffer.c */,
+				C533E4262324FE410058C80E /* evdns.c */,
+				C533E4292324FE410058C80E /* event_tagging.c */,
+				C533E42D2324FE410058C80E /* evrpc.c */,
+				C533E42E2324FE410058C80E /* evutil.c */,
+				C533E42A2324FE410058C80E /* http.c */,
+				C533E42C2324FE410058C80E /* kqueue.c */,
+				C533E4232324FE410058C80E /* log.c */,
+				C533E42B2324FE410058C80E /* poll.c */,
+				C533E4242324FE410058C80E /* select.c */,
+				C533E4282324FE410058C80E /* signal.c */,
+				C533E4272324FE410058C80E /* strlcpy.c */,
+				C533E41C2324FD5F0058C80E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		C533E387232419C20058C80E /* Products */ = {
+		C533E41C2324FD5F0058C80E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C533E386232419C20058C80E /* libmodp_b64_macos.a */,
+				C533E41B2324FD5F0058C80E /* liblibevent_macos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,70 +81,67 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		C533E382232419C20058C80E /* Headers */ = {
+		C533E4172324FD5F0058C80E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C533E39323241D130058C80E /* modp_b64.h in Headers */,
-				C533E39523241D130058C80E /* modp_b64_data.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C533E385232419C20058C80E /* modp_b64_macos */ = {
+		C533E41A2324FD5F0058C80E /* libevent_macos */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C533E38A232419C20058C80E /* Build configuration list for PBXNativeTarget "modp_b64_macos" */;
+			buildConfigurationList = C533E41F2324FD5F0058C80E /* Build configuration list for PBXNativeTarget "libevent_macos" */;
 			buildPhases = (
-				C533E382232419C20058C80E /* Headers */,
-				C533E383232419C20058C80E /* Sources */,
-				C533E384232419C20058C80E /* Frameworks */,
-				C533E38F23241C780058C80E /* ShellScript */,
+				C533E4172324FD5F0058C80E /* Headers */,
+				C533E4182324FD5F0058C80E /* Sources */,
+				C533E4192324FD5F0058C80E /* Frameworks */,
+				C533E4222324FDB30058C80E /* ShellScript */,
 			);
 			buildRules = (
-				C533E38D23241B620058C80E /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
-			name = modp_b64_macos;
-			productName = modp_b64_macos;
-			productReference = C533E386232419C20058C80E /* libmodp_b64_macos.a */;
+			name = libevent_macos;
+			productName = libevent_macos;
+			productReference = C533E41B2324FD5F0058C80E /* liblibevent_macos.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		C533E37E232419C20058C80E /* Project object */ = {
+		C533E4132324FD5F0058C80E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = larpoux;
 				TargetAttributes = {
-					C533E385232419C20058C80E = {
+					C533E41A2324FD5F0058C80E = {
 						CreatedOnToolsVersion = 10.3;
 					};
 				};
 			};
-			buildConfigurationList = C533E381232419C20058C80E /* Build configuration list for PBXProject "modp_b64_macos" */;
+			buildConfigurationList = C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "libevent_macos" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = C533E37D232419C20058C80E;
-			productRefGroup = C533E387232419C20058C80E /* Products */;
+			mainGroup = C533E4122324FD5F0058C80E;
+			productRefGroup = C533E41C2324FD5F0058C80E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C533E385232419C20058C80E /* modp_b64_macos */,
+				C533E41A2324FD5F0058C80E /* libevent_macos */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C533E38F23241C780058C80E /* ShellScript */ = {
+		C533E4222324FDB30058C80E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -146,18 +161,30 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C533E383232419C20058C80E /* Sources */ = {
+		C533E4182324FD5F0058C80E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C533E39423241D130058C80E /* modp_b64.cc in Sources */,
+				C533E4362324FE410058C80E /* event_tagging.c in Sources */,
+				C533E4332324FE410058C80E /* evdns.c in Sources */,
+				C533E43B2324FE410058C80E /* evutil.c in Sources */,
+				C533E4302324FE410058C80E /* log.c in Sources */,
+				C533E4342324FE410058C80E /* strlcpy.c in Sources */,
+				C533E4352324FE410058C80E /* signal.c in Sources */,
+				C533E43A2324FE410058C80E /* evrpc.c in Sources */,
+				C533E4392324FE410058C80E /* kqueue.c in Sources */,
+				C533E4382324FE410058C80E /* poll.c in Sources */,
+				C533E4322324FE410058C80E /* buffer.c in Sources */,
+				C533E43C2324FE410058C80E /* evbuffer.c in Sources */,
+				C533E4312324FE410058C80E /* select.c in Sources */,
+				C533E4372324FE410058C80E /* http.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		C533E388232419C20058C80E /* Debug */ = {
+		C533E41D2324FD5F0058C80E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -216,7 +243,7 @@
 			};
 			name = Debug;
 		};
-		C533E389232419C20058C80E /* Release */ = {
+		C533E41E2324FD5F0058C80E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -268,23 +295,27 @@
 			};
 			name = Release;
 		};
-		C533E38B232419C20058C80E /* Debug */ = {
+		C533E4202324FD5F0058C80E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				ENABLE_NS_ASSERTIONS = YES;
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = "HAVE_CONFIG_H=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		C533E38C232419C20058C80E /* Release */ = {
+		C533E4212324FD5F0058C80E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				ENABLE_NS_ASSERTIONS = YES;
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = "HAVE_CONFIG_H=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -293,25 +324,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C533E381232419C20058C80E /* Build configuration list for PBXProject "modp_b64_macos" */ = {
+		C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "libevent_macos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C533E388232419C20058C80E /* Debug */,
-				C533E389232419C20058C80E /* Release */,
+				C533E41D2324FD5F0058C80E /* Debug */,
+				C533E41E2324FD5F0058C80E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C533E38A232419C20058C80E /* Build configuration list for PBXNativeTarget "modp_b64_macos" */ = {
+		C533E41F2324FD5F0058C80E /* Build configuration list for PBXNativeTarget "libevent_macos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C533E38B232419C20058C80E /* Debug */,
-				C533E38C232419C20058C80E /* Release */,
+				C533E4202324FD5F0058C80E /* Debug */,
+				C533E4212324FD5F0058C80E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = C533E37E232419C20058C80E /* Project object */;
+	rootObject = C533E4132324FD5F0058C80E /* Project object */;
 }
