@@ -20,6 +20,12 @@ rm -rf src/jni/libluaFramework.so   src/jni/libs              src/jni/obj
 rm -rf AndroidFrameWork/luakit/build AndroidFrameWork/lib_chromium/build
 rm src/openssl-1.1.1c/Makefile
 
+
+# Macos
+# -----
+rm -rf src/modp_b64/build               src/modp_b64/DerivedData
+
+
 # iOS
 # ---
 # TODO!

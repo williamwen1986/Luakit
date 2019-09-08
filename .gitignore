@@ -15,7 +15,9 @@ fileChanges
 fileHashes
 local.properties
 **/libs/
-**/obj/
+**/build
+**/**/obj/
+**/DerivedData
 **/CMakeFiles/
 **/outputs/
 CMakeCache.txt
