@@ -15,7 +15,7 @@ test.testOnIOThread = function ()
             socket:read()
         end
     end
-    
+
     socket.readCallback = function (str)
         print(str)
         timer = lua_timer.createTimer(0)
@@ -26,7 +26,7 @@ test.testOnIOThread = function ()
     end
 
     socket.writeCallback = function (rv)
-        print("write" .. rv)
+        print("write Toto!" .. rv)
     end
 
     socket:connect()

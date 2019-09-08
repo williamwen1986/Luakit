@@ -161,7 +161,7 @@ jclass JniClassMember::GetClass(JNIEnv* env, const char* classSig) {
 		jclass cls = env->FindClass(classSig);
 		if (cls != 0) {
 			/*
-			 * 在android-18中，FindClass返回的jclass不能直接缓存
+			 * ??? Chinese ??? 在android-18中，FindClass返回的jclass不能直接缓存
 			 */
 			retCls = (jclass)env->NewGlobalRef(cls);
 			classes_.insert(Classes::value_type(classSig, retCls));

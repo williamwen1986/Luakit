@@ -45,9 +45,6 @@
 		2883ADB820B5439B005E1F54 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883AD8E20B5439B005E1F54 /* tolua_push.c */; };
 		2883ADB920B5439B005E1F54 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883AD8F20B5439B005E1F54 /* tolua_to.c */; };
 		2883ADBA20B5439B005E1F54 /* lua_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2883AD9320B5439B005E1F54 /* lua_helpers.cpp */; };
-		2883ADC320B544ED005E1F54 /* lsqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883ADBD20B544ED005E1F54 /* lsqlite3.c */; };
-		2883ADC420B544ED005E1F54 /* shell.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883ADBF20B544ED005E1F54 /* shell.c */; };
-		2883ADC520B544ED005E1F54 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 2883ADC020B544ED005E1F54 /* sqlite3.c */; };
 		2883ADDE20B54516005E1F54 /* async_cgi_task_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2883ADC720B54516005E1F54 /* async_cgi_task_dispatcher.cpp */; };
 		2883ADDF20B54516005E1F54 /* async_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2883ADC920B54516005E1F54 /* async_socket.cpp */; };
 		2883ADE020B54516005E1F54 /* async_task_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2883ADCB20B54516005E1F54 /* async_task_dispatcher.cpp */; };
@@ -98,6 +95,8 @@
 		3C8551A121B00DBB00860F2A /* options.c in Sources */ = {isa = PBXBuildFile; fileRef = 3C85518D21B00DBA00860F2A /* options.c */; };
 		3C962AD621992FF0002B91E7 /* lua_language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C962AC421992FF0002B91E7 /* lua_language.cpp */; };
 		3C962AD921993203002B91E7 /* languageUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3C962AD821993203002B91E7 /* languageUtil.mm */; };
+		C51B858C22E0D6E200BE82A6 /* lsqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = C51B857922E0D6E200BE82A6 /* lsqlite3.c */; };
+		C51B858E22E0D6E200BE82A6 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = C51B857C22E0D6E200BE82A6 /* sqlite3.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -281,12 +280,6 @@
 		2883AD8F20B5439B005E1F54 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		2883AD9320B5439B005E1F54 /* lua_helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_helpers.cpp; sourceTree = "<group>"; };
 		2883AD9420B5439B005E1F54 /* lua_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_helpers.h; sourceTree = "<group>"; };
-		2883ADBD20B544ED005E1F54 /* lsqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lsqlite3.c; sourceTree = "<group>"; };
-		2883ADBE20B544ED005E1F54 /* lsqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lsqlite3.h; sourceTree = "<group>"; };
-		2883ADBF20B544ED005E1F54 /* shell.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shell.c; sourceTree = "<group>"; };
-		2883ADC020B544ED005E1F54 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
-		2883ADC120B544ED005E1F54 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
-		2883ADC220B544ED005E1F54 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		2883ADC720B54516005E1F54 /* async_cgi_task_dispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = async_cgi_task_dispatcher.cpp; sourceTree = "<group>"; };
 		2883ADC820B54516005E1F54 /* async_cgi_task_dispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = async_cgi_task_dispatcher.h; sourceTree = "<group>"; };
 		2883ADC920B54516005E1F54 /* async_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = async_socket.cpp; sourceTree = "<group>"; };
@@ -416,6 +409,11 @@
 		3C962AC421992FF0002B91E7 /* lua_language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_language.cpp; sourceTree = "<group>"; };
 		3C962AD721993203002B91E7 /* languageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = languageUtil.h; sourceTree = "<group>"; };
 		3C962AD821993203002B91E7 /* languageUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = languageUtil.mm; sourceTree = "<group>"; };
+		C51B857922E0D6E200BE82A6 /* lsqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lsqlite3.c; sourceTree = "<group>"; };
+		C51B857A22E0D6E200BE82A6 /* lsqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lsqlite3.h; sourceTree = "<group>"; };
+		C51B857C22E0D6E200BE82A6 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
+		C51B857D22E0D6E200BE82A6 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
+		C51B857E22E0D6E200BE82A6 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,10 +451,10 @@
 		2883AC9320B43DFB005E1F54 /* Luakit */ = {
 			isa = PBXGroup;
 			children = (
+				C51B857822E0D6E200BE82A6 /* sqlite-amalgamation-3290000 */,
 				2883AE5E20B546C3005E1F54 /* OCHelper */,
 				2883ADFD20B5457A005E1F54 /* extensions */,
 				2883ADC620B54516005E1F54 /* network */,
-				2883ADBB20B544ED005E1F54 /* sqlite-amalgamation-3210000 */,
 				2883AD5120B5439B005E1F54 /* lua */,
 			);
 			path = Luakit;
@@ -570,20 +568,6 @@
 				2883AD9420B5439B005E1F54 /* lua_helpers.h */,
 			);
 			path = tools;
-			sourceTree = "<group>";
-		};
-		2883ADBB20B544ED005E1F54 /* sqlite-amalgamation-3210000 */ = {
-			isa = PBXGroup;
-			children = (
-				2883ADBD20B544ED005E1F54 /* lsqlite3.c */,
-				2883ADBE20B544ED005E1F54 /* lsqlite3.h */,
-				2883ADBF20B544ED005E1F54 /* shell.c */,
-				2883ADC020B544ED005E1F54 /* sqlite3.c */,
-				2883ADC120B544ED005E1F54 /* sqlite3.h */,
-				2883ADC220B544ED005E1F54 /* sqlite3ext.h */,
-			);
-			name = "sqlite-amalgamation-3210000";
-			path = "../../src/Projects/sqlite-amalgamation-3210000";
 			sourceTree = "<group>";
 		};
 		2883ADC620B54516005E1F54 /* network */ = {
@@ -853,6 +837,19 @@
 			path = language;
 			sourceTree = "<group>";
 		};
+		C51B857822E0D6E200BE82A6 /* sqlite-amalgamation-3290000 */ = {
+			isa = PBXGroup;
+			children = (
+				C51B857922E0D6E200BE82A6 /* lsqlite3.c */,
+				C51B857A22E0D6E200BE82A6 /* lsqlite3.h */,
+				C51B857C22E0D6E200BE82A6 /* sqlite3.c */,
+				C51B857D22E0D6E200BE82A6 /* sqlite3.h */,
+				C51B857E22E0D6E200BE82A6 /* sqlite3ext.h */,
+			);
+			name = "sqlite-amalgamation-3290000";
+			path = "../../src/Projects/sqlite-amalgamation-3290000";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1023,7 +1020,7 @@
 				2883ADB420B5439B005E1F54 /* print.c in Sources */,
 				2883ADB220B5439B005E1F54 /* lzio.c in Sources */,
 				2883AE6520B546C3005E1F54 /* oc_helpers.mm in Sources */,
-				2883ADC320B544ED005E1F54 /* lsqlite3.c in Sources */,
+				C51B858C22E0D6E200BE82A6 /* lsqlite3.c in Sources */,
 				2883ADDF20B54516005E1F54 /* async_socket.cpp in Sources */,
 				2883AE4C20B5457A005E1F54 /* lua_http_task.cpp in Sources */,
 				2883AE6420B546C3005E1F54 /* oc_callback.mm in Sources */,
@@ -1034,10 +1031,10 @@
 				3C85519421B00DBA00860F2A /* io.c in Sources */,
 				2883ADB520B5439B005E1F54 /* tolua_event.c in Sources */,
 				2898C85120C55F2200249775 /* xxtea.cpp in Sources */,
+				C51B858E22E0D6E200BE82A6 /* sqlite3.c in Sources */,
 				2883ADE020B54516005E1F54 /* async_task_dispatcher.cpp in Sources */,
 				2883ADB020B5439B005E1F54 /* lundump.c in Sources */,
 				3C85519B21B00DBB00860F2A /* usocket.c in Sources */,
-				2883ADC520B544ED005E1F54 /* sqlite3.c in Sources */,
 				2883ADAB20B5439B005E1F54 /* lstrlib.c in Sources */,
 				3C85519D21B00DBB00860F2A /* inet.c in Sources */,
 				3C962AD621992FF0002B91E7 /* lua_language.cpp in Sources */,
@@ -1067,7 +1064,6 @@
 				3C85519A21B00DBB00860F2A /* tcp.c in Sources */,
 				2883ADE220B54516005E1F54 /* curl_connection.cpp in Sources */,
 				3C85519C21B00DBB00860F2A /* auxiliar.c in Sources */,
-				2883ADC420B544ED005E1F54 /* shell.c in Sources */,
 				3C85519221B00DBA00860F2A /* buffer.c in Sources */,
 				2883ADB120B5439B005E1F54 /* lvm.c in Sources */,
 				3C85519321B00DBA00860F2A /* serial.c in Sources */,

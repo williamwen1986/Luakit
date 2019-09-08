@@ -1,4 +1,6 @@
-#include "build/build_config.h"
+// Patch [LARPOUX] : '#include "build/build_config.h" (not compatible with Android [LARPOUX])
+// #include "build/build_config.h"
+
 #if !defined(COMPILER_MSVC)
 #include <stdint.h>
 #else

@@ -17,6 +17,7 @@ MY_FILTER_OUT_CONTAIN := %shell.c %.h %.hpp %.mm %.proto %test.cpp %mock_server.
 My_All_Files := $(foreach src_path,$(MY_FILES_PATH), $(shell find "$(src_path)" -type f) ) 
 My_All_Files := $(My_All_Files:$(LOCAL_PATH)/./%=$(LOCAL_PATH)%)
 MY_SRC_LIST  := $(filter-out $(MY_FILTER_OUT_CONTAIN),$(My_All_Files)) 
+MY_SRC_LIST  := $(filter %.c %.cpp %.cc %.cxx,$(MY_SRC_LIST))
 MY_SRC_LIST  := $(MY_SRC_LIST:$(LOCAL_PATH)/%=%)
       
 LOCAL_SRC_FILES += $(MY_SRC_LIST)
@@ -54,4 +55,5 @@ LOCAL_STATIC_LIBRARIES += common \
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module, ../Projects)
+$(call import-add-path,$(LOCAL_PATH)/..)
+$(call import-module, common)

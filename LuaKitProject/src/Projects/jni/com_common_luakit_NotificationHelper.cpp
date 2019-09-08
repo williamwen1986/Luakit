@@ -16,10 +16,12 @@ extern "C" {
  * Signature: (ILjava/lang/Object;)V
  */
 JNIEXPORT jlong JNICALL Java_com_common_luakit_NotificationHelper_postNotificationNative
-  (JNIEnv * env, jclass c, jint type, jobject data)
+        (JNIEnv * env, jclass c, jint type, jobject data)
 {
     Notification::sourceType s = Notification::ANDROID_SYS;
-        content::NotificationService::current()->Notify(type,content::Source<Notification::sourceType>(&s),content::Details<void>((void *)data));
+    content::NotificationService::current()->Notify(type,content::Source<Notification::sourceType>(&s),content::Details<void>((void *)data));
+    // Patch [LARPOUX] : the return value was missing
+    return 0L;
 }
 
 #ifdef __cplusplus

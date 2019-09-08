@@ -61,6 +61,9 @@ LOCAL_CFLAGS += -DHAVE_CONFIG_H \
                 -DUSE_SSLEAY \
                 -DHAVE_LIBZ \
                 -DHAVE_ZLIB_H \
+                -DOPENSSL_NO_STDIO \
+                -DOPENSSL_NO_UI_CONSOLE \
+                -DOPENSSL_NO_ENGINE
 
 include $(LOCAL_PATH)/lib/Makefile.inc
 CURL_HEADERS := \
@@ -74,17 +77,16 @@ CURL_HEADERS := \
   typecheck-gcc.h
 
 LOCAL_SRC_FILES := $(addprefix lib/,$(CSOURCES))
+LOCAL_SRC_FILES  := $(filter %.c %.cpp %.cc %.cxx,$(LOCAL_SRC_FILES))
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include $(LOCAL_PATH)/lib
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../openssl/openssl-1.1.1/include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../openssl-1.1.1c/include $(LOCAL_PATH)/../openssl-1.1.1c/
+LOCAL_C_INCLUDES += ${LOCAL_PATH}/../openssl-1.1.1c/lib/android${ANDROID_API}-${CONFIG}/${TARGET_ARCH_ABI}/include
+LOCAL_C_INCLUDES += /usr/local/Cellar/node/11.5.0/include/node
+$(warning "----------------the value of LOCAL_C_INCLUDES is $(LOCAL_C_INCLUDES)-------------------------")
 
-
-LOCAL_STATIC_LIBRARIES += ssl \
+LOCAL_STATIC_LIBRARIES += libssl \
               crypto \
 
-LOCAL_LDFLAGS += -fPIC
-
-# LOCAL_COPY_HEADERS_TO := libcurl/curl
-# LOCAL_COPY_HEADERS := $(addprefix include/curl/,$(CURL_HEADERS))
 
 LOCAL_MODULE:= curl
 
@@ -95,28 +97,9 @@ LOCAL_MODULE:= curl
 # ALL_PREBUILT += $(LOCAL_PATH)/NOTICE
 # $(LOCAL_PATH)/NOTICE: $(LOCAL_PATH)/COPYING | $(ACP)
 # 	$(copy-file-to-target)
-
+#$(warning "----------------the value of LOCAL_SRC_FILES is $(LOCAL_SRC_FILES)-------------------------")
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module, openssl/openssl-1.1.1)
+$(call import-add-path,$(LOCAL_PATH)/..)
+$(call import-module, openssl-1.1.1c)
 
-
-#########################
-# Build the curl binary
-
-# include $(CLEAR_VARS)
-# include $(LOCAL_PATH)/src/Makefile.inc
-# LOCAL_SRC_FILES := $(addprefix src/,$(CURL_CFILES))
-
-# LOCAL_MODULE := curl
-# LOCAL_MODULE_TAGS := optional
-# LOCAL_STATIC_LIBRARIES := libcurl
-# LOCAL_SYSTEM_SHARED_LIBRARIES := libc
-
-# LOCAL_C_INCLUDES += $(LOCAL_PATH)/include $(LOCAL_PATH)/lib
-
-# # This may also need to include $(CURLX_CFILES) in order to correctly link
-# # if libcurl is changed to be built as a dynamic library
-# LOCAL_CFLAGS += $(common_CFLAGS)
-
-# include $(BUILD_EXECUTABLE)
