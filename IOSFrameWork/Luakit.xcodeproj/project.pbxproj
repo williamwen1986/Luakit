@@ -114,61 +114,12 @@
 			remoteGlobalIDString = 8FD8ACE4B45CC6E58BA6ECC9;
 			remoteInfo = base_i18n;
 		};
-		2883AD0D20B50E5E005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C2BF2ACA976606DEF38722D1;
-			remoteInfo = base_message_loop_tests;
-		};
-		2883AD0F20B50E5E005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5D7CCFCE51B585FE06B6873A;
-			remoteInfo = base_prefs;
-		};
-		2883AD1120B50E5E005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0C6AB638BE037930F8250611;
-			remoteInfo = base_prefs_test_support;
-		};
 		2883AD1320B50E5E005E1F54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 59317C71D4BE24DD3BE7D141;
 			remoteInfo = base_static;
-		};
-		2883AD1520B50E5E005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6384D0A2D0D086CEC8386D6D;
-			remoteInfo = run_all_unittests;
-		};
-		2883AD1720B50E5E005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F0D2D401F1D348499CC6C3A6;
-			remoteInfo = base_unittests;
-		};
-		2883AD1920B50E5E005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DBA29A29C2C422FFF737CF51;
-			remoteInfo = test_support_base;
-		};
-		2883AD1B20B50E5E005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E6CD4BA3BD730DB29CD85148;
-			remoteInfo = test_support_perf;
 		};
 		2883AD4420B51D02005E1F54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -363,8 +314,6 @@
 		2883AE6120B546C3005E1F54 /* oc_callback.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_callback.mm; sourceTree = "<group>"; };
 		2883AE6220B546C3005E1F54 /* oc_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oc_helpers.h; sourceTree = "<group>"; };
 		2883AE6320B546C3005E1F54 /* oc_helpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_helpers.mm; sourceTree = "<group>"; };
-		2883AF0020B55641005E1F54 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../src/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
-		2883AF0120B55641005E1F54 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../src/openssl/lib/libssl.a; sourceTree = "<group>"; };
 		2883AF0420B5565B005E1F54 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2898C83C20C55F2100249775 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		2898C84E20C55F2200249775 /* LuakitLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuakitLoader.h; sourceTree = "<group>"; };
@@ -465,14 +414,7 @@
 			children = (
 				2883AD0A20B50E5E005E1F54 /* libbase.a */,
 				2883AD0C20B50E5E005E1F54 /* libbase_i18n.a */,
-				2883AD0E20B50E5E005E1F54 /* libbase_message_loop_tests.a */,
-				2883AD1020B50E5E005E1F54 /* libbase_prefs.a */,
-				2883AD1220B50E5E005E1F54 /* libbase_prefs_test_support.a */,
 				2883AD1420B50E5E005E1F54 /* libbase_static.a */,
-				2883AD1620B50E5E005E1F54 /* librun_all_unittests.a */,
-				2883AD1820B50E5E005E1F54 /* base_unittests.app */,
-				2883AD1A20B50E5E005E1F54 /* libtest_support_base.a */,
-				2883AD1C20B50E5E005E1F54 /* libtest_support_perf.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -772,8 +714,6 @@
 			children = (
 				3C2CC5D521ABE47D00610EAC /* libcurl.a */,
 				2883AF0420B5565B005E1F54 /* libz.tbd */,
-				2883AF0020B55641005E1F54 /* libcrypto.a */,
-				2883AF0120B55641005E1F54 /* libssl.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -928,60 +868,11 @@
 			remoteRef = 2883AD0B20B50E5E005E1F54 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2883AD0E20B50E5E005E1F54 /* libbase_message_loop_tests.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libbase_message_loop_tests.a;
-			remoteRef = 2883AD0D20B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD1020B50E5E005E1F54 /* libbase_prefs.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libbase_prefs.a;
-			remoteRef = 2883AD0F20B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD1220B50E5E005E1F54 /* libbase_prefs_test_support.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libbase_prefs_test_support.a;
-			remoteRef = 2883AD1120B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		2883AD1420B50E5E005E1F54 /* libbase_static.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libbase_static.a;
 			remoteRef = 2883AD1320B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD1620B50E5E005E1F54 /* librun_all_unittests.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = librun_all_unittests.a;
-			remoteRef = 2883AD1520B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD1820B50E5E005E1F54 /* base_unittests.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = base_unittests.app;
-			remoteRef = 2883AD1720B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD1A20B50E5E005E1F54 /* libtest_support_base.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libtest_support_base.a;
-			remoteRef = 2883AD1920B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD1C20B50E5E005E1F54 /* libtest_support_perf.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libtest_support_perf.a;
-			remoteRef = 2883AD1B20B50E5E005E1F54 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		2883AD4C20B51D73005E1F54 /* libcommon.a */ = {

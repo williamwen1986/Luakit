@@ -59,18 +59,8 @@ if [ ! ${ANDROID_NDK_HOME} ]; then
  fi
 
 
-ANDROID_LIB_ROOT=./lib
+ANDROID_LIB_ROOT=./libs
 ANDROID_TOOLCHAIN_DIR=/tmp/android-toolchain
-#OPENSSL_CONFIGURE_OPTIONS="no-whirlpool no-ui -fPIC \
-#        no-pic no-krb5 no-idea no-camellia \
-#        no-seed no-bf no-cast no-rc2 no-rc4 no-rc5 no-md2 \
-#        no-md4 no-ripemd no-rsa no-ecdh no-sock no-ssl2 no-ssl3 \
-#        no-dsa no-dh no-ec no-ecdsa no-tls1 no-pbe no-pkcs \
-#        no-tlsext no-pem no-rfc3779 no-whirlpool no-ui no-srp \
-#        no-ssltrace no-tlsext no-mdc2 no-ecdh no-engine \
-#        no-tls2 no-srtp -fPIC"
-#OPENSSL_CONFIGURE_OPTIONS="-fPIC"
-
 
 HOST_INFO=`uname -a`
 case ${HOST_INFO} in
@@ -140,25 +130,12 @@ for ANDROID_TARGET_PLATFORM in x86 x86_64 arm64-v8a armeabi-v7a
 
      rm -rf ${ANDROID_TOOLCHAIN_DIR}
      mkdir -p "${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}"
-     #python ${ANDROID_NDK_HOME}/build/tools/make_standalone_toolchain.py \
-     #       --arch ${TOOLCHAIN_ARCH} \
-     #       --api ${ANDROID_API} \
-     #       --install-dir ${ANDROID_TOOLCHAIN_DIR}
-
+ 
      if [ $? -ne 0 ]; then
          echo "Error executing make_standalone_toolchain.py for ${TOOLCHAIN_ARCH}"
          exit 1
      fi
 
-
-     #export CROSS_SYSROOT=${ANDROID_TOOLCHAIN_DIR}/sysroot
-
-#     RANLIB=${TOOLCHAIN_PREFIX}-ranlib \
-#           AR=${TOOLCHAIN_PREFIX}-ar \
-#           CC=${TOOLCHAIN_PREFIX}-gcc \
-#           ./Configure "${CONFIGURE_ARCH}" \
-#           -D__ANDROID_API__=${ANDROID_API} \
-#           "${OPENSSL_CONFIGURE_OPTIONS}"
 
     echo "./Configure ${CONFIGURE_ARCH} -D__ANDROID_API__=$ANDROID_API ${OPENSSL_CONFIGURE_OPTIONS}\n"
     ./Configure ${CONFIGURE_ARCH} -D__ANDROID_API__=$ANDROID_API  ${OPENSSL_CONFIGURE_OPTIONS}
@@ -176,38 +153,20 @@ for ANDROID_TARGET_PLATFORM in x86 x86_64 arm64-v8a armeabi-v7a
          exit 1
      fi
 
+     rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.a
      mv libcrypto.a ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}
+     rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.a
      mv libssl.a ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}
+     rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.so
+     mv libcrypto.so.1.1 ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.so
+     rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.so
+     mv libssl.so.1.1 ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.so
 
      # copy header
      mkdir -p "${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/include/openssl"
-     cp -r "include/openssl" "${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/include/"
+     cp -r -v "include/openssl" "${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/include/"
  done 
 
-
-#if [  -f "lib/x86_64/libcrypto.a" ]  && [ -f "lib/x86_64/libssl.a" ]; then
-#    echo "lib/x86_64/libssl.a exists. Skipping"
-#else
-#    ./Configure android-x86_64 -D__ANDROID_API__=$ANDROID_API
-#fi
-
-#if [  -f "lib/x86/libcrypto.a" ] && [ -f "lib/x86/libssl.a" ]; then
-#    echo "lib/x86/libssl.a exists. Skipping"
-#else
-#   ./Configure android-x86 -D__ANDROID_API__=$ANDROID_API 
-#fi
-
-#if [  -f "lib/arm64-v8a/libcrypto.a" ] && [ -f "lib/arm64-v8a/libssl.a" ]; then
-#    echo "lib/arm64-v8a/libssl.a exists. Skipping"
-#else
-#    ./Configure android-arm64 -D__ANDROID_API__=$ANDROID_API 
-#i
-
-#if [  -f "lib/armeabi-v7a/libcrypto.a" ] && [ -f "lib/armeabi-v7a/libssl.a" ]; then
-#    echo "lib/armeabi-v7a/libssl.a exists. Skipping"
-#else
-#    ./Configure android-arm -D__ANDROID_API__=$ANDROID_API no-asm no-shared no-unit-test
-#fi
 
 make clean
 
