@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C533E41B2324FD5F0058C80E /* liblibevent_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibevent_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C533E41B2324FD5F0058C80E /* libevent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libevent.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C533E4232324FE410058C80E /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
 		C533E4242324FE410058C80E /* select.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = select.c; sourceTree = "<group>"; };
 		C533E4252324FE410058C80E /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
@@ -73,7 +73,7 @@
 		C533E41C2324FD5F0058C80E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C533E41B2324FD5F0058C80E /* liblibevent_macos.a */,
+				C533E41B2324FD5F0058C80E /* libevent.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,9 +91,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C533E41A2324FD5F0058C80E /* libevent_macos */ = {
+		C533E41A2324FD5F0058C80E /* event */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C533E41F2324FD5F0058C80E /* Build configuration list for PBXNativeTarget "libevent_macos" */;
+			buildConfigurationList = C533E41F2324FD5F0058C80E /* Build configuration list for PBXNativeTarget "event" */;
 			buildPhases = (
 				C533E4172324FD5F0058C80E /* Headers */,
 				C533E4182324FD5F0058C80E /* Sources */,
@@ -104,9 +104,9 @@
 			);
 			dependencies = (
 			);
-			name = libevent_macos;
-			productName = libevent_macos;
-			productReference = C533E41B2324FD5F0058C80E /* liblibevent_macos.a */;
+			name = event;
+			productName = event;
+			productReference = C533E41B2324FD5F0058C80E /* libevent.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -123,7 +123,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "libevent_macos" */;
+			buildConfigurationList = C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "event" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -135,7 +135,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C533E41A2324FD5F0058C80E /* libevent_macos */,
+				C533E41A2324FD5F0058C80E /* event */,
 			);
 		};
 /* End PBXProject section */
@@ -324,7 +324,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "libevent_macos" */ = {
+		C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "event" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C533E41D2324FD5F0058C80E /* Debug */,
@@ -333,7 +333,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C533E41F2324FD5F0058C80E /* Build configuration list for PBXNativeTarget "libevent_macos" */ = {
+		C533E41F2324FD5F0058C80E /* Build configuration list for PBXNativeTarget "event" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C533E4202324FD5F0058C80E /* Debug */,

@@ -13,7 +13,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C533E4FE232563E10058C80E /* libdynamic_annotations_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdynamic_annotations_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C533E4FE232563E10058C80E /* libdynamic_annotations.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdynamic_annotations.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C533E506232564D50058C80E /* dynamic_annotations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dynamic_annotations.h; sourceTree = "<group>"; };
 		C533E507232564D60058C80E /* dynamic_annotations.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dynamic_annotations.c; sourceTree = "<group>"; };
 		C533E50A2325650B0058C80E /* valgrind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = valgrind.h; path = ../valgrind/valgrind.h; sourceTree = "<group>"; };
@@ -43,7 +43,7 @@
 		C533E4FF232563E10058C80E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C533E4FE232563E10058C80E /* libdynamic_annotations_macos.a */,
+				C533E4FE232563E10058C80E /* libdynamic_annotations.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,9 +63,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C533E4FD232563E10058C80E /* dynamic_annotations_macos */ = {
+		C533E4FD232563E10058C80E /* dynamic_annotations */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C533E502232563E10058C80E /* Build configuration list for PBXNativeTarget "dynamic_annotations_macos" */;
+			buildConfigurationList = C533E502232563E10058C80E /* Build configuration list for PBXNativeTarget "dynamic_annotations" */;
 			buildPhases = (
 				C533E4FA232563E10058C80E /* Headers */,
 				C533E4FB232563E10058C80E /* Sources */,
@@ -76,9 +76,9 @@
 			);
 			dependencies = (
 			);
-			name = dynamic_annotations_macos;
-			productName = dynamic_annotations_macos;
-			productReference = C533E4FE232563E10058C80E /* libdynamic_annotations_macos.a */;
+			name = dynamic_annotations;
+			productName = dynamic_annotations;
+			productReference = C533E4FE232563E10058C80E /* libdynamic_annotations.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -95,7 +95,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C533E4F9232563E10058C80E /* Build configuration list for PBXProject "dynamic_annotations_macos" */;
+			buildConfigurationList = C533E4F9232563E10058C80E /* Build configuration list for PBXProject "dynamic_annotations" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -107,7 +107,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C533E4FD232563E10058C80E /* dynamic_annotations_macos */,
+				C533E4FD232563E10058C80E /* dynamic_annotations */,
 			);
 		};
 /* End PBXProject section */
@@ -282,7 +282,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C533E4F9232563E10058C80E /* Build configuration list for PBXProject "dynamic_annotations_macos" */ = {
+		C533E4F9232563E10058C80E /* Build configuration list for PBXProject "dynamic_annotations" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C533E500232563E10058C80E /* Debug */,
@@ -291,7 +291,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C533E502232563E10058C80E /* Build configuration list for PBXNativeTarget "dynamic_annotations_macos" */ = {
+		C533E502232563E10058C80E /* Build configuration list for PBXNativeTarget "dynamic_annotations" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C533E503232563E10058C80E /* Debug */,

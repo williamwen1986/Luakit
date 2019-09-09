@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:modp_b64_macos.xcodeproj">
+      location = "self:modp_b64.xcodeproj">
    </FileRef>
 </Workspace>

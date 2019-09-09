@@ -17,11 +17,11 @@ local.properties
 **/libs/
 **/build
 **/**/obj/
-**/DerivedData
+**/DerivedData/
 **/CMakeFiles/
 **/outputs/
 CMakeCache.txt
-**/.cxx
+**/.cxx/
 **/.externalNativeBuild
 **/.gradle
 *.o

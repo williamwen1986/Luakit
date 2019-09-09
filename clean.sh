@@ -20,10 +20,17 @@ rm -rf src/jni/libluaFramework.so   src/jni/libs              src/jni/obj
 rm -rf AndroidFrameWork/luakit/build AndroidFrameWork/lib_chromium/build
 rm src/openssl-1.1.1c/Makefile
 
+find "src" -name "CMakeFiles" -exec rm -rf {} \; 2>/dev/null
+find "src" -name "outputs" -exec rm -rf {} \; 2>/dev/null
+find "src" -name "CMakeCache.txt" -exec rm -rf {} \; 2>/dev/null
+find "AndroidDemo" -name ".cxx" -exec rm -rf {} \; 2>/dev/null
+find "AndroidDemo" -name ".externalNativeBuild" -exec rm -rf {} \; 2>/dev/null
+find "AndroidDemo" -name "build" -exec rm -rf {} \; 2>/dev/null
 
 # Macos
 # -----
 rm -rf src/modp_b64/build               src/modp_b64/DerivedData
+find "DerivedData" -name "build" -exec rm -rf {} \; 2>/dev/null
 
 
 # iOS

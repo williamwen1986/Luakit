@@ -14,7 +14,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C533E456232542BE0058C80E /* liblibxml_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibxml_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C533E456232542BE0058C80E /* libxml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C533E45F2325437E0058C80E /* libxml_utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = libxml_utils.cc; sourceTree = "<group>"; };
 		C533E4602325437E0058C80E /* libxml_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libxml_utils.h; sourceTree = "<group>"; };
 		C533E464232543930058C80E /* xml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xml.h; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		C533E457232542BE0058C80E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C533E456232542BE0058C80E /* liblibxml_macos.a */,
+				C533E456232542BE0058C80E /* libxml.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,9 +82,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C533E455232542BE0058C80E /* libxml_macos */ = {
+		C533E455232542BE0058C80E /* xml */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C533E45A232542BE0058C80E /* Build configuration list for PBXNativeTarget "libxml_macos" */;
+			buildConfigurationList = C533E45A232542BE0058C80E /* Build configuration list for PBXNativeTarget "xml" */;
 			buildPhases = (
 				C533E452232542BE0058C80E /* Headers */,
 				C533E453232542BE0058C80E /* Sources */,
@@ -95,9 +95,9 @@
 			);
 			dependencies = (
 			);
-			name = libxml_macos;
-			productName = libxml_macos;
-			productReference = C533E456232542BE0058C80E /* liblibxml_macos.a */;
+			name = xml;
+			productName = xml;
+			productReference = C533E456232542BE0058C80E /* libxml.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -114,7 +114,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C533E451232542BE0058C80E /* Build configuration list for PBXProject "libxml_macos" */;
+			buildConfigurationList = C533E451232542BE0058C80E /* Build configuration list for PBXProject "xml" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -126,7 +126,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C533E455232542BE0058C80E /* libxml_macos */,
+				C533E455232542BE0058C80E /* xml */,
 			);
 		};
 /* End PBXProject section */
@@ -302,7 +302,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C533E451232542BE0058C80E /* Build configuration list for PBXProject "libxml_macos" */ = {
+		C533E451232542BE0058C80E /* Build configuration list for PBXProject "xml" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C533E458232542BE0058C80E /* Debug */,
@@ -311,7 +311,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C533E45A232542BE0058C80E /* Build configuration list for PBXNativeTarget "libxml_macos" */ = {
+		C533E45A232542BE0058C80E /* Build configuration list for PBXNativeTarget "xml" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C533E45B232542BE0058C80E /* Debug */,
