@@ -11,7 +11,7 @@ project(luakit)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DANDROID -DHAVE_CONFIG_H -DUSE_OPENSSL -DUSE_SSLEAY -DHAVE_LIBZ -DHAVE_ZLIB_H -DOPENSSL_NO_STDIO -DOPENSSL_NO_UI_CONSOLE -DOPENSSL_NO_ENGINE")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DHAVE_CONFIG_H -DUSE_OPENSSL -DUSE_SSLEAY -DHAVE_LIBZ -DHAVE_ZLIB_H -DOPENSSL_NO_STDIO -DOPENSSL_NO_UI_CONSOLE -DOPENSSL_NO_ENGINE")
 
 file(GLOB all_SRCS
         "${PROJECT_SOURCE_DIR}/lib/*.cpp"
@@ -31,7 +31,7 @@ add_library(
 )
 
 
-link_directories(${outputDir}/${ANDROID_ABI} ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/lib)
+link_directories(${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs)
 
 
 add_library( ssl
@@ -44,7 +44,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                        # Provides the path to the library you want to import.
-                       ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/lib/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libssl.a )
+                       ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libssl.a )
 
 add_library( crypto
              STATIC
@@ -56,7 +56,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                        # Provides the path to the library you want to import.
-                       ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/lib/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libcrypto.a )
+                       ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libcrypto.a )
 
 
 

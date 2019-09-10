@@ -80,7 +80,7 @@ LOCAL_SRC_FILES := $(addprefix lib/,$(CSOURCES))
 LOCAL_SRC_FILES  := $(filter %.c %.cpp %.cc %.cxx,$(LOCAL_SRC_FILES))
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include $(LOCAL_PATH)/lib
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../openssl-1.1.1c/include $(LOCAL_PATH)/../openssl-1.1.1c/
-LOCAL_C_INCLUDES += ${LOCAL_PATH}/../openssl-1.1.1c/lib/android${ANDROID_API}-${CONFIG}/${TARGET_ARCH_ABI}/include
+LOCAL_C_INCLUDES += ${LOCAL_PATH}/../openssl-1.1.1c/libs/android${ANDROID_API}-${CONFIG}/${TARGET_ARCH_ABI}/include
 LOCAL_C_INCLUDES += /usr/local/Cellar/node/11.5.0/include/node
 $(warning "----------------the value of LOCAL_C_INCLUDES is $(LOCAL_C_INCLUDES)-------------------------")
 
