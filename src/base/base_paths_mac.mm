@@ -109,10 +109,12 @@ bool PathProviderMac(int key, base::FilePath* result) {
     case base::DIR_HOME:
       *result = base::mac::NSStringToFilePath(NSHomeDirectory());
       return true;
+#if defined(OS_IOS)
     case base::DIR_DOCUMENTS:
       return base::mac::GetUserDirectory(NSDocumentDirectory, result);
     case base::DIR_LIBRARY:
       return base::mac::GetUserDirectory(NSLibraryDirectory, result);
+#endif
     default:
       return false;
   }

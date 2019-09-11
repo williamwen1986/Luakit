@@ -16,6 +16,9 @@
 *   This file provides implementation functions for macros in the utfXX.h
 *   that would otherwise be too long as macros.
 */
+#if defined (OS_IOS)
+,,,
+#endif
 
 #include "base/third_party/icu/icu_utf.h"
 

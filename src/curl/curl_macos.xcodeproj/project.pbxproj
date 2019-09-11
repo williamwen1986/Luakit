@@ -285,7 +285,18 @@
 		C517E8152326C7D800A03663 /* progress.h in Headers */ = {isa = PBXBuildFile; fileRef = C517E7002326C7D700A03663 /* progress.h */; };
 		C517E8162326C7D800A03663 /* inet_pton.c in Sources */ = {isa = PBXBuildFile; fileRef = C517E7012326C7D700A03663 /* inet_pton.c */; };
 		C517E8182326C82800A03663 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C517E8172326C82800A03663 /* libssl.a */; };
+		C517EA472327EEE300A03663 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C517EA462327EEE300A03663 /* libcrypto.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C582B5342328D46A00206727 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C582B5302328D46A00206727 /* common_macos.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C517E5432326960600A03663;
+			remoteInfo = common;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C517E5D12326C72300A03663 /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -585,6 +596,8 @@
 		C517E7002326C7D700A03663 /* progress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = progress.h; path = lib/progress.h; sourceTree = "<group>"; };
 		C517E7012326C7D700A03663 /* inet_pton.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = inet_pton.c; path = lib/inet_pton.c; sourceTree = "<group>"; };
 		C517E8172326C82800A03663 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../openssl-1.1.1c/libs/macos-Debug/libssl.a"; sourceTree = "<group>"; };
+		C517EA462327EEE300A03663 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../openssl-1.1.1c/libs/macos-Debug/libcrypto.a"; sourceTree = "<group>"; };
+		C582B5302328D46A00206727 /* common_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common_macos.xcodeproj; path = /MacosExt/Users/larpoux/projmac/luakit/MacosFramework/../src/common/common_macos.xcodeproj; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -592,6 +605,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C517EA472327EEE300A03663 /* libcrypto.a in Frameworks */,
 				C517E8182326C82800A03663 /* libssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -602,9 +616,9 @@
 		C517E5C82326C72300A03663 = {
 			isa = PBXGroup;
 			children = (
-				C517E8172326C82800A03663 /* libssl.a */,
 				C517E5D82326C7A700A03663 /* Source */,
 				C517E5D22326C72300A03663 /* Products */,
+				C517EA452327EEE300A03663 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -936,6 +950,24 @@
 			path = lib/vtls;
 			sourceTree = "<group>";
 		};
+		C517EA452327EEE300A03663 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C517E8172326C82800A03663 /* libssl.a */,
+				C517EA462327EEE300A03663 /* libcrypto.a */,
+				C582B5302328D46A00206727 /* common_macos.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C582B5312328D46A00206727 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C582B5352328D46A00206727 /* libcommon.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1092,6 +1124,7 @@
 				C517E5CD2326C72300A03663 /* Headers */,
 				C517E5CE2326C72300A03663 /* Sources */,
 				C517E5CF2326C72300A03663 /* Frameworks */,
+				C517E8252327D01300A03663 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1108,6 +1141,9 @@
 		C517E5C92326C72300A03663 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = larpoux;
 				TargetAttributes = {
@@ -1126,12 +1162,48 @@
 			mainGroup = C517E5C82326C72300A03663;
 			productRefGroup = C517E5D22326C72300A03663 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C582B5312328D46A00206727 /* Products */;
+					ProjectRef = C582B5302328D46A00206727 /* common_macos.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C517E5D02326C72300A03663 /* curl */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C582B5352328D46A00206727 /* libcommon.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcommon.a;
+			remoteRef = C582B5342328D46A00206727 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C517E8252327D01300A03663 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Type a script or drag a script file from your workspace to insert its path.\necho \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/macos-$CONFIGURATION\nfi\n\nmkdir -p $OUTPUT_DIR/\ncp -v $TARGET_BUILD_DIR/$FULL_PRODUCT_NAME $OUTPUT_DIR/\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C517E5CE2326C72300A03663 /* Sources */ = {

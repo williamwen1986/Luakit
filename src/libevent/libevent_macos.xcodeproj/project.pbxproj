@@ -20,6 +20,7 @@
 		C533E43A2324FE410058C80E /* evrpc.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E42D2324FE410058C80E /* evrpc.c */; };
 		C533E43B2324FE410058C80E /* evutil.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E42E2324FE410058C80E /* evutil.c */; };
 		C533E43C2324FE410058C80E /* evbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C533E42F2324FE410058C80E /* evbuffer.c */; };
+		C582B5B42328DD8900206727 /* event.c in Sources */ = {isa = PBXBuildFile; fileRef = C582B5B32328DD8900206727 /* event.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		C533E42D2324FE410058C80E /* evrpc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evrpc.c; sourceTree = "<group>"; };
 		C533E42E2324FE410058C80E /* evutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evutil.c; sourceTree = "<group>"; };
 		C533E42F2324FE410058C80E /* evbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evbuffer.c; sourceTree = "<group>"; };
+		C582B5B32328DD8900206727 /* event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = event.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 		C533E4122324FD5F0058C80E = {
 			isa = PBXGroup;
 			children = (
+				C582B5B32328DD8900206727 /* event.c */,
 				C533E4252324FE410058C80E /* buffer.c */,
 				C533E42F2324FE410058C80E /* evbuffer.c */,
 				C533E4262324FE410058C80E /* evdns.c */,
@@ -123,7 +126,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "event" */;
+			buildConfigurationList = C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "libevent_macos" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -167,6 +170,7 @@
 			files = (
 				C533E4362324FE410058C80E /* event_tagging.c in Sources */,
 				C533E4332324FE410058C80E /* evdns.c in Sources */,
+				C582B5B42328DD8900206727 /* event.c in Sources */,
 				C533E43B2324FE410058C80E /* evutil.c in Sources */,
 				C533E4302324FE410058C80E /* log.c in Sources */,
 				C533E4342324FE410058C80E /* strlcpy.c in Sources */,
@@ -324,7 +328,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "event" */ = {
+		C533E4162324FD5F0058C80E /* Build configuration list for PBXProject "libevent_macos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C533E41D2324FD5F0058C80E /* Debug */,

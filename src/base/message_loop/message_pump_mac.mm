@@ -916,11 +916,13 @@ MessagePumpCrApplication::~MessagePumpCrApplication() {
 // CrApplication is responsible for setting handlingSendEvent to true just
 // before it sends the event through the event handling mechanism, and
 // returning it to its previous value once the event has been sent.
+/*
 NSAutoreleasePool* MessagePumpCrApplication::CreateAutoreleasePool() {
   if (MessagePumpMac::IsHandlingSendEvent())
     return nil;
   return MessagePumpNSApplication::CreateAutoreleasePool();
 }
+*/
 
 // static
 bool MessagePumpMac::UsingCrApp() {

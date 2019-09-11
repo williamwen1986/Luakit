@@ -298,7 +298,7 @@ class MessagePumpCrApplication : public MessagePumpNSApplication {
  protected:
   // Returns nil if NSApp is currently in the middle of calling
   // -sendEvent.  Requires NSApp implementing CrAppProtocol.
-//  virtual NSAutoreleasePool* CreateAutoreleasePool() OVERRIDE;
+  //virtual NSAutoreleasePool* CreateAutoreleasePool() ;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MessagePumpCrApplication);

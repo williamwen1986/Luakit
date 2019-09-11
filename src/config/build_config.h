@@ -18,7 +18,7 @@
 #if defined(__APPLE__)
 #include "TargetConditionals.h"
 #define OS_MACOSX 1
-#if defined(TARGET_OS_IPHONE)
+#if defined(TARGET_OS_IPHONE) && (TARGET_OS_IPHONE != 0)
 #define OS_IOS 1
 #endif
 #elif defined(ANDROID)

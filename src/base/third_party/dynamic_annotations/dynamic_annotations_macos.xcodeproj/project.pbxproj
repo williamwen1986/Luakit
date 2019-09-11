@@ -95,7 +95,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C533E4F9232563E10058C80E /* Build configuration list for PBXProject "dynamic_annotations" */;
+			buildConfigurationList = C533E4F9232563E10058C80E /* Build configuration list for PBXProject "dynamic_annotations_macos" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -186,8 +186,20 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
+					DISABLE_NACL,
+					V8_DEPRECATION_WARNINGS,
+					ENABLE_INPUT_SPEECH,
+					"USE_LIBJPEG_TURBO=1",
+					CHROMIUM_BUILD,
+					DISCARDABLE_MEMORY_ALWAYS_SUPPORTED_NATIVELY,
+					"ICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE",
+					SYSTEM_NATIVELY_SIGNALS_MEMORY_PRESSURE,
+					"CLD_VERSION=1",
+					"ENABLE_EGLIMAGE=1",
+					"ENABLE_SPELLCHECK=1",
+					"DISABLE_FTP_SUPPORT=1",
+					"DYNAMIC_ANNOTATIONS_ENABLED=1",
+					"WTF_USE_DYNAMIC_ANNOTATIONS=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -242,6 +254,22 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DISABLE_NACL,
+					V8_DEPRECATION_WARNINGS,
+					ENABLE_INPUT_SPEECH,
+					"USE_LIBJPEG_TURBO=1",
+					CHROMIUM_BUILD,
+					DISCARDABLE_MEMORY_ALWAYS_SUPPORTED_NATIVELY,
+					"ICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE",
+					SYSTEM_NATIVELY_SIGNALS_MEMORY_PRESSURE,
+					"CLD_VERSION=1",
+					"ENABLE_EGLIMAGE=1",
+					"ENABLE_SPELLCHECK=1",
+					"DISABLE_FTP_SUPPORT=1",
+					"DYNAMIC_ANNOTATIONS_ENABLED=1",
+					"WTF_USE_DYNAMIC_ANNOTATIONS=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -282,7 +310,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C533E4F9232563E10058C80E /* Build configuration list for PBXProject "dynamic_annotations" */ = {
+		C533E4F9232563E10058C80E /* Build configuration list for PBXProject "dynamic_annotations_macos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C533E500232563E10058C80E /* Debug */,

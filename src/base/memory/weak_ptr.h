@@ -69,7 +69,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
 #include "base/template_util.h"
-
 namespace base {
 
 template <typename T> class SupportsWeakPtr;

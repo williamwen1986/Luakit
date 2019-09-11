@@ -275,7 +275,9 @@ extern int luaInit(lua_State* L)
     luaopen_notification(L);
     addLuaLoader(L,luakit_loader);
     base::FilePath documentDir;
-    PathService::Get(PATH_SERVICE_KEY, &documentDir);
+    #if defined(OS_IOS)
+        PathService::Get(PATH_SERVICE_KEY, &documentDir);
+    #endif
     std::string path = documentDir.value();
     LOG(WARNING)<<"documentDir:"<<path;
     lua_pushstring(L, path.c_str());
