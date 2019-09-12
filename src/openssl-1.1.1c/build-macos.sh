@@ -49,13 +49,13 @@ fi
     mkdir -p "${LIB_ROOT}/macos-$CONFIG/"
 
     rm ${LIB_ROOT}/macos-$CONFIG/libcrypto.dylib 2>/dev/null
-    mv libcrypto.1.1.dylib ${LIB_ROOT}/macos-$CONFIG/libcrypto.dylib
+    mv libcrypto.1.1.dylib ${LIB_ROOT}/macos-$CONFIG/
     rm ${LIB_ROOT}/macos-$CONFIG/libcrypto.a 2>/dev/null
     mv libcrypto.a ${LIB_ROOT}/macos-$CONFIG/
     rm ${LIB_ROOT}/macos-$CONFIG/libssl.a 2>/dev/null
     mv libssl.a ${LIB_ROOT}/macos-$CONFIG/
     rm ${LIB_ROOT}/macos-$CONFIG/libssl.dylib 2>/dev/null
-    mv libssl.1.1.dylib ${LIB_ROOT}/macos-$CONFIG/libssl.dylib
+    mv libssl.1.1.dylib ${LIB_ROOT}/macos-$CONFIG/
 
      # copy header
      mkdir -p "${LIB_ROOT}/macos-$CONFIG/include/openssl"

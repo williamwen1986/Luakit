@@ -428,10 +428,10 @@ void BusinessMainLoop::MainMessageLoopRun() {
 //  if (parameters_.ui_task)
 //    base::MessageLoopForUI::current()->PostTask(FROM_HERE, *parameters_.ui_task);
 
-#if defined(OS_IOS)
+#if  defined(OS_IOS)
     base::MessageLoopForUI::current()->Attach();
-#elif !defined(OS_ANDROID) //android不需要调用Run
-  base::MessageLoopForUI::current()->Run();
+#elif (!defined(OS_ANDROID)) && (!defined(OS_MACOSX) ) // Patch [LARPOUX]
+    base::MessageLoopForUI::current()->Run();
 #endif
 }
 

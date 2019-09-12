@@ -248,12 +248,10 @@
 		040CAE221D097CB217C0EEB2 /* discardable_memory_allocator_android.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = discardable_memory_allocator_android.h; sourceTree = "<group>"; };
 		04368166CEDC3D0B4F33B16C /* thread_local_storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_local_storage.h; sourceTree = "<group>"; };
 		04BE3B6B24761173584327A1 /* pref_notifier_impl_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pref_notifier_impl_unittest.cc; sourceTree = "<group>"; };
-		052D710FE6F9184F671BEC81 /* platform_thread_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_linux.cc; sourceTree = "<group>"; };
 		05AA818C97E2828A5E6CE6C1 /* ref_counted_memory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ref_counted_memory.h; sourceTree = "<group>"; };
 		05C000A17F8D551995A80A49 /* mac_util.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mac_util.mm; sourceTree = "<group>"; };
 		061CEF993EB657D5DE331333 /* scoped_mach_port.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scoped_mach_port.cc; sourceTree = "<group>"; };
 		063D48F4AE142DACE41D0557 /* environment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = environment.h; sourceTree = "<group>"; };
-		063DC6FA4D7442ED01BB7E47 /* non_thread_safe_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = non_thread_safe_unittest.cc; sourceTree = "<group>"; };
 		065E04FF47CF0B763CCC6968 /* shared_memory_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = shared_memory_android.cc; sourceTree = "<group>"; };
 		0661C6494E2E84510DA2E73C /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
 		06B53B40ECC6B6A1E855F1CC /* rand_util_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rand_util_unittest.cc; sourceTree = "<group>"; };
@@ -301,7 +299,6 @@
 		10630784A89545E0EFDF5C02 /* atomicops_internals_x86_gcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = atomicops_internals_x86_gcc.h; sourceTree = "<group>"; };
 		1089B1DAF6E10C9EAE0CAD02 /* testing_pref_service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testing_pref_service.h; sourceTree = "<group>"; };
 		10C8DFC54AABCBE6B0116C8B /* values_test_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = values_test_util.h; sourceTree = "<group>"; };
-		10E8546387DEF4752351CEC0 /* thread_local_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_unittest.cc; sourceTree = "<group>"; };
 		110C2674AEB09ECBF3C57C40 /* json_pref_store_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_pref_store_unittest.cc; sourceTree = "<group>"; };
 		114D81AF83A8CB42200B4CB3 /* process_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_posix.cc; sourceTree = "<group>"; };
 		115D61261069E421347EE00B /* sparse_histogram_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sparse_histogram_unittest.cc; sourceTree = "<group>"; };
@@ -318,12 +315,10 @@
 		13D98FE872C50FE4F24E81BA /* scoped_block.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scoped_block.h; sourceTree = "<group>"; };
 		14EAA842855B360FD9D97D90 /* default_pref_store_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = default_pref_store_unittest.cc; sourceTree = "<group>"; };
 		156FED368E78DFDFF5409F21 /* native_library_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = native_library_win.cc; sourceTree = "<group>"; };
-		15B19BF15D39EF70C4D95339 /* condition_variable_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = condition_variable_win.cc; sourceTree = "<group>"; };
 		15B28FBD32AE5265A30EC167 /* run_loop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = run_loop.h; sourceTree = "<group>"; };
 		15BB99B17B97E72285103D68 /* file_descriptor_shuffle.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_descriptor_shuffle.cc; sourceTree = "<group>"; };
 		16647BB1899D99E53655ABB5 /* mac_logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mac_logging.h; sourceTree = "<group>"; };
 		16F05F8A66614876A521D7FF /* atomicops_internals_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = atomicops_internals_mac.h; sourceTree = "<group>"; };
-		170BCEAC5D352BA1166B2DCA /* platform_thread_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_win.cc; sourceTree = "<group>"; };
 		171C9BB920E42AEAEBB8E61F /* mock_chrome_application_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mock_chrome_application_mac.h; sourceTree = "<group>"; };
 		1777AFE2B471FD3F20F77B95 /* process_metrics_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_metrics_posix.cc; sourceTree = "<group>"; };
 		18B29C06E02EE94D053F20B5 /* memory_mapped_file_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = memory_mapped_file_posix.cc; sourceTree = "<group>"; };
@@ -433,7 +428,6 @@
 		3B084FBF84EEBF581A456EF7 /* md5.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cc; sourceTree = "<group>"; };
 		3B8A20C99BD6990A82B339B7 /* statistics_recorder.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = statistics_recorder.cc; sourceTree = "<group>"; };
 		3C05F954355714B1133653FF /* filename_rules.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = filename_rules.gypi; path = ../build/filename_rules.gypi; sourceTree = "<group>"; };
-		3C1CA067D2C4C235DC26A96A /* condition_variable_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = condition_variable_unittest.cc; sourceTree = "<group>"; };
 		3C412A1D6468734D10408887 /* os_crash_dumps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_crash_dumps.h; sourceTree = "<group>"; };
 		3CBF0DAAAC9C7B3541FC65CA /* sample_vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sample_vector.h; sourceTree = "<group>"; };
 		3CF368080C7AAA9DF099BEF3 /* file_descriptor_shuffle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = file_descriptor_shuffle.h; sourceTree = "<group>"; };
@@ -444,7 +438,6 @@
 		3EF3F910C2E963AE6A5CCF0A /* icu_utf.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = icu_utf.cc; sourceTree = "<group>"; };
 		3F4B472888C03993EB7064B9 /* watchdog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = watchdog.h; sourceTree = "<group>"; };
 		3F92B9271F6C04C1AD1046E2 /* bits_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bits_unittest.cc; sourceTree = "<group>"; };
-		3FACBF9F82EC43D8C541BE67 /* waitable_event_watcher_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = waitable_event_watcher_win.cc; sourceTree = "<group>"; };
 		405B6B1DD5E61D2D67483EFE /* memory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
 		40F54EE9DDB4FC42CCC84E11 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		4147E206184034084B409ACD /* scoped_ioplugininterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scoped_ioplugininterface.h; sourceTree = "<group>"; };
@@ -464,7 +457,6 @@
 		45CEA4CBEBF0BF3B7A6D8D0F /* sample_map.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sample_map.cc; sourceTree = "<group>"; };
 		46A2CCD7D81AD094F68EDE70 /* lock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lock.h; sourceTree = "<group>"; };
 		478D9CCA598A6D6BD8D39E21 /* lock_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lock_impl.h; sourceTree = "<group>"; };
-		481708FFFA1D9A90379530DB /* worker_pool_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = worker_pool_win.cc; sourceTree = "<group>"; };
 		48374CEA46C235854AB5A6DE /* file_util_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_util_unittest.cc; sourceTree = "<group>"; };
 		485671E733497FF9470E2D0B /* waitable_event_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = waitable_event_posix.cc; sourceTree = "<group>"; };
 		48D77ADDD4CDB3AD3C521BDA /* tracked_objects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tracked_objects.h; sourceTree = "<group>"; };
@@ -534,7 +526,6 @@
 		5B67E15EB3D438DA67B4196E /* message_loop_proxy.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_loop_proxy.cc; sourceTree = "<group>"; };
 		5B71493C2719B7D009D895D7 /* id_map_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = id_map_unittest.cc; sourceTree = "<group>"; };
 		5BA36D84B3EDC509CF354DCC /* rand_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rand_util.h; sourceTree = "<group>"; };
-		5BEA10FDFCD74CE91E58D3CC /* cancellation_flag_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cancellation_flag_unittest.cc; sourceTree = "<group>"; };
 		5C5AF6DB8B81EA48F3A5AFC5 /* file_util_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_util_android.cc; sourceTree = "<group>"; };
 		5C7029F5429774DFDB67013F /* test_shortcut_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test_shortcut_win.cc; sourceTree = "<group>"; };
 		5C96C0624C7C71D917BC153D /* stringprintf_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stringprintf_unittest.cc; sourceTree = "<group>"; };
@@ -549,7 +540,6 @@
 		5F8E392F80CFB99FF5DA155C /* base_paths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = base_paths.h; sourceTree = "<group>"; };
 		5FDBE46CA185C293C743E303 /* sparse_histogram.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sparse_histogram.cc; sourceTree = "<group>"; };
 		6010C9FF47D8579C45C59851 /* message_pump_x11.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_pump_x11.cc; sourceTree = "<group>"; };
-		605A757C0A6437FFC5B58E63 /* worker_pool_posix_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = worker_pool_posix_unittest.cc; sourceTree = "<group>"; };
 		608D0C3D13A7F60C4366FD9E /* scoped_launch_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scoped_launch_data.h; sourceTree = "<group>"; };
 		60A5161A3A551C360746E26A /* stats_counters.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stats_counters.cc; sourceTree = "<group>"; };
 		6172B049B4E3F45A13B409E2 /* file_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_posix.cc; sourceTree = "<group>"; };
@@ -610,13 +600,11 @@
 		70F637EA0E6DA52C3675C976 /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		70F6CAA8EDB30B7C4E659FA4 /* scoped_temp_dir.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scoped_temp_dir.cc; sourceTree = "<group>"; };
 		710C75B72967CFDBA3B35868 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		716EBB8A9D9C468803611228 /* thread_collision_warner_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_collision_warner_unittest.cc; sourceTree = "<group>"; };
 		71FCC163B2B9F0051E6B33BE /* spin_wait.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spin_wait.h; sourceTree = "<group>"; };
 		72089EC63B15E7A05A48738E /* string_number_conversions_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_number_conversions_unittest.cc; sourceTree = "<group>"; };
 		723551EB1222D98D37791730 /* unit_test_launcher.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unit_test_launcher.cc; sourceTree = "<group>"; };
 		726442D44BC960EAC9DB21D7 /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		72D67F07D62B2A4A01EAEBC2 /* string_split.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = string_split.h; sourceTree = "<group>"; };
-		72DE4D37B90A0728B7345D60 /* platform_thread_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_android.cc; sourceTree = "<group>"; };
 		72F1C27FC7A1A7200DDDA17F /* histogram_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = histogram_unittest.cc; sourceTree = "<group>"; };
 		741CEDCC48D0CC7581B12A0B /* test_result.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test_result.cc; sourceTree = "<group>"; };
 		74D12ADF9866CF6A524DFF3C /* utf_offset_string_conversions_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utf_offset_string_conversions_unittest.cc; sourceTree = "<group>"; };
@@ -657,7 +645,6 @@
 		81B9179A9106CB0D977DDD2A /* multiprocess_test_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = multiprocess_test_android.cc; sourceTree = "<group>"; };
 		82C9FD3BFCF408C10F6E3787 /* message_pump_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = message_pump_mac.h; sourceTree = "<group>"; };
 		8348437C37166CE0749970B8 /* unix_domain_socket_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unix_domain_socket_linux.cc; sourceTree = "<group>"; };
-		83A7422342BD4D8852A18F27 /* thread_local_storage_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_storage_unittest.cc; sourceTree = "<group>"; };
 		8417C5E2983028CD97B0FD2C /* port.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = port.h; sourceTree = "<group>"; };
 		843D0EDEA1BC4D25C49403D5 /* discardable_memory_emulated.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = discardable_memory_emulated.cc; sourceTree = "<group>"; };
 		84AEF37EFBEC85FAC35D1D80 /* foundation_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = foundation_util.h; sourceTree = "<group>"; };
@@ -771,11 +758,8 @@
 		A6B35DD287A3421C1D12B0F9 /* sys_info_mac.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_info_mac.cc; sourceTree = "<group>"; };
 		A6C3C82E5B325868D7374982 /* histogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = histogram.h; sourceTree = "<group>"; };
 		A6FAC6D22405F5AECA868C35 /* tracking_info.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tracking_info.h; sourceTree = "<group>"; };
-		A741FB53976D61AFC1828AB6 /* platform_thread_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_unittest.cc; sourceTree = "<group>"; };
-		A78E3A29C81E4EC6108DF2C3 /* thread_local_storage_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_storage_win.cc; sourceTree = "<group>"; };
 		A7952DC2BA9321835F84711E /* singleton_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = singleton_unittest.cc; sourceTree = "<group>"; };
 		A7ECE10279577EF6C5AC4334 /* message_pump_ozone.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_pump_ozone.cc; sourceTree = "<group>"; };
-		A803E8574AEC4690BA0D5C8C /* sequenced_worker_pool_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sequenced_worker_pool_unittest.cc; sourceTree = "<group>"; };
 		A83A85D5EBB21F7CAF2D68B9 /* mock_chrome_application_mac.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mock_chrome_application_mac.mm; sourceTree = "<group>"; };
 		A84C8687D340ED5653956382 /* dir_reader_posix_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dir_reader_posix_unittest.cc; sourceTree = "<group>"; };
 		A8BC311745613A3DCDF6598F /* platform_file.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform_file.h; sourceTree = "<group>"; };
@@ -811,8 +795,6 @@
 		B10C15E8E2784AA5F5339070 /* process_util_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_util_unittest.cc; sourceTree = "<group>"; };
 		B188E938583B1C9D58A37F8E /* tuple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tuple.h; sourceTree = "<group>"; };
 		B1B9F7A7635930E67D6315D0 /* sequenced_task_runner_helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sequenced_task_runner_helpers.h; sourceTree = "<group>"; };
-		B20557A60B5674CEC453C6CF /* simple_thread_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = simple_thread_unittest.cc; sourceTree = "<group>"; };
-		B2474B426B6413EC577C5F0C /* thread_local_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_win.cc; sourceTree = "<group>"; };
 		B292C75BDBA5EBE3CFEFD394 /* aligned_memory.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = aligned_memory.cc; sourceTree = "<group>"; };
 		B355810D1F56528623650D52 /* process_metrics.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_metrics.cc; sourceTree = "<group>"; };
 		B37DECFB79724BB41EA6F536 /* scoped_path_override.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scoped_path_override.cc; sourceTree = "<group>"; };
@@ -824,7 +806,6 @@
 		B4CE317278DAB53447AD4E0C /* histogram_samples.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = histogram_samples.cc; sourceTree = "<group>"; };
 		B504D327DE8E83005194EA5D /* pref_notifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pref_notifier.h; sourceTree = "<group>"; };
 		B5517AE8A143060CE9FF343C /* serializer_test.json */ = {isa = PBXFileReference; lastKnownFileType = text; path = serializer_test.json; sourceTree = "<group>"; };
-		B5E332A966A115AF20B1FF86 /* thread_checker_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_checker_unittest.cc; sourceTree = "<group>"; };
 		B62E151BB975C33C9B2EC4FB /* cpufeatures.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = cpufeatures.gypi; path = ../build/android/cpufeatures.gypi; sourceTree = "<group>"; };
 		B653977952CBAB67B47A6E5B /* pref_member.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pref_member.h; sourceTree = "<group>"; };
 		B6A40D8101342722694ABFD1 /* process_iterator_mac.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_iterator_mac.cc; sourceTree = "<group>"; };
@@ -838,9 +819,7 @@
 		B9A236E376DA9B4B7B261882 /* test_simple_task_runner.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test_simple_task_runner.cc; sourceTree = "<group>"; };
 		BA35BDA01CE9EADA523DC1D8 /* sys_string_conversions_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_string_conversions_posix.cc; sourceTree = "<group>"; };
 		BB169204CFB784F28E1F70AC /* location.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = location.cc; sourceTree = "<group>"; };
-		BBE360A3076524F60ED00AA5 /* thread_id_name_manager_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_id_name_manager_unittest.cc; sourceTree = "<group>"; };
 		BC4B57B80C7281822E66D0B2 /* stringprintf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stringprintf.h; sourceTree = "<group>"; };
-		BC4FCCBDAAE2B095782238C3 /* lock_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lock_unittest.cc; sourceTree = "<group>"; };
 		BCB8ED6ABF907BAD842D0CB5 /* timer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = timer.cc; sourceTree = "<group>"; };
 		BCC81847D4241D5638CFC6A3 /* test_file_util_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test_file_util_android.cc; sourceTree = "<group>"; };
 		BD1128B2382EB9B1717DEE7E /* test_support_android.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = test_support_android.h; sourceTree = "<group>"; };
@@ -874,7 +853,6 @@
 		C61458245CC6C17C40646221 /* sys_info_openbsd.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_info_openbsd.cc; sourceTree = "<group>"; };
 		C663CD6F9B8B92795B94D32D /* pref_store_observer_mock.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pref_store_observer_mock.cc; sourceTree = "<group>"; };
 		C69F7983BE6FC9384C947373 /* sys_info.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sys_info.h; sourceTree = "<group>"; };
-		C77823A838CC53B621529039 /* waitable_event_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = waitable_event_unittest.cc; sourceTree = "<group>"; };
 		C7A4145B94DEC61838DA214B /* string_number_conversions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = string_number_conversions.h; sourceTree = "<group>"; };
 		C7BD5C7686721260B89952B5 /* condition_variable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = condition_variable.h; sourceTree = "<group>"; };
 		C7FE5AD80CD8A6766FE93E86 /* utf_string_conversions.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utf_string_conversions.cc; sourceTree = "<group>"; };
@@ -922,14 +900,12 @@
 		D852FBE473C9F21E95FED034 /* eintr_wrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = eintr_wrapper.h; sourceTree = "<group>"; };
 		D868D475DF8CFCFE5300F763 /* histogram_base.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = histogram_base.cc; sourceTree = "<group>"; };
 		D8BC6B5453D280F32802343B /* tick_clock.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tick_clock.cc; sourceTree = "<group>"; };
-		D94053BC98BD9E291165F0BD /* lock_impl_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lock_impl_win.cc; sourceTree = "<group>"; };
 		D9B5C9E920C29F044DF9376F /* discardable_memory_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = discardable_memory_linux.cc; sourceTree = "<group>"; };
 		D9CD7B0CAE80FCCA2351A545 /* thread_local.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_local.h; sourceTree = "<group>"; };
 		DA277DBB049231B3DBA46E90 /* release_defaults.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_defaults.gypi; path = ../build/internal/release_defaults.gypi; sourceTree = "<group>"; };
 		DA36C5BB3C6756A2241D024F /* pref_observer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pref_observer.h; sourceTree = "<group>"; };
 		DA6C87CCDDF3C241BF16B215 /* allocator_extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = allocator_extension.h; sourceTree = "<group>"; };
 		DAC41F29E6810D242DE75EB9 /* file_util_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_util_win.cc; sourceTree = "<group>"; };
-		DAF346D9E8DE1685074366B9 /* waitable_event_watcher_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = waitable_event_watcher_unittest.cc; sourceTree = "<group>"; };
 		DB9BE973BB83C15A745E8C79 /* mac_util_unittest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mac_util_unittest.mm; sourceTree = "<group>"; };
 		DBFD28027D9AC79527E45083 /* grit_action.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = grit_action.gypi; path = ../build/grit_action.gypi; sourceTree = "<group>"; };
 		DC2EBBFF643F7172CA4620FF /* string_piece.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_piece.cc; sourceTree = "<group>"; };
@@ -960,7 +936,6 @@
 		E287FCD10CD5C098C1781C59 /* sys_info_chromeos.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_info_chromeos.cc; sourceTree = "<group>"; };
 		E3A2170849D0B356CDE79FA1 /* sequenced_task_runner_test_template.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sequenced_task_runner_test_template.cc; sourceTree = "<group>"; };
 		E3F6ACC4B7CCD8A57FC9F52F /* sequenced_worker_pool_owner.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sequenced_worker_pool_owner.cc; sourceTree = "<group>"; };
-		E48D92B5DC41B9722CD16A89 /* waitable_event_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = waitable_event_win.cc; sourceTree = "<group>"; };
 		E4F66CB81E7F15CB680B5ED8 /* xdg_util.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = xdg_util.cc; sourceTree = "<group>"; };
 		E55C9CA3F0AD4CB40199CEAB /* sequenced_worker_pool.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sequenced_worker_pool.cc; sourceTree = "<group>"; };
 		E5CCA4234376EEBCC37F641F /* process_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_win.cc; sourceTree = "<group>"; };
@@ -981,7 +956,6 @@
 		EB2122CE7A2118BB2266E053 /* file_enumerator.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_enumerator.cc; sourceTree = "<group>"; };
 		EB9EA42DA2FD1B6CA85ED5CF /* message_loop_proxy_impl.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_loop_proxy_impl.cc; sourceTree = "<group>"; };
 		EC17BD28BAC36035B7CD3107 /* authorization_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = authorization_util.h; sourceTree = "<group>"; };
-		ECCE940327E3A12BAA42F85A /* worker_pool_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = worker_pool_unittest.cc; sourceTree = "<group>"; };
 		EDC5DEC6072F1B79D6F42A86 /* atomic_sequence_num.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = atomic_sequence_num.h; sourceTree = "<group>"; };
 		EDDAF5A29FD8D56B4CA90F11 /* discardable_memory_allocator_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = discardable_memory_allocator_android.cc; sourceTree = "<group>"; };
 		EEB25A6C39359C15B6D63760 /* scoped_nsobject_unittest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = scoped_nsobject_unittest.mm; sourceTree = "<group>"; };
@@ -1617,26 +1591,17 @@
 			children = (
 				B7DAC23E9D93B75185671F7E /* cancellation_flag.cc */,
 				DEA0994876E90FB5D8E583DC /* cancellation_flag.h */,
-				5BEA10FDFCD74CE91E58D3CC /* cancellation_flag_unittest.cc */,
 				C7BD5C7686721260B89952B5 /* condition_variable.h */,
 				1EDCBA2802B9A2BFFF185C20 /* condition_variable_posix.cc */,
-				3C1CA067D2C4C235DC26A96A /* condition_variable_unittest.cc */,
-				15B19BF15D39EF70C4D95339 /* condition_variable_win.cc */,
 				634A215411492EBF10D83021 /* lock.cc */,
 				46A2CCD7D81AD094F68EDE70 /* lock.h */,
 				478D9CCA598A6D6BD8D39E21 /* lock_impl.h */,
 				A2C4F472B85566BBD75DFB38 /* lock_impl_posix.cc */,
-				D94053BC98BD9E291165F0BD /* lock_impl_win.cc */,
-				BC4FCCBDAAE2B095782238C3 /* lock_unittest.cc */,
 				71FCC163B2B9F0051E6B33BE /* spin_wait.h */,
 				E2523F8B78E3C47B2EA0582E /* waitable_event.h */,
 				485671E733497FF9470E2D0B /* waitable_event_posix.cc */,
-				C77823A838CC53B621529039 /* waitable_event_unittest.cc */,
 				55BDF0FE5133ABBBF1B4DFB2 /* waitable_event_watcher.h */,
 				AEFCC626E3B8622488C5E452 /* waitable_event_watcher_posix.cc */,
-				DAF346D9E8DE1685074366B9 /* waitable_event_watcher_unittest.cc */,
-				3FACBF9F82EC43D8C541BE67 /* waitable_event_watcher_win.cc */,
-				E48D92B5DC41B9722CD16A89 /* waitable_event_win.cc */,
 			);
 			path = synchronization;
 			sourceTree = "<group>";
@@ -1687,42 +1652,28 @@
 				D5A725E92D218D27BCB94C3B /* non_thread_safe.h */,
 				1A7A59FD198A4551C186E13D /* non_thread_safe_impl.cc */,
 				8991C615D4B46C8CA5EE4D82 /* non_thread_safe_impl.h */,
-				063DC6FA4D7442ED01BB7E47 /* non_thread_safe_unittest.cc */,
 				F6B62A52F2BAED5839FA52CF /* platform_thread.h */,
-				72DE4D37B90A0728B7345D60 /* platform_thread_android.cc */,
-				052D710FE6F9184F671BEC81 /* platform_thread_linux.cc */,
 				F1E1571247D033283F6E2613 /* platform_thread_mac.mm */,
 				80F38800BFB8288CF1EA197B /* platform_thread_posix.cc */,
-				A741FB53976D61AFC1828AB6 /* platform_thread_unittest.cc */,
-				170BCEAC5D352BA1166B2DCA /* platform_thread_win.cc */,
 				B8B6F044757FA7BE262B5AAB /* post_task_and_reply_impl.cc */,
 				A5E57D0E0E45593391591B56 /* post_task_and_reply_impl.h */,
 				E55C9CA3F0AD4CB40199CEAB /* sequenced_worker_pool.cc */,
 				5E6DB07911AF4E4BBC29DB83 /* sequenced_worker_pool.h */,
-				A803E8574AEC4690BA0D5C8C /* sequenced_worker_pool_unittest.cc */,
 				24418E4F6436D6365D70EB39 /* simple_thread.cc */,
 				317A0ADF2EE1818AE06DFD4B /* simple_thread.h */,
-				B20557A60B5674CEC453C6CF /* simple_thread_unittest.cc */,
 				8887CEE1AE41676D021CD703 /* thread.cc */,
 				2F5CBD2571E6260E9D521562 /* thread.h */,
 				F5CEE3A70AE8AA43AADDF46F /* thread_checker.h */,
 				02EA81EFE3B73C495550B6DF /* thread_checker_impl.cc */,
 				617E2AA1B6827610C337BD60 /* thread_checker_impl.h */,
-				B5E332A966A115AF20B1FF86 /* thread_checker_unittest.cc */,
 				07044152D0AACC196AF849F0 /* thread_collision_warner.cc */,
 				961B967BAD62085DF1B59AF7 /* thread_collision_warner.h */,
-				716EBB8A9D9C468803611228 /* thread_collision_warner_unittest.cc */,
 				6B4C5B974C6F0C2C74C3B415 /* thread_id_name_manager.cc */,
 				5122224CF147807ADC49263E /* thread_id_name_manager.h */,
-				BBE360A3076524F60ED00AA5 /* thread_id_name_manager_unittest.cc */,
 				D9CD7B0CAE80FCCA2351A545 /* thread_local.h */,
 				C2FA8D896851848B26DC3F0B /* thread_local_posix.cc */,
 				04368166CEDC3D0B4F33B16C /* thread_local_storage.h */,
 				9B7AAA61464059B48595277E /* thread_local_storage_posix.cc */,
-				83A7422342BD4D8852A18F27 /* thread_local_storage_unittest.cc */,
-				A78E3A29C81E4EC6108DF2C3 /* thread_local_storage_win.cc */,
-				10E8546387DEF4752351CEC0 /* thread_local_unittest.cc */,
-				B2474B426B6413EC577C5F0C /* thread_local_win.cc */,
 				0F5B60B5E0A515BB2823D068 /* thread_restrictions.cc */,
 				8AEB9A8745B9FFFDCB296DA4 /* thread_restrictions.h */,
 				341D1BF07FAF4BE25CBAA2B6 /* watchdog.cc */,
@@ -1731,9 +1682,6 @@
 				BE2AF108C4AC29B65A827DB5 /* worker_pool.h */,
 				D0246D01A8BFAEE1CB0134E9 /* worker_pool_posix.cc */,
 				FC9D1FD75E7A921ABC2AAE08 /* worker_pool_posix.h */,
-				605A757C0A6437FFC5B58E63 /* worker_pool_posix_unittest.cc */,
-				ECCE940327E3A12BAA42F85A /* worker_pool_unittest.cc */,
-				481708FFFA1D9A90379530DB /* worker_pool_win.cc */,
 			);
 			path = threading;
 			sourceTree = "<group>";
@@ -2476,6 +2424,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -2506,7 +2455,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Applications/Dev/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(TOP_SRC_DIR)",
 					"$(TOP_SRC_DIR)/Luakit",
 				);
@@ -2524,6 +2473,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOP_SRC_DIR)/Luakit",
+				);
 				PRODUCT_NAME = All;
 			};
 			name = Debug;
@@ -2532,6 +2485,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CONFIG_IPHONE = 0;
 				COPY_PHASE_STRIP = NO;
@@ -2589,6 +2543,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOP_SRC_DIR)/Luakit",
+				);
 				PRODUCT_NAME = All;
 			};
 			name = Release;
@@ -2597,6 +2555,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CONFIG_IPHONE = 0;
 				EXECUTABLE_PREFIX = lib;
@@ -2655,6 +2614,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -2686,7 +2646,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Applications/Dev/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(TOP_SRC_DIR)",
 					"$(TOP_SRC_DIR)/Luakit",
 				);

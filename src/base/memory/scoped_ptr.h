@@ -93,9 +93,7 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
-
 #include <algorithm>  // For std::swap().
-
 #include "base/basictypes.h"
 #include "base/compiler_specific.h"
 #include "base/move.h"
