@@ -12,7 +12,7 @@
 		C517AB31232969050039AF93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C517AB30232969050039AF93 /* Assets.xcassets */; };
 		C517AB34232969050039AF93 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C517AB32232969050039AF93 /* Main.storyboard */; };
 		C517AB3F232A0A8C0039AF93 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C517AB3E232A0A8C0039AF93 /* main.mm */; };
-		C517AB7F232A10500039AF93 /* libLuakit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C517AB7C232A0F5B0039AF93 /* libLuakit.dylib */; };
+		C5383F48232A8F2200E8F2A4 /* libLuakit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C517AB6F232A0D380039AF93 /* libLuakit.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +38,6 @@
 		C517AB3E232A0A8C0039AF93 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		C517AB40232A0D300039AF93 /* Luakit_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit_macos.xcodeproj; path = ../../MacosFramework/Luakit_macos.xcodeproj; sourceTree = "<group>"; };
 		C517AB7A232A0EB80039AF93 /* libLuakit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLuakit.dylib; path = "../../libs/macos-Debug/libLuakit.dylib"; sourceTree = "<group>"; };
-		C517AB7C232A0F5B0039AF93 /* libLuakit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLuakit.dylib; path = "../../libs/macos-Debug/libLuakit.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C517AB7F232A10500039AF93 /* libLuakit.dylib in Frameworks */,
+				C5383F48232A8F2200E8F2A4 /* libLuakit.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,7 +55,6 @@
 		C517AB1E232969040039AF93 = {
 			isa = PBXGroup;
 			children = (
-				C517AB7C232A0F5B0039AF93 /* libLuakit.dylib */,
 				C517AB40232A0D300039AF93 /* Luakit_macos.xcodeproj */,
 				C517AB29232969040039AF93 /* NotificationTest */,
 				C517AB28232969040039AF93 /* Products */,

@@ -15,8 +15,8 @@
 		2898C94020C683EC00249775 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2898C93F20C683EC00249775 /* main.mm */; };
 		2898C97420C6848B00249775 /* libLuakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898C96A20C6846F00249775 /* libLuakit.a */; };
 		2898C97A20C684AA00249775 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898C97920C684AA00249775 /* libz.tbd */; };
-		2898C97D20C6857F00249775 /* async_socket_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 2898C97C20C6857F00249775 /* async_socket_test.lua */; };
 		3CF6F49621B8CB9F00B7A811 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF6F49521B8CB9F00B7A811 /* libcurl.a */; };
+		C5383F7F232A933400E8F2A4 /* async_socket_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = C5383F7E232A933400E8F2A4 /* async_socket_test.lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,14 +48,9 @@
 		2898C93E20C683EC00249775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2898C93F20C683EC00249775 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		2898C95C20C6846F00249775 /* Luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit.xcodeproj; path = ../../IOSFrameWork/Luakit.xcodeproj; sourceTree = "<group>"; };
-		2898C96E20C6848B00249775 /* libbase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libbase.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2898C97020C6848B00249775 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2898C97220C6848B00249775 /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2898C97520C6849E00249775 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../src/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
-		2898C97620C6849E00249775 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../src/openssl/lib/libssl.a; sourceTree = "<group>"; };
 		2898C97920C684AA00249775 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		2898C97C20C6857F00249775 /* async_socket_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = async_socket_test.lua; path = AsyncSocketTest/lua/async_socket_test.lua; sourceTree = "<group>"; };
 		3CF6F49521B8CB9F00B7A811 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../src/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
+		C5383F7E232A933400E8F2A4 /* async_socket_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = async_socket_test.lua; path = AsyncSocketTest/lua/async_socket_test.lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +70,7 @@
 		2898C92420C683EB00249775 = {
 			isa = PBXGroup;
 			children = (
-				2898C97C20C6857F00249775 /* async_socket_test.lua */,
+				C5383F7E232A933400E8F2A4 /* async_socket_test.lua */,
 				2898C95C20C6846F00249775 /* Luakit.xcodeproj */,
 				2898C92F20C683EB00249775 /* AsyncSocketTest */,
 				2898C92E20C683EB00249775 /* Products */,
@@ -120,11 +115,6 @@
 			children = (
 				3CF6F49521B8CB9F00B7A811 /* libcurl.a */,
 				2898C97920C684AA00249775 /* libz.tbd */,
-				2898C97520C6849E00249775 /* libcrypto.a */,
-				2898C97620C6849E00249775 /* libssl.a */,
-				2898C96E20C6848B00249775 /* libbase.a */,
-				2898C97020C6848B00249775 /* libcommon.a */,
-				2898C97220C6848B00249775 /* libcurl.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -205,7 +195,7 @@
 			files = (
 				2898C93D20C683EC00249775 /* LaunchScreen.storyboard in Resources */,
 				2898C93A20C683EC00249775 /* Assets.xcassets in Resources */,
-				2898C97D20C6857F00249775 /* async_socket_test.lua in Resources */,
+				C5383F7F232A933400E8F2A4 /* async_socket_test.lua in Resources */,
 				2898C93820C683EB00249775 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

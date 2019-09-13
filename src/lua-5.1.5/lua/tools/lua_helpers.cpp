@@ -296,6 +296,9 @@ extern int luaInit(lua_State* L)
 #if defined(OS_ANDROID)
     std::string lua = "package.path = '" +path+"/lua/?.lua'";
     luaL_dostring(L, lua.c_str());
+#elif defined(OS_MACOSX) // Patch [LARPOUX]
+    std::string lua = "package.path = '" +packagePath+"/Contents/Resources/?.lua'";
+    luaL_dostring(L, lua.c_str());
 #endif
     return 0;
 }
