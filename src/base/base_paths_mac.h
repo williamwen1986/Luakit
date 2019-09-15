@@ -16,7 +16,7 @@ enum {
 
   DIR_APP_DATA,  // ~/Library/Application Support
 
-#if defined(OS_IOS)
+#if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
   DIR_DOCUMENTS,
   DIR_LIBRARY,
 #endif

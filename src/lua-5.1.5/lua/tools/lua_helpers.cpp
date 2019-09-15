@@ -30,13 +30,19 @@ static int   _xxteaSignLen = 0;
 
 typedef void (*LuaErrorFun)(const char *);
 
-#if defined(OS_IOS)
+#if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
 static const int PATH_SERVICE_KEY = base::DIR_DOCUMENTS;
 #elif defined(OS_ANDROID)
 static const int PATH_SERVICE_KEY = base::DIR_ANDROID_APP_DATA;
 #endif
 
 static std::string packagePath = "";
+static std::string dataDirectoryPath = "";
+static std::string databaseDirectoryPath = "";
+static std::string cacheDirectoryPath = "";
+static std::string downloadsDirectoryPath = "";
+static std::string nativeLibraryDirectoryPath = "";
+static std::string externalStorageDirectoryPath = "";
 
 static LuaErrorFun luaErrorFun = NULL;
 
@@ -116,15 +122,27 @@ extern void doString(lua_State* L,const char * s)
     luaL_dostring(L, s);
 }
 
-extern void luaSetPackagePath(std::string path)
-{
-    packagePath = path;
-}
+extern void luaSetPackagePath(std::string path) { packagePath = path; } 
+extern std::string luaGetPackagePath() { return packagePath; }
 
-extern std::string luaGetPackagePath()
-{
-    return packagePath;
-}
+extern void luaSetDataDirectoryPath(std::string path) { dataDirectoryPath = path; } 
+extern std::string luaGetDataDirectoryPath() { return dataDirectoryPath; }
+
+extern void luaSetDatabaseDirectoryPath(std::string path) { databaseDirectoryPath = path; }
+extern std::string luaGetDatabaseDirectoryPath() { return databaseDirectoryPath; }
+
+extern void luaSetCacheDirectoryPath(std::string path) { cacheDirectoryPath = path; } 
+extern std::string luaGetCacheDirectoryPath() { return cacheDirectoryPath; }
+
+extern void luaSetDownloadDirectoryPath(std::string path) { downloadsDirectoryPath = path; }
+extern std::string luaGetDownloadDirectoryPath() { return downloadsDirectoryPath; }
+
+extern void luaSetNativeLibraryDirectoryPath(std::string path) { nativeLibraryDirectoryPath = path; } 
+extern std::string luaGetNativeLibraryDirectoryPath() { return nativeLibraryDirectoryPath; }
+
+extern void luaSetExternalStorageDirectoryPath(std::string path) { externalStorageDirectoryPath = path; }
+extern std::string luaGetExternalStorageDirectoryPath() { return externalStorageDirectoryPath; }
+
 
 #if defined(OS_ANDROID)
 static int androidPrint(lua_State *L) {
@@ -275,7 +293,7 @@ extern int luaInit(lua_State* L)
     luaopen_notification(L);
     addLuaLoader(L,luakit_loader);
     base::FilePath documentDir;
-    #if defined(OS_IOS)
+    #if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
         PathService::Get(PATH_SERVICE_KEY, &documentDir);
     #endif
     std::string path = documentDir.value();
@@ -297,7 +315,7 @@ extern int luaInit(lua_State* L)
     //std::string lua = "package.path = '" +path+"/lua/?.lua'";
     //luaL_dostring(L, lua.c_str());
 #elif defined(OS_MACOSX) && (! defined(OS_IOS)) // Patch [LARPOUX]
-    std::string lua = "package.path = '" +packagePath+"/Contents/Resources/?.lua'";
+    std::string lua = "package.path = '" +packagePath+"/Contents/Resources/lua/?.lua'";
     luaL_dostring(L, lua.c_str());
 #endif
     return 0;

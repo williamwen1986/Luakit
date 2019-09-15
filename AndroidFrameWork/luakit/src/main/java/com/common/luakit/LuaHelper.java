@@ -12,6 +12,14 @@ public class LuaHelper {
 
 
     private static native void setPackagePath(String thePackagePath);
+    private static native void setDataDirectoryPath(String thePackagePath);
+    private static native void setDatabaseDirectoryPath(String thePackagePath);
+    private static native void setCacheDirectoryPath(String thePackagePath);
+    private static native void setDownloadDirectoryPath(String thePackagePath);
+    private static native void setNativeLibraryDirectoryPath(String thePackagePath);
+    private static native void setExternalStorageDirectoryPath(String thePackagePath);
+
+
 
     private static native void startLuaKitNative(Context c);
 
@@ -43,6 +51,13 @@ public class LuaHelper {
         copyFolderFromAssets(c, "lua",toPath);
         Log.d("copyfile", "copyFolderFromAssets");
         setPackagePath(toPath);
+        setDataDirectoryPath(PathUtils.getDataDirectory(c));
+        setDatabaseDirectoryPath(PathUtils.getDatabaseDirectory(c));
+        setCacheDirectoryPath(PathUtils.getCacheDirectory(c));
+        setDownloadDirectoryPath(PathUtils.getDownloadsDirectory(c));
+        setNativeLibraryDirectoryPath(PathUtils.getNativeLibraryDirectory(c));
+        setExternalStorageDirectoryPath(PathUtils.getExternalStorageDirectory());
+
         startLuaKitNative(c);
     }
 

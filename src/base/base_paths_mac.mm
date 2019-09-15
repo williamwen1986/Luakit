@@ -68,7 +68,7 @@ bool PathProviderMac(int key, base::FilePath* result) {
     case base::DIR_APP_DATA: {
       bool success = base::mac::GetUserDirectory(NSApplicationSupportDirectory,
                                                  result);
-#if defined(OS_IOS)
+#if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
       // On IOS, this directory does not exist unless it is created explicitly.
       if (success && !base::PathExists(*result))
         success = base::CreateDirectory(*result);
@@ -83,7 +83,7 @@ bool PathProviderMac(int key, base::FilePath* result) {
       // Start with the executable's directory.
       *result = result->DirName();
 
-#if !defined(OS_IOS)
+#if !defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
       if (base::mac::AmIBundled()) {
         // The bundled app executables (Chromium, TestShell, etc) live five
         // levels down, eg:
@@ -97,7 +97,7 @@ bool PathProviderMac(int key, base::FilePath* result) {
 #endif
       return true;
     case base::DIR_USER_DESKTOP:
-#if defined(OS_IOS)
+#if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
       // iOS does not have desktop directories.
       NOTIMPLEMENTED();
       return false;
@@ -109,7 +109,7 @@ bool PathProviderMac(int key, base::FilePath* result) {
     case base::DIR_HOME:
       *result = base::mac::NSStringToFilePath(NSHomeDirectory());
       return true;
-#if defined(OS_IOS)
+#if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
     case base::DIR_DOCUMENTS:
       return base::mac::GetUserDirectory(NSDocumentDirectory, result);
     case base::DIR_LIBRARY:

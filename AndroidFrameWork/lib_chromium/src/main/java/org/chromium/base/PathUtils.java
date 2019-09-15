@@ -90,7 +90,7 @@ public abstract class PathUtils {
      */
     @SuppressWarnings("unused")
     @CalledByNative
-    private static String getDownloadsDirectory(Context appContext) {
+    public static String getDownloadsDirectory(Context appContext) {
         return Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DOWNLOADS).getPath();
     }
@@ -100,7 +100,7 @@ public abstract class PathUtils {
      */
     @SuppressWarnings("unused")
     @CalledByNative
-    private static String getNativeLibraryDirectory(Context appContext) {
+    public static String getNativeLibraryDirectory(Context appContext) {
         ApplicationInfo ai = appContext.getApplicationInfo();
         if(ai != null) {
             if ((ai.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0 ||

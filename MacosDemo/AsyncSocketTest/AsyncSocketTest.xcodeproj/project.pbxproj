@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C519A4A3232E29B3006C824D /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C519A4A2232E29B3006C824D /* lua */; };
 		C5383F57232A8FB800E8F2A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5383F56232A8FB800E8F2A4 /* AppDelegate.m */; };
 		C5383F5C232A8FB900E8F2A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5383F5B232A8FB900E8F2A4 /* Assets.xcassets */; };
 		C5383F5F232A8FB900E8F2A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5383F5D232A8FB900E8F2A4 /* Main.storyboard */; };
 		C5383F6B232A904100E8F2A4 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C5383F69232A904100E8F2A4 /* ViewController.mm */; };
 		C5383F6C232A904100E8F2A4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C5383F6A232A904100E8F2A4 /* main.mm */; };
 		C5383F75232A90D500E8F2A4 /* libLuakit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C5383F74232A90D500E8F2A4 /* libLuakit.dylib */; };
-		C5383FB9232A99E100E8F2A4 /* async_socket_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = C5383FB8232A99E100E8F2A4 /* async_socket_test.lua */; };
-		C5383FBC232A9A5600E8F2A4 /* async_socket_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = C5383FBB232A9A5600E8F2A4 /* async_socket_test.lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C519A4A2232E29B3006C824D /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = AsyncSocketTest/lua; sourceTree = "<group>"; };
 		C5383F52232A8FB800E8F2A4 /* AsyncSocketTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsyncSocketTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5383F55232A8FB800E8F2A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C5383F56232A8FB800E8F2A4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -41,7 +41,6 @@
 		C5383F74232A90D500E8F2A4 /* libLuakit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLuakit.dylib; path = "../../libs/macos-Debug/libLuakit.dylib"; sourceTree = "<group>"; };
 		C5383F81232A988100E8F2A4 /* Luakit_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit_macos.xcodeproj; path = ../../MacosFramework/Luakit_macos.xcodeproj; sourceTree = "<group>"; };
 		C5383FB8232A99E100E8F2A4 /* async_socket_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = async_socket_test.lua; path = AsyncSocketTest/lua/async_socket_test.lua; sourceTree = "<group>"; };
-		C5383FBB232A9A5600E8F2A4 /* async_socket_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = async_socket_test.lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +58,7 @@
 		C5383F49232A8FB800E8F2A4 = {
 			isa = PBXGroup;
 			children = (
-				C5383FBA232A9A5500E8F2A4 /* lua */,
+				C519A4A2232E29B3006C824D /* lua */,
 				C5383FB8232A99E100E8F2A4 /* async_socket_test.lua */,
 				C5383F81232A988100E8F2A4 /* Luakit_macos.xcodeproj */,
 				C5383F54232A8FB800E8F2A4 /* AsyncSocketTest */,
@@ -106,15 +105,6 @@
 				C5383FB4232A988900E8F2A4 /* libLuakit.dylib */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		C5383FBA232A9A5500E8F2A4 /* lua */ = {
-			isa = PBXGroup;
-			children = (
-				C5383FBB232A9A5600E8F2A4 /* async_socket_test.lua */,
-			);
-			name = lua;
-			path = AsyncSocketTest/lua;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,9 +186,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5383F5C232A8FB900E8F2A4 /* Assets.xcassets in Resources */,
-				C5383FB9232A99E100E8F2A4 /* async_socket_test.lua in Resources */,
-				C5383FBC232A9A5600E8F2A4 /* async_socket_test.lua in Resources */,
 				C5383F5F232A8FB900E8F2A4 /* Main.storyboard in Resources */,
+				C519A4A3232E29B3006C824D /* lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
