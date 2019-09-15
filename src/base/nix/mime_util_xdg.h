@@ -8,7 +8,7 @@
 #include <string>
 
 #include "base/base_export.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 namespace base {
 

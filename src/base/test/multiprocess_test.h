@@ -10,7 +10,7 @@
 #include "base/basictypes.h"
 #include "base/process/launch.h"
 #include "base/process/process_handle.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 #include "testing/platform_test.h"
 
 class CommandLine;

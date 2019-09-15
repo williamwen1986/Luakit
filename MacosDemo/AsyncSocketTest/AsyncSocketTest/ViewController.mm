@@ -31,7 +31,6 @@
 - (IBAction)TestButton:(id)sender
 {
     lua_State * state = getCurrentThreadLuaState();
-    //luaL_dostring(state, "package.path = '/MacosExt/Users/larpoux/?.lua;?;?.lua;Resources/?.lua;./Contents/Resources/?.lua;./Contents/Resources/?;/tmp/?.lua;;' ");
     luaL_dostring(state, "require('async_socket_test').test()");
 }
 

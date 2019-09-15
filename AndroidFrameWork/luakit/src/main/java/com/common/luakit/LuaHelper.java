@@ -10,6 +10,9 @@ import java.io.InputStream;
 
 public class LuaHelper {
 
+
+    private static native void setPackagePath(String thePackagePath);
+
     private static native void startLuaKitNative(Context c);
 
     public static native Object callLuaFunction(String moduleName, String methodName);
@@ -24,7 +27,10 @@ public class LuaHelper {
 
     public static native Object callLuaFunction(String moduleName, String methodName, Object p1, Object p2, Object p3, Object p4, Object p5);
 
-    static { System.loadLibrary("luaFramework");}
+    static
+    {
+        System.loadLibrary("luaFramework");
+    }
 
     public static void startLuaKit(Context c){
         String toPath = PathUtils.getDataDirectory(c)+"/lua";
@@ -36,6 +42,7 @@ public class LuaHelper {
         toFolder.mkdir();
         copyFolderFromAssets(c, "lua",toPath);
         Log.d("copyfile", "copyFolderFromAssets");
+        setPackagePath(toPath);
         startLuaKitNative(c);
     }
 

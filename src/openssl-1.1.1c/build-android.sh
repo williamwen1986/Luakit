@@ -121,21 +121,15 @@ for ANDROID_TARGET_PLATFORM in x86 x86_64 arm64-v8a armeabi-v7a
              TOOLCHAIN_PREFIX=aarch64-linux-android
              CONFIGURE_ARCH=android-arm64
              PLATFORM_OUTPUT_DIR=arm64-v8a
-             OPENSSL_CONFIGURE_OPTIONS="no-whirlpool no-engine -fPIC"
+             OPENSSL_CONFIGURE_OPTIONS="no-whirlpool no-ui no-engine -fPIC"
              ;;
          *)
              echo "Unsupported build platform:${ANDROID_TARGET_PLATFORM}"
              exit 1
      esac
 
-     rm -rf ${ANDROID_TOOLCHAIN_DIR}
-     mkdir -p "${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}"
- 
-     if [ $? -ne 0 ]; then
-         echo "Error executing make_standalone_toolchain.py for ${TOOLCHAIN_ARCH}"
-         exit 1
-     fi
-
+    rm -rf ${ANDROID_TOOLCHAIN_DIR}
+    mkdir -p "${ANDROID_LIB_ROOT}/android$ANDROID_API-$CONFIG/${PLATFORM_OUTPUT_DIR}"
 
     echo "./Configure ${CONFIGURE_ARCH} -D__ANDROID_API__=$ANDROID_API ${OPENSSL_CONFIGURE_OPTIONS}\n"
     ./Configure ${CONFIGURE_ARCH} -D__ANDROID_API__=$ANDROID_API  ${OPENSSL_CONFIGURE_OPTIONS}
@@ -153,14 +147,14 @@ for ANDROID_TARGET_PLATFORM in x86 x86_64 arm64-v8a armeabi-v7a
          exit 1
      fi
 
-     rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.a
-     mv libcrypto.a ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}
-     rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.a
-     mv libssl.a ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}
-     rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.so
-     mv libcrypto.so.1.1 ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.so
-     rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.so
-     mv libssl.so.1.1 ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.so
+     #rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.a
+     cp -v libcrypto.a ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}
+     #rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.a
+     cp -v libssl.a ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}
+     #rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/
+     cp -v libcrypto.so.1.1 ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.1.1.so
+     #rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.1.1.so
+     cp -v libssl.so.1.1 ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.1.1.so
 
      # copy header
      mkdir -p "${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/include/openssl"

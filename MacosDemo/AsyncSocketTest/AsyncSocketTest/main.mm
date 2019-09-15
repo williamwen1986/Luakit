@@ -16,8 +16,5 @@
 int main(int argc, const char * argv[])
 {
     startLuakit(argc, (char**)argv);
-    //NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-    //luaSetPackagePath([bundlePath cStringUsingEncoding:NSUTF8StringEncoding]);
-
     return NSApplicationMain(argc, argv);
 }

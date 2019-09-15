@@ -12,7 +12,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {

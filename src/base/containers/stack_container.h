@@ -11,7 +11,7 @@
 #include "base/basictypes.h"
 #include "base/memory/aligned_memory.h"
 #include "base/strings/string16.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 namespace base {
 

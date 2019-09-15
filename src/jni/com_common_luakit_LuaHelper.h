@@ -8,6 +8,9 @@
 extern "C" {
 #endif
 
+
+JNIEXPORT void JNICALL Java_com_common_luakit_LuaHelper_setPackagePath__Ljava_lang_String_2 (JNIEnv *env, jclass c, jstring thePackagePath );
+
 JNIEXPORT void JNICALL Java_com_common_luakit_LuaHelper_startLuaKitNative
   (JNIEnv *, jclass, jobject);
 

@@ -116,7 +116,7 @@ extern void doString(lua_State* L,const char * s)
     luaL_dostring(L, s);
 }
 
-extern void luaSetPackagePath(const char * path)
+extern void luaSetPackagePath(std::string path)
 {
     packagePath = path;
 }
@@ -293,10 +293,10 @@ extern int luaInit(lua_State* L)
         luaL_dostring(L, lua.c_str());
     }
     
-#if defined(OS_ANDROID)
-    std::string lua = "package.path = '" +path+"/lua/?.lua'";
-    luaL_dostring(L, lua.c_str());
-#elif defined(OS_MACOSX) // Patch [LARPOUX]
+#if defined(OS_ANDROID) // Patch [LARPOUX]
+    //std::string lua = "package.path = '" +path+"/lua/?.lua'";
+    //luaL_dostring(L, lua.c_str());
+#elif defined(OS_MACOSX) && (! defined(OS_IOS)) // Patch [LARPOUX]
     std::string lua = "package.path = '" +packagePath+"/Contents/Resources/?.lua'";
     luaL_dostring(L, lua.c_str());
 #endif

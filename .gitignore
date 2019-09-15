@@ -24,6 +24,7 @@ CMakeCache.txt
 **/.cxx/
 **/.externalNativeBuild
 **/.gradle
+*.s
 *.o
 *.a
 *.d

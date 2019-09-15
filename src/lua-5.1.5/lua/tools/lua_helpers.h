@@ -18,7 +18,7 @@ extern void pushStrongUserdataTable(lua_State *L);
 extern void pushUserdataInStrongTable(lua_State *L, void * object);
 extern void pushUserdataInWeakTable(lua_State *L, void * object);
 extern int  luaInit(lua_State* L);
-extern void luaSetPackagePath(const char * path);
+extern void luaSetPackagePath(std::string);
 extern void setLuaErrorFun(LuaErrorFun func);
 extern std::string luaGetPackagePath();
 extern void doString(lua_State* L,const char * s);

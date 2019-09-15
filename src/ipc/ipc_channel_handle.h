@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_POSIX)
 #include "base/file_descriptor_posix.h"

@@ -18,7 +18,7 @@
 #include "base/nix/xdg_util.h"
 #include "base/path_service.h"
 #include "base/process/process_metrics.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_FREEBSD)
 #include <sys/param.h>

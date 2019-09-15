@@ -6,7 +6,7 @@
 
 #include "base/atomicops.h"
 #include "base/logging.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_POSIX)
 #include "ipc/file_descriptor_set_posix.h"

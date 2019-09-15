@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/cpu.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
 

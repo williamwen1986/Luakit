@@ -17,6 +17,14 @@ extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
 
+
+JNI_EXPORT void JNICALL Java_com_common_luakit_LuaHelper_setPackagePath__Ljava_lang_String_2 (JNIEnv *env, jclass c, jstring thePackagePath )
+{
+    const char* packagePath = env ->GetStringUTFChars((jstring)thePackagePath, NULL);
+    luaSetPackagePath((std::string)packagePath);
+    env ->ReleaseStringUTFChars((jstring)thePackagePath, packagePath);
+}
+
 JNIEXPORT void JNICALL Java_com_common_luakit_LuaHelper_startLuaKitNative
   (JNIEnv *env, jclass c, jobject context)
 {
@@ -239,6 +247,8 @@ jint JNI_OnLoad(JavaVM* jvm, void* reserved) {
     LOG(INFO) << "JNI_Onload end";
     return JNI_VERSION_1_6;
 }
+
+
 
 #ifdef __cplusplus
 }

@@ -46,7 +46,7 @@
 // and memmove().  We assume they are async-signal-safe.
 //
 
-#include "build/build_config.h"
+#include "config/build_config.h"
 #include "utilities.h"
 
 #if defined(HAVE_SYMBOLIZE)

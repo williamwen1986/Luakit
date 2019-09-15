@@ -55,7 +55,7 @@ make_abi() {
                 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=$OUTPUT_DIR/$ABI \
                 -DOPENSSL_ROOT_DIR=../openssl-1.1.1c \
                 -DOPENSSL_LIBRARIES=../openssl-1.1.1c/lib \
-                -DANDROID \
+                -DANDROID=1 \
 
             checkError
             make -j4

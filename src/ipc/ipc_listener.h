@@ -6,7 +6,7 @@
 #define IPC_IPC_LISTENER_H_
 
 #include "base/basictypes.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 #include "ipc/ipc_export.h"
 
 namespace IPC {

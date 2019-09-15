@@ -14,7 +14,6 @@
 #if defined(OS_ANDROID)
 #include <asm/fcntl.h>
 #endif
-
 using namespace net;
 
 int SetNonBlocking(int fd) {
@@ -209,12 +208,12 @@ int AsyncSocket::connect(const CompletionCallback& callback, const BeforeConnect
     if (!beforeConnectCallback.is_null()) beforeConnectCallback.Run(true);
     int rv = ::connect(socket_fd_, (sockaddr *)hostaddr_.data(), (socklen_t)hostaddr_.length());
     int ret = rv == 0 ? OK : MapConnectError(errno);
-    
+
     if (ret != ERR_IO_PENDING) {
+        LOG(ERROR) << "AsyncSocket connect IP: " << strerror(errno) << "\n";
         callback.Run(ret);
         return ret;
     }
-    
     if (!base::MessageLoopForIO::current()->WatchFileDescriptor(
             socket_fd_, true, base::MessageLoopForIO::WATCH_WRITE,
             &write_socket_watcher_, this)) {
@@ -303,7 +302,9 @@ int AsyncSocket::read(IOBuffer* buf, size_t buf_len, const CompletionCallback& c
     
     ssize_t rv = ::read(socket_fd_, buf->data(), buf_len);
     int ret = rv >= 0 ? (int)rv : MapSystemError(errno);
+
     if (ret != 0 && ret != ERR_IO_PENDING) {
+        LOG(ERROR) << "AsyncSocket read: " << strerror(errno) << "\n";
         callback.Run(ret);
         return ret;
     }
@@ -331,7 +332,9 @@ int AsyncSocket::write(IOBuffer* buf, size_t buf_len, const CompletionCallback& 
     
     ssize_t rv = WriteWrapper(socket_fd_, buf->data(), buf_len);
     int ret = rv >= 0 ? (int)rv : MapSystemError(errno);
+
     if (ret != 0 && ret != ERR_IO_PENDING) {
+        LOG(ERROR) << "AsyncSocket write: " << strerror(errno) << "\n";
         callback.Run(ret);
         return ret;
     }
@@ -386,7 +389,8 @@ void AsyncSocket::OnFileCanReadWithoutBlocking(int fd) {
     int ret = rv >= 0 ? (int)rv : MapSystemError(errno);
     if (ret == ERR_IO_PENDING)
         return;
-    
+
+    LOG(ERROR) << "AsyncSocket OnFileCanReadWithoutBlocking: " << strerror(errno) << "\n";
     bool ok = read_socket_watcher_.StopWatchingFileDescriptor();
     DCHECK(ok);
     read_buf_ = NULL;
@@ -407,6 +411,7 @@ void AsyncSocket::OnFileCanWriteWithoutBlocking(int fd) {
         }
         
         int ret = MapConnectError(errno);
+
         if (ret == ERR_IO_PENDING)
             return;
 
@@ -416,6 +421,7 @@ void AsyncSocket::OnFileCanWriteWithoutBlocking(int fd) {
             connect_state_ = CONNECT_STATE_CONNECT_COMPLETE;
         } else {
             connect_state_ = CONNECT_STATE_NONE;
+            LOG(ERROR) << "AsyncSocket OnFileCanWriteWithoutBlocking: " << strerror(errno) << "\n";
         }
         base::ResetAndReturn(&write_callback_).Run(ret);
     } else {

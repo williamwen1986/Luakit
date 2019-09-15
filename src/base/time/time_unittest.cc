@@ -10,7 +10,7 @@
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/platform_thread.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::Time;
