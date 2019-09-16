@@ -71,6 +71,7 @@ cd ../..
 
 
 cd MacosFramework
-. ../bin/build-macos.sh Luakit
+./build-macos.sh
 checkError
+cd ..
 
