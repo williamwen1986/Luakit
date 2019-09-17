@@ -44,15 +44,15 @@ make_abi() {
             echo
             echo "---------------------- ANDROID_ABI=$ABI ---------------------"
             rm -r obj CMakeFiles 2>/dev/null
-            mkdir -p $OUTPUT_DIR/$ABI
+            mkdir -p "$OUTPUT_DIR/$ABI"
             cmake .\
                 -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake \
                 -DANDROID_ABI=$ABI \
                 -DANDROID_NATIVE_API_LEVEL=$ANDROID_API \
                 -DANDROID_STL=c++_static \
-                -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=$OUTPUT_DIR/$ABI \
+                -DCMAKE_LIBRARY_OUTPUT_DIRECTORY="$OUTPUT_DIR/$ABI" \
                 -DCMAKE_BUILD_TYPE=$CONFIG \
-                -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=$OUTPUT_DIR/$ABI \
+                -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY="$OUTPUT_DIR/$ABI" \
                 -DOPENSSL_ROOT_DIR=../openssl-1.1.1c \
                 -DOPENSSL_LIBRARIES=../openssl-1.1.1c/lib \
                 -DANDROID=1 \
@@ -75,11 +75,11 @@ if [ -z "$OUTPUT_DIR" ]
 then
      export OUTPUT_DIR="$DEFAULT_OUTPUT"
 fi
-mkdir -p $OUTPUT_DIR 2>/dev/null
+mkdir -p "$OUTPUT_DIR" 2>/dev/null
 
 pushd "$OUTPUT_DIR" > /dev/null
 dir=$(pwd)
-export OUTPUT_DIR=$dir
+export OUTPUT_DIR="$dir"
 popd > /dev/null
 
 export NDK_MODULE_PATH="$path"

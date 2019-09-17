@@ -55,6 +55,7 @@ fi
 
     make clean
 
+cp -v -r "${LIB_ROOT}/macos-$CONFIG/" "$OUTPUT_DIR"
 echo
 echo "Your ouputs are in " "$OUTPUT_DIR"
 echo

@@ -1,0 +1,531 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C526DF912330FA5C0069143A /* notification_registrar.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF6A2330FA5B0069143A /* notification_registrar.cc */; };
+		C526DF922330FA5C0069143A /* network_monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF6D2330FA5B0069143A /* network_monitor.cpp */; };
+		C526DF932330FA5C0069143A /* network_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF702330FA5B0069143A /* network_util.cpp */; };
+		C526DF942330FA5C0069143A /* network_monitor_android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF712330FA5B0069143A /* network_monitor_android.cpp */; };
+		C526DF952330FA5C0069143A /* business_switches.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF722330FA5B0069143A /* business_switches.cpp */; };
+		C526DF962330FA5C0069143A /* business_runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF732330FA5B0069143A /* business_runtime.cpp */; };
+		C526DF972330FA5C0069143A /* network_util_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = C526DF752330FA5B0069143A /* network_util_ios.mm */; };
+		C526DF982330FA5C0069143A /* network_util_android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF7B2330FA5B0069143A /* network_util_android.cpp */; };
+		C526DF992330FA5C0069143A /* business_main_loop.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF802330FA5C0069143A /* business_main_loop.cc */; };
+		C526DF9A2330FA5C0069143A /* business_client_main_parts.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF852330FA5C0069143A /* business_client_main_parts.cc */; };
+		C526DF9B2330FA5C0069143A /* business_client_process_sub_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF892330FA5C0069143A /* business_client_process_sub_thread.cc */; };
+		C526DF9C2330FA5C0069143A /* business_client_thread_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8D2330FA5C0069143A /* business_client_thread_impl.cc */; };
+		C526DF9D2330FA5C0069143A /* network_monitor_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8E2330FA5C0069143A /* network_monitor_ios.mm */; };
+		C526DF9E2330FA5C0069143A /* notification_service_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8F2330FA5C0069143A /* notification_service_impl.cc */; };
+		C526DF9F2330FA5C0069143A /* business_main_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF902330FA5C0069143A /* business_main_delegate.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BA4685DC1DD1C8D200A8CCB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04A4FA0A1D7464E500E42FE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04A4FA111D7464E500E42FE3;
+			remoteInfo = common;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		04A4FA101D7464E500E42FE3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA4685D01DD1C8A200A8CCB4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		04A4FA121D7464E500E42FE3 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA4685D21DD1C8A200A8CCB4 /* libcommon_unittests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_unittests.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C526DF6A2330FA5B0069143A /* notification_registrar.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = notification_registrar.cc; path = common/notification_registrar.cc; sourceTree = "<group>"; };
+		C526DF6B2330FA5B0069143A /* business_client_shutdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_shutdown.h; path = common/business_client_shutdown.h; sourceTree = "<group>"; };
+		C526DF6C2330FA5B0069143A /* business_main_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_main_loop.h; path = common/business_main_loop.h; sourceTree = "<group>"; };
+		C526DF6D2330FA5B0069143A /* network_monitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network_monitor.cpp; path = common/network_monitor.cpp; sourceTree = "<group>"; };
+		C526DF6E2330FA5B0069143A /* notification_details.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_details.h; path = common/notification_details.h; sourceTree = "<group>"; };
+		C526DF6F2330FA5B0069143A /* ph-promise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ph-promise.h"; path = "common/ph-promise.h"; sourceTree = "<group>"; };
+		C526DF702330FA5B0069143A /* network_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network_util.cpp; path = common/network_util.cpp; sourceTree = "<group>"; };
+		C526DF712330FA5B0069143A /* network_monitor_android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network_monitor_android.cpp; path = common/network_monitor_android.cpp; sourceTree = "<group>"; };
+		C526DF722330FA5B0069143A /* business_switches.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_switches.cpp; path = common/business_switches.cpp; sourceTree = "<group>"; };
+		C526DF732330FA5B0069143A /* business_runtime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_runtime.cpp; path = common/business_runtime.cpp; sourceTree = "<group>"; };
+		C526DF742330FA5B0069143A /* result_codes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = result_codes.h; path = common/result_codes.h; sourceTree = "<group>"; };
+		C526DF752330FA5B0069143A /* network_util_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = network_util_ios.mm; path = common/network_util_ios.mm; sourceTree = "<group>"; };
+		C526DF762330FA5B0069143A /* business_client_main_parts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_main_parts.h; path = common/business_client_main_parts.h; sourceTree = "<group>"; };
+		C526DF772330FA5B0069143A /* business_runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_runtime.h; path = common/business_runtime.h; sourceTree = "<group>"; };
+		C526DF782330FA5B0069143A /* business_client_process_sub_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_process_sub_thread.h; path = common/business_client_process_sub_thread.h; sourceTree = "<group>"; };
+		C526DF792330FA5B0069143A /* main_function_params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main_function_params.h; path = common/main_function_params.h; sourceTree = "<group>"; };
+		C526DF7A2330FA5B0069143A /* network_monitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_monitor.h; path = common/network_monitor.h; sourceTree = "<group>"; };
+		C526DF7B2330FA5B0069143A /* network_util_android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network_util_android.cpp; path = common/network_util_android.cpp; sourceTree = "<group>"; };
+		C526DF7C2330FA5B0069143A /* business_main_delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_main_delegate.h; path = common/business_main_delegate.h; sourceTree = "<group>"; };
+		C526DF7D2330FA5B0069143A /* notification_service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_service.h; path = common/notification_service.h; sourceTree = "<group>"; };
+		C526DF7E2330FA5C0069143A /* business_switches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_switches.h; path = common/business_switches.h; sourceTree = "<group>"; };
+		C526DF7F2330FA5C0069143A /* base_lambda_support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base_lambda_support.h; path = common/base_lambda_support.h; sourceTree = "<group>"; };
+		C526DF802330FA5C0069143A /* business_main_loop.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_main_loop.cc; path = common/business_main_loop.cc; sourceTree = "<group>"; };
+		C526DF812330FA5C0069143A /* business_client_thread_delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_thread_delegate.h; path = common/business_client_thread_delegate.h; sourceTree = "<group>"; };
+		C526DF822330FA5C0069143A /* network_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_util.h; path = common/network_util.h; sourceTree = "<group>"; };
+		C526DF832330FA5C0069143A /* notification_observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_observer.h; path = common/notification_observer.h; sourceTree = "<group>"; };
+		C526DF842330FA5C0069143A /* business_client_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_thread.h; path = common/business_client_thread.h; sourceTree = "<group>"; };
+		C526DF852330FA5C0069143A /* business_client_main_parts.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_client_main_parts.cc; path = common/business_client_main_parts.cc; sourceTree = "<group>"; };
+		C526DF862330FA5C0069143A /* notification_source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_source.h; path = common/notification_source.h; sourceTree = "<group>"; };
+		C526DF872330FA5C0069143A /* notification_service_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_service_impl.h; path = common/notification_service_impl.h; sourceTree = "<group>"; };
+		C526DF882330FA5C0069143A /* business_client_thread_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_thread_impl.h; path = common/business_client_thread_impl.h; sourceTree = "<group>"; };
+		C526DF892330FA5C0069143A /* business_client_process_sub_thread.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_client_process_sub_thread.cc; path = common/business_client_process_sub_thread.cc; sourceTree = "<group>"; };
+		C526DF8A2330FA5C0069143A /* notification_registrar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_registrar.h; path = common/notification_registrar.h; sourceTree = "<group>"; };
+		C526DF8B2330FA5C0069143A /* observer_wrapper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = observer_wrapper.hpp; path = common/observer_wrapper.hpp; sourceTree = "<group>"; };
+		C526DF8C2330FA5C0069143A /* content_export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = content_export.h; path = common/content_export.h; sourceTree = "<group>"; };
+		C526DF8D2330FA5C0069143A /* business_client_thread_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_client_thread_impl.cc; path = common/business_client_thread_impl.cc; sourceTree = "<group>"; };
+		C526DF8E2330FA5C0069143A /* network_monitor_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = network_monitor_ios.mm; path = common/network_monitor_ios.mm; sourceTree = "<group>"; };
+		C526DF8F2330FA5C0069143A /* notification_service_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = notification_service_impl.cc; path = common/notification_service_impl.cc; sourceTree = "<group>"; };
+		C526DF902330FA5C0069143A /* business_main_delegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_main_delegate.cpp; path = common/business_main_delegate.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		04A4FA0F1D7464E500E42FE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA4685CF1DD1C8A200A8CCB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04A4FA091D7464E500E42FE3 = {
+			isa = PBXGroup;
+			children = (
+				04A4FA491D74663000E42FE3 /* src */,
+				04A4FA131D7464E500E42FE3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		04A4FA131D7464E500E42FE3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04A4FA121D7464E500E42FE3 /* libcommon.a */,
+				BA4685D21DD1C8A200A8CCB4 /* libcommon_unittests.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		04A4FA491D74663000E42FE3 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C526DF7F2330FA5C0069143A /* base_lambda_support.h */,
+				C526DF852330FA5C0069143A /* business_client_main_parts.cc */,
+				C526DF762330FA5B0069143A /* business_client_main_parts.h */,
+				C526DF892330FA5C0069143A /* business_client_process_sub_thread.cc */,
+				C526DF782330FA5B0069143A /* business_client_process_sub_thread.h */,
+				C526DF6B2330FA5B0069143A /* business_client_shutdown.h */,
+				C526DF812330FA5C0069143A /* business_client_thread_delegate.h */,
+				C526DF8D2330FA5C0069143A /* business_client_thread_impl.cc */,
+				C526DF882330FA5C0069143A /* business_client_thread_impl.h */,
+				C526DF842330FA5C0069143A /* business_client_thread.h */,
+				C526DF902330FA5C0069143A /* business_main_delegate.cpp */,
+				C526DF7C2330FA5B0069143A /* business_main_delegate.h */,
+				C526DF802330FA5C0069143A /* business_main_loop.cc */,
+				C526DF6C2330FA5B0069143A /* business_main_loop.h */,
+				C526DF732330FA5B0069143A /* business_runtime.cpp */,
+				C526DF772330FA5B0069143A /* business_runtime.h */,
+				C526DF722330FA5B0069143A /* business_switches.cpp */,
+				C526DF7E2330FA5C0069143A /* business_switches.h */,
+				C526DF8C2330FA5C0069143A /* content_export.h */,
+				C526DF792330FA5B0069143A /* main_function_params.h */,
+				C526DF712330FA5B0069143A /* network_monitor_android.cpp */,
+				C526DF8E2330FA5C0069143A /* network_monitor_ios.mm */,
+				C526DF6D2330FA5B0069143A /* network_monitor.cpp */,
+				C526DF7A2330FA5B0069143A /* network_monitor.h */,
+				C526DF7B2330FA5B0069143A /* network_util_android.cpp */,
+				C526DF752330FA5B0069143A /* network_util_ios.mm */,
+				C526DF702330FA5B0069143A /* network_util.cpp */,
+				C526DF822330FA5C0069143A /* network_util.h */,
+				C526DF6E2330FA5B0069143A /* notification_details.h */,
+				C526DF832330FA5C0069143A /* notification_observer.h */,
+				C526DF6A2330FA5B0069143A /* notification_registrar.cc */,
+				C526DF8A2330FA5C0069143A /* notification_registrar.h */,
+				C526DF8F2330FA5C0069143A /* notification_service_impl.cc */,
+				C526DF872330FA5C0069143A /* notification_service_impl.h */,
+				C526DF7D2330FA5B0069143A /* notification_service.h */,
+				C526DF862330FA5C0069143A /* notification_source.h */,
+				C526DF8B2330FA5C0069143A /* observer_wrapper.hpp */,
+				C526DF6F2330FA5B0069143A /* ph-promise.h */,
+				C526DF742330FA5B0069143A /* result_codes.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		04A4FA111D7464E500E42FE3 /* common */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04A4FA1B1D7464E500E42FE3 /* Build configuration list for PBXNativeTarget "common" */;
+			buildPhases = (
+				04A4FA0E1D7464E500E42FE3 /* Sources */,
+				04A4FA0F1D7464E500E42FE3 /* Frameworks */,
+				04A4FA101D7464E500E42FE3 /* CopyFiles */,
+				C526DF692330FA070069143A /* Copy to $OUTPUT_DIR */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = common;
+			productName = common;
+			productReference = 04A4FA121D7464E500E42FE3 /* libcommon.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		BA4685D11DD1C8A200A8CCB4 /* common_unittests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA4685DA1DD1C8A200A8CCB4 /* Build configuration list for PBXNativeTarget "common_unittests" */;
+			buildPhases = (
+				BA4685CE1DD1C8A200A8CCB4 /* Sources */,
+				BA4685CF1DD1C8A200A8CCB4 /* Frameworks */,
+				BA4685D01DD1C8A200A8CCB4 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BA4685DD1DD1C8D200A8CCB4 /* PBXTargetDependency */,
+			);
+			name = common_unittests;
+			productName = common_unittests;
+			productReference = BA4685D21DD1C8A200A8CCB4 /* libcommon_unittests.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		04A4FA0A1D7464E500E42FE3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1030;
+				TargetAttributes = {
+					04A4FA111D7464E500E42FE3 = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 4M5K2JD7QG;
+					};
+					BA4685D11DD1C8A200A8CCB4 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 04A4FA0D1D7464E500E42FE3 /* Build configuration list for PBXProject "common" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 04A4FA091D7464E500E42FE3;
+			productRefGroup = 04A4FA131D7464E500E42FE3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				04A4FA111D7464E500E42FE3 /* common */,
+				BA4685D11DD1C8A200A8CCB4 /* common_unittests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C526DF692330FA070069143A /* Copy to $OUTPUT_DIR */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy to $OUTPUT_DIR";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/ios$SDK_VERSION-$CONFIGURATION\nfi\n\nmkdir -p \"$OUTPUT_DIR/\"\ncp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		04A4FA0E1D7464E500E42FE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C526DF982330FA5C0069143A /* network_util_android.cpp in Sources */,
+				C526DF9B2330FA5C0069143A /* business_client_process_sub_thread.cc in Sources */,
+				C526DF932330FA5C0069143A /* network_util.cpp in Sources */,
+				C526DF942330FA5C0069143A /* network_monitor_android.cpp in Sources */,
+				C526DF9E2330FA5C0069143A /* notification_service_impl.cc in Sources */,
+				C526DF9C2330FA5C0069143A /* business_client_thread_impl.cc in Sources */,
+				C526DF992330FA5C0069143A /* business_main_loop.cc in Sources */,
+				C526DF9A2330FA5C0069143A /* business_client_main_parts.cc in Sources */,
+				C526DF9F2330FA5C0069143A /* business_main_delegate.cpp in Sources */,
+				C526DF9D2330FA5C0069143A /* network_monitor_ios.mm in Sources */,
+				C526DF972330FA5C0069143A /* network_util_ios.mm in Sources */,
+				C526DF912330FA5C0069143A /* notification_registrar.cc in Sources */,
+				C526DF952330FA5C0069143A /* business_switches.cpp in Sources */,
+				C526DF962330FA5C0069143A /* business_runtime.cpp in Sources */,
+				C526DF922330FA5C0069143A /* network_monitor.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA4685CE1DD1C8A200A8CCB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BA4685DD1DD1C8D200A8CCB4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04A4FA111D7464E500E42FE3 /* common */;
+			targetProxy = BA4685DC1DD1C8D200A8CCB4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		04A4FA191D7464E500E42FE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEPLOYMENT_POSTPROCESSING = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					NDEBUG,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_FILE_PATH)",
+					"$(PROJECT_FILE_PATH)/../lua-5.1.5/lua",
+					"$(PROJECT_FILE_PATH)/common",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				TOP_SRC_DIR = "$(PROJECT_FILE_PATH)/../";
+			};
+			name = Debug;
+		};
+		04A4FA1A1D7464E500E42FE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_FILE_PATH)",
+					"$(PROJECT_FILE_PATH)/../lua-5.1.5/lua",
+					"$(PROJECT_FILE_PATH)/common",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				TOP_SRC_DIR = "$(PROJECT_FILE_PATH)/../";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		04A4FA1C1D7464E500E42FE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(SRCROOT)/../lua-5.1.5/lua",
+					"$(SRCROOT)/common",
+					"$(SRCROOT)/..",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		04A4FA1D1D7464E500E42FE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(SRCROOT)/../lua-5.1.5/lua",
+					"$(SRCROOT)/common",
+					"$(SRCROOT)/..",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		BA4685D81DD1C8A200A8CCB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		BA4685D91DD1C8A200A8CCB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04A4FA0D1D7464E500E42FE3 /* Build configuration list for PBXProject "common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04A4FA191D7464E500E42FE3 /* Debug */,
+				04A4FA1A1D7464E500E42FE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04A4FA1B1D7464E500E42FE3 /* Build configuration list for PBXNativeTarget "common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04A4FA1C1D7464E500E42FE3 /* Debug */,
+				04A4FA1D1D7464E500E42FE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA4685DA1DD1C8A200A8CCB4 /* Build configuration list for PBXNativeTarget "common_unittests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA4685D81DD1C8A200A8CCB4 /* Debug */,
+				BA4685D91DD1C8A200A8CCB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 04A4FA0A1D7464E500E42FE3 /* Project object */;
+}

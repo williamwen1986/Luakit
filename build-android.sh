@@ -83,20 +83,20 @@ fi
 #
 pushd "$path" > /dev/null
 dir=$(pwd)
-path=$dir
+path="$dir"
 popd > /dev/null
 
 
-if [ -z  ]
+if [ -z  "$OUTPUT_DIR" ]
 then
      export OUTPUT_DIR="$DEFAULT_OUTPUT"
 fi
 
-rm -rf  $OUTPUT_DIR
-mkdir -p $OUTPUT_DIR 2>/dev/null
+rm -rf  "$OUTPUT_DIR"
+mkdir -p "$OUTPUT_DIR" 2>/dev/null
 pushd "$OUTPUT_DIR" > /dev/null
 dir=$(pwd)
-export OUTPUT_DIR=$dir
+export OUTPUT_DIR="$dir"
 popd > /dev/null
 
 cd src/openssl-1.1.1c

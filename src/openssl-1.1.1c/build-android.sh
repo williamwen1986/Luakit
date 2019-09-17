@@ -13,10 +13,6 @@ fi
 DEFAULT_OUTPUT=../../libs/android"$ANDROID_API"-$CONFIG
 #--------------------------------------------------
 path=$(dirname "$0")
-OUTPUT_DIR=$1
-
-
-
 #
 # Canonicalize relative paths to absolute paths
 #
@@ -33,7 +29,7 @@ fi
 
 pushd "$OUTPUT_DIR" > /dev/null
 dir=$(pwd)
-OUTPUT_DIR=$dir
+OUTPUT_DIR="$dir"
 popd > /dev/null
 
 rm -r obj 2>/dev/null
@@ -128,7 +124,7 @@ for ANDROID_TARGET_PLATFORM in x86 x86_64 arm64-v8a armeabi-v7a
              exit 1
      esac
 
-    rm -rf ${ANDROID_TOOLCHAIN_DIR}
+    rm -rf "${ANDROID_TOOLCHAIN_DIR}"
     mkdir -p "${ANDROID_LIB_ROOT}/android$ANDROID_API-$CONFIG/${PLATFORM_OUTPUT_DIR}"
 
     echo "./Configure ${CONFIGURE_ARCH} -D__ANDROID_API__=$ANDROID_API ${OPENSSL_CONFIGURE_OPTIONS}\n"
@@ -147,24 +143,20 @@ for ANDROID_TARGET_PLATFORM in x86 x86_64 arm64-v8a armeabi-v7a
          exit 1
      fi
 
-     #rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.a
-     cp -v libcrypto.a ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}
-     #rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.a
-     cp -v libssl.a ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}
-     #rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/
-     cp -v libcrypto.so.1.1 ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.1.1.so
-     #rm ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.1.1.so
-     cp -v libssl.so.1.1 ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.1.1.so
+     cp -v libcrypto.a "${ANDROID_LIB_ROOT}/android$ANDROID_API-$CONFIG/${PLATFORM_OUTPUT_DIR}"
+     cp -v libssl.a "${ANDROID_LIB_ROOT}/android$ANDROID_API-$CONFIG/${PLATFORM_OUTPUT_DIR}"
+     cp -v libcrypto.so.1.1 "${ANDROID_LIB_ROOT}/android$ANDROID_API-$CONFIG/${PLATFORM_OUTPUT_DIR}/libcrypto.1.1.so"
+     cp -v libssl.so.1.1 "${ANDROID_LIB_ROOT}/android$ANDROID_API-$CONFIG/${PLATFORM_OUTPUT_DIR}/libssl.1.1.so"
 
      # copy header
-     mkdir -p "${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/include/openssl"
-     cp -r -v "include/openssl" "${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/${PLATFORM_OUTPUT_DIR}/include/"
+     mkdir -p "${ANDROID_LIB_ROOT}/android$ANDROID_API-$CONFIG/${PLATFORM_OUTPUT_DIR}/include/openssl"
+     cp -r -v "include/openssl" "${ANDROID_LIB_ROOT}/android$ANDROID_API-$CONFIG/${PLATFORM_OUTPUT_DIR}/include/"
  done 
 
 
 make clean
 
-cp -a -v ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/* "$OUTPUT_DIR"
+cp -a  ${ANDROID_LIB_ROOT}/android"$ANDROID_API"-$CONFIG/* "$OUTPUT_DIR"
 
 if [ .$BUILD = ."NDK_BUILD" ]; then
 . ../../bin/build-android.sh

@@ -14,9 +14,14 @@
 		2898C8B120C633A900249775 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2898C8AF20C633A900249775 /* LaunchScreen.storyboard */; };
 		2898C8B420C633A900249775 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2898C8B320C633A900249775 /* main.mm */; };
 		2898C8D320C6342200249775 /* libLuakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898C8C820C633CB00249775 /* libLuakit.a */; };
-		2898C8D520C6342E00249775 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898C8D420C6342E00249775 /* libz.tbd */; };
 		2898C8DD20C6385400249775 /* thread_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 2898C8DC20C6385400249775 /* thread_test.lua */; };
 		3CF6F47021B8C8E400B7A811 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF6F46F21B8C8E400B7A811 /* libcurl.a */; };
+		C52187F523313415001AA895 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C52187F423313415001AA895 /* libbase.a */; };
+		C52187F723313415001AA895 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C52187F623313415001AA895 /* libcommon.a */; };
+		C52187F923313415001AA895 /* libdynamic_annotations.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C52187F823313415001AA895 /* libdynamic_annotations.a */; };
+		C52187FB23313415001AA895 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C52187FA23313415001AA895 /* libevent.a */; };
+		C52187FD23313415001AA895 /* libmodp_b64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C52187FC23313415001AA895 /* libmodp_b64.a */; };
+		C52187FF23313415001AA895 /* libxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C52187FE23313415001AA895 /* libxml.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,14 +53,14 @@
 		2898C8B220C633A900249775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2898C8B320C633A900249775 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		2898C8BA20C633CA00249775 /* Luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit.xcodeproj; path = ../../IOSFrameWork/Luakit.xcodeproj; sourceTree = "<group>"; };
-		2898C8CD20C6342200249775 /* libbase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libbase.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2898C8CF20C6342200249775 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2898C8D120C6342200249775 /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2898C8D420C6342E00249775 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		2898C8D620C6347E00249775 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../src/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
-		2898C8D720C6347E00249775 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../src/openssl/lib/libssl.a; sourceTree = "<group>"; };
 		2898C8DC20C6385400249775 /* thread_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = thread_test.lua; path = ThreadTest/lua/thread_test.lua; sourceTree = "<group>"; };
 		3CF6F46F21B8C8E400B7A811 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../src/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
+		C52187F423313415001AA895 /* libbase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libbase.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C52187F623313415001AA895 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C52187F823313415001AA895 /* libdynamic_annotations.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libdynamic_annotations.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C52187FA23313415001AA895 /* libevent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libevent.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C52187FC23313415001AA895 /* libmodp_b64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libmodp_b64.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C52187FE23313415001AA895 /* libxml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libxml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +68,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C52187F523313415001AA895 /* libbase.a in Frameworks */,
+				C52187F723313415001AA895 /* libcommon.a in Frameworks */,
+				C52187F923313415001AA895 /* libdynamic_annotations.a in Frameworks */,
+				C52187FB23313415001AA895 /* libevent.a in Frameworks */,
+				C52187FD23313415001AA895 /* libmodp_b64.a in Frameworks */,
+				C52187FF23313415001AA895 /* libxml.a in Frameworks */,
 				3CF6F47021B8C8E400B7A811 /* libcurl.a in Frameworks */,
-				2898C8D520C6342E00249775 /* libz.tbd in Frameworks */,
 				2898C8D320C6342200249775 /* libLuakit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,13 +128,13 @@
 		2898C8CC20C6342200249775 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C52187F423313415001AA895 /* libbase.a */,
+				C52187F623313415001AA895 /* libcommon.a */,
+				C52187F823313415001AA895 /* libdynamic_annotations.a */,
+				C52187FA23313415001AA895 /* libevent.a */,
+				C52187FC23313415001AA895 /* libmodp_b64.a */,
+				C52187FE23313415001AA895 /* libxml.a */,
 				3CF6F46F21B8C8E400B7A811 /* libcurl.a */,
-				2898C8D620C6347E00249775 /* libcrypto.a */,
-				2898C8D720C6347E00249775 /* libssl.a */,
-				2898C8D420C6342E00249775 /* libz.tbd */,
-				2898C8CD20C6342200249775 /* libbase.a */,
-				2898C8CF20C6342200249775 /* libcommon.a */,
-				2898C8D120C6342200249775 /* libcurl.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

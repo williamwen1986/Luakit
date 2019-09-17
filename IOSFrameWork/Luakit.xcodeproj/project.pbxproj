@@ -72,8 +72,6 @@
 		2883AE5920B5457A005E1F54 /* lua_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE4120B5457A005E1F54 /* lua_timer.cpp */; };
 		2883AE6420B546C3005E1F54 /* oc_callback.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE6120B546C3005E1F54 /* oc_callback.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2883AE6520B546C3005E1F54 /* oc_helpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2883AE6320B546C3005E1F54 /* oc_helpers.mm */; };
-		2883AEFD20B55606005E1F54 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2883AD4C20B51D73005E1F54 /* libcommon.a */; };
-		2883AEFE20B5560D005E1F54 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2883AD0A20B50E5E005E1F54 /* libbase.a */; };
 		2898C85120C55F2200249775 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2898C84F20C55F2200249775 /* xxtea.cpp */; };
 		2898C85220C55F2200249775 /* LuakitLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2898C85020C55F2200249775 /* LuakitLoader.cpp */; };
 		3C85519121B00DBA00860F2A /* mobdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 3C85515D21B00DBA00860F2A /* mobdebug.c */; };
@@ -100,54 +98,47 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2883AD0920B50E5E005E1F54 /* PBXContainerItemProxy */ = {
+		C52187B323312BA2001AA895 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A24F8E8AF59B46B92FF23F23;
-			remoteInfo = base;
-		};
-		2883AD0B20B50E5E005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8FD8ACE4B45CC6E58BA6ECC9;
-			remoteInfo = base_i18n;
-		};
-		2883AD1320B50E5E005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 59317C71D4BE24DD3BE7D141;
-			remoteInfo = base_static;
-		};
-		2883AD4420B51D02005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5272CB5A73F54B4A0E227C3D;
-			remoteInfo = base;
-		};
-		2883AD4B20B51D73005E1F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883AD4620B51D73005E1F54 /* common.xcodeproj */;
+			containerPortal = C52187AE23312BA2001AA895 /* common.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 04A4FA121D7464E500E42FE3;
 			remoteInfo = common;
 		};
-		2883AD4D20B51D73005E1F54 /* PBXContainerItemProxy */ = {
+		C52187B523312BA2001AA895 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2883AD4620B51D73005E1F54 /* common.xcodeproj */;
+			containerPortal = C52187AE23312BA2001AA895 /* common.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = BA4685D21DD1C8A200A8CCB4;
 			remoteInfo = common_unittests;
 		};
-		2883AD4F20B51D7B005E1F54 /* PBXContainerItemProxy */ = {
+		C5218A082331439C001AA895 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2883AD4620B51D73005E1F54 /* common.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 04A4FA111D7464E500E42FE3;
-			remoteInfo = common;
+			containerPortal = C5218A042331439C001AA895 /* curl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C521881E23313510001AA895;
+			remoteInfo = curl;
+		};
+		C5218A1523314506001AA895 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5218A0A23314506001AA895 /* base.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A24F8E8AF59B46B92FF23F23;
+			remoteInfo = base;
+		};
+		C5218A1723314506001AA895 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5218A0A23314506001AA895 /* base.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8FD8ACE4B45CC6E58BA6ECC9;
+			remoteInfo = base_i18n;
+		};
+		C5218A1923314506001AA895 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5218A0A23314506001AA895 /* base.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 59317C71D4BE24DD3BE7D141;
+			remoteInfo = base_static;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -165,8 +156,6 @@
 
 /* Begin PBXFileReference section */
 		2883AC9120B43DFB005E1F54 /* libLuakit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLuakit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2883ACF120B50E5D005E1F54 /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../src/base/base.xcodeproj; sourceTree = "<group>"; };
-		2883AD4620B51D73005E1F54 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../src/common/common/common.xcodeproj; sourceTree = "<group>"; };
 		2883AD5220B5439B005E1F54 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
 		2883AD5320B5439B005E1F54 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
 		2883AD5420B5439B005E1F54 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
@@ -319,7 +308,6 @@
 		2898C84E20C55F2200249775 /* LuakitLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuakitLoader.h; sourceTree = "<group>"; };
 		2898C84F20C55F2200249775 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
 		2898C85020C55F2200249775 /* LuakitLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuakitLoader.cpp; sourceTree = "<group>"; };
-		3C2CC5D521ABE47D00610EAC /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../src/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
 		3C85515D21B00DBA00860F2A /* mobdebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mobdebug.c; sourceTree = "<group>"; };
 		3C85515E21B00DBA00860F2A /* mobdebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mobdebug.h; sourceTree = "<group>"; };
 		3C85517121B00DBA00860F2A /* tcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tcp.h; sourceTree = "<group>"; };
@@ -363,6 +351,9 @@
 		C51B857C22E0D6E200BE82A6 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		C51B857D22E0D6E200BE82A6 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		C51B857E22E0D6E200BE82A6 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
+		C52187AE23312BA2001AA895 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../src/common/common.xcodeproj; sourceTree = "<group>"; };
+		C5218A042331439C001AA895 /* curl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = curl.xcodeproj; path = ../src/curl/curl.xcodeproj; sourceTree = "<group>"; };
+		C5218A0A23314506001AA895 /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../src/base/base.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,8 +361,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2883AEFE20B5560D005E1F54 /* libbase.a in Frameworks */,
-				2883AEFD20B55606005E1F54 /* libcommon.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,8 +370,9 @@
 		2883AC8820B43DFB005E1F54 = {
 			isa = PBXGroup;
 			children = (
-				2883AD4620B51D73005E1F54 /* common.xcodeproj */,
-				2883ACF120B50E5D005E1F54 /* base.xcodeproj */,
+				C5218A0A23314506001AA895 /* base.xcodeproj */,
+				C5218A042331439C001AA895 /* curl.xcodeproj */,
+				C52187AE23312BA2001AA895 /* common.xcodeproj */,
 				2883AC9320B43DFB005E1F54 /* Luakit */,
 				2883AC9220B43DFB005E1F54 /* Products */,
 				2883AEFC20B55606005E1F54 /* Frameworks */,
@@ -407,25 +397,6 @@
 				2883AD5120B5439B005E1F54 /* lua */,
 			);
 			path = Luakit;
-			sourceTree = "<group>";
-		};
-		2883ACF220B50E5D005E1F54 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2883AD0A20B50E5E005E1F54 /* libbase.a */,
-				2883AD0C20B50E5E005E1F54 /* libbase_i18n.a */,
-				2883AD1420B50E5E005E1F54 /* libbase_static.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		2883AD4720B51D73005E1F54 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2883AD4C20B51D73005E1F54 /* libcommon.a */,
-				2883AD4E20B51D73005E1F54 /* libcommon_unittests.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		2883AD5120B5439B005E1F54 /* lua */ = {
@@ -712,7 +683,6 @@
 		2883AEFC20B55606005E1F54 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3C2CC5D521ABE47D00610EAC /* libcurl.a */,
 				2883AF0420B5565B005E1F54 /* libz.tbd */,
 			);
 			name = Frameworks;
@@ -790,6 +760,33 @@
 			path = "../../src/sqlite-amalgamation-3290000";
 			sourceTree = "<group>";
 		};
+		C52187AF23312BA2001AA895 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C52187B423312BA2001AA895 /* libcommon.a */,
+				C52187B623312BA2001AA895 /* libcommon_unittests.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C5218A052331439C001AA895 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C5218A092331439C001AA895 /* libcurl.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C5218A0B23314506001AA895 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C5218A1623314506001AA895 /* libbase.a */,
+				C5218A1823314506001AA895 /* libbase_i18n.a */,
+				C5218A1A23314506001AA895 /* libbase_static.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -800,12 +797,11 @@
 				2883AC8D20B43DFB005E1F54 /* Sources */,
 				2883AC8E20B43DFB005E1F54 /* Frameworks */,
 				2883AC8F20B43DFB005E1F54 /* CopyFiles */,
+				C52070D52330D44C00FCDD41 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				2883AD5020B51D7B005E1F54 /* PBXTargetDependency */,
-				2883AD4520B51D02005E1F54 /* PBXTargetDependency */,
 			);
 			name = Luakit;
 			productName = Luakit;
@@ -838,12 +834,16 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 2883ACF220B50E5D005E1F54 /* Products */;
-					ProjectRef = 2883ACF120B50E5D005E1F54 /* base.xcodeproj */;
+					ProductGroup = C5218A0B23314506001AA895 /* Products */;
+					ProjectRef = C5218A0A23314506001AA895 /* base.xcodeproj */;
 				},
 				{
-					ProductGroup = 2883AD4720B51D73005E1F54 /* Products */;
-					ProjectRef = 2883AD4620B51D73005E1F54 /* common.xcodeproj */;
+					ProductGroup = C52187AF23312BA2001AA895 /* Products */;
+					ProjectRef = C52187AE23312BA2001AA895 /* common.xcodeproj */;
+				},
+				{
+					ProductGroup = C5218A052331439C001AA895 /* Products */;
+					ProjectRef = C5218A042331439C001AA895 /* curl.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -854,42 +854,69 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		2883AD0A20B50E5E005E1F54 /* libbase.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libbase.a;
-			remoteRef = 2883AD0920B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD0C20B50E5E005E1F54 /* libbase_i18n.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libbase_i18n.a;
-			remoteRef = 2883AD0B20B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD1420B50E5E005E1F54 /* libbase_static.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libbase_static.a;
-			remoteRef = 2883AD1320B50E5E005E1F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2883AD4C20B51D73005E1F54 /* libcommon.a */ = {
+		C52187B423312BA2001AA895 /* libcommon.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libcommon.a;
-			remoteRef = 2883AD4B20B51D73005E1F54 /* PBXContainerItemProxy */;
+			remoteRef = C52187B323312BA2001AA895 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2883AD4E20B51D73005E1F54 /* libcommon_unittests.a */ = {
+		C52187B623312BA2001AA895 /* libcommon_unittests.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libcommon_unittests.a;
-			remoteRef = 2883AD4D20B51D73005E1F54 /* PBXContainerItemProxy */;
+			remoteRef = C52187B523312BA2001AA895 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C5218A092331439C001AA895 /* libcurl.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcurl.a;
+			remoteRef = C5218A082331439C001AA895 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C5218A1623314506001AA895 /* libbase.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libbase.a;
+			remoteRef = C5218A1523314506001AA895 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C5218A1823314506001AA895 /* libbase_i18n.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libbase_i18n.a;
+			remoteRef = C5218A1723314506001AA895 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C5218A1A23314506001AA895 /* libbase_static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libbase_static.a;
+			remoteRef = C5218A1923314506001AA895 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C52070D52330D44C00FCDD41 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#echo \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"TARGET_OS_IPHONE = $TARGET_OS_IPHONE\"\necho \"OS_IOS = $OS_IOS\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=\"$PROJECT_DIR/../libs/ios$SDK_VERSION-$CONFIGURATION\"\nfi\n\nmkdir -p \"$OUTPUT_DIR/\"\ncp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2883AC8D20B43DFB005E1F54 /* Sources */ = {
@@ -988,19 +1015,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		2883AD4520B51D02005E1F54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = base;
-			targetProxy = 2883AD4420B51D02005E1F54 /* PBXContainerItemProxy */;
-		};
-		2883AD5020B51D7B005E1F54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = common;
-			targetProxy = 2883AD4F20B51D7B005E1F54 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2883AC9820B43DFB005E1F54 /* Debug */ = {
