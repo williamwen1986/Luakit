@@ -66,7 +66,8 @@ int LuaHttpTask::OnResponse(network::ProtocolErrorCode error_code,
     std::string response = resp;
     HTTP_HEADERS headers = h;
     scoped_refptr<network::LuaHttpTask> ref = make_scoped_refptr(this);
-    BusinessThread::PostTask(threadId, FROM_HERE, base::BindLambda([=](){
+    BusinessThread::PostTask(threadId, FROM_HERE, base::BindLambda([=]()
+    {
         lua_State * state = BusinessThread::GetCurrentThreadLuaState();
         BEGIN_STACK_MODIFY(state);
         pushStrongUserdataTable(state);
@@ -119,7 +120,8 @@ int LuaHttpTask::OnResponse(network::ProtocolErrorCode error_code,
             lua_pop(state, 1);
         }
         END_STACK_MODIFY(state, 0)
-    }));
+    }
+    ));
     return 0;
 }
 

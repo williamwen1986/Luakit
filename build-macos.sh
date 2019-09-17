@@ -69,6 +69,11 @@ cd src/base
 checkError
 cd ../..
 
+cd src/lua-5.1.5
+./build-macos.sh
+checkError
+cd ../..
+
 
 cd MacosFramework
 ./build-macos.sh

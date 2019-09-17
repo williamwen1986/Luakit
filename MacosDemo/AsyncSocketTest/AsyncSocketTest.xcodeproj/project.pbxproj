@@ -17,9 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C5383FB3232A988900E8F2A4 /* PBXContainerItemProxy */ = {
+		C5DB93B923300876007FD2DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C5383F81232A988100E8F2A4 /* Luakit_macos.xcodeproj */;
+			containerPortal = C5DB939E23300876007FD2DF /* Luakit-dylib_macos.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C517E8352327D0DE00A03663;
 			remoteInfo = Luakit;
@@ -39,8 +39,8 @@
 		C5383F69232A904100E8F2A4 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		C5383F6A232A904100E8F2A4 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		C5383F74232A90D500E8F2A4 /* libLuakit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLuakit.dylib; path = "../../libs/macos-Debug/libLuakit.dylib"; sourceTree = "<group>"; };
-		C5383F81232A988100E8F2A4 /* Luakit_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit_macos.xcodeproj; path = ../../MacosFramework/Luakit_macos.xcodeproj; sourceTree = "<group>"; };
 		C5383FB8232A99E100E8F2A4 /* async_socket_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = async_socket_test.lua; path = AsyncSocketTest/lua/async_socket_test.lua; sourceTree = "<group>"; };
+		C5DB939E23300876007FD2DF /* Luakit-dylib_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Luakit-dylib_macos.xcodeproj"; path = "../../MacosFramework/Luakit-dylib_macos.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +58,9 @@
 		C5383F49232A8FB800E8F2A4 = {
 			isa = PBXGroup;
 			children = (
+				C5DB939E23300876007FD2DF /* Luakit-dylib_macos.xcodeproj */,
 				C519A4A2232E29B3006C824D /* lua */,
 				C5383FB8232A99E100E8F2A4 /* async_socket_test.lua */,
-				C5383F81232A988100E8F2A4 /* Luakit_macos.xcodeproj */,
 				C5383F54232A8FB800E8F2A4 /* AsyncSocketTest */,
 				C5383F53232A8FB800E8F2A4 /* Products */,
 				C5383F73232A90D500E8F2A4 /* Frameworks */,
@@ -99,10 +99,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C5383F82232A988100E8F2A4 /* Products */ = {
+		C5DB939F23300876007FD2DF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C5383FB4232A988900E8F2A4 /* libLuakit.dylib */,
+				C5DB93BA23300876007FD2DF /* libLuakit.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,8 +159,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C5383F82232A988100E8F2A4 /* Products */;
-					ProjectRef = C5383F81232A988100E8F2A4 /* Luakit_macos.xcodeproj */;
+					ProductGroup = C5DB939F23300876007FD2DF /* Products */;
+					ProjectRef = C5DB939E23300876007FD2DF /* Luakit-dylib_macos.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -171,11 +171,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C5383FB4232A988900E8F2A4 /* libLuakit.dylib */ = {
+		C5DB93BA23300876007FD2DF /* libLuakit.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
 			path = libLuakit.dylib;
-			remoteRef = C5383FB3232A988900E8F2A4 /* PBXContainerItemProxy */;
+			remoteRef = C5DB93B923300876007FD2DF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

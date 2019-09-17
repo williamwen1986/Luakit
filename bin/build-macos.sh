@@ -39,6 +39,8 @@ dir=$(pwd)
 export OUTPUT_DIR=$dir
 popd > /dev/null
 
+xcodebuild -configuration $CONFIG -project $1_macos.xcodeproj clean
+checkError
 xcodebuild -configuration $CONFIG -project $1_macos.xcodeproj
 checkError
 
