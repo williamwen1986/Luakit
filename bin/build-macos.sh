@@ -36,9 +36,10 @@ mkdir -p $OUTPUT_DIR 2>/dev/null
 
 pushd "$OUTPUT_DIR" > /dev/null
 dir=$(pwd)
-export OUTPUT_DIR=$dir
+export OUTPUT_DIR="$dir"
 popd > /dev/null
 
+rm -rf DerivedData
 xcodebuild -configuration $CONFIG -project $1_macos.xcodeproj clean
 checkError
 xcodebuild -configuration $CONFIG -project $1_macos.xcodeproj
