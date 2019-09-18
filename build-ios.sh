@@ -14,7 +14,7 @@ then
 export OUTPUT_DIR=libs/ios$SDK_VERSION-$CONFIG
 fi
 #------------------------------------------------
-mkdir -p $OUTPUT_DIR 2>/dev/null
+mkdir -p "$OUTPUT_DIR" 2>/dev/null
 pushd "$OUTPUT_DIR" > /dev/null
 dir=$(pwd)
 export OUTPUT_DIR=$dir
@@ -27,6 +27,9 @@ checkError() {
         exit -1
     fi
 }
+./clean.sh
+rm -r "$OUTPUT_DIR"/*
+
 
 cd src/openssl-1.1.1c
 ./build-ios.sh
@@ -51,7 +54,7 @@ checkError
 cd ../..
 
 cd src/base/third_party/dynamic_annotations
-./build-macos.sh
+./build-ios.sh
 checkError
 cd ../../../..
 

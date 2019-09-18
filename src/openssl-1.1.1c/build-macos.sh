@@ -23,8 +23,9 @@ pushd "$OUTPUT_DIR" > /dev/null
 dir=$(pwd)
 OUTPUT_DIR="$dir"
 popd > /dev/null
+#OPENSSL_CONFIGURE_OPTIONS="no-whirlpool no-ui no-engine -fPIC"
 
-./Configure darwin64-x86_64-cc
+./Configure darwin64-x86_64-cc ${OPENSSL_CONFIGURE_OPTIONS}
 if [ $? -ne 0 ]; then
     echo "Error executing:./Configure ${CONFIGURE_ARCH} -D__ANDROID_API__=$ANDROID_API ${OPENSSL_CONFIGURE_OPTIONS}"
     exit 1

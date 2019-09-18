@@ -37,7 +37,7 @@ if [ -z "$OUTPUT_DIR" ]
 then
      export OUTPUT_DIR="$DEFAULT_OUTPUT"
 fi
-mkdir -p $OUTPUT_DIR 2>/dev/null
+mkdir -p "$OUTPUT_DIR" 2>/dev/null
 
 pushd "$OUTPUT_DIR" > /dev/null
 dir=$(pwd)
