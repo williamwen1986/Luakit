@@ -29,6 +29,7 @@ CMakeCache.txt
 *.a
 *.d
 *.iml
+*.dylib
 LuaKitProject/src/Projects/openssl-1.1.1c/test/
 *.tmp
 cmake_install.cmake

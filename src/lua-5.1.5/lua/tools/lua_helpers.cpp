@@ -309,15 +309,17 @@ extern int luaInit(lua_State* L)
     if (packagePath.length() > 0) {
         std::string lua = "package.path = '" +packagePath+"/?.lua'";
         luaL_dostring(L, lua.c_str());
-    }
+    } else
+    {
     
-#if defined(OS_ANDROID) // Patch [LARPOUX]
-    //std::string lua = "package.path = '" +path+"/lua/?.lua'";
-    //luaL_dostring(L, lua.c_str());
-#elif defined(OS_MACOSX) && (! defined(OS_IOS)) // Patch [LARPOUX]
-    std::string lua = "package.path = '" +packagePath+"/Contents/Resources/lua/?.lua'";
-    luaL_dostring(L, lua.c_str());
-#endif
+        #if defined(OS_ANDROID) // Patch [LARPOUX]
+            //std::string lua = "package.path = '" +path+"/lua/?.lua'";
+            //luaL_dostring(L, lua.c_str());
+        #elif defined(OS_MACOSX) && (! defined(OS_IOS)) // Patch [LARPOUX]
+            std::string lua = "package.path = '" +packagePath+"/Contents/Resources/lua/?.lua'";
+            luaL_dostring(L, lua.c_str());
+        #endif
+    }
     return 0;
 }
 

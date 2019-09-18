@@ -53,12 +53,6 @@ cd src/libxml
 checkError
 cd ../..
 
-cd src/base/third_party/dynamic_annotations
-./build-ios.sh
-checkError
-cd ../../../..
-
-
 cd src/curl
 ./build-ios.sh
 checkError

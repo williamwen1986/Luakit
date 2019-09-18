@@ -13,10 +13,9 @@
 		2898C9A820C689FA00249775 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2898C9A720C689FA00249775 /* Assets.xcassets */; };
 		2898C9AB20C689FA00249775 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2898C9A920C689FA00249775 /* LaunchScreen.storyboard */; };
 		2898C9AE20C689FA00249775 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2898C9AD20C689FA00249775 /* main.mm */; };
-		2898C9CD20C68AE700249775 /* libLuakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898C9C220C68A0400249775 /* libLuakit.a */; };
-		2898C9D320C68AFB00249775 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898C9D220C68AFB00249775 /* libz.tbd */; };
-		2898C9F320C690FC00249775 /* notification_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 2898C9F220C690FC00249775 /* notification_test.lua */; };
-		3CF6F48C21B8CB3800B7A811 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF6F48B21B8CB3800B7A811 /* libcurl.a */; };
+		C57A427A233234B900D893ED /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57A4278233234B900D893ED /* libssl.a */; };
+		C57A427B2332351400D893ED /* libLuakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898C9C220C68A0400249775 /* libLuakit.a */; };
+		C5DAC5872332AE3900AED9A4 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C5DAC5862332AE3800AED9A4 /* lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,14 +47,8 @@
 		2898C9AC20C689FA00249775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2898C9AD20C689FA00249775 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		2898C9B420C68A0300249775 /* Luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit.xcodeproj; path = ../../IOSFrameWork/Luakit.xcodeproj; sourceTree = "<group>"; };
-		2898C9C720C68AE700249775 /* libbase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libbase.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2898C9C920C68AE700249775 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2898C9CB20C68AE700249775 /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2898C9CE20C68AF400249775 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../src/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
-		2898C9CF20C68AF400249775 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../src/openssl/lib/libssl.a; sourceTree = "<group>"; };
-		2898C9D220C68AFB00249775 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		2898C9F220C690FC00249775 /* notification_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = notification_test.lua; path = NotificationTest/lua/notification_test.lua; sourceTree = "<group>"; };
-		3CF6F48B21B8CB3800B7A811 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../src/curl/ios/lib/libcurl.a; sourceTree = "<group>"; };
+		C57A4278233234B900D893ED /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/ios12.4-Debug/libssl.a"; sourceTree = "<group>"; };
+		C5DAC5862332AE3800AED9A4 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = NotificationTest/lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,9 +56,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CF6F48C21B8CB3800B7A811 /* libcurl.a in Frameworks */,
-				2898C9D320C68AFB00249775 /* libz.tbd in Frameworks */,
-				2898C9CD20C68AE700249775 /* libLuakit.a in Frameworks */,
+				C57A427B2332351400D893ED /* libLuakit.a in Frameworks */,
+				C57A427A233234B900D893ED /* libssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +67,7 @@
 		2898C99220C689F900249775 = {
 			isa = PBXGroup;
 			children = (
-				2898C9F220C690FC00249775 /* notification_test.lua */,
+				C5DAC5862332AE3800AED9A4 /* lua */,
 				2898C9B420C68A0300249775 /* Luakit.xcodeproj */,
 				2898C99D20C689F900249775 /* NotificationTest */,
 				2898C99C20C689F900249775 /* Products */,
@@ -118,13 +110,7 @@
 		2898C9C620C68AE700249775 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3CF6F48B21B8CB3800B7A811 /* libcurl.a */,
-				2898C9D220C68AFB00249775 /* libz.tbd */,
-				2898C9CE20C68AF400249775 /* libcrypto.a */,
-				2898C9CF20C68AF400249775 /* libssl.a */,
-				2898C9C720C68AE700249775 /* libbase.a */,
-				2898C9C920C68AE700249775 /* libcommon.a */,
-				2898C9CB20C68AE700249775 /* libcurl.a */,
+				C57A4278233234B900D893ED /* libssl.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,10 +189,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5DAC5872332AE3900AED9A4 /* lua in Resources */,
 				2898C9AB20C689FA00249775 /* LaunchScreen.storyboard in Resources */,
 				2898C9A820C689FA00249775 /* Assets.xcassets in Resources */,
 				2898C9A620C689F900249775 /* Main.storyboard in Resources */,
-				2898C9F320C690FC00249775 /* notification_test.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,10 +357,10 @@
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../src",
-					"$(SRCROOT)/../../src/lua-5.1.5/lua",
-					"$(SRCROOT)/../../src/common",
-					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/IOSFrameWork/Luakit/OCHelper",
 				);
 				INFOPLIST_FILE = NotificationTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -382,7 +368,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/curl/ios/lib";
+				LIBRARY_SEARCH_PATHS = "$(LUAKIT_ROOT)/libs/ios$SDK_VERSION-$CONFIGURATION";
+				LUAKIT_ROOT = "$(SRCROOT)/../../";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.NotificationTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -397,10 +384,10 @@
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../src",
-					"$(SRCROOT)/../../src/lua-5.1.5/lua",
-					"$(SRCROOT)/../../src/common",
-					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/IOSFrameWork/Luakit/OCHelper",
 				);
 				INFOPLIST_FILE = NotificationTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -408,7 +395,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../src/curl/ios/lib";
+				LIBRARY_SEARCH_PATHS = "$(LUAKIT_ROOT)/libs/ios$SDK_VERSION-$CONFIGURATION/toto";
+				LUAKIT_ROOT = "$(SRCROOT)/../../";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.NotificationTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

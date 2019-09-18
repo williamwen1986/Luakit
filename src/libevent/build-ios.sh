@@ -1,5 +1,5 @@
 #!/bin/bash
 
-. ../../bin/build-ios.sh libevent
+. ../../bin/build-ios.sh event
 checkError
 

@@ -148,6 +148,8 @@
 		C52189DF2331368A001AA895 /* gtls.c in Sources */ = {isa = PBXBuildFile; fileRef = C52189D12331368A001AA895 /* gtls.c */; };
 		C52189E02331368A001AA895 /* nss.c in Sources */ = {isa = PBXBuildFile; fileRef = C52189D22331368A001AA895 /* nss.c */; };
 		C52189E12331368A001AA895 /* openssl.c in Sources */ = {isa = PBXBuildFile; fileRef = C52189D32331368A001AA895 /* openssl.c */; };
+		C57A42CD23325F0A00D893ED /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57A42CB23325F0A00D893ED /* libssl.a */; };
+		C57A42CE23325F0A00D893ED /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57A42CC23325F0A00D893ED /* libcrypto.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -468,6 +470,8 @@
 		C52189EA2331384E001AA895 /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdcheaders.h; path = include/curl/stdcheaders.h; sourceTree = "<group>"; };
 		C52189EB2331384E001AA895 /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mprintf.h; path = include/curl/mprintf.h; sourceTree = "<group>"; };
 		C52189EC2331384E001AA895 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = curl.h; path = include/curl/curl.h; sourceTree = "<group>"; };
+		C57A42CB23325F0A00D893ED /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/ios12.4-Debug/libssl.a"; sourceTree = "<group>"; };
+		C57A42CC23325F0A00D893ED /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../../libs/ios12.4-Debug/libcrypto.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -475,6 +479,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C57A42CD23325F0A00D893ED /* libssl.a in Frameworks */,
+				C57A42CE23325F0A00D893ED /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +493,7 @@
 				C52189E323313834001AA895 /* include */,
 				C521882A23313545001AA895 /* Sources */,
 				C521881F23313510001AA895 /* Products */,
+				C57A42CA23325F0900D893ED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -832,6 +839,15 @@
 			name = include;
 			sourceTree = "<group>";
 		};
+		C57A42CA23325F0900D893ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C57A42CC23325F0A00D893ED /* libcrypto.a */,
+				C57A42CB23325F0A00D893ED /* libssl.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -901,7 +917,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"TARGET_OS_IPHONE = $TARGET_OS_IPHONE\"\necho \"OS_IOS = $OS_IOS\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/ios$SDK_VERSION-$CONFIGURATION\nfi\nmkdir -p \"$OUTPUT_DIR/\"\ncp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
+			shellScript = "echo \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"TARGET_OS_IPHONE = $TARGET_OS_IPHONE\"\necho \"OS_IOS = $OS_IOS\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/ios$SDK_VERSION-$CONFIGURATION\nfi\n\n#mkdir -p \"$OUTPUT_DIR/\"\n#cp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1109,11 +1125,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../openssl-1.1.1c/libs/ios$SDK_VERSION-$CONFIGURATION/$ARCHS/include",
+					"<Multiple",
+					"values>",
+					"$(SRCROOT)/../../libs/ios$SDK_VERSION-$CONFIGURATION/include-$arch",
 					"$(SRCROOT)/include",
 					"$(SRCROOT)/lib",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../libs/ios$SDK_VERSION-$CONFIGURATION";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1176,11 +1195,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../openssl-1.1.1c/libs/ios$SDK_VERSION-$CONFIGURATION/$ARCHS/include",
+					"<Multiple",
+					"values>",
+					"$(SRCROOT)/../../libs/ios$SDK_VERSION-$CONFIGURATION/include-$arch",
 					"$(SRCROOT)/include",
 					"$(SRCROOT)/lib",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../libs/ios$SDK_VERSION-$CONFIGURATION";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = (

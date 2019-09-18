@@ -27,7 +27,6 @@
 #ifdef _MSC_VER
 # include <windows.h>
 #endif
-
 #ifdef __cplusplus
 # error "This file should be built as pure C to avoid name mangling"
 #endif

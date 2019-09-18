@@ -95,6 +95,10 @@
 		3C962AD921993203002B91E7 /* languageUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3C962AD821993203002B91E7 /* languageUtil.mm */; };
 		C51B858C22E0D6E200BE82A6 /* lsqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = C51B857922E0D6E200BE82A6 /* lsqlite3.c */; };
 		C51B858E22E0D6E200BE82A6 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = C51B857C22E0D6E200BE82A6 /* sqlite3.c */; };
+		C57A432C233267B300D893ED /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5218A1623314506001AA895 /* libbase.a */; };
+		C57A432E2332682400D893ED /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C52187B423312BA2001AA895 /* libcommon.a */; };
+		C57A432F2332682400D893ED /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5218A092331439C001AA895 /* libcurl.a */; };
+		C57A43302332682400D893ED /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57A42B723325E4800D893ED /* libevent.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,30 +130,52 @@
 			remoteGlobalIDString = A24F8E8AF59B46B92FF23F23;
 			remoteInfo = base;
 		};
-		C5218A1723314506001AA895 /* PBXContainerItemProxy */ = {
+		C57A429723325C7A00D893ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C5218A0A23314506001AA895 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8FD8ACE4B45CC6E58BA6ECC9;
-			remoteInfo = base_i18n;
+			proxyType = 1;
+			remoteGlobalIDString = 5272CB5A73F54B4A0E227C3D;
+			remoteInfo = base;
 		};
-		C5218A1923314506001AA895 /* PBXContainerItemProxy */ = {
+		C57A429923325C7A00D893ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C5218A0A23314506001AA895 /* base.xcodeproj */;
+			containerPortal = C5218A042331439C001AA895 /* curl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C521881D23313510001AA895;
+			remoteInfo = curl;
+		};
+		C57A429B23325C7A00D893ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C52187AE23312BA2001AA895 /* common.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 04A4FA111D7464E500E42FE3;
+			remoteInfo = common;
+		};
+		C57A42B623325E4800D893ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57A42B223325E4800D893ED /* event.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 59317C71D4BE24DD3BE7D141;
-			remoteInfo = base_static;
+			remoteGlobalIDString = FC3DE02F41FA36BF9BC0714C;
+			remoteInfo = libevent;
+		};
+		C57A43082332646C00D893ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57A42B223325E4800D893ED /* event.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3957C557EC3642B16CCFD55B;
+			remoteInfo = libevent;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2883AC8F20B43DFB005E1F54 /* CopyFiles */ = {
+		2883AC8F20B43DFB005E1F54 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -303,7 +329,6 @@
 		2883AE6120B546C3005E1F54 /* oc_callback.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_callback.mm; sourceTree = "<group>"; };
 		2883AE6220B546C3005E1F54 /* oc_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oc_helpers.h; sourceTree = "<group>"; };
 		2883AE6320B546C3005E1F54 /* oc_helpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_helpers.mm; sourceTree = "<group>"; };
-		2883AF0420B5565B005E1F54 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2898C83C20C55F2100249775 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		2898C84E20C55F2200249775 /* LuakitLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuakitLoader.h; sourceTree = "<group>"; };
 		2898C84F20C55F2200249775 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
@@ -354,6 +379,9 @@
 		C52187AE23312BA2001AA895 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../src/common/common.xcodeproj; sourceTree = "<group>"; };
 		C5218A042331439C001AA895 /* curl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = curl.xcodeproj; path = ../src/curl/curl.xcodeproj; sourceTree = "<group>"; };
 		C5218A0A23314506001AA895 /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../src/base/base.xcodeproj; sourceTree = "<group>"; };
+		C57A42B223325E4800D893ED /* event.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = event.xcodeproj; path = ../src/libevent/event.xcodeproj; sourceTree = "<group>"; };
+		C57A42E5233260F100D893ED /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../libs/ios12.4-Debug/libssl.a"; sourceTree = "<group>"; };
+		C57A42E6233260F100D893ED /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../libs/ios12.4-Debug/libcrypto.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,6 +389,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C57A432E2332682400D893ED /* libcommon.a in Frameworks */,
+				C57A432F2332682400D893ED /* libcurl.a in Frameworks */,
+				C57A43302332682400D893ED /* libevent.a in Frameworks */,
+				C57A432C233267B300D893ED /* libbase.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +402,7 @@
 		2883AC8820B43DFB005E1F54 = {
 			isa = PBXGroup;
 			children = (
+				C57A42B223325E4800D893ED /* event.xcodeproj */,
 				C5218A0A23314506001AA895 /* base.xcodeproj */,
 				C5218A042331439C001AA895 /* curl.xcodeproj */,
 				C52187AE23312BA2001AA895 /* common.xcodeproj */,
@@ -683,7 +716,8 @@
 		2883AEFC20B55606005E1F54 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2883AF0420B5565B005E1F54 /* libz.tbd */,
+				C57A42E6233260F100D893ED /* libcrypto.a */,
+				C57A42E5233260F100D893ED /* libssl.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -781,8 +815,14 @@
 			isa = PBXGroup;
 			children = (
 				C5218A1623314506001AA895 /* libbase.a */,
-				C5218A1823314506001AA895 /* libbase_i18n.a */,
-				C5218A1A23314506001AA895 /* libbase_static.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57A42B323325E4800D893ED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57A42B723325E4800D893ED /* libevent.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -796,12 +836,16 @@
 			buildPhases = (
 				2883AC8D20B43DFB005E1F54 /* Sources */,
 				2883AC8E20B43DFB005E1F54 /* Frameworks */,
-				2883AC8F20B43DFB005E1F54 /* CopyFiles */,
+				2883AC8F20B43DFB005E1F54 /* Copy Files */,
 				C52070D52330D44C00FCDD41 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C57A43092332646C00D893ED /* PBXTargetDependency */,
+				C57A429823325C7A00D893ED /* PBXTargetDependency */,
+				C57A429A23325C7A00D893ED /* PBXTargetDependency */,
+				C57A429C23325C7A00D893ED /* PBXTargetDependency */,
 			);
 			name = Luakit;
 			productName = Luakit;
@@ -845,6 +889,10 @@
 					ProductGroup = C5218A052331439C001AA895 /* Products */;
 					ProjectRef = C5218A042331439C001AA895 /* curl.xcodeproj */;
 				},
+				{
+					ProductGroup = C57A42B323325E4800D893ED /* Products */;
+					ProjectRef = C57A42B223325E4800D893ED /* event.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -882,18 +930,11 @@
 			remoteRef = C5218A1523314506001AA895 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C5218A1823314506001AA895 /* libbase_i18n.a */ = {
+		C57A42B723325E4800D893ED /* libevent.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libbase_i18n.a;
-			remoteRef = C5218A1723314506001AA895 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C5218A1A23314506001AA895 /* libbase_static.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libbase_static.a;
-			remoteRef = C5218A1923314506001AA895 /* PBXContainerItemProxy */;
+			path = libevent.a;
+			remoteRef = C57A42B623325E4800D893ED /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -914,7 +955,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#echo \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"TARGET_OS_IPHONE = $TARGET_OS_IPHONE\"\necho \"OS_IOS = $OS_IOS\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=\"$PROJECT_DIR/../libs/ios$SDK_VERSION-$CONFIGURATION\"\nfi\n\nmkdir -p \"$OUTPUT_DIR/\"\ncp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
+			shellScript = "#echo \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"TARGET_OS_IPHONE = $TARGET_OS_IPHONE\"\necho \"OS_IOS = $OS_IOS\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=\"$PROJECT_DIR/../libs/ios$SDK_VERSION-$CONFIGURATION\"\nfi\n\n#mkdir -p \"$OUTPUT_DIR/\"\n#cp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1016,6 +1057,29 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		C57A429823325C7A00D893ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = base;
+			targetProxy = C57A429723325C7A00D893ED /* PBXContainerItemProxy */;
+		};
+		C57A429A23325C7A00D893ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = curl;
+			targetProxy = C57A429923325C7A00D893ED /* PBXContainerItemProxy */;
+		};
+		C57A429C23325C7A00D893ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = common;
+			targetProxy = C57A429B23325C7A00D893ED /* PBXContainerItemProxy */;
+		};
+		C57A43092332646C00D893ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libevent;
+			targetProxy = C57A43082332646C00D893ED /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		2883AC9820B43DFB005E1F54 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1070,6 +1134,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/src/curl/include",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1124,6 +1194,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/src/curl/include",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -1138,14 +1214,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../src/lua-5.1.5/lua",
-					"$(SRCROOT)/../src",
-					"$(SRCROOT)/../src/common",
-					"$(SRCROOT)/../src/extensions",
-					"$(SRCROOT)/../src/curl/ios/include",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/curl/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/curl/ios/lib";
+				LUAKIT_ROOT = "$(SRCROOT)/..";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1160,14 +1236,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../src/lua-5.1.5/lua",
-					"$(SRCROOT)/../src",
-					"$(SRCROOT)/../src/common",
-					"$(SRCROOT)/../src/extensions",
-					"$(SRCROOT)/../src/curl/ios/include",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/curl/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../src/curl/ios/lib";
+				LUAKIT_ROOT = "$(SRCROOT)/..";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

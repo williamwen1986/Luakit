@@ -1,5 +1,5 @@
 #!/bin/bash
 
-. ../../bin/build-ios.sh libxml
+. ../../bin/build-ios.sh xml
 checkError
 

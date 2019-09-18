@@ -1,66 +1,95 @@
+
+Build the OpenSSL library
+-------------------------
+You need to build the openSSL library for your target API version, such as:
+
+```sh
+export CONFIG=Debug
+cd luakit/src/openssl-1.1.1c/
+./build-ios.sh
+```
+
+The $CONFIG environment variable must be "Debug" or "Release".
+
+You will get your library in luakit/libs/
+
+
+Build the Luakit library (optional)
+-----------------------------------
+If you want to build the complete Luakit library and not just Open SSL, you can do the following instead of the previous step :
+
+```sh
+export CONFIG=Debug
+export ANDROID_API=24
+cd luakit/
+./build-android.sh
+```
+
+The $CONFIG environment variable must be "Debug" or "Release".
+
+You will get your library in luakit/libs/
+
 Create a new project with xcode
------------------------------
+-------------------------------
 If you have your own project , skip this step
 
-Copy the src code and framework
------------------------------
-Copy [source code folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/src) and [IOS framework folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/IOSFrameWork) to the rootPath of your project
 
-Add dependence
------------------------------
-Open your app project, open Luakit/LuaKitProject/IOSFrameWork folder, drag the Luakit.xcodeproj to your project.
+Copy the src code and framework
+-------------------------------
+Copy Github [source code folder](../../../..) somewhere on your disk.
+
+Add dependences
+---------------
+Open your app project,  drag and drop the luakit/IOSFrameWork/Luakit.xcodeproj from the finder to your project.
+
+Got to Build Settings and add a User-Defined variable to your luakit source folder.
+For example:
+```
+LUAKIT_ROOT = $(SRCROOT)/../..
+```
 
 Go to Build Settings and Add Header Search Paths as below
 
-```	
-$(SRCROOT)/src/Projects
-$(SRCROOT)/src/Projects/lua-5.1.5/lua
-$(SRCROOT)/src/Projects/common
-$(SRCROOT)/IOSFrameWork/Luakit/OCHelper
+```
+$(LUAKIT_ROOT)/src
+$(LUAKIT_ROOT)/src/lua-5.1.5/lua
+$(LUAKIT_ROOT)/src/common
+$(LUAKIT_ROOT)/IOSFrameWork/Luakit/OCHelper
+```
+
+Go to Build Settings and add Library Search Paths as below:
+```
+$(LUAKIT_ROOT)/libs/ios$SDK_VERSION-$CONFIGURATION
 ```
 
 Go Build Phases -> Target Dependencies -> add Luakit
 
-Go Build Phases -> Link Binary With Libraries -> add libLuakit.a , libz.tbd , libssl.a and libcrypto.a
-
-libssl.a and libcrypto.a locate in [the folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/src/Projects/openssl/lib) src/Projects/openssl/lib/ 
+Go Build Phases -> Link Binary With Libraries -> add libLuakit.a and libssl.a (libssl.a is located in the sub-folder luakit/libs/...)
 
 Add the lua source to your project
------------------------------
+----------------------------------
+Go to Build Phases, Copy Bundle Resources, and add your "lua" directory. The name "lua" is important. You must check the option "Create folder Refeferences"
+
 Our demo lua source code is in the [luaSrc folder](https://github.com/williamwen1986/Luakit/tree/master/LuaKitProject/src/Projects/LuaSrc), src/Projects/LuaSrc
 
 Initialization Luakit
------------------------------
-Add below code to your entrance of your app. In most cases , you can do this in main function, modify your main file name from main.m to main.mm and add below code
+---------------------
+Add below code to your entrance of your app. In most cases , you can do this in main function.
+
+ __Modify your main file name from main.m to main.mm and add below code__
 
 ```c++
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#include "base/command_line.h"
-#include "base/memory/scoped_ptr.h"
-#include "common/business_main_delegate.h"
-#include "common/business_runtime.h"
-#include "tools/lua_helpers.h"
-#include "base/thread_task_runner_handle.h"
-#include "common/base_lambda_support.h"
-extern "C" {
-#include "lua_h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
-
-int main(int argc, char * argv[]) {
-	CommandLine::Init(argc, argv);
-	NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
-	luaSetPackagePath([bundlePath cStringUsingEncoding:NSUTF8StringEncoding]);
-	setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
-	scoped_ptr<BusinessMainDelegate> delegate(new BusinessMainDelegate());
-	scoped_ptr<BusinessRuntime> business_runtime(BusinessRuntime::Create());
-	business_runtime->Initialize(delegate.get());
-	business_runtime->Run();
-	@autoreleasepool {
-	    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-	}
+#import "oc_helpers.h"
+int main(int argc, char * argv[])
+{
+    startLuakit(argc, argv);
+    lua_State * state = getCurrentThreadLuaState();
+    luaL_dostring(state, "require('notification_test').test()");
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+    }
 }
 ```
 
@@ -68,8 +97,17 @@ Create your own business model
 -----------------------------
 Refer to [Demo code](https://github.com/williamwen1986/Luakit/blob/master/LuaKitProject/IOS%20Demo/WeatherTest/WeatherTest/WeatherManager.mm), WeatherManager.mm  demonstrate how to connect IOS and lua, Luakit provide a general interface to connect IOS and lua
 
-```	objective-c
-+ (NSArray *)getWeather {
+```objective-c
+#import "WeatherManager.h"
+#include "common/business_runtime.h"
+#include "tools/lua_helpers.h"
+#import "oc_helpers.h"
+#import "lauxlib.h"
+
+@implementation WeatherManager
+
++ (NSArray *)getWeather
+{
     return call_lua_function(@"WeatherManager", @"getWeather");
 }
 

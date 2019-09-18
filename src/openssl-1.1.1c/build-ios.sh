@@ -9,7 +9,6 @@ if [ -z $SDK_VERSION ]; then
 	SDK_VERSION="12.4"
 fi
 
-LIB_ROOT=./libs
 
 DEFAULT_OUTPUT=../../libs/ios$SDK_VERSION-$CONFIG
 #--------------------------------------------------
@@ -27,8 +26,9 @@ dir=$(pwd)
 OUTPUT_DIR="$dir"
 popd > /dev/null
 DEVELOPER=`xcode-select -print-path`
-ANDROID_LIB_ROOT=./libs
 
+LIB_ROOT=./libs
+rm -r $LIB_ROOT
 buildIOS()
 {
 	ARCH=$1
@@ -71,29 +71,23 @@ buildIOS()
 	cp -v libssl.so.1.1 "${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/${ARCH}/libssl.1.1.so"
 
 	# copy header
-	mkdir -p "${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/${ARCH}/include/openssl"
-	cp -r -v "include/openssl" "${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/${ARCH}/include/"
+	mkdir -p "$OUTPUT_DIR/include-${ARCH}/openssl"
+	cp -r -v "include/openssl" "$OUTPUT_DIR/include-${ARCH}/"
 }
 
 
-    buildIOS "armv7"
     buildIOS "arm64"
     buildIOS "x86_64"
-    buildIOS "i386"
 
 
 echo "Building iOS libraries"
 lipo \
-	"${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/armv7/libcrypto.a" \
 	"${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/arm64/libcrypto.a" \
-	"${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/i386/libcrypto.a" \
 	"${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/x86_64/libcrypto.a" \
 	-create -output "$OUTPUT_DIR/libcrypto.a"
 
 lipo \
-	"${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/armv7/libssl.a" \
 	"${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/arm64/libssl.a" \
-	"${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/i386/libssl.a" \
 	"${LIB_ROOT}/ios$SDK_VERSION-$CONFIG/x86_64/libssl.a" \
 	-create -output "$OUTPUT_DIR/libssl.a"
 

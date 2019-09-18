@@ -41,6 +41,9 @@
 		AFB590903F3E979981C902AE /* evbuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = evbuffer.c; sourceTree = "<group>"; };
 		B0CC16E414633F607726CDDB /* buffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
 		B590A0DEA2BF0556C3A622B7 /* release.gypi */ = {isa = PBXFileReference; lastKnownFileType = text; name = release.gypi; path = ../../build/release.gypi; sourceTree = "<group>"; };
+		C57A42FA2332635600D893ED /* libbase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libbase.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C57A42FC2332635600D893ED /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C57A42FE2332635600D893ED /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2FB3996DC5F99F88035CCF7 /* evdns.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = evdns.c; sourceTree = "<group>"; };
 		F3D8B5612358813734A716AF /* log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
 		F3FADF6FEF906ECC1B5BC2DD /* evrpc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = evrpc.c; sourceTree = "<group>"; };
@@ -87,7 +90,18 @@
 				DD2ABBE1F85A980AD35C6DD9 /* Source */,
 				121DF42F0392BDAACEAF30CB /* Products */,
 				433EA82E02ABA3E33813E8D0 /* Build */,
+				C57A42F92332635600D893ED /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		C57A42F92332635600D893ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C57A42FA2332635600D893ED /* libbase.a */,
+				C57A42FC2332635600D893ED /* libcommon.a */,
+				C57A42FE2332635600D893ED /* libcurl.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		DD2ABBE1F85A980AD35C6DD9 /* Source */ = {
@@ -140,7 +154,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1030;
 			};
-			buildConfigurationList = 020B46B76508758D8F20055A /* Build configuration list for PBXProject "libevent" */;
+			buildConfigurationList = 020B46B76508758D8F20055A /* Build configuration list for PBXProject "event" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
@@ -174,7 +188,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/ios$SDK_VERSION-$CONFIGURATION\nfi\ntoto\nmkdir -p \"$OUTPUT_DIR/\"\ncp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
+			shellScript = "if [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/ios$SDK_VERSION-$CONFIGURATION\nfi\n\n#mkdir -p \"$OUTPUT_DIR/\"\n#cp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -357,7 +372,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		020B46B76508758D8F20055A /* Build configuration list for PBXProject "libevent" */ = {
+		020B46B76508758D8F20055A /* Build configuration list for PBXProject "event" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				97C8EB95302A77100F71E925 /* Debug */,

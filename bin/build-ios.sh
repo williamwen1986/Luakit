@@ -45,11 +45,31 @@ export OUTPUT_DIR="$dir"
 popd > /dev/null
 
 rm -rf DerivedData
-xcodebuild -configuration $CONFIG -project $1.xcodeproj clean
-checkError
-xcodebuild -configuration $CONFIG -project $1.xcodeproj
-checkError
 
+LIB_ROOT=./libs
+rm -r $LIB_ROOT
+mkdir -p $LIB_ROOT
+project=$1
+
+buildIOS()
+{
+	ARCH=$1
+
+    xcodebuild clean -configuration $CONFIG -project $project.xcodeproj -arch $1 -destination $2 -sdk $3$SDK_VERSION 
+    checkError
+    xcodebuild build -configuration $CONFIG -project $project.xcodeproj -arch $1 -destination $2 -sdk $3$SDK_VERSION 
+    checkError
+    cp -v build/$CONFIG-$3/lib$project.a $LIB_ROOT/$project-$1.a
+}
+
+    buildIOS "arm64"  "platform=iOS,arch=armv64"            "iphoneos"
+    buildIOS "x86_64" "platform=iOS Simulator,arch=x86_64"  "iphonesimulator"
+
+echo "Building iOS libraries"
+lipo \
+	"${LIB_ROOT}/$project-arm64.a" \
+	"${LIB_ROOT}/$project-x86_64.a" \
+	-create -output "$OUTPUT_DIR/lib$1.a"
 
 echo
 echo "Your ouputs are in " "$OUTPUT_DIR"
