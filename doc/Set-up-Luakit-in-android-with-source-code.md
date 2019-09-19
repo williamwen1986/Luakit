@@ -62,7 +62,7 @@ Add dependence
 Open your project, add jniLibs.srcDir to your app build.gradle, such as below
 
 
-```	
+```
 apply plugin: 'com.android.application'
 
 android {
@@ -90,6 +90,14 @@ android {
 
         }
     }
+    dependencies {
+        implementation 'com.android.support:appcompat-v7:28.0.0'
+        implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+           ...
+        implementation project(':luakit')
+        //implementation 'com.github.williamwen1986:LuakitJitpack:1.0.9'
+
+    }
 }
 ```
 
@@ -103,7 +111,7 @@ project(':lib_chromium').projectDir = new File(settingsDir, '../../AndroidFrameW
 
 Copy your lua source code to android assets/lua folder
 -----------------------------
-Our demo lua source code is in the [luaSrc folder](../AndroidDemo/WeatherTest/app/src/main/assets/lua), you need to copy the source code your need to assets/lua folder, you can also add your own lua file to assets/lua folder.
+You must add your own lua files to assets/lua folder (the name "lua" is important).
 
 Initialization Luakit
 -----------------------------
@@ -114,7 +122,7 @@ LuaHelper.startLuaKit(this);
 ```
 Create your own business model
 -----------------------------
-Luakit provide general interface to connect java and lua ,Refer to [LuaHelper.java](../src/main/java/com/common/luakit/LuaHelper.java.java) 
+Luakit provide general interface to connect java and lua ,Refer to [LuaHelper.java](../src/main/java/com/common/luakit/LuaHelper.java.java)
 
 ```java
 Object[] ret =  (Object[]) LuaHelper.callLuaFunction("WeatherManager","getWeather");
@@ -130,7 +138,9 @@ ILuaCallback callback = new ILuaCallback() {
 
 LuaHelper.callLuaFunction("WeatherManager","loadWeather", callback);
 ```
-The goal of the above code is to connect the [lua file](../AndroidDemo/WeatherTest/app/src/main/assets/lua/WeatherManager.lua) , the lua code is the finally working code
+The goal of the above code is to connect the [lua file](../AndroidDemo/WeatherTest/app/src/main/assets/lua/WeatherManager.lua).
+
+The lua code is the finally working code
 
 ```lua
 local _weatherManager = {}
@@ -186,14 +196,4 @@ end
 
 return _weatherManager
 ```
-Maintain your own jni project
------------------------------
 
-Luakit is provide a integrated jni project in [the folder](../src/jni), you can go to this path in the console, and type the below command.
-
-```
-export CONFIG=Debug
-export ANDROID_API=24
-cd luakit/
-./build-android.sh
-```

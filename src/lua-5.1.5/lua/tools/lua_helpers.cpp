@@ -292,11 +292,15 @@ extern int luaInit(lua_State* L)
     luaopen_async_socket(L);
     luaopen_notification(L);
     addLuaLoader(L,luakit_loader);
-    base::FilePath documentDir;
+    std::string path = "";
     #if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
+        base::FilePath documentDir;
+        path = documentDir.value();
         PathService::Get(PATH_SERVICE_KEY, &documentDir);
+    #elif defined(OS_ANDROID)
+        path = dataDirectoryPath;
     #endif
-    std::string path = documentDir.value();
+
     LOG(WARNING)<<"documentDir:"<<path;
     lua_pushstring(L, path.c_str());
     lua_setglobal(L, "BASE_DOCUMENT_PATH");
