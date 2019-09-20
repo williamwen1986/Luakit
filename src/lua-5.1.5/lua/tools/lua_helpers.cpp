@@ -295,8 +295,8 @@ extern int luaInit(lua_State* L)
     std::string path = "";
     #if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
         base::FilePath documentDir;
-        path = documentDir.value();
         PathService::Get(PATH_SERVICE_KEY, &documentDir);
+        path = documentDir.value();
     #elif defined(OS_ANDROID)
         path = dataDirectoryPath;
     #endif

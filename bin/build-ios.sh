@@ -10,6 +10,12 @@ if [ -z $SDK_VERSION ]; then
 	SDK_VERSION="12.4"
 fi
 
+PROJECT=$1
+
+if [ -z $TARGET ]; then
+    TARGET=$PROJECT
+fi
+
 DEFAULT_OUTPUT=../../libs/ios$SDK_VERSION-$CONFIG
 #-------------------------------------------------------------------
 
@@ -49,17 +55,16 @@ rm -rf DerivedData
 LIB_ROOT=./libs
 rm -r $LIB_ROOT
 mkdir -p $LIB_ROOT
-project=$1
 
 buildIOS()
 {
 	ARCH=$1
 
-    xcodebuild clean -configuration $CONFIG -project $project.xcodeproj -arch $1 -destination $2 -sdk $3$SDK_VERSION 
+    xcodebuild clean -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$SDK_VERSION 
     checkError
-    xcodebuild build -configuration $CONFIG -project $project.xcodeproj -arch $1 -destination $2 -sdk $3$SDK_VERSION 
+    xcodebuild build -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$SDK_VERSION 
     checkError
-    cp -v build/$CONFIG-$3/lib$project.a $LIB_ROOT/$project-$1.a
+    cp -v build/$CONFIG-$3/lib$PROJECT.a $LIB_ROOT/$PROJECT-$1.a
 }
 
     buildIOS "arm64"  "platform=iOS,arch=armv64"            "iphoneos"
@@ -67,8 +72,8 @@ buildIOS()
 
 echo "Building iOS libraries"
 lipo \
-	"${LIB_ROOT}/$project-arm64.a" \
-	"${LIB_ROOT}/$project-x86_64.a" \
+	"${LIB_ROOT}/$PROJECT-arm64.a" \
+	"${LIB_ROOT}/$PROJECT-x86_64.a" \
 	-create -output "$OUTPUT_DIR/lib$1.a"
 
 echo

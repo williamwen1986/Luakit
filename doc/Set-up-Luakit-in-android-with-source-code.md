@@ -110,18 +110,18 @@ project(':lib_chromium').projectDir = new File(settingsDir, '../../AndroidFrameW
 ```
 
 Copy your lua source code to android assets/lua folder
------------------------------
+------------------------------------------------------
 You must add your own lua files to assets/lua folder (the name "lua" is important).
 
 Initialization Luakit
------------------------------
+---------------------
 Add below code to your entrance of your app
 
 ```java
 LuaHelper.startLuaKit(this);
 ```
 Create your own business model
------------------------------
+------------------------------
 Luakit provide general interface to connect java and lua ,Refer to [LuaHelper.java](../src/main/java/com/common/luakit/LuaHelper.java.java)
 
 ```java

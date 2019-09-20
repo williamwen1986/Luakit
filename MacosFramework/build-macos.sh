@@ -1,8 +1,12 @@
 #!/bin/bash
 
+export TARGET=Luakit
 . ../bin/build-macos.sh Luakit
 checkError
-. ../bin/build-macos.sh Luakit-dylib
+export TARGET=Luakit-dylib
+. ../bin/build-macos.sh Luakit
+cp  -v build/$CONFIG/$TARGET.dylib  "$OUTPUT_DIR/Luakit.dylib"
+
 checkError
 
 

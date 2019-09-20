@@ -1,5 +1,6 @@
 #!/bin/bash
 
-. ../../bin/build-macos.sh libevent
+export TARGET=event-macos
+. ../../bin/build-macos.sh event
 checkError
 

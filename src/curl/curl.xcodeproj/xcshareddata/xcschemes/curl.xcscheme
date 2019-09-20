@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3957C557EC3642B16CCFD55B"
-               BuildableName = "libevent.a"
-               BlueprintName = "libevent"
-               ReferencedContainer = "container:event.xcodeproj">
+               BlueprintIdentifier = "C521881D23313510001AA895"
+               BuildableName = "libcurl.a"
+               BlueprintName = "curl"
+               ReferencedContainer = "container:curl.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3957C557EC3642B16CCFD55B"
-            BuildableName = "libevent.a"
-            BlueprintName = "libevent"
-            ReferencedContainer = "container:event.xcodeproj">
+            BlueprintIdentifier = "C521881D23313510001AA895"
+            BuildableName = "libcurl.a"
+            BlueprintName = "curl"
+            ReferencedContainer = "container:curl.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3957C557EC3642B16CCFD55B"
-            BuildableName = "libevent.a"
-            BlueprintName = "libevent"
-            ReferencedContainer = "container:event.xcodeproj">
+            BlueprintIdentifier = "C521881D23313510001AA895"
+            BuildableName = "libcurl.a"
+            BlueprintName = "curl"
+            ReferencedContainer = "container:curl.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

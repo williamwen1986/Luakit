@@ -1,5 +1,5 @@
 #!/bin/bash
 
-. ../../bin/build-macos.sh libxml
+. ../../bin/build-macos.sh xml
 checkError
 

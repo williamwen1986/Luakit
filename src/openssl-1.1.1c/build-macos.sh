@@ -4,9 +4,16 @@ if [ -z "$CONFIG" ]
 then
     export CONFIG=Debug
 fi
+
+if [ -z $SDK_VERSION ]; then
+	SDK_VERSION="10.14"
+fi
+
+
+
 LIB_ROOT=./libs
 
-DEFAULT_OUTPUT=../../libs/macos-$CONFIG
+DEFAULT_OUTPUT=../../libs/macos$SDK_VERSION-$CONFIG
 #--------------------------------------------------
 path=$(dirname "$0")
 
@@ -51,8 +58,8 @@ fi
     mv libssl.1.1.dylib "${LIB_ROOT}/macos-$CONFIG/"
 
      # copy header
-     mkdir -p "${LIB_ROOT}/macos-$CONFIG/include/openssl"
-     cp -v -r "include/openssl" "${LIB_ROOT}/macos-$CONFIG/include/"
+     mkdir -p "${LIB_ROOT}/macos-$CONFIG/include-x86_64/openssl-x86_64"
+     cp -v -r "include/openssl" "${LIB_ROOT}/macos-$CONFIG/include-x86_64/"
 
     make clean
 

@@ -5,9 +5,13 @@ then
     export CONFIG=Debug
 fi
 
+if [ -z $SDK_VERSION ]; then
+	SDK_VERSION="10.14"
+fi
+
 if [ -z "$OUTPUT_DIR" ]
 then
-export OUTPUT_DIR=libs/macos-$CONFIG
+export OUTPUT_DIR=libs/macos$SDK_VERSION-$CONFIG
 fi
 
 mkdir -p $OUTPUT_DIR 2>/dev/null
@@ -23,6 +27,8 @@ checkError() {
         exit -1
     fi
 }
+./clean.sh
+rm -r "$OUTPUT_DIR"/*
 
 cd src/openssl-1.1.1c
 ./build-macos.sh
@@ -58,18 +64,7 @@ cd src/common
 checkError
 cd ../..
 
-cd src/base/third_party/dynamic_annotations
-./build-macos.sh
-checkError
-cd ../../../..
-
-
 cd src/base
-./build-macos.sh
-checkError
-cd ../..
-
-cd src/lua-5.1.5
 ./build-macos.sh
 checkError
 cd ../..

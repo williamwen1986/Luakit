@@ -10,6 +10,8 @@ Luakit is a multi-platform solution in lua , you can develop your app, IOS or an
 
 [Set up Luakit in IOS with source code](Set-up-Luakit-in-IOS-with-source-code.md)
 
+[Set up Luakit in Macos with source code](Set-up-Luakit-in-macos-with-source-code.md)
+
 [IDE androidstudio and debug](IDE-AndroidStudio.md)
 
 [Lua code encryption and decryption](Lua-encryption-and-decryption.md)

@@ -38,7 +38,8 @@ void startLuakit(int argc, char * argv[])
     static bool hasStartLuakit = false;
     if (!hasStartLuakit) {
         CommandLine::Init(argc, argv);
-        NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+        //NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+        NSString *bundlePath = [[NSBundle mainBundle] pathForResource: @"lua" ofType: @""]; // Patch [LARPOUX]
         if (luaGetPackagePath().size() == 0) {
             luaSetPackagePath([bundlePath cStringUsingEncoding:NSUTF8StringEncoding]);
         }

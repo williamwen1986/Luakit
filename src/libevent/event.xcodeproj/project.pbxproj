@@ -20,6 +20,20 @@
 		9241D72533882DDAE22D4EC7 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 869DC94DC8F44BFA44ABF853 /* select.c */; };
 		B3A918B06FA2D20CCE103678 /* poll.c in Sources */ = {isa = PBXBuildFile; fileRef = 09B1205F157F0A970AF4D2D7 /* poll.c */; };
 		BA5257CC1F5257E56E667977 /* event.c in Sources */ = {isa = PBXBuildFile; fileRef = FE13C074AEC50C02BB3DCAA4 /* event.c */; };
+		C5BD05E02334C70A00E630F5 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = B0CC16E414633F607726CDDB /* buffer.c */; };
+		C5BD05E12334C70A00E630F5 /* evbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = AFB590903F3E979981C902AE /* evbuffer.c */; };
+		C5BD05E22334C70A00E630F5 /* evdns.c in Sources */ = {isa = PBXBuildFile; fileRef = F2FB3996DC5F99F88035CCF7 /* evdns.c */; };
+		C5BD05E32334C70A00E630F5 /* event.c in Sources */ = {isa = PBXBuildFile; fileRef = FE13C074AEC50C02BB3DCAA4 /* event.c */; };
+		C5BD05E42334C70A00E630F5 /* event_tagging.c in Sources */ = {isa = PBXBuildFile; fileRef = 31BB2BB94B9447A901CB2774 /* event_tagging.c */; };
+		C5BD05E52334C70A00E630F5 /* evrpc.c in Sources */ = {isa = PBXBuildFile; fileRef = F3FADF6FEF906ECC1B5BC2DD /* evrpc.c */; };
+		C5BD05E62334C70A00E630F5 /* evutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 982229E1748AC4B3BDD8F068 /* evutil.c */; };
+		C5BD05E72334C70A00E630F5 /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B7BCE2B11BB856DA8F17C94 /* http.c */; };
+		C5BD05E82334C70A00E630F5 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = F3D8B5612358813734A716AF /* log.c */; };
+		C5BD05E92334C70A00E630F5 /* poll.c in Sources */ = {isa = PBXBuildFile; fileRef = 09B1205F157F0A970AF4D2D7 /* poll.c */; };
+		C5BD05EA2334C70A00E630F5 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 869DC94DC8F44BFA44ABF853 /* select.c */; };
+		C5BD05EB2334C70A00E630F5 /* signal.c in Sources */ = {isa = PBXBuildFile; fileRef = 04422A3CDE1C65BDCA76C408 /* signal.c */; };
+		C5BD05EC2334C70A00E630F5 /* strlcpy.c in Sources */ = {isa = PBXBuildFile; fileRef = 2357CD830CD764260CDC96E0 /* strlcpy.c */; };
+		C5BD05ED2334C70A00E630F5 /* kqueue.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B2A04AE2069089CEAA1F942 /* kqueue.c */; };
 		E3141BA1A7CF84171F15E7A9 /* evutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 982229E1748AC4B3BDD8F068 /* evutil.c */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +58,9 @@
 		C57A42FA2332635600D893ED /* libbase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libbase.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57A42FC2332635600D893ED /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57A42FE2332635600D893ED /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5BD05F32334C70A00E630F5 /* libevent-macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libevent-macos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5BD062C2334CFEC00E630F5 /* libmodp_b64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libmodp_b64.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5BD062E2334CFEC00E630F5 /* libxml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libxml.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2FB3996DC5F99F88035CCF7 /* evdns.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = evdns.c; sourceTree = "<group>"; };
 		F3D8B5612358813734A716AF /* log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
 		F3FADF6FEF906ECC1B5BC2DD /* evrpc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = evrpc.c; sourceTree = "<group>"; };
@@ -59,6 +76,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C5BD05EE2334C70A00E630F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -66,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				FC3DE02F41FA36BF9BC0714C /* libevent.a */,
+				C5BD05F32334C70A00E630F5 /* libevent-macos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,6 +122,8 @@
 		C57A42F92332635600D893ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5BD062C2334CFEC00E630F5 /* libmodp_b64.a */,
+				C5BD062E2334CFEC00E630F5 /* libxml.a */,
 				C57A42FA2332635600D893ED /* libbase.a */,
 				C57A42FC2332635600D893ED /* libcommon.a */,
 				C57A42FE2332635600D893ED /* libcurl.a */,
@@ -128,9 +155,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3957C557EC3642B16CCFD55B /* libevent */ = {
+		3957C557EC3642B16CCFD55B /* event */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E06644439621D6750DC637AC /* Build configuration list for PBXNativeTarget "libevent" */;
+			buildConfigurationList = E06644439621D6750DC637AC /* Build configuration list for PBXNativeTarget "event" */;
 			buildPhases = (
 				A1E8076C291DA11417D8AAC2 /* Sources */,
 				62C666431113C3955BBC963F /* Frameworks */,
@@ -140,9 +167,26 @@
 			);
 			dependencies = (
 			);
-			name = libevent;
+			name = event;
 			productName = event;
 			productReference = FC3DE02F41FA36BF9BC0714C /* libevent.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		C5BD05DE2334C70A00E630F5 /* event-macos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5BD05F02334C70A00E630F5 /* Build configuration list for PBXNativeTarget "event-macos" */;
+			buildPhases = (
+				C5BD05DF2334C70A00E630F5 /* Sources */,
+				C5BD05EE2334C70A00E630F5 /* Frameworks */,
+				C5BD05EF2334C70A00E630F5 /* Copy to $OUTPUT_DIR */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "event-macos";
+			productName = event;
+			productReference = C5BD05F32334C70A00E630F5 /* libevent-macos.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -166,13 +210,33 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3957C557EC3642B16CCFD55B /* libevent */,
+				3957C557EC3642B16CCFD55B /* event */,
+				C5BD05DE2334C70A00E630F5 /* event-macos */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		C526DF632330F6E70069143A /* Copy to $OUTPUT_DIR */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy to $OUTPUT_DIR";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/ios$SDK_VERSION-$CONFIGURATION\nfi\n\n#mkdir -p \"$OUTPUT_DIR/\"\n#cp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C5BD05EF2334C70A00E630F5 /* Copy to $OUTPUT_DIR */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -215,6 +279,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C5BD05DF2334C70A00E630F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5BD05E02334C70A00E630F5 /* buffer.c in Sources */,
+				C5BD05E12334C70A00E630F5 /* evbuffer.c in Sources */,
+				C5BD05E22334C70A00E630F5 /* evdns.c in Sources */,
+				C5BD05E32334C70A00E630F5 /* event.c in Sources */,
+				C5BD05E42334C70A00E630F5 /* event_tagging.c in Sources */,
+				C5BD05E52334C70A00E630F5 /* evrpc.c in Sources */,
+				C5BD05E62334C70A00E630F5 /* evutil.c in Sources */,
+				C5BD05E72334C70A00E630F5 /* http.c in Sources */,
+				C5BD05E82334C70A00E630F5 /* log.c in Sources */,
+				C5BD05E92334C70A00E630F5 /* poll.c in Sources */,
+				C5BD05EA2334C70A00E630F5 /* select.c in Sources */,
+				C5BD05EB2334C70A00E630F5 /* signal.c in Sources */,
+				C5BD05EC2334C70A00E630F5 /* strlcpy.c in Sources */,
+				C5BD05ED2334C70A00E630F5 /* kqueue.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -248,6 +333,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				ONLY_ACTIVE_ARCH = YES;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
 			};
 			name = Release;
@@ -272,6 +358,7 @@
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				HEADER_SEARCH_PATHS = mac;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-fno-strict-aliasing",
 					"-fstack-protector-all",
@@ -314,6 +401,7 @@
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				HEADER_SEARCH_PATHS = mac;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRODUCT_NAME = event;
 				SDKROOT = iphoneos;
@@ -369,6 +457,89 @@
 			};
 			name = Debug;
 		};
+		C5BD05F12334C70A00E630F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"NDEBUG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				HEADER_SEARCH_PATHS = mac;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fno-strict-aliasing",
+					"-fstack-protector-all",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = (
+					"-Wendif-labels",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unused-function",
+					"-Wno-unnamed-type-template-args",
+					"-Wno-c++11-extensions",
+					"-Wno-covered-switch-default",
+				);
+				WARNING_CFLAGS_excluded = "-Wall -Wextra";
+			};
+			name = Debug;
+		};
+		C5BD05F22334C70A00E630F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
+					"NDEBUG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				HEADER_SEARCH_PATHS = mac;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "-fno-strict-aliasing";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = (
+					"-Wendif-labels",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unused-function",
+					"-Wno-unnamed-type-template-args",
+					"-Wno-c++11-extensions",
+					"-Wno-covered-switch-default",
+				);
+				WARNING_CFLAGS_excluded = "-Wall -Wextra";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -381,7 +552,16 @@
 			defaultConfigurationIsVisible = 1;
 			defaultConfigurationName = Release;
 		};
-		E06644439621D6750DC637AC /* Build configuration list for PBXNativeTarget "libevent" */ = {
+		C5BD05F02334C70A00E630F5 /* Build configuration list for PBXNativeTarget "event-macos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5BD05F12334C70A00E630F5 /* Debug */,
+				C5BD05F22334C70A00E630F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Release;
+		};
+		E06644439621D6750DC637AC /* Build configuration list for PBXNativeTarget "event" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				359C0CACEAD0F926026D4788 /* Debug */,

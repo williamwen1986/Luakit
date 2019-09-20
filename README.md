@@ -92,11 +92,11 @@ Define your model, [demo code](IOSDemo/OrmTest/OrmTest/lua/db_test.lua)
 ```lua
 -- Add the define table to dbData.lua
 -- Luakit provide 7 colum types
--- IntegerField to sqlite integer 
--- RealField to sqlite real 
--- BlobField to sqlite blob 
--- CharField to sqlite varchar 
--- TextField to sqlite text 
+-- IntegerField to sqlite integer
+-- RealField to sqlite real
+-- BlobField to sqlite blob
+-- CharField to sqlite varchar
+-- TextField to sqlite text
 -- BooleandField to sqlite bool
 -- DateTimeField to sqlite integer
 user = {
@@ -228,7 +228,7 @@ socket.connectCallback = function (rv)
         socket:read()
     end
 end
-    
+
 socket.readCallback = function (str)
     print(str)
     timer = lua_timer.createTimer(0)
@@ -319,6 +319,8 @@ Setup
 [Set up Luakit in android with source code](doc/Set-up-Luakit-in-android-with-source-code.md)
 
 [Set up Luakit in IOS with source code](doc/Set-up-Luakit-in-IOS-with-source-code.md)
+
+[Set up Luakit in Macos with source code](Set-up-Luakit-in-macos-with-source-code.md)
 
 IDE AndroidStudio
 -----------------------------
