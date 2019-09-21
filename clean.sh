@@ -26,6 +26,7 @@ find . -name "CMakeCache.txt" -exec rm -rf {} \;  2> /dev/null
 find . -name ".cxx" -exec rm -rf {} \;  2> /dev/null
 find . -name ".externalNativeBuild" -exec rm -rf {} \;  2> /dev/null
 find . -name "build" -exec rm -rf {} \;  2> /dev/null
+find . -name "libs" -exec rm -rf {} \;  2> /dev/null
 
 # Macos
 # -----

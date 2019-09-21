@@ -56,6 +56,7 @@ make_abi() {
                 -DOPENSSL_ROOT_DIR=../openssl-1.1.1c \
                 -DOPENSSL_LIBRARIES=../openssl-1.1.1c/lib \
                 -DANDROID=1 \
+                -DOS_ANDROID=1 \
 
             checkError
             make -j4

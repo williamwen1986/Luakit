@@ -11,7 +11,7 @@ project(luakit)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DANDROID -DUSE_HISTORICAL_STRERRO_R -DOS_ANDROID -DNVALGRIND -fvisibility=hidden")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_HISTORICAL_STRERRO_R -DNVALGRIND -fvisibility=hidden")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -fexceptions -frtti -fPIC -DUSE_HISTORICAL_STRERRO_R")
 
@@ -102,22 +102,22 @@ add_library(
                 ${ALL_SRCS}
 )
 
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../curl/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( "${PROJECT_SOURCE_DIR}/../curl" ${lib_build_DIR} )
-set_target_properties( curl PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libcurl.a)
+#set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../curl/outputs/${ANDROID_ABI})
+#file(MAKE_DIRECTORY ${lib_build_DIR})
+#add_subdirectory( "${PROJECT_SOURCE_DIR}/../curl" ${lib_build_DIR} )
+#set_target_properties( curl PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libcurl.a)
 
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../base/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( ${PROJECT_SOURCE_DIR}/../base ${lib_build_DIR} )
-set_target_properties( base    PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libbase.a)
+#set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../base/outputs/${ANDROID_ABI})
+#file(MAKE_DIRECTORY ${lib_build_DIR})
+#add_subdirectory( ${PROJECT_SOURCE_DIR}/../base ${lib_build_DIR} )
+#set_target_properties( base    PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libbase.a)
 
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../libxml/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( ${PROJECT_SOURCE_DIR}/../libxml ${lib_build_DIR} )
-set_target_properties( xml PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libxml.a)
+#set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../libxml/outputs/${ANDROID_ABI})
+#file(MAKE_DIRECTORY ${lib_build_DIR})
+#add_subdirectory( ${PROJECT_SOURCE_DIR}/../libxml ${lib_build_DIR} )
+#set_target_properties( xml PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libxml.a)
 
-target_link_libraries(common curl base xml)
+#target_link_libraries(common curl base xml)
 
 
 

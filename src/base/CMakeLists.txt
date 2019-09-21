@@ -11,7 +11,7 @@ project(luakit)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DANDROID -DUSE_HISTORICAL_STRERRO_R -DOS_ANDROID -DNVALGRIND -fvisibility=hidden")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_HISTORICAL_STRERRO_R -DNVALGRIND -fvisibility=hidden")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -fexceptions -frtti -fPIC -DUSE_HISTORICAL_STRERRO_R")
 #set(CMAKE_STATIC_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC -llog -lz -lc")
@@ -209,17 +209,17 @@ add_library(
                    ${ANDROID_NDK}/sources/android/cpufeatures/cpu-features.c
 )
 
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../libevent/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( "${PROJECT_SOURCE_DIR}/../libevent" ${lib_build_DIR} )
-set_target_properties( event PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libevent.a)
+#set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../libevent/outputs/${ANDROID_ABI})
+#file(MAKE_DIRECTORY ${lib_build_DIR})
+#add_subdirectory( "${PROJECT_SOURCE_DIR}/../libevent" ${lib_build_DIR} )
+#set_target_properties( event PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libevent.a)
 
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../modp_b64/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( "${PROJECT_SOURCE_DIR}/../modp_b64" ${lib_build_DIR} )
-set_target_properties( modp_b64 PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libmodp_b64.a)
+#set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../modp_b64/outputs/${ANDROID_ABI})
+#file(MAKE_DIRECTORY ${lib_build_DIR})
+#add_subdirectory( "${PROJECT_SOURCE_DIR}/../modp_b64" ${lib_build_DIR} )
+#set_target_properties( modp_b64 PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libmodp_b64.a)
 
-target_link_libraries(base modp_b64 event)
+#target_link_libraries(base modp_b64 event)
 
 
 # Specifies a path to native header files.

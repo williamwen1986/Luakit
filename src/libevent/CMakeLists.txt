@@ -11,7 +11,7 @@ project(luakit)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_SYS_TIME_H -DANDROID -Wno-multichar -DHAVE_CONFIG_H -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DOS_ANDROID")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_SYS_TIME_H -Wno-multichar -DHAVE_CONFIG_H -DDYNAMIC_ANNOTATIONS_ENABLED=1")
 
 
 add_library(
