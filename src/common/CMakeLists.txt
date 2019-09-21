@@ -20,18 +20,7 @@ file(GLOB ALL_SRCS
         "${PROJECT_SOURCE_DIR}/common/*.c"
         "${PROJECT_SOURCE_DIR}/common/*.cc"
 
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/*.cpp"
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/*.c"
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/*.cc"
-
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/tools/*.cpp"
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/tools/*.c"
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/tools/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../sqlite-amalgamation-3290000/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../sqlite-amalgamation-3290000/*.c"
-	"${PROJECT_SOURCE_DIR}/../sqlite-amalgamation-3290000/*.cc"
-
+ 
 	"${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket/*.cpp"
 	"${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket/*.c"
 	"${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket/*.cc"

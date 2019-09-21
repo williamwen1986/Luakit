@@ -12,7 +12,6 @@ project(luakit)
 # Gradle automatically packages shared libraries with your APK.
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_HISTORICAL_STRERRO_R -DNVALGRIND -fvisibility=hidden")
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -fexceptions -frtti -fPIC -DUSE_HISTORICAL_STRERRO_R")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC -llog -lz -lc")
 
@@ -21,22 +20,7 @@ file(GLOB all_SRCS
         "${PROJECT_SOURCE_DIR}/*.hpp"
         "${PROJECT_SOURCE_DIR}/*.cpp"
         "${PROJECT_SOURCE_DIR}/*.c"
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/*.c"
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/*.h"
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/tools/*.cpp"
-        "${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/tools/*.h"
-                    ${PROJECT_SOURCE_DIR}/../sqlite-amalgamation-3290000/*.c
-                    ${PROJECT_SOURCE_DIR}/../extensions/HTTP*.cpp
-                    ${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master/*.c
-                    ${PROJECT_SOURCE_DIR}/../extensions/thread/*.cpp
-                    ${PROJECT_SOURCE_DIR}/../extensions/timer/*.cpp
-                    ${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket/*.cpp
-                    ${PROJECT_SOURCE_DIR}/../extensions/File/*.cpp
-                    ${PROJECT_SOURCE_DIR}/../extensions/debug/*.c
-                    ${PROJECT_SOURCE_DIR}/../extensions/luasocket/*.c
-                    ${PROJECT_SOURCE_DIR}/../extensions/Notify/*.cpp
-                    ${PROJECT_SOURCE_DIR}/../extensions/language/*.cpp
-       )
+        )
 
 list(FILTER all_SRCS EXCLUDE REGEX ".*lua_timer.cpp$")
 list(FILTER all_SRCS EXCLUDE REGEX ".*shell.c$")
@@ -83,6 +67,27 @@ file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/../libiconv-1.14" ${lib_build_DIR} )
 set_target_properties( common PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libiconv.a)
 
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../lua-5.1.5/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/../lua-5.1.5" ${lib_build_DIR} )
+set_target_properties( common PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/liblua.a)
+
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../sqlite-amalgamation-3290000/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/../sqlite-amalgamation-3290000" ${lib_build_DIR} )
+set_target_properties( common PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libsqlite.a)
+
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../extensions/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/../extensions" ${lib_build_DIR} )
+set_target_properties( common PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libextensions.a)
+
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../network/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/../network" ${lib_build_DIR} )
+set_target_properties( common PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libnetwork.a)
+
+
 
 add_library( ssl
              STATIC
@@ -112,35 +117,26 @@ set_target_properties( # Specifies the target library.
                         ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libcrypto.a 
                       )
 
-#add_subdirectory( "${PROJECT_SOURCE_DIR}/../libiconv-1.14" ${lib_build_DIR} )
-#set_target_properties( iconv PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libiconv.a)
-
-
-#target_link_libraries( curl ssl crypto)
-
-
 link_directories(${outputDir}/${ANDROID_ABI})
-target_link_libraries(luaFramework  common base event curl ssl crypto xml modp_b64 iconv)
+target_link_libraries(luaFramework  common  modp_b64 iconv lua sqlite extensions network curl base event ssl crypto xml )
 
 # Specifies a path to native header files.
 include_directories(
                     $ENV{OUTPUT_DIR}/
                     ${PROJECT_SOURCE_DIR}/../
-		    ${PROJECT_SOURCE_DIR}/../jni
+		                ${PROJECT_SOURCE_DIR}/../jni
                     ${PROJECT_SOURCE_DIR}/../common/
-                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua
                     ${PROJECT_SOURCE_DIR}/../openssl/include/
                     ${PROJECT_SOURCE_DIR}/../curl/include
-                    ${PROJECT_SOURCE_DIR}/../sqlite-amalgamation-3290000
-                    ${PROJECT_SOURCE_DIR}/../extensions/HTTP
-                    ${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master
-                    ${PROJECT_SOURCE_DIR}/../extensions/thread
-                    ${PROJECT_SOURCE_DIR}/../extensions/timer
-                    ${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket
-                    ${PROJECT_SOURCE_DIR}/../extensions/File
-                    ${PROJECT_SOURCE_DIR}/../extensions/debug
-                    ${PROJECT_SOURCE_DIR}/../extensions/luasocket
-                    ${PROJECT_SOURCE_DIR}/../extensions/Notify
-                    ${PROJECT_SOURCE_DIR}/../extensions/language
+                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua
                     ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/tools
+                    ${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master
+                    ${PROJECT_SOURCE_DIR}/../extensions/debug
+                    ${PROJECT_SOURCE_DIR}/../extensions/HTTP
+                    ${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket
+                    ${PROJECT_SOURCE_DIR}/../extensions/timer
+                    ${PROJECT_SOURCE_DIR}/../extensions/thread
+                    ${PROJECT_SOURCE_DIR}/../extensions/File
+                    ${PROJECT_SOURCE_DIR}/../extensions/Notify
+
 )
