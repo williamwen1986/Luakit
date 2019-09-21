@@ -141,9 +141,9 @@ static int ReadFile(lua_State *L)
     lua_pop(L, 1);
     bool b = base::ReadFileToString(fpath, &content);
     if (b) {
-        lua_pushnil(L);
-    } else {
         lua_pushlstring(L, content.c_str(), content.length());
+    } else {
+        lua_pushnil(L);
     }
     return 1;
 }
