@@ -21,7 +21,11 @@
 #include <vector>
 
 #include "base/base_export.h"
+<<<<<<< HEAD
 #include "build_config.h"
+=======
+#include "config/build_config.h"
+>>>>>>> Merge "build-macos" branch with William
 
 namespace base {
 class FilePath;

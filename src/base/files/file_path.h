@@ -111,7 +111,11 @@
 #include "base/containers/hash_tables.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"  // For implicit conversions.
+<<<<<<< HEAD
 #include "build_config.h"
+=======
+#include "config/build_config.h"
+>>>>>>> Merge "build-macos" branch with William
 
 // Windows-style drive letter support and pathname separator characters can be
 // enabled and disabled independently, to aid testing.  These #defines are

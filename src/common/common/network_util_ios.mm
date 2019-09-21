@@ -1,7 +1,6 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 
 #include "network_util.h"
-#include "build_config.h"
 
 #import "LReachability.h"
 
@@ -13,9 +12,6 @@ int NetworkUtil::NetWorkType() {
   const int k3G = 3;
   const int kWiFi = 4;
   const int k4G = 5;
-  
-// Patch [LARPOUX] :
-#ifdef OS_IOS // Not a Macintosh ?
   
   //客户端网络类型(1=2G,2=非wifi,3=3G,4=wifi,5=4G)
   LNetworkStatus status = CURRENT_NETWORK_STATUS;
@@ -49,7 +45,6 @@ int NetworkUtil::NetWorkType() {
     else if ([netinfo.currentRadioAccessTechnology isEqualToString:CTRadioAccessTechnologyLTE])
       return k4G;
   }
- #endif // OS_IOS
+  
   return kNonWiFi;
-
 }

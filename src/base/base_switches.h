@@ -7,7 +7,11 @@
 #ifndef BASE_BASE_SWITCHES_H_
 #define BASE_BASE_SWITCHES_H_
 
+<<<<<<< HEAD
 #include "build_config.h"
+=======
+#include "config/build_config.h"
+>>>>>>> Merge "build-macos" branch with William
 
 namespace switches {
 

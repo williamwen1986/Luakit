@@ -5,7 +5,11 @@
 #ifndef BASE_COMPILER_SPECIFIC_H_
 #define BASE_COMPILER_SPECIFIC_H_
 
+<<<<<<< HEAD
 #include "build_config.h"
+=======
+#include "config/build_config.h"
+>>>>>>> Merge "build-macos" branch with William
 
 #if defined(COMPILER_MSVC)
 

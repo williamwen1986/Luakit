@@ -4,7 +4,6 @@
 
 #include "base/critical_closure.h"
 
-#ifdef OS_IOS // Patch [LARPOUX]
 #import <UIKit/UIKit.h>
 
 #include "base/bind.h"
@@ -54,5 +53,3 @@ base::Closure MakeCriticalClosure(const base::Closure& closure) {
 }
 
 }  // namespace base
-
-#endif // OS_IOS

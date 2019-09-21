@@ -5,7 +5,11 @@
 #ifndef BASE_MEMORY_SHARED_MEMORY_H_
 #define BASE_MEMORY_SHARED_MEMORY_H_
 
+<<<<<<< HEAD
 #include "build_config.h"
+=======
+#include "config/build_config.h"
+>>>>>>> Merge "build-macos" branch with William
 
 #include <string>
 

@@ -13,7 +13,11 @@
 #include "base/base_export.h"
 #include "base/basictypes.h"
 //#include "base/debug/debugger.h"
+<<<<<<< HEAD
 #include "build_config.h"
+=======
+#include "config/build_config.h"
+>>>>>>> Merge "build-macos" branch with William
 
 //
 // Optional message capabilities

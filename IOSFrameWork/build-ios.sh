@@ -1,5 +1,6 @@
 #!/bin/bash
 
+<<<<<<< HEAD
 if [ -z "$CONFIG" ]
 then
     export CONFIG=Debug
@@ -44,6 +45,9 @@ checkError() {
 
 
 . ../bin/build-ios.sh luakit
+=======
+. ../bin/build-ios.sh Luakit
+>>>>>>> Merge "build-macos" branch with William
 checkError
 
 

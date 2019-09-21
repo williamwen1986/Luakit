@@ -6,13 +6,19 @@ You need to build the openSSL library for your target API version, such as:
 
 ```sh
 export CONFIG=Debug
+<<<<<<< HEAD
 export MACOS_SDK_VERSION=10.15
+=======
+>>>>>>> Merge "build-macos" branch with William
 cd luakit/src/openssl-1.1.1c/
 ./build-macos.sh
 ```
 
 The $CONFIG environment variable must be "Debug" or "Release".
+<<<<<<< HEAD
 The $MACOS_SDK_VERSION is your target SDK.
+=======
+>>>>>>> Merge "build-macos" branch with William
 
 You will get your library in luakit/libs/
 
@@ -23,13 +29,19 @@ If you want to build the complete Luakit library and not just Open SSL, you can 
 
 ```sh
 export CONFIG=Debug
+<<<<<<< HEAD
 export MACOS_SDK_VERSION=10.15
+=======
+>>>>>>> Merge "build-macos" branch with William
 cd luakit/
 ./build-macos.sh
 ```
 
 The $CONFIG environment variable must be "Debug" or "Release".
+<<<<<<< HEAD
 The $MACOS_SDK_VERSION is your target SDK.
+=======
+>>>>>>> Merge "build-macos" branch with William
 
 You will get your library in luakit/libs/
 

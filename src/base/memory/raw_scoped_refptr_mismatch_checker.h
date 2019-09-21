@@ -8,7 +8,11 @@
 #include "base/memory/ref_counted.h"
 #include "base/template_util.h"
 #include "base/tuple.h"
+<<<<<<< HEAD
 #include "build_config.h"
+=======
+#include "config/build_config.h"
+>>>>>>> Merge "build-macos" branch with William
 
 // It is dangerous to post a task with a T* argument where T is a subtype of
 // RefCounted(Base|ThreadSafeBase), since by the time the parameter is used, the

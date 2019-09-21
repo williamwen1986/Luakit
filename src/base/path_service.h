@@ -10,7 +10,11 @@
 #include "base/base_export.h"
 #include "base/base_paths.h"
 //#include "base/gtest_prod_util.h"
+<<<<<<< HEAD
 #include "build_config.h"
+=======
+#include "config/build_config.h"
+>>>>>>> Merge "build-macos" branch with William
 
 namespace base {
 class FilePath;

@@ -43,7 +43,7 @@
 //#include "base/debug/leak_annotations.h"
 #include "base/logging.h"
 #include "base/memory/aligned_memory.h"
-#include "dynamic_annotations/dynamic_annotations.h" // Patch [LARPOUX]
+#include "base/third_party/dynamic_annotations/dynamic_annotations.h"
 #include "base/threading/thread_restrictions.h"
 
 // LazyInstance uses its own struct initializer-list style static

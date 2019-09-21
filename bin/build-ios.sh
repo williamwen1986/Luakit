@@ -6,8 +6,13 @@ then
     export CONFIG=Debug
 fi
 
+<<<<<<< HEAD
 if [ -z $IOS_SDK_VERSION ]; then
 	export IOS_SDK_VERSION="13.0"
+=======
+if [ -z $SDK_VERSION ]; then
+	SDK_VERSION="12.4"
+>>>>>>> Merge "build-macos" branch with William
 fi
 
 PROJECT=$1
@@ -16,7 +21,11 @@ if [ -z $TARGET ]; then
     TARGET=$PROJECT
 fi
 
+<<<<<<< HEAD
 DEFAULT_OUTPUT=../../libs/ios$IOS_SDK_VERSION-$CONFIG
+=======
+DEFAULT_OUTPUT=../../libs/ios$SDK_VERSION-$CONFIG
+>>>>>>> Merge "build-macos" branch with William
 #-------------------------------------------------------------------
 
 path=$(dirname "$0")
@@ -43,6 +52,7 @@ if [ -z "$OUTPUT_DIR" ]
 then
      export OUTPUT_DIR="$DEFAULT_OUTPUT"
 fi
+<<<<<<< HEAD
 
 iosdev=`xcode-select --print-path`
 if [ ! -e "$iosdev/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS$IOS_SDK_VERSION.sdk" ]
@@ -60,6 +70,8 @@ fi
 
 
 
+=======
+>>>>>>> Merge "build-macos" branch with William
 mkdir -p "$OUTPUT_DIR" 2>/dev/null
 
 pushd "$OUTPUT_DIR" > /dev/null
@@ -67,11 +79,17 @@ dir=$(pwd)
 export OUTPUT_DIR="$dir"
 popd > /dev/null
 
+<<<<<<< HEAD
 
 
 rm -rf DerivedData
 
 LIB_ROOT=./generation
+=======
+rm -rf DerivedData
+
+LIB_ROOT=./libs
+>>>>>>> Merge "build-macos" branch with William
 rm -r $LIB_ROOT
 mkdir -p $LIB_ROOT
 
@@ -79,9 +97,15 @@ buildIOS()
 {
 	ARCH=$1
 
+<<<<<<< HEAD
     xcodebuild clean -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$IOS_SDK_VERSION 
     checkError
     xcodebuild build -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$IOS_SDK_VERSION 
+=======
+    xcodebuild clean -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$SDK_VERSION 
+    checkError
+    xcodebuild build -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$SDK_VERSION 
+>>>>>>> Merge "build-macos" branch with William
     checkError
     cp -v build/$CONFIG-$3/lib$PROJECT.a $LIB_ROOT/$PROJECT-$1.a
 }

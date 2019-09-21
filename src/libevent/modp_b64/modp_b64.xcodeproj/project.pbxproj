@@ -1,0 +1,315 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DD9B13632B7E66D964257147 /* modp_b64.cc in Sources */ = {isa = PBXBuildFile; fileRef = DEDF776BBEC8281C93A64B6D /* modp_b64.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		045535AE1B819A7A00930F2A /* DebugProject.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugProject.xcconfig; sourceTree = "<group>"; };
+		045535AF1B819A7A00930F2A /* FrameworkTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = FrameworkTarget.xcconfig; sourceTree = "<group>"; };
+		045535B01B819A7A00930F2A /* General.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = General.xcconfig; sourceTree = "<group>"; };
+		045535B11B819A7A00930F2A /* ReleaseProject.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseProject.xcconfig; sourceTree = "<group>"; };
+		045535B21B819A7A00930F2A /* StaticLibraryTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StaticLibraryTarget.xcconfig; sourceTree = "<group>"; };
+		045535B31B819A7A00930F2A /* TestTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = TestTarget.xcconfig; sourceTree = "<group>"; };
+		0E4F2F6A1B89E26245AF06BC /* libmodp_b64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmodp_b64.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		10DA374F9F86DABDA4B5C517 /* release.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release.gypi; path = ../../build/release.gypi; sourceTree = "<group>"; };
+		143E8CFD34443CDE201B9094 /* release_impl_official.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_impl_official.gypi; path = ../../build/internal/release_impl_official.gypi; sourceTree = "<group>"; };
+		4EBE19222AC0ED31A989588E /* release_defaults.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_defaults.gypi; path = ../../build/internal/release_defaults.gypi; sourceTree = "<group>"; };
+		580B9C8501DF3EC709E6A061 /* modp_b64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = modp_b64.h; sourceTree = "<group>"; };
+		9700AB5F1A78FA621E6C0866 /* filename_rules.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = filename_rules.gypi; path = ../../build/filename_rules.gypi; sourceTree = "<group>"; };
+		98B25FD155A8366A79516119 /* release_impl.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_impl.gypi; path = ../../build/internal/release_impl.gypi; sourceTree = "<group>"; };
+		B28B4A11EEEE09ADCA7136C2 /* modp_b64.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = modp_b64.gyp; sourceTree = "<group>"; };
+		C8298AAE4E08082CA5F31F7F /* common.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = common.gypi; path = ../../build/common.gypi; sourceTree = "<group>"; };
+		DEDF776BBEC8281C93A64B6D /* modp_b64.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = modp_b64.cc; sourceTree = "<group>"; };
+		E8524199C49AF10F6F7C1056 /* modp_b64_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = modp_b64_data.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		23220FB1B69DF900B350F4E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		045535AD1B819A7A00930F2A /* ShareConfig */ = {
+			isa = PBXGroup;
+			children = (
+				045535AE1B819A7A00930F2A /* DebugProject.xcconfig */,
+				045535AF1B819A7A00930F2A /* FrameworkTarget.xcconfig */,
+				045535B01B819A7A00930F2A /* General.xcconfig */,
+				045535B11B819A7A00930F2A /* ReleaseProject.xcconfig */,
+				045535B21B819A7A00930F2A /* StaticLibraryTarget.xcconfig */,
+				045535B31B819A7A00930F2A /* TestTarget.xcconfig */,
+			);
+			name = ShareConfig;
+			path = ../../ios/ShareConfig;
+			sourceTree = "<group>";
+		};
+		1351BB6DB9730ADD6E084355 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				DEDF776BBEC8281C93A64B6D /* modp_b64.cc */,
+				580B9C8501DF3EC709E6A061 /* modp_b64.h */,
+				E8524199C49AF10F6F7C1056 /* modp_b64_data.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		47B6D749C0C2208BA5B3AB55 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E4F2F6A1B89E26245AF06BC /* libmodp_b64.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B344E1E36A0E379B896D711A = {
+			isa = PBXGroup;
+			children = (
+				1351BB6DB9730ADD6E084355 /* Source */,
+				045535AD1B819A7A00930F2A /* ShareConfig */,
+				47B6D749C0C2208BA5B3AB55 /* Products */,
+				B510A59F03BE4A44C5D0EC89 /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+		B510A59F03BE4A44C5D0EC89 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				C8298AAE4E08082CA5F31F7F /* common.gypi */,
+				9700AB5F1A78FA621E6C0866 /* filename_rules.gypi */,
+				B28B4A11EEEE09ADCA7136C2 /* modp_b64.gyp */,
+				10DA374F9F86DABDA4B5C517 /* release.gypi */,
+				4EBE19222AC0ED31A989588E /* release_defaults.gypi */,
+				98B25FD155A8366A79516119 /* release_impl.gypi */,
+				143E8CFD34443CDE201B9094 /* release_impl_official.gypi */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9D5D659AE4416D4670CD8571 /* modp_b64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 931B23A2FE46F331AC5AF1FC /* Build configuration list for PBXNativeTarget "modp_b64" */;
+			buildPhases = (
+				1CEDF61ACBD35724F1E0CF88 /* Sources */,
+				23220FB1B69DF900B350F4E9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = modp_b64;
+			productName = modp_b64;
+			productReference = 0E4F2F6A1B89E26245AF06BC /* libmodp_b64.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C32AE9B342446FBEAFE37F63 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = A0CFE16930FD545404B1EB3C /* Build configuration list for PBXProject "modp_b64" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B344E1E36A0E379B896D711A;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9D5D659AE4416D4670CD8571 /* modp_b64 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1CEDF61ACBD35724F1E0CF88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD9B13632B7E66D964257147 /* modp_b64.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1BFBF971FDCBE6D65A6192A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 045535B21B819A7A00930F2A /* StaticLibraryTarget.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					V8_DEPRECATION_WARNINGS,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					"USE_LIBJPEG_TURBO=1",
+					ENABLE_INPUT_SPEECH,
+					DISCARDABLE_MEMORY_ALWAYS_SUPPORTED_NATIVELY,
+					SYSTEM_NATIVELY_SIGNALS_MEMORY_PRESSURE,
+					"ICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE",
+					"ENABLE_EGLIMAGE=1",
+					"CLD_VERSION=1",
+					"ENABLE_SPELLCHECK=1",
+					"DISABLE_FTP_SUPPORT=1",
+					NDEBUG,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					"NS_BLOCK_ASSERTIONS=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(TOP_SRC_DIR)",
+					"$(TOP_SRC_DIR)/Luakit",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = modp_b64;
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = iphoneos11.2;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TOP_SRC_DIR = "$(PROJECT_FILE_PATH)/../../..";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = (
+					"-Wendif-labels",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unneeded-internal-declaration",
+					"-Wno-c++11-narrowing",
+				);
+				WARNING_CFLAGS_excluded = "-Wall -Wextra";
+			};
+			name = Release;
+		};
+		467E76894DD50C45B6969FFA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 045535AE1B819A7A00930F2A /* DebugProject.xcconfig */;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Debug;
+		};
+		83A2C63910D9040426E7CF28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 045535B11B819A7A00930F2A /* ReleaseProject.xcconfig */;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Release;
+		};
+		EEA7266FCD05371C2E77BA6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 045535B21B819A7A00930F2A /* StaticLibraryTarget.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					V8_DEPRECATION_WARNINGS,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					"USE_LIBJPEG_TURBO=1",
+					ENABLE_INPUT_SPEECH,
+					DISCARDABLE_MEMORY_ALWAYS_SUPPORTED_NATIVELY,
+					SYSTEM_NATIVELY_SIGNALS_MEMORY_PRESSURE,
+					"ICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE",
+					"ENABLE_EGLIMAGE=1",
+					"CLD_VERSION=1",
+					"ENABLE_SPELLCHECK=1",
+					"DISABLE_FTP_SUPPORT=1",
+					"DYNAMIC_ANNOTATIONS_ENABLED=1",
+					"WTF_USE_DYNAMIC_ANNOTATIONS=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(TOP_SRC_DIR)",
+					"$(TOP_SRC_DIR)/Luakit",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = modp_b64;
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = iphoneos11.2;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TOP_SRC_DIR = "$(PROJECT_FILE_PATH)/../../..";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = (
+					"-Wendif-labels",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unneeded-internal-declaration",
+					"-Wno-c++11-narrowing",
+				);
+				WARNING_CFLAGS_excluded = "-Wall -Wextra";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		931B23A2FE46F331AC5AF1FC /* Build configuration list for PBXNativeTarget "modp_b64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEA7266FCD05371C2E77BA6B /* Debug */,
+				1BFBF971FDCBE6D65A6192A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Release;
+		};
+		A0CFE16930FD545404B1EB3C /* Build configuration list for PBXProject "modp_b64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				467E76894DD50C45B6969FFA /* Debug */,
+				83A2C63910D9040426E7CF28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C32AE9B342446FBEAFE37F63 /* Project object */;
+}

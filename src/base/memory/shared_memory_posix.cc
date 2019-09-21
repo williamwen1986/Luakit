@@ -27,7 +27,7 @@
 
 #if defined(OS_ANDROID)
 #include "base/os_compat_android.h"
-#include "third-party/ashmem/ashmem.h"
+#include "third_party/ashmem/ashmem.h"
 #endif
 
 using file_util::ScopedFD;

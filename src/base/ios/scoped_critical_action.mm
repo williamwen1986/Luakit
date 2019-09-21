@@ -4,8 +4,6 @@
 
 #include "base/ios/scoped_critical_action.h"
 
-
-#ifdef OS_IOS // Patch [LARPOUX] : Not a Macintosh ?
 #import <UIKit/UIKit.h>
 
 #include "base/logging.h"
@@ -65,5 +63,3 @@ void ScopedCriticalAction::Core::EndBackgroundTask() {
 
 }  // namespace ios
 }  // namespace base
-
-#endif // OS_IOS

@@ -20,7 +20,7 @@
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_cftyperef.h"
-#include "icu/icu_utf.h" // Patch [LARPOUX]
+#include "base/third_party/icu/icu_utf.h"
 #endif
 
 #if defined(OS_WIN)

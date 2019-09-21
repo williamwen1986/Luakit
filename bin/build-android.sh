@@ -29,6 +29,7 @@ fi
 
 path=$(dirname "$0")
 
+<<<<<<< HEAD
 if [ ! -d "$ANDROID_HOME/build-tools/" ]
 then
     	echo "$0: directory '$ANDROID_HOME/build-tools/' not found."
@@ -56,6 +57,8 @@ then
 fi
 
 
+=======
+>>>>>>> Merge "build-macos" branch with William
 # Checks exit value for error
 #
 checkError() {
@@ -65,7 +68,11 @@ checkError() {
         exit -1
     fi
 }
+<<<<<<< HEAD
 export OS_ANDROID=1
+=======
+
+>>>>>>> Merge "build-macos" branch with William
 make_abi() {
             ABI=$1
             echo
@@ -81,9 +88,14 @@ make_abi() {
                 -DCMAKE_BUILD_TYPE=$CONFIG \
                 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY="$OUTPUT_DIR/$ABI" \
                 -DOPENSSL_ROOT_DIR=../openssl-1.1.1c \
+<<<<<<< HEAD
                 -DOPENSSL_LIBRARIES="$OUTPUT_DIR/$ABI" \
                 -DANDROID=1 \
                 -DOS_ANDROID=1 \
+=======
+                -DOPENSSL_LIBRARIES=../openssl-1.1.1c/lib \
+                -DANDROID=1 \
+>>>>>>> Merge "build-macos" branch with William
 
             checkError
             make -j4
@@ -121,7 +133,11 @@ then
 	export ANDROID_NDK_HOME=$NDK_ROOT
 fi
 
+<<<<<<< HEAD
 rm -r obj CMakeFiles CMakeCache.txt 2>/dev/null
+=======
+rm -r obj CMakeFiles 2>/dev/null
+>>>>>>> Merge "build-macos" branch with William
 if [ .$BUILD = ."NDK_BUILD" ]; then
 $ANDROID_NDK_HOME/ndk-build    NDK_APPLICATION_MK=Application.mk
 cp -a obj/local/* "$OUTPUT_DIR"

@@ -7,7 +7,7 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "icu/icu_utf.h" // Patch [LARPOUX]
+#include "base/third_party/icu/icu_utf.h"
 
 namespace base {
 

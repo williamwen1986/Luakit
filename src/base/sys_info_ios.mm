@@ -3,11 +3,8 @@
 // found in the LICENSE file.
 
 #include "base/sys_info.h"
-#include "build_config.h"
-#ifdef OS_IOS
-#import <UIKit/UIKit.h>
-#endif
 
+#import <UIKit/UIKit.h>
 #include <mach/mach.h>
 #include <sys/sysctl.h>
 #include <sys/types.h>
@@ -18,8 +15,6 @@
 #include "base/strings/sys_string_conversions.h"
 
 namespace base {
-
-#if defined(OS_IOS) // Patch [LARPOUX]
 
 // static
 std::string SysInfo::OperatingSystemName() {
@@ -47,7 +42,6 @@ std::string SysInfo::GetDeviceName() {
   
   return *device_name;
 }
-
 
 std::string SysInfo::GetReadableDeviceName() {
   std::string name = SysInfo::GetDeviceName();
@@ -168,6 +162,5 @@ std::string SysInfo::CPUModelName() {
     return name;
   return std::string();
 }
-#endif
 
 }  // namespace base

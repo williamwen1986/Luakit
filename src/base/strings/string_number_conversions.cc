@@ -14,7 +14,7 @@
 #include "base/logging.h"
 #include "base/scoped_clear_errno.h"
 #include "base/strings/utf_string_conversions.h"
-#include "dmg_fp/dmg_fp.h" // Patch [LARPOUX]
+#include "base/third_party/dmg_fp/dmg_fp.h"
 
 namespace base {
 

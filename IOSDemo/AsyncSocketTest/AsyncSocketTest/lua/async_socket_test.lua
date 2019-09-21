@@ -7,7 +7,11 @@ end
 local socket
 local timer
 test.testOnIOThread = function ()
+<<<<<<< HEAD
     socket = lua_asyncSocket.create("88.190.98.37",80)
+=======
+    socket = lua_asyncSocket.create("127.0.0.1",80)
+>>>>>>> Merge "build-macos" branch with William
 
     socket.connectCallback = function (rv)
         if rv >= 0 then

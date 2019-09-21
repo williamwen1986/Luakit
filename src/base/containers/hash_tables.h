@@ -25,7 +25,11 @@
 
 #include "base/basictypes.h"
 #include "base/strings/string16.h"
+<<<<<<< HEAD
 #include "build_config.h"
+=======
+#include "config/build_config.h"
+>>>>>>> Merge "build-macos" branch with William
 
 #if defined(COMPILER_MSVC)
 #include <hash_map>
