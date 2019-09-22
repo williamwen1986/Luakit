@@ -28,7 +28,7 @@ list(FILTER all_SRCS EXCLUDE REGEX ".*shell.c$")
 
 
 add_library( luaFramework SHARED ${all_SRCS})
-link_directories(${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs)
+link_directories(${PROJECT_SOURCE_DIR}/../../libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE})
 
 #---- set(outputDir $ENV{OUTPUT_DIR})
 
@@ -100,7 +100,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                       # Provides the path to the library you want to import.
-                      ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libssl.a 
+                      ${PROJECT_SOURCE_DIR}/../../libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libssl.a 
                 )
 
 add_library( crypto
@@ -114,7 +114,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                         #Provides the path to the library you want to import.
-                        ${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libcrypto.a 
+                        ${PROJECT_SOURCE_DIR}/../../libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libcrypto.a 
                       )
 
 link_directories(${outputDir}/${ANDROID_ABI})

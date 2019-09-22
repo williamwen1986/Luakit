@@ -5,11 +5,13 @@ You need to build the openSSL library for your target API version, such as:
 
 ```sh
 export CONFIG=Debug
+export IOS_SDK_VERSION=13.0
 cd luakit/src/openssl-1.1.1c/
 ./build-ios.sh
 ```
 
 The $CONFIG environment variable must be "Debug" or "Release".
+The $IOS_SDK_VERSION is your target SDK.
 
 You will get your library in luakit/libs/
 
@@ -20,11 +22,13 @@ If you want to build the complete Luakit library and not just Open SSL, you can 
 
 ```sh
 export CONFIG=Debug
+export IOS_SDK_VERSION=13.0
 cd luakit/
 ./build-ios.sh
 ```
 
 The $CONFIG environment variable must be "Debug" or "Release".
+The $IOS_SDK_VERSION is your target SDK.
 
 You will get your library in luakit/libs/
 

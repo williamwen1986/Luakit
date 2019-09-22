@@ -14,6 +14,7 @@ generateDebugRFile
 fileChanges
 fileHashes
 local.properties
+**/generation/
 **/libs/
 **/build
 **/**/obj/

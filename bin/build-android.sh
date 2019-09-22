@@ -29,6 +29,33 @@ fi
 
 path=$(dirname "$0")
 
+if [ ! -d "$ANDROID_HOME/build-tools/" ]
+then
+    	echo "$0: directory '$ANDROID_HOME/build-tools/' not found."
+	    echo "Have you set correctly \$ANDROID_HOME environment variable ?"
+	    exit -1
+fi
+
+if [ -z "$ANDROID_NDK_HOME" ]
+then
+	    export ANDROID_NDK_HOME=$ANDROID_NDK
+fi
+
+if [ ! -d "$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/" ]
+then
+    	echo "$0: directory '$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/' not found."
+	    echo "Have you set \$ANDROID_NDK_HOME environment variable ?"
+	    exit -1
+fi
+
+if [ ! -e "$ANDROID_NDK_HOME/platforms/android-$ANDROID_API" ]
+then
+    echo "$ANDROID_NDK_HOME/platforms/android-$ANDROID_API" not found
+    echo "did you export the ANDROID_API environment variable ?"
+    exit -1
+fi
+
+
 # Checks exit value for error
 #
 checkError() {

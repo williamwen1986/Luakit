@@ -5,15 +5,15 @@ then
     export CONFIG=Debug
 fi
 
-if [ -z $SDK_VERSION ]; then
-	SDK_VERSION="10.14"
+if [ -z $MACOS_SDK_VERSION ]; then
+	MACOS_SDK_VERSION="10.15"
 fi
 
 
 
-LIB_ROOT=./libs
+LIB_ROOT=./
 
-DEFAULT_OUTPUT=../../libs/macos$SDK_VERSION-$CONFIG
+DEFAULT_OUTPUT=../../libs/macos$MACOS_MACOS_SDK_VERSION-$CONFIG
 #--------------------------------------------------
 path=$(dirname "$0")
 
@@ -45,7 +45,7 @@ fi
          echo "Error executing make for platform:${ANDROID_TARGET_PLATFORM}"
          exit 1
      fi
-
+   LIB_ROOT = ./generation 
     mkdir -p "${LIB_ROOT}/macos-$CONFIG/"
 
     rm "${LIB_ROOT}/macos-$CONFIG/libcrypto.dylib" 2>/dev/null

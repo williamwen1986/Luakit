@@ -54,6 +54,13 @@ then
 	    exit -1
 fi
 
+if [ ! -e "$ANDROID_NDK_HOME/platforms/android-$ANDROID_API" ]
+then
+    echo "$ANDROID_NDK_HOME/platforms/android-$ANDROID_API" not found
+    echo "did you export the ANDROID_API environment variable ?"
+    exit -1
+fi
+
 
 # Checks exit value for error
 #

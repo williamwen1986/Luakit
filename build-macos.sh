@@ -5,13 +5,21 @@ then
     export CONFIG=Debug
 fi
 
-if [ -z $SDK_VERSION ]; then
-	SDK_VERSION="10.14"
+if [ -z $MACOS_SDK_VERSION ]; then
+	export MACOS_SDK_VERSION="10.15"
 fi
 
 if [ -z "$OUTPUT_DIR" ]
 then
-export OUTPUT_DIR=libs/macos$SDK_VERSION-$CONFIG
+export OUTPUT_DIR=libs/macos$MACOS_SDK_VERSION-$CONFIG
+fi
+
+macosdev=`xcode-select --print-path`
+if [ ! -e "$macosdev/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$MACOS_SDK_VERSION.sdk" ]
+then
+    echo "$macosdev/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$MACOS_SDK_VERSION.sdk" not found
+    echo "did you export the MACOS_SDK_VERSION environment variable ?"
+    exit -1
 fi
 
 mkdir -p $OUTPUT_DIR 2>/dev/null
@@ -27,6 +35,8 @@ checkError() {
         exit -1
     fi
 }
+
+
 ./clean.sh
 rm -r "$OUTPUT_DIR"/*
 

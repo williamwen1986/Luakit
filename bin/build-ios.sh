@@ -6,8 +6,8 @@ then
     export CONFIG=Debug
 fi
 
-if [ -z $SDK_VERSION ]; then
-	SDK_VERSION="12.4"
+if [ -z $IOS_SDK_VERSION ]; then
+	export IOS_SDK_VERSION="13.0"
 fi
 
 PROJECT=$1
@@ -16,7 +16,7 @@ if [ -z $TARGET ]; then
     TARGET=$PROJECT
 fi
 
-DEFAULT_OUTPUT=../../libs/ios$SDK_VERSION-$CONFIG
+DEFAULT_OUTPUT=../../libs/ios$IOS_SDK_VERSION-$CONFIG
 #-------------------------------------------------------------------
 
 path=$(dirname "$0")
@@ -43,6 +43,23 @@ if [ -z "$OUTPUT_DIR" ]
 then
      export OUTPUT_DIR="$DEFAULT_OUTPUT"
 fi
+
+iosdev=`xcode-select --print-path`
+if [ ! -e "$iosdev/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS$IOS_SDK_VERSION.sdk" ]
+then
+    echo "$iosdev/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS$IOS_SDK_VERSION.sdk" not found
+    echo "did you export the IOS_SDK_VERSION environment variable ?"
+    exit -1
+fi
+if [ ! -e "$iosdev/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator$IOS_SDK_VERSION.sdk" ]
+then
+    echo "$iosdev/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator$IOS_SDK_VERSION.sdk"  not found
+    echo "did you export the IOS_SDK_VERSION environment variable ?"
+    exit -1
+fi
+
+
+
 mkdir -p "$OUTPUT_DIR" 2>/dev/null
 
 pushd "$OUTPUT_DIR" > /dev/null
@@ -50,9 +67,11 @@ dir=$(pwd)
 export OUTPUT_DIR="$dir"
 popd > /dev/null
 
+
+
 rm -rf DerivedData
 
-LIB_ROOT=./libs
+LIB_ROOT=./generation
 rm -r $LIB_ROOT
 mkdir -p $LIB_ROOT
 
@@ -60,9 +79,9 @@ buildIOS()
 {
 	ARCH=$1
 
-    xcodebuild clean -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$SDK_VERSION 
+    xcodebuild clean -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$IOS_SDK_VERSION 
     checkError
-    xcodebuild build -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$SDK_VERSION 
+    xcodebuild build -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch $1 -destination $2 -sdk $3$IOS_SDK_VERSION 
     checkError
     cp -v build/$CONFIG-$3/lib$PROJECT.a $LIB_ROOT/$PROJECT-$1.a
 }

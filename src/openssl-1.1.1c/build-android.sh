@@ -55,7 +55,7 @@ if [ ! ${ANDROID_NDK_HOME} ]; then
  fi
 
 
-ANDROID_LIB_ROOT=./libs
+ANDROID_LIB_ROOT=./generation
 ANDROID_TOOLCHAIN_DIR=/tmp/android-toolchain
 
 HOST_INFO=`uname -a`
