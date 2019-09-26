@@ -67,7 +67,7 @@ local Field = {
                     -- table column settings
                     settings = {
                         default = nil,
-                        null = false,
+                        null = true,
                         unique = false, 
                         max_length = nil,
                         primary_key = false,
