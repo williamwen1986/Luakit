@@ -4,12 +4,12 @@
 
 #include "base/test/perf_log.h"
 
-#include "base/file_util.h"
+#include "base/files/file_util.h"
 #include "base/logging.h"
 
 namespace base {
 
-static FILE* perf_log_file = NULL;
+static FILE* perf_log_file = nullptr;
 
 bool InitPerfLog(const FilePath& log_file) {
   if (perf_log_file) {
@@ -19,7 +19,7 @@ bool InitPerfLog(const FilePath& log_file) {
   }
 
   perf_log_file = OpenFile(log_file, "w");
-  return perf_log_file != NULL;
+  return perf_log_file != nullptr;
 }
 
 void FinalizePerfLog() {
@@ -39,6 +39,7 @@ void LogPerfResult(const char* test_name, double value, const char* units) {
 
   fprintf(perf_log_file, "%s\t%g\t%s\n", test_name, value, units);
   printf("%s\t%g\t%s\n", test_name, value, units);
+  fflush(stdout);
 }
 
 }  // namespace base

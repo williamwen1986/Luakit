@@ -4,14 +4,23 @@
 
 #include "base/process/process_handle.h"
 
-#include "base/file_util.h"
+#include "base/files/file_util.h"
 #include "base/process/internal_linux.h"
+#if defined(OS_AIX)
+#include "base/process/internal_aix.h"
+#endif
 
 namespace base {
 
 ProcessId GetParentProcessId(ProcessHandle process) {
   ProcessId pid =
+#if defined(OS_AIX)
+      internalAIX::ReadProcStatsAndGetFieldAsInt64(process,
+                                                   internalAIX::VM_PPID);
+#else
       internal::ReadProcStatsAndGetFieldAsInt64(process, internal::VM_PPID);
+#endif
+  // TODO(zijiehe): Returns 0 if |process| does not have a parent process.
   if (pid)
     return pid;
   return -1;

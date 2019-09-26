@@ -6,28 +6,39 @@
 #define BASE_SYNCHRONIZATION_WAITABLE_EVENT_WATCHER_H_
 
 #include "base/base_export.h"
-#include "config/build_config.h"
+#include "base/macros.h"
+#include "base/sequenced_task_runner.h"
+#include "build/build_config.h"
 
 #if defined(OS_WIN)
 #include "base/win/object_watcher.h"
-#else
-#include "base/callback.h"
-#include "base/message_loop/message_loop.h"
+#include "base/win/scoped_handle.h"
+#elif defined(OS_MACOSX)
+#include <dispatch/dispatch.h>
+
+#include "base/mac/scoped_dispatch_object.h"
+#include "base/memory/weak_ptr.h"
 #include "base/synchronization/waitable_event.h"
+#else
+#include "base/sequence_checker.h"
+#include "base/synchronization/waitable_event.h"
+#endif
+
+#if !defined(OS_WIN)
+#include "base/callback.h"
 #endif
 
 namespace base {
 
 class Flag;
 class AsyncWaiter;
-class AsyncCallbackTask;
 class WaitableEvent;
 
 // This class provides a way to wait on a WaitableEvent asynchronously.
 //
 // Each instance of this object can be waiting on a single WaitableEvent. When
-// the waitable event is signaled, a callback is made in the thread of a given
-// MessageLoop. This callback can be deleted by deleting the waiter.
+// the waitable event is signaled, a callback is invoked on the sequence that
+// called StartWatching(). This callback can be deleted by deleting the waiter.
 //
 // Typical usage:
 //
@@ -35,7 +46,7 @@ class WaitableEvent;
 //    public:
 //     void DoStuffWhenSignaled(WaitableEvent *waitable_event) {
 //       watcher_.StartWatching(waitable_event,
-//           base::Bind(&MyClass::OnWaitableEventSignaled, this);
+//           base::BindOnce(&MyClass::OnWaitableEventSignaled, this);
 //     }
 //    private:
 //     void OnWaitableEventSignaled(WaitableEvent* waitable_event) {
@@ -56,57 +67,92 @@ class WaitableEvent;
 // missing a signal.
 //
 // NOTE: you /are/ allowed to delete the WaitableEvent while still waiting on
-// it with a Watcher. It will act as if the event was never signaled.
+// it with a Watcher. But pay attention: if the event was signaled and deleted
+// right after, the callback may be called with deleted WaitableEvent pointer.
 
 class BASE_EXPORT WaitableEventWatcher
 #if defined(OS_WIN)
-    : public win::ObjectWatcher::Delegate {
-#else
-    : public MessageLoop::DestructionObserver {
+    : public win::ObjectWatcher::Delegate
 #endif
+{
  public:
-  typedef Callback<void(WaitableEvent*)> EventCallback;
+  using EventCallback = OnceCallback<void(WaitableEvent*)>;
+
   WaitableEventWatcher();
-  virtual ~WaitableEventWatcher();
 
-  // When @event is signaled, the given callback is called on the thread of the
-  // current message loop when StartWatching is called.
-  bool StartWatching(WaitableEvent* event, const EventCallback& callback);
+#if defined(OS_WIN)
+  ~WaitableEventWatcher() override;
+#else
+  ~WaitableEventWatcher();
+#endif
 
-  // Cancel the current watch. Must be called from the same thread which
+  // When |event| is signaled, |callback| is called on the sequence that called
+  // StartWatching().
+  // |task_runner| is used for asynchronous executions of calling |callback|.
+  bool StartWatching(WaitableEvent* event,
+                     EventCallback callback,
+                     scoped_refptr<SequencedTaskRunner> task_runner);
+
+  // Cancel the current watch. Must be called from the same sequence which
   // started the watch.
   //
   // Does nothing if no event is being watched, nor if the watch has completed.
   // The callback will *not* be called for the current watch after this
-  // function returns. Since the callback runs on the same thread as this
+  // function returns. Since the callback runs on the same sequence as this
   // function, it cannot be called during this function either.
   void StopWatching();
 
-  // Return the currently watched event, or NULL if no object is currently being
-  // watched.
-  WaitableEvent* GetWatchedEvent();
-
-  // Return the callback that will be invoked when the event is
-  // signaled.
-  const EventCallback& callback() const { return callback_; }
-
  private:
 #if defined(OS_WIN)
-  virtual void OnObjectSignaled(HANDLE h) OVERRIDE;
-  win::ObjectWatcher watcher_;
-#else
-  // Implementation of MessageLoop::DestructionObserver
-  virtual void WillDestroyCurrentMessageLoop() OVERRIDE;
+  void OnObjectSignaled(HANDLE h) override;
 
-  MessageLoop* message_loop_;
+  // Duplicated handle of the event passed to StartWatching().
+  win::ScopedHandle duplicated_event_handle_;
+
+  // A watcher for |duplicated_event_handle_|. The handle MUST outlive
+  // |watcher_|.
+  win::ObjectWatcher watcher_;
+
+  EventCallback callback_;
+  WaitableEvent* event_ = nullptr;
+#elif defined(OS_MACOSX)
+  // Invokes the callback and resets the source. Must be called on the task
+  // runner on which StartWatching() was called.
+  void InvokeCallback();
+
+  // Closure bound to the event being watched. This will be is_null() if
+  // nothing is being watched.
+  OnceClosure callback_;
+
+  // A reference to the receive right that is kept alive while a watcher
+  // is waiting. Null if no event is being watched.
+  scoped_refptr<WaitableEvent::ReceiveRight> receive_right_;
+
+  // A TYPE_MACH_RECV dispatch source on |receive_right_|. When a receive event
+  // is delivered, the message queue will be peeked and the bound |callback_|
+  // may be run. This will be null if nothing is currently being watched.
+  ScopedDispatchObject<dispatch_source_t> source_;
+
+  // Used to vend a weak pointer for calling InvokeCallback() from the
+  // |source_| event handler.
+  WeakPtrFactory<WaitableEventWatcher> weak_ptr_factory_;
+#else
+  // Instantiated in StartWatching(). Set before the callback runs. Reset in
+  // StopWatching() or StartWatching().
   scoped_refptr<Flag> cancel_flag_;
-  AsyncWaiter* waiter_;
-  base::Closure internal_callback_;
+
+  // Enqueued in the wait list of the watched WaitableEvent.
+  AsyncWaiter* waiter_ = nullptr;
+
+  // Kernel of the watched WaitableEvent.
   scoped_refptr<WaitableEvent::WaitableEventKernel> kernel_;
+
+  // Ensures that StartWatching() and StopWatching() are called on the same
+  // sequence.
+  SequenceChecker sequence_checker_;
 #endif
 
-  WaitableEvent* event_;
-  EventCallback callback_;
+  DISALLOW_COPY_AND_ASSIGN(WaitableEventWatcher);
 };
 
 }  // namespace base

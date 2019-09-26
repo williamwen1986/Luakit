@@ -28,22 +28,21 @@
 #ifndef BASE_ATOMICOPS_H_
 #define BASE_ATOMICOPS_H_
 
-#include "base/basictypes.h"
-#include "config/build_config.h"
+#include <stdint.h>
 
-#if defined(OS_WIN) && defined(ARCH_CPU_64_BITS)
-// windows.h #defines this (only on x64). This causes problems because the
-// public API also uses MemoryBarrier at the public name for this fence. So, on
-// X64, undef it, and call its documented
-// (http://msdn.microsoft.com/en-us/library/windows/desktop/ms684208.aspx)
-// implementation directly.
-#undef MemoryBarrier
-#endif
+// Small C++ header which defines implementation specific macros used to
+// identify the STL implementation.
+// - libc++: captures __config for _LIBCPP_VERSION
+// - libstdc++: captures bits/c++config.h for __GLIBCXX__
+#include <cstddef>
+
+#include "base/base_export.h"
+#include "build/build_config.h"
 
 namespace base {
 namespace subtle {
 
-typedef int32 Atomic32;
+typedef int32_t Atomic32;
 #ifdef ARCH_CPU_64_BITS
 // We need to be able to go between Atomic64 and AtomicWord implicitly.  This
 // means Atomic64 and AtomicWord should be the same type on 64-bit.
@@ -92,8 +91,7 @@ Atomic32 Barrier_AtomicIncrement(volatile Atomic32* ptr,
 // ensure that no later memory access can be reordered ahead of the operation.
 // "Release" operations ensure that no previous memory access can be reordered
 // after the operation.  "Barrier" operations have both "Acquire" and "Release"
-// semantics.   A MemoryBarrier() has "Barrier" semantics, but does no memory
-// access.
+// semantics.
 Atomic32 Acquire_CompareAndSwap(volatile Atomic32* ptr,
                                 Atomic32 old_value,
                                 Atomic32 new_value);
@@ -101,7 +99,6 @@ Atomic32 Release_CompareAndSwap(volatile Atomic32* ptr,
                                 Atomic32 old_value,
                                 Atomic32 new_value);
 
-void MemoryBarrier();
 void NoBarrier_Store(volatile Atomic32* ptr, Atomic32 value);
 void Acquire_Store(volatile Atomic32* ptr, Atomic32 value);
 void Release_Store(volatile Atomic32* ptr, Atomic32 value);
@@ -133,28 +130,15 @@ Atomic64 Acquire_Load(volatile const Atomic64* ptr);
 Atomic64 Release_Load(volatile const Atomic64* ptr);
 #endif  // ARCH_CPU_64_BITS
 
-}  // namespace base::subtle
+}  // namespace subtle
 }  // namespace base
 
-// Include our platform specific implementation.
-#if defined(THREAD_SANITIZER)
-#include "base/atomicops_internals_tsan.h"
-#elif defined(OS_WIN) && defined(COMPILER_MSVC) && defined(ARCH_CPU_X86_FAMILY)
-#include "base/atomicops_internals_x86_msvc.h"
-#elif defined(OS_MACOSX)
-#include "base/atomicops_internals_mac.h"
-#elif defined(OS_NACL)
-#include "base/atomicops_internals_gcc.h"
-#elif defined(COMPILER_GCC) && defined(ARCH_CPU_ARM_FAMILY) && defined(ARCH_CPU_64_BITS)
-#include "base/atomicops_internals_arm64_gcc.h"
-#elif defined(COMPILER_GCC) && defined(ARCH_CPU_ARM_FAMILY)
-#include "base/atomicops_internals_arm_gcc.h"
-#elif defined(COMPILER_GCC) && defined(ARCH_CPU_X86_FAMILY)
-#include "base/atomicops_internals_x86_gcc.h"
-#elif defined(COMPILER_GCC) && defined(ARCH_CPU_MIPS_FAMILY)
-#include "base/atomicops_internals_mips_gcc.h"
+#if defined(OS_WIN) && defined(ARCH_CPU_X86_FAMILY)
+// TODO(jfb): Try to use base/atomicops_internals_portable.h everywhere.
+// https://crbug.com/559247.
+#  include "base/atomicops_internals_x86_msvc.h"
 #else
-#error "Atomic operations are not supported on your platform"
+#  include "base/atomicops_internals_portable.h"
 #endif
 
 // On some platforms we need additional declarations to make

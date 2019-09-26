@@ -2,25 +2,45 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/file_util.h"
 #include "base/files/file.h"
+
+#include <stdint.h>
+
+#include <utility>
+
+#include "base/files/file_util.h"
+#include "base/files/memory_mapped_file.h"
 #include "base/files/scoped_temp_dir.h"
+#include "base/strings/string_util.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::File;
 using base::FilePath;
 
-TEST(File, Create) {
+TEST(FileTest, Create) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  FilePath file_path = temp_dir.path().AppendASCII("create_file_1");
+  FilePath file_path = temp_dir.GetPath().AppendASCII("create_file_1");
+
+  {
+    // Don't create a File at all.
+    File file;
+    EXPECT_FALSE(file.IsValid());
+    EXPECT_EQ(base::File::FILE_ERROR_FAILED, file.error_details());
+
+    File file2(base::File::FILE_ERROR_TOO_MANY_OPENED);
+    EXPECT_FALSE(file2.IsValid());
+    EXPECT_EQ(base::File::FILE_ERROR_TOO_MANY_OPENED, file2.error_details());
+  }
 
   {
     // Open a file that doesn't exist.
     File file(file_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
     EXPECT_FALSE(file.IsValid());
     EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND, file.error_details());
+    EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND, base::File::GetLastFileError());
   }
 
   {
@@ -62,12 +82,13 @@ TEST(File, Create) {
     EXPECT_FALSE(file.IsValid());
     EXPECT_FALSE(file.created());
     EXPECT_EQ(base::File::FILE_ERROR_EXISTS, file.error_details());
+    EXPECT_EQ(base::File::FILE_ERROR_EXISTS, base::File::GetLastFileError());
   }
 
   {
     // Create or overwrite a file.
     File file(file_path,
-              base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_READ);
+              base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
     EXPECT_TRUE(file.IsValid());
     EXPECT_TRUE(file.created());
     EXPECT_EQ(base::File::FILE_OK, file.error_details());
@@ -75,7 +96,7 @@ TEST(File, Create) {
 
   {
     // Create a delete-on-close file.
-    file_path = temp_dir.path().AppendASCII("create_file_2");
+    file_path = temp_dir.GetPath().AppendASCII("create_file_2");
     File file(file_path,
               base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_READ |
                   base::File::FLAG_DELETE_ON_CLOSE);
@@ -87,10 +108,38 @@ TEST(File, Create) {
   EXPECT_FALSE(base::PathExists(file_path));
 }
 
-TEST(File, DeleteOpenFile) {
+TEST(FileTest, SelfSwap) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  FilePath file_path = temp_dir.path().AppendASCII("create_file_1");
+  FilePath file_path = temp_dir.GetPath().AppendASCII("create_file_1");
+  File file(file_path,
+            base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_DELETE_ON_CLOSE);
+  std::swap(file, file);
+  EXPECT_TRUE(file.IsValid());
+}
+
+TEST(FileTest, Async) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("create_file");
+
+  {
+    File file(file_path, base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_ASYNC);
+    EXPECT_TRUE(file.IsValid());
+    EXPECT_TRUE(file.async());
+  }
+
+  {
+    File file(file_path, base::File::FLAG_OPEN_ALWAYS);
+    EXPECT_TRUE(file.IsValid());
+    EXPECT_FALSE(file.async());
+  }
+}
+
+TEST(FileTest, DeleteOpenFile) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("create_file_1");
 
   // Create a file.
   File file(file_path,
@@ -114,10 +163,10 @@ TEST(File, DeleteOpenFile) {
   EXPECT_FALSE(base::PathExists(file_path));
 }
 
-TEST(File, ReadWrite) {
+TEST(FileTest, ReadWrite) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  FilePath file_path = temp_dir.path().AppendASCII("read_write_file");
+  FilePath file_path = temp_dir.GetPath().AppendASCII("read_write_file");
   File file(file_path,
             base::File::FLAG_CREATE | base::File::FLAG_READ |
                 base::File::FLAG_WRITE);
@@ -128,6 +177,10 @@ TEST(File, ReadWrite) {
 
   // Write 0 bytes to the file.
   int bytes_written = file.Write(0, data_to_write, 0);
+  EXPECT_EQ(0, bytes_written);
+
+  // Write 0 bytes, with buf=nullptr.
+  bytes_written = file.Write(0, nullptr, 0);
   EXPECT_EQ(0, bytes_written);
 
   // Write "test" to the file.
@@ -170,7 +223,7 @@ TEST(File, ReadWrite) {
   EXPECT_EQ(kPartialWriteLength, bytes_written);
 
   // Make sure the file was extended.
-  int64 file_size = 0;
+  int64_t file_size = 0;
   EXPECT_TRUE(GetFileSize(file_path, &file_size));
   EXPECT_EQ(kOffsetBeyondEndOfFile + kPartialWriteLength, file_size);
 
@@ -186,10 +239,29 @@ TEST(File, ReadWrite) {
     EXPECT_EQ(data_to_write[i - kOffsetBeyondEndOfFile], data_read_2[i]);
 }
 
-TEST(File, Append) {
+TEST(FileTest, GetLastFileError) {
+#if defined(OS_WIN)
+  ::SetLastError(ERROR_ACCESS_DENIED);
+#else
+  errno = EACCES;
+#endif
+  EXPECT_EQ(File::FILE_ERROR_ACCESS_DENIED, File::GetLastFileError());
+
+  base::ScopedTempDir temp_dir;
+  EXPECT_TRUE(temp_dir.CreateUniqueTempDir());
+
+  FilePath nonexistent_path(temp_dir.GetPath().AppendASCII("nonexistent"));
+  File file(nonexistent_path, File::FLAG_OPEN | File::FLAG_READ);
+  File::Error last_error = File::GetLastFileError();
+  EXPECT_FALSE(file.IsValid());
+  EXPECT_EQ(File::FILE_ERROR_NOT_FOUND, file.error_details());
+  EXPECT_EQ(File::FILE_ERROR_NOT_FOUND, last_error);
+}
+
+TEST(FileTest, Append) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  FilePath file_path = temp_dir.path().AppendASCII("append_file");
+  FilePath file_path = temp_dir.GetPath().AppendASCII("append_file");
   File file(file_path, base::File::FLAG_CREATE | base::File::FLAG_APPEND);
   ASSERT_TRUE(file.IsValid());
 
@@ -198,6 +270,10 @@ TEST(File, Append) {
 
   // Write 0 bytes to the file.
   int bytes_written = file.Write(0, data_to_write, 0);
+  EXPECT_EQ(0, bytes_written);
+
+  // Write 0 bytes, with buf=nullptr.
+  bytes_written = file.Write(0, nullptr, 0);
   EXPECT_EQ(0, bytes_written);
 
   // Write "test" to the file.
@@ -211,7 +287,7 @@ TEST(File, Append) {
   ASSERT_TRUE(file2.IsValid());
 
   // Test passing the file around.
-  file = file2.Pass();
+  file = std::move(file2);
   EXPECT_FALSE(file2.IsValid());
   ASSERT_TRUE(file.IsValid());
 
@@ -234,10 +310,10 @@ TEST(File, Append) {
 }
 
 
-TEST(File, Length) {
+TEST(FileTest, Length) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  FilePath file_path = temp_dir.path().AppendASCII("truncate_file");
+  FilePath file_path = temp_dir.GetPath().AppendASCII("truncate_file");
   File file(file_path,
             base::File::FLAG_CREATE | base::File::FLAG_READ |
                 base::File::FLAG_WRITE);
@@ -252,7 +328,7 @@ TEST(File, Length) {
 
   // Extend the file.
   const int kExtendedFileLength = 10;
-  int64 file_size = 0;
+  int64_t file_size = 0;
   EXPECT_TRUE(file.SetLength(kExtendedFileLength));
   EXPECT_EQ(kExtendedFileLength, file.GetLength());
   EXPECT_TRUE(GetFileSize(file_path, &file_size));
@@ -279,17 +355,24 @@ TEST(File, Length) {
   EXPECT_EQ(file_size, bytes_read);
   for (int i = 0; i < file_size; i++)
     EXPECT_EQ(data_to_write[i], data_read[i]);
+
+  // Close the file and reopen with base::File::FLAG_CREATE_ALWAYS, and make
+  // sure the file is empty (old file was overridden).
+  file.Close();
+  file.Initialize(file_path,
+                  base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  EXPECT_EQ(0, file.GetLength());
 }
 
 // Flakily fails: http://crbug.com/86494
 #if defined(OS_ANDROID)
-TEST(File, TouchGetInfo) {
+TEST(FileTest, TouchGetInfo) {
 #else
-TEST(File, DISABLED_TouchGetInfo) {
+TEST(FileTest, DISABLED_TouchGetInfo) {
 #endif
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  File file(temp_dir.path().AppendASCII("touch_get_info_file"),
+  File file(temp_dir.GetPath().AppendASCII("touch_get_info_file"),
             base::File::FLAG_CREATE | base::File::FLAG_WRITE |
                 base::File::FLAG_WRITE_ATTRIBUTES);
   ASSERT_TRUE(file.IsValid());
@@ -349,18 +432,41 @@ TEST(File, DISABLED_TouchGetInfo) {
             creation_time.ToInternalValue());
 }
 
-TEST(File, ReadFileAtCurrentPosition) {
+// Test we can retrieve the file's creation time through File::GetInfo().
+TEST(FileTest, GetInfoForCreationTime) {
+  int64_t before_creation_time_s =
+      base::Time::Now().ToDeltaSinceWindowsEpoch().InSeconds();
+
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("test_file");
+  File file(file_path, base::File::FLAG_CREATE | base::File::FLAG_READ |
+                           base::File::FLAG_WRITE);
+  EXPECT_TRUE(file.IsValid());
+
+  int64_t after_creation_time_s =
+      base::Time::Now().ToDeltaSinceWindowsEpoch().InSeconds();
+
+  base::File::Info info;
+  EXPECT_TRUE(file.GetInfo(&info));
+  EXPECT_GE(info.creation_time.ToDeltaSinceWindowsEpoch().InSeconds(),
+            before_creation_time_s);
+  EXPECT_LE(info.creation_time.ToDeltaSinceWindowsEpoch().InSeconds(),
+            after_creation_time_s);
+}
+
+TEST(FileTest, ReadAtCurrentPosition) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   FilePath file_path =
-      temp_dir.path().AppendASCII("read_file_at_current_position");
+      temp_dir.GetPath().AppendASCII("read_at_current_position");
   File file(file_path,
             base::File::FLAG_CREATE | base::File::FLAG_READ |
                 base::File::FLAG_WRITE);
   EXPECT_TRUE(file.IsValid());
 
   const char kData[] = "test";
-  const int kDataSize = arraysize(kData) - 1;
+  const int kDataSize = sizeof(kData) - 1;
   EXPECT_EQ(kDataSize, file.Write(0, kData, kDataSize));
 
   EXPECT_EQ(0, file.Seek(base::File::FROM_BEGIN, 0));
@@ -371,25 +477,134 @@ TEST(File, ReadFileAtCurrentPosition) {
   EXPECT_EQ(kDataSize - first_chunk_size,
             file.ReadAtCurrentPos(buffer + first_chunk_size,
                                   kDataSize - first_chunk_size));
-  EXPECT_EQ(std::string(buffer, buffer + kDataSize),
-            std::string(kData));
+  EXPECT_EQ(std::string(buffer, buffer + kDataSize), std::string(kData));
+}
+
+TEST(FileTest, WriteAtCurrentPosition) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path =
+      temp_dir.GetPath().AppendASCII("write_at_current_position");
+  File file(file_path,
+            base::File::FLAG_CREATE | base::File::FLAG_READ |
+                base::File::FLAG_WRITE);
+  EXPECT_TRUE(file.IsValid());
+
+  const char kData[] = "test";
+  const int kDataSize = sizeof(kData) - 1;
+
+  int first_chunk_size = kDataSize / 2;
+  EXPECT_EQ(first_chunk_size, file.WriteAtCurrentPos(kData, first_chunk_size));
+  EXPECT_EQ(kDataSize - first_chunk_size,
+            file.WriteAtCurrentPos(kData + first_chunk_size,
+                                   kDataSize - first_chunk_size));
+
+  char buffer[kDataSize];
+  EXPECT_EQ(kDataSize, file.Read(0, buffer, kDataSize));
+  EXPECT_EQ(std::string(buffer, buffer + kDataSize), std::string(kData));
+}
+
+TEST(FileTest, Seek) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("seek_file");
+  File file(file_path,
+            base::File::FLAG_CREATE | base::File::FLAG_READ |
+                base::File::FLAG_WRITE);
+  ASSERT_TRUE(file.IsValid());
+
+  const int64_t kOffset = 10;
+  EXPECT_EQ(kOffset, file.Seek(base::File::FROM_BEGIN, kOffset));
+  EXPECT_EQ(2 * kOffset, file.Seek(base::File::FROM_CURRENT, kOffset));
+  EXPECT_EQ(kOffset, file.Seek(base::File::FROM_CURRENT, -kOffset));
+  EXPECT_TRUE(file.SetLength(kOffset * 2));
+  EXPECT_EQ(kOffset, file.Seek(base::File::FROM_END, -kOffset));
+}
+
+TEST(FileTest, Duplicate) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+  File file(file_path,(base::File::FLAG_CREATE |
+                       base::File::FLAG_READ |
+                       base::File::FLAG_WRITE));
+  ASSERT_TRUE(file.IsValid());
+
+  File file2(file.Duplicate());
+  ASSERT_TRUE(file2.IsValid());
+
+  // Write through one handle, close it, read through the other.
+  static const char kData[] = "now is a good time.";
+  static const int kDataLen = sizeof(kData) - 1;
+
+  ASSERT_EQ(0, file.Seek(base::File::FROM_CURRENT, 0));
+  ASSERT_EQ(0, file2.Seek(base::File::FROM_CURRENT, 0));
+  ASSERT_EQ(kDataLen, file.WriteAtCurrentPos(kData, kDataLen));
+  ASSERT_EQ(kDataLen, file.Seek(base::File::FROM_CURRENT, 0));
+  ASSERT_EQ(kDataLen, file2.Seek(base::File::FROM_CURRENT, 0));
+  file.Close();
+  char buf[kDataLen];
+  ASSERT_EQ(kDataLen, file2.Read(0, &buf[0], kDataLen));
+  ASSERT_EQ(std::string(kData, kDataLen), std::string(&buf[0], kDataLen));
+}
+
+TEST(FileTest, DuplicateDeleteOnClose) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+  File file(file_path,(base::File::FLAG_CREATE |
+                       base::File::FLAG_READ |
+                       base::File::FLAG_WRITE |
+                       base::File::FLAG_DELETE_ON_CLOSE));
+  ASSERT_TRUE(file.IsValid());
+  File file2(file.Duplicate());
+  ASSERT_TRUE(file2.IsValid());
+  file.Close();
+  file2.Close();
+  ASSERT_FALSE(base::PathExists(file_path));
 }
 
 #if defined(OS_WIN)
-TEST(File, GetInfoForDirectory) {
+// Flakily times out on Windows, see http://crbug.com/846276.
+#define MAYBE_WriteDataToLargeOffset DISABLED_WriteDataToLargeOffset
+#else
+#define MAYBE_WriteDataToLargeOffset WriteDataToLargeOffset
+#endif
+TEST(FileTest, MAYBE_WriteDataToLargeOffset) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  FilePath empty_dir = temp_dir.path().Append(FILE_PATH_LITERAL("gpfi_test"));
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+  File file(file_path,
+            (base::File::FLAG_CREATE | base::File::FLAG_READ |
+             base::File::FLAG_WRITE | base::File::FLAG_DELETE_ON_CLOSE));
+  ASSERT_TRUE(file.IsValid());
+
+  const char kData[] = "this file is sparse.";
+  const int kDataLen = sizeof(kData) - 1;
+  const int64_t kLargeFileOffset = (1LL << 31);
+
+  // If the file fails to write, it is probably we are running out of disk space
+  // and the file system doesn't support sparse file.
+  if (file.Write(kLargeFileOffset - kDataLen - 1, kData, kDataLen) < 0)
+    return;
+
+  ASSERT_EQ(kDataLen, file.Write(kLargeFileOffset + 1, kData, kDataLen));
+}
+
+#if defined(OS_WIN)
+TEST(FileTest, GetInfoForDirectory) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath empty_dir =
+      temp_dir.GetPath().Append(FILE_PATH_LITERAL("gpfi_test"));
   ASSERT_TRUE(CreateDirectory(empty_dir));
 
-  base::File dir(
-      ::CreateFile(empty_dir.value().c_str(),
-                   FILE_ALL_ACCESS,
-                   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-                   NULL,
-                   OPEN_EXISTING,
-                   FILE_FLAG_BACKUP_SEMANTICS,  // Needed to open a directory.
-                   NULL));
+  base::File dir(::CreateFile(
+      base::as_wcstr(empty_dir.value()), GENERIC_READ | GENERIC_WRITE,
+      FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+      OPEN_EXISTING,
+      FILE_FLAG_BACKUP_SEMANTICS,  // Needed to open a directory.
+      NULL));
   ASSERT_TRUE(dir.IsValid());
 
   base::File::Info info;
@@ -397,5 +612,173 @@ TEST(File, GetInfoForDirectory) {
   EXPECT_TRUE(info.is_directory);
   EXPECT_FALSE(info.is_symbolic_link);
   EXPECT_EQ(0, info.size);
+}
+
+TEST(FileTest, DeleteNoop) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+
+  // Creating and closing a file with DELETE perms should do nothing special.
+  File file(file_path,
+            (base::File::FLAG_CREATE | base::File::FLAG_READ |
+             base::File::FLAG_WRITE | base::File::FLAG_CAN_DELETE_ON_CLOSE));
+  ASSERT_TRUE(file.IsValid());
+  file.Close();
+  ASSERT_TRUE(base::PathExists(file_path));
+}
+
+TEST(FileTest, Delete) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+
+  // Creating a file with DELETE and then marking for delete on close should
+  // delete it.
+  File file(file_path,
+            (base::File::FLAG_CREATE | base::File::FLAG_READ |
+             base::File::FLAG_WRITE | base::File::FLAG_CAN_DELETE_ON_CLOSE));
+  ASSERT_TRUE(file.IsValid());
+  ASSERT_TRUE(file.DeleteOnClose(true));
+  file.Close();
+  ASSERT_FALSE(base::PathExists(file_path));
+}
+
+TEST(FileTest, DeleteThenRevoke) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+
+  // Creating a file with DELETE, marking it for delete, then clearing delete on
+  // close should not delete it.
+  File file(file_path,
+            (base::File::FLAG_CREATE | base::File::FLAG_READ |
+             base::File::FLAG_WRITE | base::File::FLAG_CAN_DELETE_ON_CLOSE));
+  ASSERT_TRUE(file.IsValid());
+  ASSERT_TRUE(file.DeleteOnClose(true));
+  ASSERT_TRUE(file.DeleteOnClose(false));
+  file.Close();
+  ASSERT_TRUE(base::PathExists(file_path));
+}
+
+TEST(FileTest, IrrevokableDeleteOnClose) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+
+  // DELETE_ON_CLOSE cannot be revoked by this opener.
+  File file(
+      file_path,
+      (base::File::FLAG_CREATE | base::File::FLAG_READ |
+       base::File::FLAG_WRITE | base::File::FLAG_DELETE_ON_CLOSE |
+       base::File::FLAG_SHARE_DELETE | base::File::FLAG_CAN_DELETE_ON_CLOSE));
+  ASSERT_TRUE(file.IsValid());
+  // https://msdn.microsoft.com/library/windows/desktop/aa364221.aspx says that
+  // setting the dispositon has no effect if the handle was opened with
+  // FLAG_DELETE_ON_CLOSE. Do not make the test's success dependent on whether
+  // or not SetFileInformationByHandle indicates success or failure. (It happens
+  // to indicate success on Windows 10.)
+  file.DeleteOnClose(false);
+  file.Close();
+  ASSERT_FALSE(base::PathExists(file_path));
+}
+
+TEST(FileTest, IrrevokableDeleteOnCloseOther) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+
+  // DELETE_ON_CLOSE cannot be revoked by another opener.
+  File file(
+      file_path,
+      (base::File::FLAG_CREATE | base::File::FLAG_READ |
+       base::File::FLAG_WRITE | base::File::FLAG_DELETE_ON_CLOSE |
+       base::File::FLAG_SHARE_DELETE | base::File::FLAG_CAN_DELETE_ON_CLOSE));
+  ASSERT_TRUE(file.IsValid());
+
+  File file2(
+      file_path,
+      (base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE |
+       base::File::FLAG_SHARE_DELETE | base::File::FLAG_CAN_DELETE_ON_CLOSE));
+  ASSERT_TRUE(file2.IsValid());
+
+  file2.DeleteOnClose(false);
+  file2.Close();
+  ASSERT_TRUE(base::PathExists(file_path));
+  file.Close();
+  ASSERT_FALSE(base::PathExists(file_path));
+}
+
+TEST(FileTest, DeleteWithoutPermission) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+
+  // It should not be possible to mark a file for deletion when it was not
+  // created/opened with DELETE.
+  File file(file_path, (base::File::FLAG_CREATE | base::File::FLAG_READ |
+                        base::File::FLAG_WRITE));
+  ASSERT_TRUE(file.IsValid());
+  ASSERT_FALSE(file.DeleteOnClose(true));
+  file.Close();
+  ASSERT_TRUE(base::PathExists(file_path));
+}
+
+TEST(FileTest, UnsharedDeleteOnClose) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+
+  // Opening with DELETE_ON_CLOSE when a previous opener hasn't enabled sharing
+  // will fail.
+  File file(file_path, (base::File::FLAG_CREATE | base::File::FLAG_READ |
+                        base::File::FLAG_WRITE));
+  ASSERT_TRUE(file.IsValid());
+  File file2(
+      file_path,
+      (base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE |
+       base::File::FLAG_DELETE_ON_CLOSE | base::File::FLAG_SHARE_DELETE));
+  ASSERT_FALSE(file2.IsValid());
+
+  file.Close();
+  ASSERT_TRUE(base::PathExists(file_path));
+}
+
+TEST(FileTest, NoDeleteOnCloseWithMappedFile) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+
+  // Mapping a file into memory blocks DeleteOnClose.
+  File file(file_path,
+            (base::File::FLAG_CREATE | base::File::FLAG_READ |
+             base::File::FLAG_WRITE | base::File::FLAG_CAN_DELETE_ON_CLOSE));
+  ASSERT_TRUE(file.IsValid());
+  ASSERT_EQ(5, file.WriteAtCurrentPos("12345", 5));
+
+  {
+    base::MemoryMappedFile mapping;
+    ASSERT_TRUE(mapping.Initialize(file.Duplicate()));
+    ASSERT_EQ(5U, mapping.length());
+
+    EXPECT_FALSE(file.DeleteOnClose(true));
+  }
+
+  file.Close();
+  ASSERT_TRUE(base::PathExists(file_path));
+}
+
+// Check that we handle the async bit being set incorrectly in a sane way.
+TEST(FileTest, UseSyncApiWithAsyncFile) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  FilePath file_path = temp_dir.GetPath().AppendASCII("file");
+
+  File file(file_path, base::File::FLAG_CREATE | base::File::FLAG_WRITE |
+                           base::File::FLAG_ASYNC);
+  File lying_file(file.TakePlatformFile(), false /* async */);
+  ASSERT_TRUE(lying_file.IsValid());
+
+  ASSERT_EQ(lying_file.WriteAtCurrentPos("12345", 5), -1);
 }
 #endif  // defined(OS_WIN)

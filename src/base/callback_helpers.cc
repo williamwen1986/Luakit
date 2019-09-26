@@ -4,39 +4,37 @@
 
 #include "base/callback_helpers.h"
 
-#include "base/callback.h"
-
 namespace base {
 
-ScopedClosureRunner::ScopedClosureRunner() {
-}
+ScopedClosureRunner::ScopedClosureRunner() = default;
 
-ScopedClosureRunner::ScopedClosureRunner(const Closure& closure)
-    : closure_(closure) {
-}
+ScopedClosureRunner::ScopedClosureRunner(OnceClosure closure)
+    : closure_(std::move(closure)) {}
 
 ScopedClosureRunner::~ScopedClosureRunner() {
   if (!closure_.is_null())
-    closure_.Run();
+    std::move(closure_).Run();
 }
 
-void ScopedClosureRunner::Reset() {
-  Closure old_closure = Release();
-  if (!old_closure.is_null())
-    old_closure.Run();
+ScopedClosureRunner::ScopedClosureRunner(ScopedClosureRunner&& other)
+    : closure_(other.Release()) {}
+
+ScopedClosureRunner& ScopedClosureRunner::operator=(
+    ScopedClosureRunner&& other) {
+  ReplaceClosure(other.Release());
+  return *this;
 }
 
-void ScopedClosureRunner::Reset(const Closure& closure) {
-  Closure old_closure = Release();
-  closure_ = closure;
-  if (!old_closure.is_null())
-    old_closure.Run();
+void ScopedClosureRunner::RunAndReset() {
+  std::move(closure_).Run();
 }
 
-Closure ScopedClosureRunner::Release() {
-  Closure result = closure_;
-  closure_.Reset();
-  return result;
+void ScopedClosureRunner::ReplaceClosure(OnceClosure closure) {
+  closure_ = std::move(closure);
+}
+
+OnceClosure ScopedClosureRunner::Release() {
+  return std::move(closure_);
 }
 
 }  // namespace base

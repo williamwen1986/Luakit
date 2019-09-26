@@ -5,20 +5,19 @@
 //
 // A string-like object that points to a sized piece of memory.
 //
-// Functions or methods may use const StringPiece& parameters to accept either
-// a "const char*" or a "string" value that will be implicitly converted to
-// a StringPiece.  The implicit conversion means that it is often appropriate
-// to include this .h file in other files rather than forward-declaring
-// StringPiece as would be appropriate for most other Google classes.
+// You can use StringPiece as a function or method parameter.  A StringPiece
+// parameter can receive a double-quoted string literal argument, a "const
+// char*" argument, a string argument, or a StringPiece argument with no data
+// copying.  Systematic use of StringPiece for arguments reduces data
+// copies and strlen() calls.
 //
-// Systematic usage of StringPiece is encouraged as it will reduce unnecessary
-// conversions from "const char*" to "string" and back again.
-//
-// StringPiece16 is similar to StringPiece but for base::string16 instead of
-// std::string. We do not define as large of a subset of the STL functions
-// from basic_string as in StringPiece, but this can be changed if these
-// functions (find, find_first_of, etc.) are found to be useful in this context.
-//
+// Prefer passing StringPieces by value:
+//   void MyFunction(StringPiece arg);
+// If circumstances require, you may also pass by const reference:
+//   void MyFunction(const StringPiece& arg);  // not preferred
+// Both of these have the same lifetime semantics.  Passing by value
+// generates slightly smaller code.  For more discussion, Googlers can see
+// the thread go/stringpiecebyvalue on c-users.
 
 #ifndef BASE_STRINGS_STRING_PIECE_H_
 #define BASE_STRINGS_STRING_PIECE_H_
@@ -27,26 +26,142 @@
 
 #include <iosfwd>
 #include <string>
+#include <type_traits>
 
 #include "base/base_export.h"
-#include "base/basictypes.h"
-#include "base/containers/hash_tables.h"
+#include "base/logging.h"
+#include "base/strings/char_traits.h"
 #include "base/strings/string16.h"
+#include "base/strings/string_piece_forward.h"
 
 namespace base {
 
-template <typename STRING_TYPE> class BasicStringPiece;
-typedef BasicStringPiece<std::string> StringPiece;
-typedef BasicStringPiece<string16> StringPiece16;
+// internal --------------------------------------------------------------------
 
+// Many of the StringPiece functions use different implementations for the
+// 8-bit and 16-bit versions, and we don't want lots of template expansions in
+// this (very common) header that will slow down compilation.
+//
+// So here we define overloaded functions called by the StringPiece template.
+// For those that share an implementation, the two versions will expand to a
+// template internal to the .cc file.
 namespace internal {
+
+BASE_EXPORT void CopyToString(const StringPiece& self, std::string* target);
+BASE_EXPORT void CopyToString(const StringPiece16& self, string16* target);
+
+BASE_EXPORT void AppendToString(const StringPiece& self, std::string* target);
+BASE_EXPORT void AppendToString(const StringPiece16& self, string16* target);
+
+BASE_EXPORT size_t copy(const StringPiece& self,
+                        char* buf,
+                        size_t n,
+                        size_t pos);
+BASE_EXPORT size_t copy(const StringPiece16& self,
+                        char16* buf,
+                        size_t n,
+                        size_t pos);
+
+BASE_EXPORT size_t find(const StringPiece& self,
+                        const StringPiece& s,
+                        size_t pos);
+BASE_EXPORT size_t find(const StringPiece16& self,
+                        const StringPiece16& s,
+                        size_t pos);
+BASE_EXPORT size_t find(const StringPiece& self,
+                        char c,
+                        size_t pos);
+BASE_EXPORT size_t find(const StringPiece16& self,
+                        char16 c,
+                        size_t pos);
+
+BASE_EXPORT size_t rfind(const StringPiece& self,
+                         const StringPiece& s,
+                         size_t pos);
+BASE_EXPORT size_t rfind(const StringPiece16& self,
+                         const StringPiece16& s,
+                         size_t pos);
+BASE_EXPORT size_t rfind(const StringPiece& self,
+                         char c,
+                         size_t pos);
+BASE_EXPORT size_t rfind(const StringPiece16& self,
+                         char16 c,
+                         size_t pos);
+
+BASE_EXPORT size_t find_first_of(const StringPiece& self,
+                                 const StringPiece& s,
+                                 size_t pos);
+BASE_EXPORT size_t find_first_of(const StringPiece16& self,
+                                 const StringPiece16& s,
+                                 size_t pos);
+
+BASE_EXPORT size_t find_first_not_of(const StringPiece& self,
+                                     const StringPiece& s,
+                                     size_t pos);
+BASE_EXPORT size_t find_first_not_of(const StringPiece16& self,
+                                     const StringPiece16& s,
+                                     size_t pos);
+BASE_EXPORT size_t find_first_not_of(const StringPiece& self,
+                                     char c,
+                                     size_t pos);
+BASE_EXPORT size_t find_first_not_of(const StringPiece16& self,
+                                     char16 c,
+                                     size_t pos);
+
+BASE_EXPORT size_t find_last_of(const StringPiece& self,
+                                const StringPiece& s,
+                                size_t pos);
+BASE_EXPORT size_t find_last_of(const StringPiece16& self,
+                                const StringPiece16& s,
+                                size_t pos);
+BASE_EXPORT size_t find_last_of(const StringPiece& self,
+                                char c,
+                                size_t pos);
+BASE_EXPORT size_t find_last_of(const StringPiece16& self,
+                                char16 c,
+                                size_t pos);
+
+BASE_EXPORT size_t find_last_not_of(const StringPiece& self,
+                                    const StringPiece& s,
+                                    size_t pos);
+BASE_EXPORT size_t find_last_not_of(const StringPiece16& self,
+                                    const StringPiece16& s,
+                                    size_t pos);
+BASE_EXPORT size_t find_last_not_of(const StringPiece16& self,
+                                    char16 c,
+                                    size_t pos);
+BASE_EXPORT size_t find_last_not_of(const StringPiece& self,
+                                    char c,
+                                    size_t pos);
+
+BASE_EXPORT StringPiece substr(const StringPiece& self,
+                               size_t pos,
+                               size_t n);
+BASE_EXPORT StringPiece16 substr(const StringPiece16& self,
+                                 size_t pos,
+                                 size_t n);
+
+#if DCHECK_IS_ON()
+// Asserts that begin <= end to catch some errors with iterator usage.
+BASE_EXPORT void AssertIteratorsInOrder(std::string::const_iterator begin,
+                                        std::string::const_iterator end);
+BASE_EXPORT void AssertIteratorsInOrder(string16::const_iterator begin,
+                                        string16::const_iterator end);
+#endif
+
+}  // namespace internal
+
+// BasicStringPiece ------------------------------------------------------------
 
 // Defines the types, methods, operators, and data members common to both
 // StringPiece and StringPiece16. Do not refer to this class directly, but
 // rather to BasicStringPiece, StringPiece, or StringPiece16.
-template <typename STRING_TYPE> class StringPieceDetail {
+//
+// This is templatized by string class type rather than character type, so
+// BasicStringPiece<std::string> or BasicStringPiece<base::string16>.
+template <typename STRING_TYPE> class BasicStringPiece {
  public:
-  // standard STL container boilerplate
+  // Standard STL container boilerplate.
   typedef size_t size_type;
   typedef typename STRING_TYPE::value_type value_type;
   typedef const value_type* pointer;
@@ -62,26 +177,38 @@ template <typename STRING_TYPE> class StringPieceDetail {
   // We provide non-explicit singleton constructors so users can pass
   // in a "const char*" or a "string" wherever a "StringPiece" is
   // expected (likewise for char16, string16, StringPiece16).
-  StringPieceDetail() : ptr_(NULL), length_(0) {}
-  StringPieceDetail(const value_type* str)
-      : ptr_(str),
-        length_((str == NULL) ? 0 : STRING_TYPE::traits_type::length(str)) {}
-  StringPieceDetail(const STRING_TYPE& str)
+  constexpr BasicStringPiece() : ptr_(NULL), length_(0) {}
+  // TODO(dcheng): Construction from nullptr is not allowed for
+  // std::basic_string_view, so remove the special handling for it.
+  // Note: This doesn't just use STRING_TYPE::traits_type::length(), since that
+  // isn't constexpr until C++17.
+  constexpr BasicStringPiece(const value_type* str)
+      : ptr_(str), length_(!str ? 0 : CharTraits<value_type>::length(str)) {}
+  BasicStringPiece(const STRING_TYPE& str)
       : ptr_(str.data()), length_(str.size()) {}
-  StringPieceDetail(const value_type* offset, size_type len)
+  constexpr BasicStringPiece(const value_type* offset, size_type len)
       : ptr_(offset), length_(len) {}
-  StringPieceDetail(const typename STRING_TYPE::const_iterator& begin,
-                    const typename STRING_TYPE::const_iterator& end)
-      : ptr_((end > begin) ? &(*begin) : NULL),
-        length_((end > begin) ? (size_type)(end - begin) : 0) {}
+  BasicStringPiece(const typename STRING_TYPE::const_iterator& begin,
+                   const typename STRING_TYPE::const_iterator& end) {
+#if DCHECK_IS_ON()
+    // This assertion is done out-of-line to avoid bringing in logging.h and
+    // instantiating logging macros for every instantiation.
+    internal::AssertIteratorsInOrder(begin, end);
+#endif
+    length_ = static_cast<size_t>(std::distance(begin, end));
+
+    // The length test before assignment is to avoid dereferencing an iterator
+    // that may point to the end() of a string.
+    ptr_ = length_ > 0 ? &*begin : nullptr;
+  }
 
   // data() may return a pointer to a buffer with embedded NULs, and the
   // returned buffer may or may not be null terminated.  Therefore it is
   // typically a mistake to pass data() to a routine that expects a NUL
   // terminated string.
-  const value_type* data() const { return ptr_; }
-  size_type size() const { return length_; }
-  size_type length() const { return length_; }
+  constexpr const value_type* data() const { return ptr_; }
+  constexpr size_type size() const noexcept { return length_; }
+  constexpr size_type length() const noexcept { return length_; }
   bool empty() const { return length_ == 0; }
 
   void clear() {
@@ -97,19 +224,34 @@ template <typename STRING_TYPE> class StringPieceDetail {
     length_ = str ? STRING_TYPE::traits_type::length(str) : 0;
   }
 
-  value_type operator[](size_type i) const { return ptr_[i]; }
+  constexpr value_type operator[](size_type i) const {
+    CHECK(i < length_);
+    return ptr_[i];
+  }
 
-  void remove_prefix(size_type n) {
+  value_type front() const {
+    CHECK_NE(0UL, length_);
+    return ptr_[0];
+  }
+
+  value_type back() const {
+    CHECK_NE(0UL, length_);
+    return ptr_[length_ - 1];
+  }
+
+  constexpr void remove_prefix(size_type n) {
+    CHECK(n <= length_);
     ptr_ += n;
     length_ -= n;
   }
 
-  void remove_suffix(size_type n) {
+  constexpr void remove_suffix(size_type n) {
+    CHECK(n <= length_);
     length_ -= n;
   }
 
-  int compare(const BasicStringPiece<STRING_TYPE>& x) const {
-    int r = wordmemcmp(
+  constexpr int compare(BasicStringPiece x) const noexcept {
+    int r = CharTraits<value_type>::compare(
         ptr_, x.ptr_, (length_ < x.length_ ? length_ : x.length_));
     if (r == 0) {
       if (length_ < x.length_) r = -1;
@@ -117,6 +259,9 @@ template <typename STRING_TYPE> class StringPieceDetail {
     }
     return r;
   }
+
+  // This is the style of conversion preferred by std::string_view in C++17.
+  explicit operator STRING_TYPE() const { return as_string(); }
 
   STRING_TYPE as_string() const {
     // std::string doesn't like to take a NULL pointer even with a 0 size.
@@ -135,317 +280,269 @@ template <typename STRING_TYPE> class StringPieceDetail {
   size_type max_size() const { return length_; }
   size_type capacity() const { return length_; }
 
-  static int wordmemcmp(const value_type* p,
-                        const value_type* p2,
-                        size_type N) {
-    return STRING_TYPE::traits_type::compare(p, p2, N);
-  }
-
- protected:
-  const value_type* ptr_;
-  size_type     length_;
-};
-
-template <typename STRING_TYPE>
-const typename StringPieceDetail<STRING_TYPE>::size_type
-StringPieceDetail<STRING_TYPE>::npos =
-    typename StringPieceDetail<STRING_TYPE>::size_type(-1);
-
-// MSVC doesn't like complex extern templates and DLLs.
-#if !defined(COMPILER_MSVC)
-extern template class BASE_EXPORT StringPieceDetail<std::string>;
-extern template class BASE_EXPORT StringPieceDetail<string16>;
-#endif
-
-BASE_EXPORT void CopyToString(const StringPiece& self, std::string* target);
-BASE_EXPORT void AppendToString(const StringPiece& self, std::string* target);
-BASE_EXPORT StringPieceDetail<std::string>::size_type copy(
-    const StringPiece& self,
-    char* buf,
-    StringPieceDetail<std::string>::size_type n,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type find(
-    const StringPiece& self,
-    const StringPiece& s,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type find(
-    const StringPiece& self,
-    char c,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type rfind(
-    const StringPiece& self,
-    const StringPiece& s,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type rfind(
-    const StringPiece& self,
-    char c,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type find_first_of(
-    const StringPiece& self,
-    const StringPiece& s,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type find_first_not_of(
-    const StringPiece& self,
-    const StringPiece& s,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type find_first_not_of(
-    const StringPiece& self,
-    char c,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type find_last_of(
-    const StringPiece& self,
-    const StringPiece& s,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type find_last_of(
-    const StringPiece& self,
-    char c,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type find_last_not_of(
-    const StringPiece& self,
-    const StringPiece& s,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPieceDetail<std::string>::size_type find_last_not_of(
-    const StringPiece& self,
-    char c,
-    StringPieceDetail<std::string>::size_type pos);
-BASE_EXPORT StringPiece substr(const StringPiece& self,
-                               StringPieceDetail<std::string>::size_type pos,
-                               StringPieceDetail<std::string>::size_type n);
-}  // namespace internal
-
-// Defines the template type that is instantiated as either StringPiece or
-// StringPiece16.
-template <typename STRING_TYPE> class BasicStringPiece :
-    public internal::StringPieceDetail<STRING_TYPE> {
- public:
-  typedef typename internal::StringPieceDetail<STRING_TYPE>::value_type
-      value_type;
-  typedef typename internal::StringPieceDetail<STRING_TYPE>::size_type
-      size_type;
-
-  BasicStringPiece() {}
-  BasicStringPiece(const value_type*str)
-      : internal::StringPieceDetail<STRING_TYPE>(str) {}
-  BasicStringPiece(const STRING_TYPE& str)
-      : internal::StringPieceDetail<STRING_TYPE>(str) {}
-  BasicStringPiece(const value_type* offset, size_type len)
-      : internal::StringPieceDetail<STRING_TYPE>(offset, len) {}
-  BasicStringPiece(const typename STRING_TYPE::const_iterator& begin,
-                   const typename STRING_TYPE::const_iterator& end)
-      : internal::StringPieceDetail<STRING_TYPE>(begin, end) {}
-};
-
-// Specializes BasicStringPiece for std::string to add a few operations that
-// are not needed for string16.
-template <> class BasicStringPiece<std::string> :
-    public internal::StringPieceDetail<std::string> {
- public:
-  BasicStringPiece() {}
-  BasicStringPiece(const char* str)
-      : internal::StringPieceDetail<std::string>(str) {}
-  BasicStringPiece(const std::string& str)
-      : internal::StringPieceDetail<std::string>(str) {}
-  BasicStringPiece(const char* offset, size_type len)
-      : internal::StringPieceDetail<std::string>(offset, len) {}
-  BasicStringPiece(const std::string::const_iterator& begin,
-                   const std::string::const_iterator& end)
-      : internal::StringPieceDetail<std::string>(begin, end) {}
-
-  // Prevent the following overload of set() from hiding the definitions in the
-  // base class.
-  using internal::StringPieceDetail<std::string>::set;
-
-  void set(const void* data, size_type len) {
-    ptr_ = reinterpret_cast<const value_type*>(data);
-    length_ = len;
-  }
-
-  void CopyToString(std::string* target) const {
+  // Sets the value of the given string target type to be the current string.
+  // This saves a temporary over doing |a = b.as_string()|
+  void CopyToString(STRING_TYPE* target) const {
     internal::CopyToString(*this, target);
   }
 
-  void AppendToString(std::string* target) const {
+  void AppendToString(STRING_TYPE* target) const {
     internal::AppendToString(*this, target);
   }
 
-  // Does "this" start with "x"
-  bool starts_with(const BasicStringPiece& x) const {
-    return ((length_ >= x.length_) &&
-            (wordmemcmp(ptr_, x.ptr_, x.length_) == 0));
-  }
-
-  // Does "this" end with "x"
-  bool ends_with(const BasicStringPiece& x) const {
-    return ((length_ >= x.length_) &&
-            (wordmemcmp(ptr_ + (length_-x.length_), x.ptr_, x.length_) == 0));
-  }
-
-  size_type copy(char* buf, size_type n, size_type pos = 0) const {
+  size_type copy(value_type* buf, size_type n, size_type pos = 0) const {
     return internal::copy(*this, buf, n, pos);
   }
 
-  size_type find(const BasicStringPiece& s, size_type pos = 0) const {
-    return internal::find(*this, s, pos);
+  // Does "this" start with "x"
+  constexpr bool starts_with(BasicStringPiece x) const noexcept {
+    return (
+        (this->length_ >= x.length_) &&
+        (CharTraits<value_type>::compare(this->ptr_, x.ptr_, x.length_) == 0));
   }
 
-  size_type find(char c, size_type pos = 0) const {
+  // Does "this" end with "x"
+  constexpr bool ends_with(BasicStringPiece x) const noexcept {
+    return ((this->length_ >= x.length_) &&
+            (CharTraits<value_type>::compare(
+                 this->ptr_ + (this->length_ - x.length_), x.ptr_, x.length_) ==
+             0));
+  }
+
+  // find: Search for a character or substring at a given offset.
+  size_type find(const BasicStringPiece<STRING_TYPE>& s,
+                 size_type pos = 0) const {
+    return internal::find(*this, s, pos);
+  }
+  size_type find(value_type c, size_type pos = 0) const {
     return internal::find(*this, c, pos);
   }
 
-  size_type rfind(const BasicStringPiece& s, size_type pos = npos) const {
+  // rfind: Reverse find.
+  size_type rfind(const BasicStringPiece& s,
+                  size_type pos = BasicStringPiece::npos) const {
     return internal::rfind(*this, s, pos);
   }
-
-  size_type rfind(char c, size_type pos = npos) const {
+  size_type rfind(value_type c, size_type pos = BasicStringPiece::npos) const {
     return internal::rfind(*this, c, pos);
   }
 
-  size_type find_first_of(const BasicStringPiece& s, size_type pos = 0) const {
+  // find_first_of: Find the first occurence of one of a set of characters.
+  size_type find_first_of(const BasicStringPiece& s,
+                          size_type pos = 0) const {
     return internal::find_first_of(*this, s, pos);
   }
-
-  size_type find_first_of(char c, size_type pos = 0) const {
+  size_type find_first_of(value_type c, size_type pos = 0) const {
     return find(c, pos);
   }
 
+  // find_first_not_of: Find the first occurence not of a set of characters.
   size_type find_first_not_of(const BasicStringPiece& s,
                               size_type pos = 0) const {
     return internal::find_first_not_of(*this, s, pos);
   }
-
-  size_type find_first_not_of(char c, size_type pos = 0) const {
+  size_type find_first_not_of(value_type c, size_type pos = 0) const {
     return internal::find_first_not_of(*this, c, pos);
   }
 
+  // find_last_of: Find the last occurence of one of a set of characters.
   size_type find_last_of(const BasicStringPiece& s,
-                         size_type pos = npos) const {
+                         size_type pos = BasicStringPiece::npos) const {
     return internal::find_last_of(*this, s, pos);
   }
-
-  size_type find_last_of(char c, size_type pos = npos) const {
+  size_type find_last_of(value_type c,
+                         size_type pos = BasicStringPiece::npos) const {
     return rfind(c, pos);
   }
 
+  // find_last_not_of: Find the last occurence not of a set of characters.
   size_type find_last_not_of(const BasicStringPiece& s,
-                             size_type pos = npos) const {
+                             size_type pos = BasicStringPiece::npos) const {
     return internal::find_last_not_of(*this, s, pos);
   }
-
-  size_type find_last_not_of(char c, size_type pos = npos) const {
+  size_type find_last_not_of(value_type c,
+                             size_type pos = BasicStringPiece::npos) const {
     return internal::find_last_not_of(*this, c, pos);
   }
 
-  BasicStringPiece substr(size_type pos, size_type n = npos) const {
+  // substr.
+  BasicStringPiece substr(size_type pos,
+                          size_type n = BasicStringPiece::npos) const {
     return internal::substr(*this, pos, n);
   }
+
+ protected:
+  const value_type* ptr_;
+  size_type length_;
 };
+
+template <typename STRING_TYPE>
+const typename BasicStringPiece<STRING_TYPE>::size_type
+BasicStringPiece<STRING_TYPE>::npos =
+    typename BasicStringPiece<STRING_TYPE>::size_type(-1);
 
 // MSVC doesn't like complex extern templates and DLLs.
 #if !defined(COMPILER_MSVC)
-// We can't explicitly declare the std::string instantiation here because it was
-// already instantiated when specialized, above. Not only is it a no-op, but
-// currently it also crashes Clang (see http://crbug.com/107412).
+extern template class BASE_EXPORT BasicStringPiece<std::string>;
 extern template class BASE_EXPORT BasicStringPiece<string16>;
 #endif
 
-BASE_EXPORT bool operator==(const StringPiece& x, const StringPiece& y);
-
-inline bool operator!=(const StringPiece& x, const StringPiece& y) {
-  return !(x == y);
+// Comparison operators --------------------------------------------------------
+// operator ==
+template <typename StringT>
+constexpr bool operator==(BasicStringPiece<StringT> lhs,
+                          BasicStringPiece<StringT> rhs) noexcept {
+  return lhs.size() == rhs.size() && lhs.compare(rhs) == 0;
 }
 
-inline bool operator<(const StringPiece& x, const StringPiece& y) {
-  const int r = StringPiece::wordmemcmp(
-      x.data(), y.data(), (x.size() < y.size() ? x.size() : y.size()));
-  return ((r < 0) || ((r == 0) && (x.size() < y.size())));
+// Here and below we make use of std::common_type_t to emulate an identity type
+// transformation. This creates a non-deduced context, so that we can compare
+// StringPieces with types that implicitly convert to StringPieces. See
+// https://wg21.link/n3766 for details.
+// Furthermore, we require dummy template parameters for these overloads to work
+// around a name mangling issue on Windows.
+template <typename StringT, int = 1>
+constexpr bool operator==(
+    BasicStringPiece<StringT> lhs,
+    std::common_type_t<BasicStringPiece<StringT>> rhs) noexcept {
+  return lhs.size() == rhs.size() && lhs.compare(rhs) == 0;
 }
 
-inline bool operator>(const StringPiece& x, const StringPiece& y) {
-  return y < x;
+template <typename StringT, int = 2>
+constexpr bool operator==(std::common_type_t<BasicStringPiece<StringT>> lhs,
+                          BasicStringPiece<StringT> rhs) noexcept {
+  return lhs.size() == rhs.size() && lhs.compare(rhs) == 0;
 }
 
-inline bool operator<=(const StringPiece& x, const StringPiece& y) {
-  return !(x > y);
+// operator !=
+template <typename StringT>
+constexpr bool operator!=(BasicStringPiece<StringT> lhs,
+                          BasicStringPiece<StringT> rhs) noexcept {
+  return !(lhs == rhs);
 }
 
-inline bool operator>=(const StringPiece& x, const StringPiece& y) {
-  return !(x < y);
+template <typename StringT, int = 1>
+constexpr bool operator!=(
+    BasicStringPiece<StringT> lhs,
+    std::common_type_t<BasicStringPiece<StringT>> rhs) noexcept {
+  return !(lhs == rhs);
 }
 
-inline bool operator==(const StringPiece16& x, const StringPiece16& y) {
-  if (x.size() != y.size())
-    return false;
-
-  return StringPiece16::wordmemcmp(x.data(), y.data(), x.size()) == 0;
+template <typename StringT, int = 2>
+constexpr bool operator!=(std::common_type_t<BasicStringPiece<StringT>> lhs,
+                          BasicStringPiece<StringT> rhs) noexcept {
+  return !(lhs == rhs);
 }
 
-inline bool operator!=(const StringPiece16& x, const StringPiece16& y) {
-  return !(x == y);
+// operator <
+template <typename StringT>
+constexpr bool operator<(BasicStringPiece<StringT> lhs,
+                         BasicStringPiece<StringT> rhs) noexcept {
+  return lhs.compare(rhs) < 0;
 }
 
-inline bool operator<(const StringPiece16& x, const StringPiece16& y) {
-  const int r = StringPiece16::wordmemcmp(
-      x.data(), y.data(), (x.size() < y.size() ? x.size() : y.size()));
-  return ((r < 0) || ((r == 0) && (x.size() < y.size())));
+template <typename StringT, int = 1>
+constexpr bool operator<(
+    BasicStringPiece<StringT> lhs,
+    std::common_type_t<BasicStringPiece<StringT>> rhs) noexcept {
+  return lhs.compare(rhs) < 0;
 }
 
-inline bool operator>(const StringPiece16& x, const StringPiece16& y) {
-  return y < x;
+template <typename StringT, int = 2>
+constexpr bool operator<(std::common_type_t<BasicStringPiece<StringT>> lhs,
+                         BasicStringPiece<StringT> rhs) noexcept {
+  return lhs.compare(rhs) < 0;
 }
 
-inline bool operator<=(const StringPiece16& x, const StringPiece16& y) {
-  return !(x > y);
+// operator >
+template <typename StringT>
+constexpr bool operator>(BasicStringPiece<StringT> lhs,
+                         BasicStringPiece<StringT> rhs) noexcept {
+  return rhs < lhs;
 }
 
-inline bool operator>=(const StringPiece16& x, const StringPiece16& y) {
-  return !(x < y);
+template <typename StringT, int = 1>
+constexpr bool operator>(
+    BasicStringPiece<StringT> lhs,
+    std::common_type_t<BasicStringPiece<StringT>> rhs) noexcept {
+  return rhs < lhs;
+}
+
+template <typename StringT, int = 2>
+constexpr bool operator>(std::common_type_t<BasicStringPiece<StringT>> lhs,
+                         BasicStringPiece<StringT> rhs) noexcept {
+  return rhs < lhs;
+}
+
+// operator <=
+template <typename StringT>
+constexpr bool operator<=(BasicStringPiece<StringT> lhs,
+                          BasicStringPiece<StringT> rhs) noexcept {
+  return !(rhs < lhs);
+}
+
+template <typename StringT, int = 1>
+constexpr bool operator<=(
+    BasicStringPiece<StringT> lhs,
+    std::common_type_t<BasicStringPiece<StringT>> rhs) noexcept {
+  return !(rhs < lhs);
+}
+
+template <typename StringT, int = 2>
+constexpr bool operator<=(std::common_type_t<BasicStringPiece<StringT>> lhs,
+                          BasicStringPiece<StringT> rhs) noexcept {
+  return !(rhs < lhs);
+}
+
+// operator >=
+template <typename StringT>
+constexpr bool operator>=(BasicStringPiece<StringT> lhs,
+                          BasicStringPiece<StringT> rhs) noexcept {
+  return !(lhs < rhs);
+}
+
+template <typename StringT, int = 1>
+constexpr bool operator>=(
+    BasicStringPiece<StringT> lhs,
+    std::common_type_t<BasicStringPiece<StringT>> rhs) noexcept {
+  return !(lhs < rhs);
+}
+
+template <typename StringT, int = 2>
+constexpr bool operator>=(std::common_type_t<BasicStringPiece<StringT>> lhs,
+                          BasicStringPiece<StringT> rhs) noexcept {
+  return !(lhs < rhs);
 }
 
 BASE_EXPORT std::ostream& operator<<(std::ostream& o,
                                      const StringPiece& piece);
 
-}  // namespace base
+BASE_EXPORT std::ostream& operator<<(std::ostream& o,
+                                     const StringPiece16& piece);
+
+// Hashing ---------------------------------------------------------------------
 
 // We provide appropriate hash functions so StringPiece and StringPiece16 can
 // be used as keys in hash sets and maps.
 
-// This hash function is copied from base/containers/hash_tables.h. We don't
-// use the ones already defined for string and string16 directly because it
-// would require the string constructors to be called, which we don't want.
-#define HASH_STRING_PIECE(StringPieceType, string_piece)                \
-  std::size_t result = 0;                                               \
-  for (StringPieceType::const_iterator i = string_piece.begin();        \
-       i != string_piece.end(); ++i)                                    \
-    result = (result * 131) + *i;                                       \
-  return result;                                                        \
+// This hash function is copied from base/strings/string16.h. We don't use the
+// ones already defined for string and string16 directly because it would
+// require the string constructors to be called, which we don't want.
 
-namespace BASE_HASH_NAMESPACE {
-#if defined(COMPILER_GCC)
-
-template<>
-struct hash<base::StringPiece> {
-  std::size_t operator()(const base::StringPiece& sp) const {
-    HASH_STRING_PIECE(base::StringPiece, sp);
-  }
-};
-template<>
-struct hash<base::StringPiece16> {
-  std::size_t operator()(const base::StringPiece16& sp16) const {
-    HASH_STRING_PIECE(base::StringPiece16, sp16);
+template <typename StringPieceType>
+struct StringPieceHashImpl {
+  std::size_t operator()(StringPieceType sp) const {
+    std::size_t result = 0;
+    for (auto c : sp)
+      result = (result * 131) + c;
+    return result;
   }
 };
 
-#elif defined(COMPILER_MSVC)
+using StringPieceHash = StringPieceHashImpl<StringPiece>;
+using StringPiece16Hash = StringPieceHashImpl<StringPiece16>;
+using WStringPieceHash = StringPieceHashImpl<WStringPiece>;
 
-inline size_t hash_value(const base::StringPiece& sp) {
-  HASH_STRING_PIECE(base::StringPiece, sp);
-}
-inline size_t hash_value(const base::StringPiece16& sp16) {
-  HASH_STRING_PIECE(base::StringPiece16, sp16);
-}
-
-#endif  // COMPILER
-
-}  // namespace BASE_HASH_NAMESPACE
+}  // namespace base
 
 #endif  // BASE_STRINGS_STRING_PIECE_H_

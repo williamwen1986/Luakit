@@ -4,9 +4,14 @@
 
 #include "base/test/gtest_xml_util.h"
 
-#include "base/file_util.h"
+#include <stdint.h>
+
+#include "base/base64.h"
+#include "base/files/file_util.h"
 #include "base/logging.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/gtest_util.h"
 #include "base/test/launcher/test_launcher.h"
 #include "third_party/libxml/chromium/libxml_utils.h"
 
@@ -20,72 +25,11 @@ static void XmlErrorFunc(void *context, const char *message, ...) {
   va_list args;
   va_start(args, message);
   std::string* error = static_cast<std::string*>(context);
-  base::StringAppendV(error, message, args);
+  StringAppendV(error, message, args);
   va_end(args);
 }
 
 }  // namespace
-
-XmlUnitTestResultPrinter::XmlUnitTestResultPrinter() : output_file_(NULL) {
-}
-
-XmlUnitTestResultPrinter::~XmlUnitTestResultPrinter() {
-  if (output_file_) {
-    fprintf(output_file_, "</testsuites>\n");
-    fflush(output_file_);
-    base::CloseFile(output_file_);
-  }
-}
-
-bool XmlUnitTestResultPrinter::Initialize(const FilePath& output_file_path) {
-  DCHECK(!output_file_);
-  output_file_ = OpenFile(output_file_path, "w");
-  if (!output_file_)
-    return false;
-
-  fprintf(output_file_,
-          "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<testsuites>\n");
-  fflush(output_file_);
-
-  return true;
-}
-
-void XmlUnitTestResultPrinter::OnTestCaseStart(
-    const testing::TestCase& test_case) {
-  fprintf(output_file_, "  <testsuite>\n");
-  fflush(output_file_);
-}
-
-void XmlUnitTestResultPrinter::OnTestStart(const testing::TestInfo& test_info) {
-  // This is our custom extension - it helps to recognize which test was running
-  // when the test binary crashed. Note that we cannot even open the <testcase>
-  // tag here - it requires e.g. run time of the test to be known.
-  fprintf(output_file_,
-          "    <x-teststart name=\"%s\" classname=\"%s\" />\n",
-          test_info.name(),
-          test_info.test_case_name());
-  fflush(output_file_);
-}
-
-void XmlUnitTestResultPrinter::OnTestEnd(const testing::TestInfo& test_info) {
-  fprintf(output_file_,
-          "    <testcase name=\"%s\" status=\"run\" time=\"%.3f\""
-          " classname=\"%s\">\n",
-          test_info.name(),
-          static_cast<double>(test_info.result()->elapsed_time()) /
-              Time::kMillisecondsPerSecond,
-          test_info.test_case_name());
-  if (test_info.result()->Failed())
-    fprintf(output_file_, "      <failure message=\"\" type=\"\"></failure>\n");
-  fprintf(output_file_, "    </testcase>\n");
-  fflush(output_file_);
-}
-
-void XmlUnitTestResultPrinter::OnTestCaseEnd(
-    const testing::TestCase& test_case) {
-  fprintf(output_file_, "  </testsuite>\n");
-  fflush(output_file_);
-}
 
 bool ProcessGTestOutput(const base::FilePath& output_file,
                         std::vector<TestResult>* results,
@@ -108,6 +52,7 @@ bool ProcessGTestOutput(const base::FilePath& output_file,
     STATE_INIT,
     STATE_TESTSUITE,
     STATE_TESTCASE,
+    STATE_TEST_RESULT,
     STATE_FAILURE,
     STATE_END,
   } state = STATE_INIT;
@@ -146,7 +91,7 @@ bool ProcessGTestOutput(const base::FilePath& output_file,
           std::string test_name;
           if (!xml_reader.NodeAttribute("name", &test_name))
             return false;
-          result.full_name = test_case_name + "." + test_name;
+          result.full_name = FormatFullTestName(test_case_name, test_name);
 
           result.elapsed_time = TimeDelta();
 
@@ -177,16 +122,15 @@ bool ProcessGTestOutput(const base::FilePath& output_file,
           std::string test_time_str;
           if (!xml_reader.NodeAttribute("time", &test_time_str))
             return false;
-          result.elapsed_time =
-              TimeDelta::FromMicroseconds(strtod(test_time_str.c_str(), NULL) *
-                                          Time::kMicrosecondsPerSecond);
+          result.elapsed_time = TimeDelta::FromMicroseconds(
+              static_cast<int64_t>(strtod(test_time_str.c_str(), nullptr) *
+                                   Time::kMicrosecondsPerSecond));
 
           result.status = TestResult::TEST_SUCCESS;
 
           if (!results->empty() &&
-              results->at(results->size() - 1).full_name == result.full_name &&
-              results->at(results->size() - 1).status ==
-                  TestResult::TEST_CRASH) {
+              results->back().full_name == result.full_name &&
+              results->back().status == TestResult::TEST_CRASH) {
             // Erase the fail-safe "crashed" result - now we know the test did
             // not crash.
             results->pop_back();
@@ -199,11 +143,73 @@ bool ProcessGTestOutput(const base::FilePath& output_file,
             return false;
 
           DCHECK(!results->empty());
-          results->at(results->size() - 1).status = TestResult::TEST_FAILURE;
+          results->back().status = TestResult::TEST_FAILURE;
 
           state = STATE_FAILURE;
         } else if (node_name == "testcase" && xml_reader.IsClosingElement()) {
           // Deliberately empty.
+        } else if (node_name == "x-test-result-part" &&
+                   !xml_reader.IsClosingElement()) {
+          std::string result_type;
+          if (!xml_reader.NodeAttribute("type", &result_type))
+            return false;
+
+          std::string file_name;
+          if (!xml_reader.NodeAttribute("file", &file_name))
+            return false;
+
+          std::string line_number_str;
+          if (!xml_reader.NodeAttribute("line", &line_number_str))
+            return false;
+
+          int line_number;
+          if (!StringToInt(line_number_str, &line_number))
+            return false;
+
+          TestResultPart::Type type;
+          if (!TestResultPart::TypeFromString(result_type, &type))
+            return false;
+
+          TestResultPart test_result_part;
+          test_result_part.type = type;
+          test_result_part.file_name = file_name,
+          test_result_part.line_number = line_number;
+          DCHECK(!results->empty());
+          results->back().test_result_parts.push_back(test_result_part);
+
+          state = STATE_TEST_RESULT;
+        } else {
+          return false;
+        }
+        break;
+      case STATE_TEST_RESULT:
+        if (node_name == "summary" && !xml_reader.IsClosingElement()) {
+          std::string summary;
+          if (!xml_reader.ReadElementContent(&summary))
+            return false;
+
+          if (!Base64Decode(summary, &summary))
+            return false;
+
+          DCHECK(!results->empty());
+          DCHECK(!results->back().test_result_parts.empty());
+          results->back().test_result_parts.back().summary = summary;
+        } else if (node_name == "summary" && xml_reader.IsClosingElement()) {
+        } else if (node_name == "message" && !xml_reader.IsClosingElement()) {
+          std::string message;
+          if (!xml_reader.ReadElementContent(&message))
+            return false;
+
+          if (!Base64Decode(message, &message))
+            return false;
+
+          DCHECK(!results->empty());
+          DCHECK(!results->back().test_result_parts.empty());
+          results->back().test_result_parts.back().message = message;
+        } else if (node_name == "message" && xml_reader.IsClosingElement()) {
+        } else if (node_name == "x-test-result-part" &&
+                   xml_reader.IsClosingElement()) {
+          state = STATE_TESTCASE;
         } else {
           return false;
         }

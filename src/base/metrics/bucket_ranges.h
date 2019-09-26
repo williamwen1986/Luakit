@@ -17,11 +17,16 @@
 #ifndef BASE_METRICS_BUCKET_RANGES_H_
 #define BASE_METRICS_BUCKET_RANGES_H_
 
+#include <stddef.h>
+#include <stdint.h>
+
 #include <vector>
 
+#include <limits.h>
+
+#include "base/atomicops.h"
 #include "base/base_export.h"
-#include "base/basictypes.h"
-//#include "base/gtest_prod_util.h"
+#include "base/macros.h"
 #include "base/metrics/histogram_base.h"
 
 namespace base {
@@ -35,9 +40,13 @@ class BASE_EXPORT BucketRanges {
 
   size_t size() const { return ranges_.size(); }
   HistogramBase::Sample range(size_t i) const { return ranges_[i]; }
-  void set_range(size_t i, HistogramBase::Sample value);
-  uint32 checksum() const { return checksum_; }
-  void set_checksum(uint32 checksum) { checksum_ = checksum; }
+  void set_range(size_t i, HistogramBase::Sample value) {
+    DCHECK_LT(i, ranges_.size());
+    DCHECK_GE(value, 0);
+    ranges_[i] = value;
+  }
+  uint32_t checksum() const { return checksum_; }
+  void set_checksum(uint32_t checksum) { checksum_ = checksum; }
 
   // A bucket is defined by a consecutive pair of entries in |ranges|, so there
   // is one fewer bucket than there are ranges.  For example, if |ranges| is
@@ -47,12 +56,23 @@ class BASE_EXPORT BucketRanges {
 
   // Checksum methods to verify whether the ranges are corrupted (e.g. bad
   // memory access).
-  uint32 CalculateChecksum() const;
+  uint32_t CalculateChecksum() const;
   bool HasValidChecksum() const;
   void ResetChecksum();
 
   // Return true iff |other| object has same ranges_ as |this| object's ranges_.
   bool Equals(const BucketRanges* other) const;
+
+  // Set and get a reference into persistent memory where this bucket data
+  // can be found (and re-used). These calls are internally atomic with no
+  // safety against overwriting an existing value since though it is wasteful
+  // to have multiple identical persistent records, it is still safe.
+  void set_persistent_reference(uint32_t ref) const {
+    subtle::Release_Store(&persistent_reference_, ref);
+  }
+  uint32_t persistent_reference() const {
+    return subtle::Acquire_Load(&persistent_reference_);
+  }
 
  private:
   // A monotonically increasing list of values which determine which bucket to
@@ -63,16 +83,18 @@ class BASE_EXPORT BucketRanges {
   // Checksum for the conntents of ranges_.  Used to detect random over-writes
   // of our data, and to quickly see if some other BucketRanges instance is
   // possibly Equal() to this instance.
-  // TODO(kaiwang): Consider change this to uint64. Because we see a lot of
+  // TODO(kaiwang): Consider change this to uint64_t. Because we see a lot of
   // noise on UMA dashboard.
-  uint32 checksum_;
+  uint32_t checksum_;
+
+  // A reference into a global PersistentMemoryAllocator where the ranges
+  // information is stored. This allows for the record to be created once and
+  // re-used simply by having all histograms with the same ranges use the
+  // same reference.
+  mutable subtle::Atomic32 persistent_reference_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(BucketRanges);
 };
-
-//////////////////////////////////////////////////////////////////////////////
-// Expose only for test.
-BASE_EXPORT_PRIVATE extern const uint32 kCrcTable[256];
 
 }  // namespace base
 

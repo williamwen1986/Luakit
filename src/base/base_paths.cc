@@ -4,8 +4,8 @@
 
 #include "base/base_paths.h"
 
-#include "base/file_util.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/path_service.h"
 
 namespace base {
@@ -13,35 +13,39 @@ namespace base {
 bool PathProvider(int key, FilePath* result) {
   // NOTE: DIR_CURRENT is a special case in PathService::Get
 
-  FilePath cur;
   switch (key) {
     case DIR_EXE:
-      PathService::Get(FILE_EXE, &cur);
-      cur = cur.DirName();
-      break;
+      if (!PathService::Get(FILE_EXE, result))
+        return false;
+      *result = result->DirName();
+      return true;
     case DIR_MODULE:
-      PathService::Get(FILE_MODULE, &cur);
-      cur = cur.DirName();
-      break;
+      if (!PathService::Get(FILE_MODULE, result))
+        return false;
+      *result = result->DirName();
+      return true;
+    case DIR_ASSETS:
+      return PathService::Get(DIR_MODULE, result);
     case DIR_TEMP:
-      if (!base::GetTempDir(&cur))
+      return GetTempDir(result);
+    case base::DIR_HOME:
+      *result = GetHomeDir();
+      return true;
+    case DIR_TEST_DATA: {
+      FilePath test_data_path;
+      if (!PathService::Get(DIR_SOURCE_ROOT, &test_data_path))
         return false;
-      break;
-    case DIR_TEST_DATA:
-      if (!PathService::Get(DIR_SOURCE_ROOT, &cur))
+      test_data_path = test_data_path.Append(FILE_PATH_LITERAL("base"));
+      test_data_path = test_data_path.Append(FILE_PATH_LITERAL("test"));
+      test_data_path = test_data_path.Append(FILE_PATH_LITERAL("data"));
+      if (!PathExists(test_data_path))  // We don't want to create this.
         return false;
-      cur = cur.Append(FILE_PATH_LITERAL("base"));
-      cur = cur.Append(FILE_PATH_LITERAL("test"));
-      cur = cur.Append(FILE_PATH_LITERAL("data"));
-      if (!base::PathExists(cur))  // We don't want to create this.
-        return false;
-      break;
+      *result = test_data_path;
+      return true;
+    }
     default:
       return false;
   }
-
-  *result = cur;
-  return true;
 }
 
 }  // namespace base

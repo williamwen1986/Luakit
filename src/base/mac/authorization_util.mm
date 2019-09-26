@@ -5,17 +5,18 @@
 #include "base/mac/authorization_util.h"
 
 #import <Foundation/Foundation.h>
+#include <stddef.h>
 #include <sys/wait.h>
 
 #include <string>
 
-#include "base/basictypes.h"
 #include "base/logging.h"
 #include "base/mac/bundle_locations.h"
+#include "base/mac/foundation_util.h"
 #include "base/mac/mac_logging.h"
-#import "base/mac/mac_util.h"
 #include "base/mac/scoped_authorizationref.h"
 #include "base/posix/eintr_wrapper.h"
+#include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 
@@ -28,10 +29,9 @@ AuthorizationRef GetAuthorizationRightsWithPrompt(
     AuthorizationFlags extraFlags) {
   // Create an empty AuthorizationRef.
   ScopedAuthorizationRef authorization;
-  OSStatus status = AuthorizationCreate(NULL,
-                                        kAuthorizationEmptyEnvironment,
+  OSStatus status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment,
                                         kAuthorizationFlagDefaults,
-                                        &authorization);
+                                        authorization.get_pointer());
   if (status != errAuthorizationSuccess) {
     OSSTATUS_LOG(ERROR, status) << "AuthorizationCreate";
     return NULL;
@@ -51,8 +51,8 @@ AuthorizationRef GetAuthorizationRightsWithPrompt(
   const char* icon_path_c = [icon_path fileSystemRepresentation];
   size_t icon_path_length = icon_path_c ? strlen(icon_path_c) : 0;
 
-  // The OS will append " Type an administrator's name and password to allow
-  // <CFBundleDisplayName> to make changes."
+  // The OS will dispay |prompt| along with a sentence asking the user to type
+  // the "password to allow this."
   NSString* prompt_ns = base::mac::CFToNSCast(prompt);
   const char* prompt_c = [prompt_ns UTF8String];
   size_t prompt_length = prompt_c ? strlen(prompt_c) : 0;
@@ -62,7 +62,7 @@ AuthorizationRef GetAuthorizationRightsWithPrompt(
     {kAuthorizationEnvironmentPrompt, prompt_length, (void*)prompt_c, 0}
   };
 
-  AuthorizationEnvironment environment = {arraysize(environment_items),
+  AuthorizationEnvironment environment = {base::size(environment_items),
                                           environment_items};
 
   status = AuthorizationCopyRights(authorization,
@@ -87,7 +87,7 @@ AuthorizationRef AuthorizationCreateToRunAsRoot(CFStringRef prompt) {
   AuthorizationItem right_items[] = {
     {kAuthorizationRightExecute, 0, NULL, 0}
   };
-  AuthorizationRights rights = {arraysize(right_items), right_items};
+  AuthorizationRights rights = {base::size(right_items), right_items};
 
   return GetAuthorizationRightsWithPrompt(&rights, prompt, 0);
 }
@@ -108,6 +108,10 @@ OSStatus ExecuteWithPrivilegesAndGetPID(AuthorizationRef authorization,
     pipe_pointer = &local_pipe;
   }
 
+// AuthorizationExecuteWithPrivileges is deprecated in macOS 10.7, but no good
+// replacement exists. https://crbug.com/593133.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   // AuthorizationExecuteWithPrivileges wants |char* const*| for |arguments|,
   // but it doesn't actually modify the arguments, and that type is kind of
   // silly and callers probably aren't dealing with that.  Put the cast here
@@ -117,6 +121,7 @@ OSStatus ExecuteWithPrivilegesAndGetPID(AuthorizationRef authorization,
                                                        options,
                                                        (char* const*)arguments,
                                                        pipe_pointer);
+#pragma clang diagnostic pop
   if (status != errAuthorizationSuccess) {
     return status;
   }

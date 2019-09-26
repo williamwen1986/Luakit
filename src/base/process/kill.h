@@ -9,12 +9,38 @@
 #define BASE_PROCESS_KILL_H_
 
 #include "base/files/file_path.h"
+#include "base/process/process.h"
 #include "base/process/process_handle.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 
 namespace base {
 
 class ProcessFilter;
+
+#if defined(OS_WIN)
+namespace win {
+
+// See definition in sandbox/win/src/sandbox_types.h
+const DWORD kSandboxFatalMemoryExceeded = 7012;
+
+// Exit codes with special meanings on Windows.
+const DWORD kNormalTerminationExitCode = 0;
+const DWORD kDebuggerInactiveExitCode = 0xC0000354;
+const DWORD kKeyboardInterruptExitCode = 0xC000013A;
+const DWORD kDebuggerTerminatedExitCode = 0x40010004;
+
+// This exit code is used by the Windows task manager when it kills a
+// process.  It's value is obviously not that unique, and it's
+// surprising to me that the task manager uses this value, but it
+// seems to be common practice on Windows to test for it as an
+// indication that the task manager has killed something if the
+// process goes away.
+const DWORD kProcessKilledExitCode = 1;
+
+}  // namespace win
+
+#endif  // OS_WIN
 
 // Return status values from GetTerminationStatus.  Don't use these as
 // exit code arguments to KillProcess*(), use platform/application
@@ -25,6 +51,10 @@ enum TerminationStatus {
   TERMINATION_STATUS_PROCESS_WAS_KILLED,   // e.g. SIGKILL or task manager kill
   TERMINATION_STATUS_PROCESS_CRASHED,      // e.g. Segmentation fault
   TERMINATION_STATUS_STILL_RUNNING,        // child hasn't exited yet
+#if defined(OS_CHROMEOS)
+  // Used for the case when oom-killer kills a process on ChromeOS.
+  TERMINATION_STATUS_PROCESS_WAS_KILLED_BY_OOM,
+#endif
 #if defined(OS_ANDROID)
   // On Android processes are spawned from the system Zygote and we do not get
   // the termination status.  We can't know if the termination was a crash or an
@@ -32,6 +62,8 @@ enum TerminationStatus {
   // a hint.
   TERMINATION_STATUS_OOM_PROTECTED,        // child was protected from oom kill
 #endif
+  TERMINATION_STATUS_LAUNCH_FAILED,        // child process never launched
+  TERMINATION_STATUS_OOM,                  // Process died due to oom
   TERMINATION_STATUS_MAX_ENUM
 };
 
@@ -44,29 +76,16 @@ BASE_EXPORT bool KillProcesses(const FilePath::StringType& executable_name,
                                int exit_code,
                                const ProcessFilter* filter);
 
-// Attempts to kill the process identified by the given process
-// entry structure, giving it the specified exit code. If |wait| is true, wait
-// for the process to be actually terminated before returning.
-// Returns true if this is successful, false otherwise.
-BASE_EXPORT bool KillProcess(ProcessHandle process, int exit_code, bool wait);
-
 #if defined(OS_POSIX)
 // Attempts to kill the process group identified by |process_group_id|. Returns
 // true on success.
 BASE_EXPORT bool KillProcessGroup(ProcessHandle process_group_id);
 #endif  // defined(OS_POSIX)
 
-#if defined(OS_WIN)
-BASE_EXPORT bool KillProcessById(ProcessId process_id,
-                                 int exit_code,
-                                 bool wait);
-#endif  // defined(OS_WIN)
-
 // Get the termination status of the process by interpreting the
 // circumstances of the child process' death. |exit_code| is set to
-// the status returned by waitpid() on POSIX, and from
-// GetExitCodeProcess() on Windows.  |exit_code| may be NULL if the
-// caller is not interested in it.  Note that on Linux, this function
+// the status returned by waitpid() on POSIX, and from GetExitCodeProcess() on
+// Windows, and may not be null.  Note that on Linux, this function
 // will only return a useful result the first time it is called after
 // the child exits (because it will reap the child and the information
 // will no longer be available).
@@ -91,24 +110,25 @@ BASE_EXPORT TerminationStatus GetTerminationStatus(ProcessHandle handle,
 //
 BASE_EXPORT TerminationStatus GetKnownDeadTerminationStatus(
     ProcessHandle handle, int* exit_code);
+
+#if defined(OS_LINUX)
+// Spawns a thread to wait asynchronously for the child |process| to exit
+// and then reaps it.
+BASE_EXPORT void EnsureProcessGetsReaped(Process process);
+#endif  // defined(OS_LINUX)
 #endif  // defined(OS_POSIX)
 
-// Waits for process to exit. On POSIX systems, if the process hasn't been
-// signaled then puts the exit code in |exit_code|; otherwise it's considered
-// a failure. On Windows |exit_code| is always filled. Returns true on success,
-// and closes |handle| in any case.
-BASE_EXPORT bool WaitForExitCode(ProcessHandle handle, int* exit_code);
+// Registers |process| to be asynchronously monitored for termination, forcibly
+// terminated if necessary, and reaped on exit. The caller should have signalled
+// |process| to exit before calling this API. The API will allow a couple of
+// seconds grace period before forcibly terminating |process|.
+// TODO(https://crbug.com/806451): The Mac implementation currently blocks the
+// calling thread for up to two seconds.
+BASE_EXPORT void EnsureProcessTerminated(Process process);
 
-// Waits for process to exit. If it did exit within |timeout_milliseconds|,
-// then puts the exit code in |exit_code|, and returns true.
-// In POSIX systems, if the process has been signaled then |exit_code| is set
-// to -1. Returns false on failure (the caller is then responsible for closing
-// |handle|).
-// The caller is always responsible for closing the |handle|.
-BASE_EXPORT bool WaitForExitCodeWithTimeout(ProcessHandle handle,
-                                            int* exit_code,
-                                            base::TimeDelta timeout);
-
+// These are only sparingly used, and not needed on Fuchsia. They could be
+// implemented if necessary.
+#if !defined(OS_FUCHSIA)
 // Wait for all the processes based on the named executable to exit.  If filter
 // is non-null, then only processes selected by the filter are waited on.
 // Returns after all processes have exited or wait_milliseconds have expired.
@@ -117,12 +137,6 @@ BASE_EXPORT bool WaitForProcessesToExit(
     const FilePath::StringType& executable_name,
     base::TimeDelta wait,
     const ProcessFilter* filter);
-
-// Wait for a single process to exit. Return true if it exited cleanly within
-// the given time limit. On Linux |handle| must be a child process, however
-// on Mac and Windows it can be any process.
-BASE_EXPORT bool WaitForSingleProcess(ProcessHandle handle,
-                                      base::TimeDelta wait);
 
 // Waits a certain amount of time (can be 0) for all the processes with a given
 // executable name to exit, then kills off any of them that are still around.
@@ -134,28 +148,7 @@ BASE_EXPORT bool CleanupProcesses(const FilePath::StringType& executable_name,
                                   base::TimeDelta wait,
                                   int exit_code,
                                   const ProcessFilter* filter);
-
-// This method ensures that the specified process eventually terminates, and
-// then it closes the given process handle.
-//
-// It assumes that the process has already been signalled to exit, and it
-// begins by waiting a small amount of time for it to exit.  If the process
-// does not appear to have exited, then this function starts to become
-// aggressive about ensuring that the process terminates.
-//
-// On Linux this method does not block the calling thread.
-// On OS X this method may block for up to 2 seconds.
-//
-// NOTE: The process handle must have been opened with the PROCESS_TERMINATE
-// and SYNCHRONIZE permissions.
-//
-BASE_EXPORT void EnsureProcessTerminated(ProcessHandle process_handle);
-
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
-// The nicer version of EnsureProcessTerminated() that is patient and will
-// wait for |process_handle| to finish and then reap it.
-BASE_EXPORT void EnsureProcessGetsReaped(ProcessHandle process_handle);
-#endif
+#endif  // !defined(OS_FUCHSIA)
 
 }  // namespace base
 

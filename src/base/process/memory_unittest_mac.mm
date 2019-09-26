@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/process/memory_unittest_mac.h"
+#include "build/build_config.h"
 
 #import <Foundation/Foundation.h>
 #include <CoreFoundation/CoreFoundation.h>

@@ -4,12 +4,37 @@
 
 #import "base/mac/scoped_sending_event.h"
 
+#import <Foundation/Foundation.h>
+
+#include "base/mac/scoped_nsobject.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+@interface ScopedSendingEventTestCrApp : NSApplication <CrAppControlProtocol> {
+ @private
+  BOOL handlingSendEvent_;
+}
+@property(nonatomic, assign, getter=isHandlingSendEvent) BOOL handlingSendEvent;
+@end
+
+@implementation ScopedSendingEventTestCrApp
+@synthesize handlingSendEvent = handlingSendEvent_;
+@end
 
 namespace {
 
+class ScopedSendingEventTest : public testing::Test {
+ public:
+  ScopedSendingEventTest() : app_([[ScopedSendingEventTestCrApp alloc] init]) {
+    NSApp = app_.get();
+  }
+  ~ScopedSendingEventTest() override { NSApp = nil; }
+
+ private:
+  base::scoped_nsobject<ScopedSendingEventTestCrApp> app_;
+};
+
 // Sets the flag within scope, resets when leaving scope.
-TEST(ScopedSendingEventTest, SetHandlingSendEvent) {
+TEST_F(ScopedSendingEventTest, SetHandlingSendEvent) {
   id<CrAppProtocol> app = NSApp;
   EXPECT_FALSE([app isHandlingSendEvent]);
   {
@@ -20,7 +45,7 @@ TEST(ScopedSendingEventTest, SetHandlingSendEvent) {
 }
 
 // Nested call restores previous value rather than resetting flag.
-TEST(ScopedSendingEventTest, NestedSetHandlingSendEvent) {
+TEST_F(ScopedSendingEventTest, NestedSetHandlingSendEvent) {
   id<CrAppProtocol> app = NSApp;
   EXPECT_FALSE([app isHandlingSendEvent]);
   {

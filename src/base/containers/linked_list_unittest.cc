@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/basictypes.h"
 #include "base/containers/linked_list.h"
+#include "base/stl_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -28,7 +28,19 @@ class MultipleInheritanceNodeBase {
 class MultipleInheritanceNode : public MultipleInheritanceNodeBase,
                                 public LinkNode<MultipleInheritanceNode> {
  public:
-  MultipleInheritanceNode() {}
+  MultipleInheritanceNode() = default;
+};
+
+class MovableNode : public LinkNode<MovableNode> {
+ public:
+  explicit MovableNode(int id) : id_(id) {}
+
+  MovableNode(MovableNode&&) = default;
+
+  int id() const { return id_; }
+
+ private:
+  int id_;
 };
 
 // Checks that when iterating |list| (either from head to tail, or from
@@ -65,12 +77,12 @@ TEST(LinkedList, Empty) {
   LinkedList<Node> list;
   EXPECT_EQ(list.end(), list.head());
   EXPECT_EQ(list.end(), list.tail());
-  ExpectListContents(list, 0, NULL);
+  ExpectListContents(list, 0, nullptr);
 }
 
 TEST(LinkedList, Append) {
   LinkedList<Node> list;
-  ExpectListContents(list, 0, NULL);
+  ExpectListContents(list, 0, nullptr);
 
   Node n1(1);
   list.Append(&n1);
@@ -79,7 +91,7 @@ TEST(LinkedList, Append) {
   EXPECT_EQ(&n1, list.tail());
   {
     const int expected[] = {1};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   Node n2(2);
@@ -89,7 +101,7 @@ TEST(LinkedList, Append) {
   EXPECT_EQ(&n2, list.tail());
   {
     const int expected[] = {1, 2};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   Node n3(3);
@@ -99,7 +111,7 @@ TEST(LinkedList, Append) {
   EXPECT_EQ(&n3, list.tail());
   {
     const int expected[] = {1, 2, 3};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 }
 
@@ -122,7 +134,7 @@ TEST(LinkedList, RemoveFromList) {
   EXPECT_EQ(&n5, list.tail());
   {
     const int expected[] = {1, 2, 3, 4, 5};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   // Remove from the middle.
@@ -132,7 +144,7 @@ TEST(LinkedList, RemoveFromList) {
   EXPECT_EQ(&n5, list.tail());
   {
     const int expected[] = {1, 2, 4, 5};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   // Remove from the tail.
@@ -142,7 +154,7 @@ TEST(LinkedList, RemoveFromList) {
   EXPECT_EQ(&n4, list.tail());
   {
     const int expected[] = {1, 2, 4};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   // Remove from the head.
@@ -152,14 +164,14 @@ TEST(LinkedList, RemoveFromList) {
   EXPECT_EQ(&n4, list.tail());
   {
     const int expected[] = {2, 4};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   // Empty the list.
   n2.RemoveFromList();
   n4.RemoveFromList();
 
-  ExpectListContents(list, 0, NULL);
+  ExpectListContents(list, 0, nullptr);
   EXPECT_EQ(list.end(), list.head());
   EXPECT_EQ(list.end(), list.tail());
 
@@ -174,7 +186,7 @@ TEST(LinkedList, RemoveFromList) {
   EXPECT_EQ(&n5, list.tail());
   {
     const int expected[] = {1, 2, 3, 4, 5};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 }
 
@@ -193,7 +205,7 @@ TEST(LinkedList, InsertBefore) {
   EXPECT_EQ(&n2, list.tail());
   {
     const int expected[] = {1, 2};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   n3.InsertBefore(&n2);
@@ -202,7 +214,7 @@ TEST(LinkedList, InsertBefore) {
   EXPECT_EQ(&n2, list.tail());
   {
     const int expected[] = {1, 3, 2};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   n4.InsertBefore(&n1);
@@ -211,7 +223,7 @@ TEST(LinkedList, InsertBefore) {
   EXPECT_EQ(&n2, list.tail());
   {
     const int expected[] = {4, 1, 3, 2};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 }
 
@@ -230,7 +242,7 @@ TEST(LinkedList, InsertAfter) {
   EXPECT_EQ(&n2, list.tail());
   {
     const int expected[] = {1, 2};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   n3.InsertAfter(&n2);
@@ -239,7 +251,7 @@ TEST(LinkedList, InsertAfter) {
   EXPECT_EQ(&n3, list.tail());
   {
     const int expected[] = {1, 2, 3};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 
   n4.InsertAfter(&n1);
@@ -248,13 +260,89 @@ TEST(LinkedList, InsertAfter) {
   EXPECT_EQ(&n3, list.tail());
   {
     const int expected[] = {1, 4, 2, 3};
-    ExpectListContents(list, arraysize(expected), expected);
+    ExpectListContents(list, base::size(expected), expected);
   }
 }
 
 TEST(LinkedList, MultipleInheritanceNode) {
   MultipleInheritanceNode node;
   EXPECT_EQ(&node, node.value());
+}
+
+TEST(LinkedList, EmptyListIsEmpty) {
+  LinkedList<Node> list;
+  EXPECT_TRUE(list.empty());
+}
+
+TEST(LinkedList, NonEmptyListIsNotEmpty) {
+  LinkedList<Node> list;
+
+  Node n(1);
+  list.Append(&n);
+
+  EXPECT_FALSE(list.empty());
+}
+
+TEST(LinkedList, EmptiedListIsEmptyAgain) {
+  LinkedList<Node> list;
+
+  Node n(1);
+  list.Append(&n);
+  n.RemoveFromList();
+
+  EXPECT_TRUE(list.empty());
+}
+
+TEST(LinkedList, NodesCanBeReused) {
+  LinkedList<Node> list1;
+  LinkedList<Node> list2;
+
+  Node n(1);
+  list1.Append(&n);
+  n.RemoveFromList();
+  list2.Append(&n);
+
+  EXPECT_EQ(list2.head()->value(), &n);
+}
+
+TEST(LinkedList, RemovedNodeHasNullNextPrevious) {
+  LinkedList<Node> list;
+
+  Node n(1);
+  list.Append(&n);
+  n.RemoveFromList();
+
+  EXPECT_EQ(nullptr, n.next());
+  EXPECT_EQ(nullptr, n.previous());
+}
+
+TEST(LinkedList, NodeMoveConstructor) {
+  LinkedList<MovableNode> list;
+
+  MovableNode n1(1);
+  MovableNode n2(2);
+  MovableNode n3(3);
+
+  list.Append(&n1);
+  list.Append(&n2);
+  list.Append(&n3);
+
+  EXPECT_EQ(&n1, n2.previous());
+  EXPECT_EQ(&n2, n1.next());
+  EXPECT_EQ(&n3, n2.next());
+  EXPECT_EQ(&n2, n3.previous());
+  EXPECT_EQ(2, n2.id());
+
+  MovableNode n2_new(std::move(n2));
+
+  EXPECT_EQ(nullptr, n2.next());
+  EXPECT_EQ(nullptr, n2.previous());
+
+  EXPECT_EQ(&n1, n2_new.previous());
+  EXPECT_EQ(&n2_new, n1.next());
+  EXPECT_EQ(&n3, n2_new.next());
+  EXPECT_EQ(&n2_new, n3.previous());
+  EXPECT_EQ(2, n2_new.id());
 }
 
 }  // namespace

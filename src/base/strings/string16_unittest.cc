@@ -3,15 +3,23 @@
 // found in the LICENSE file.
 
 #include <sstream>
+#include <unordered_set>
 
 #include "base/strings/string16.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
 
-#if defined(WCHAR_T_IS_UTF32)
+#if defined(WCHAR_T_IS_UTF16)
+TEST(String16Test, String16Literal) {
+  static constexpr char16 kHelloWorld[] = STRING16_LITERAL("Hello, World");
+  string16 hello_world = kHelloWorld;
+  EXPECT_EQ(kHelloWorld, hello_world);
+}
+#endif
 
 // We define a custom operator<< for string16 so we can use it with logging.
 // This tests that conversion.
@@ -53,6 +61,15 @@ TEST(String16Test, OutputStream) {
   }
 }
 
-#endif
+TEST(String16Test, Hash) {
+  string16 str1 = ASCIIToUTF16("hello");
+  string16 str2 = ASCIIToUTF16("world");
+
+  std::unordered_set<string16> set;
+
+  set.insert(str1);
+  EXPECT_EQ(1u, set.count(str1));
+  EXPECT_EQ(0u, set.count(str2));
+}
 
 }  // namespace base

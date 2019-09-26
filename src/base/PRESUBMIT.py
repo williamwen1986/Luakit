@@ -5,7 +5,7 @@
 """Chromium presubmit script for src/base.
 
 See http://dev.chromium.org/developers/how-tos/depottools/presubmit-scripts
-for more details on the presubmit API built into gcl.
+for more details on the presubmit API built into depot_tools.
 """
 
 def _CheckNoInterfacesInBase(input_api, output_api):
@@ -14,6 +14,7 @@ def _CheckNoInterfacesInBase(input_api, output_api):
   files = []
   for f in input_api.AffectedSourceFiles(input_api.FilterSourceFile):
     if (f.LocalPath().startswith('base/') and
+        not "/ios/" in f.LocalPath() and
         not "/test/" in f.LocalPath() and
         not f.LocalPath().endswith('_unittest.mm') and
         not f.LocalPath().endswith('mac/sdk_forward_declarations.h')):
@@ -46,11 +47,3 @@ def CheckChangeOnCommit(input_api, output_api):
   results = []
   results.extend(_CommonChecks(input_api, output_api))
   return results
-
-
-def GetPreferredTrySlaves():
-  return [
-    'linux_rel:sync_integration_tests',
-    'mac_rel:sync_integration_tests',
-    'win_rel:sync_integration_tests',
-  ]

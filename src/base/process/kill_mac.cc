@@ -4,12 +4,14 @@
 
 #include "base/process/kill.h"
 
+#include <errno.h>
 #include <signal.h>
 #include <sys/event.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "base/file_util.h"
+#include "base/files/file_util.h"
+#include "base/files/scoped_file.h"
 #include "base/logging.h"
 #include "base/posix/eintr_wrapper.h"
 
@@ -65,8 +67,8 @@ void BlockingReap(pid_t child) {
 // work in that case, but waitpid won't, and killing a non-child might not be
 // the best approach.
 void WaitForChildToDie(pid_t child, int timeout) {
-  DCHECK(child > 0);
-  DCHECK(timeout > 0);
+  DCHECK_GT(child, 0);
+  DCHECK_GT(timeout, 0);
 
   // DON'T ADD ANY EARLY RETURNS TO THIS FUNCTION without ensuring that
   // |child| has been reaped. Specifically, even if a kqueue, kevent, or other
@@ -76,15 +78,13 @@ void WaitForChildToDie(pid_t child, int timeout) {
 
   int result;
 
-  int kq = HANDLE_EINTR(kqueue());
-  if (kq == -1) {
+  ScopedFD kq(HANDLE_EINTR(kqueue()));
+  if (!kq.is_valid()) {
     DPLOG(ERROR) << "kqueue()";
   } else {
-    file_util::ScopedFD auto_close_kq(&kq);
-
     struct kevent change = {0};
     EV_SET(&change, child, EVFILT_PROC, EV_ADD, NOTE_EXIT, 0, NULL);
-    result = HANDLE_EINTR(kevent(kq, &change, 1, NULL, 0, NULL));
+    result = HANDLE_EINTR(kevent(kq.get(), &change, 1, NULL, 0, NULL));
 
     if (result == -1) {
       if (errno != ESRCH) {
@@ -120,7 +120,7 @@ void WaitForChildToDie(pid_t child, int timeout) {
       struct kevent event = {0};
       while (remaining_delta.InMilliseconds() > 0) {
         const struct timespec remaining_timespec = remaining_delta.ToTimeSpec();
-        result = kevent(kq, NULL, 0, &event, 1, &remaining_timespec);
+        result = kevent(kq.get(), NULL, 0, &event, 1, &remaining_timespec);
         if (result == -1 && errno == EINTR) {
           remaining_delta = deadline - TimeTicks::Now();
           result = 0;
@@ -166,8 +166,8 @@ void WaitForChildToDie(pid_t child, int timeout) {
 
 }  // namespace
 
-void EnsureProcessTerminated(ProcessHandle process) {
-  WaitForChildToDie(process, kWaitBeforeKillSeconds);
+void EnsureProcessTerminated(Process process) {
+  WaitForChildToDie(process.Pid(), kWaitBeforeKillSeconds);
 }
 
 }  // namespace base

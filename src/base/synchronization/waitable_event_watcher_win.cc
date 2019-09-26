@@ -8,41 +8,54 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/win/object_watcher.h"
 
+#include <windows.h>
+
 namespace base {
 
-WaitableEventWatcher::WaitableEventWatcher()
-    : event_(NULL) {
-}
+WaitableEventWatcher::WaitableEventWatcher() = default;
 
-WaitableEventWatcher::~WaitableEventWatcher() {
-}
+WaitableEventWatcher::~WaitableEventWatcher() {}
 
 bool WaitableEventWatcher::StartWatching(
     WaitableEvent* event,
-    const EventCallback& callback) {
-  callback_ = callback;
+    EventCallback callback,
+    scoped_refptr<SequencedTaskRunner> task_runner) {
+  DCHECK(event);
+  callback_ = std::move(callback);
   event_ = event;
-  return watcher_.StartWatching(event->handle(), this);
+
+  // Duplicate and hold the event handle until a callback is returned or
+  // waiting is stopped.
+  HANDLE handle = nullptr;
+  if (!::DuplicateHandle(::GetCurrentProcess(),  // hSourceProcessHandle
+                         event->handle(),
+                         ::GetCurrentProcess(),  // hTargetProcessHandle
+                         &handle,
+                         0,      // dwDesiredAccess ignored due to SAME_ACCESS
+                         FALSE,  // !bInheritHandle
+                         DUPLICATE_SAME_ACCESS)) {
+    return false;
+  }
+  duplicated_event_handle_.Set(handle);
+  return watcher_.StartWatchingOnce(handle, this);
 }
 
 void WaitableEventWatcher::StopWatching() {
   callback_.Reset();
   event_ = NULL;
   watcher_.StopWatching();
-}
-
-WaitableEvent* WaitableEventWatcher::GetWatchedEvent() {
-  return event_;
+  duplicated_event_handle_.Close();
 }
 
 void WaitableEventWatcher::OnObjectSignaled(HANDLE h) {
+  DCHECK_EQ(duplicated_event_handle_.Get(), h);
   WaitableEvent* event = event_;
-  EventCallback callback = callback_;
+  EventCallback callback = std::move(callback_);
   event_ = NULL;
-  callback_.Reset();
+  duplicated_event_handle_.Close();
   DCHECK(event);
 
-  callback.Run(event);
+  std::move(callback).Run(event);
 }
 
 }  // namespace base

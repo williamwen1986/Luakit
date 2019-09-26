@@ -4,9 +4,12 @@
 
 #include "base/process/process_iterator.h"
 
-#include "base/file_util.h"
+#include <stddef.h>
+
+#include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/process/internal_linux.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_restrictions.h"
 
@@ -30,7 +33,7 @@ std::string GetProcStatsFieldAsString(
     return proc_stats[field_num];
 
   NOTREACHED();
-  return 0;
+  return std::string();
 }
 
 // Reads /proc/<pid>/cmdline and populates |proc_cmd_line_args| with the command
@@ -48,7 +51,8 @@ bool GetProcCmdline(pid_t pid, std::vector<std::string>* proc_cmd_line_args) {
     return false;
   std::string delimiters;
   delimiters.push_back('\0');
-  Tokenize(cmd_line, delimiters, proc_cmd_line_args);
+  *proc_cmd_line_args = SplitString(cmd_line, delimiters, KEEP_WHITESPACE,
+                                    SPLIT_WANT_NONEMPTY);
   return true;
 }
 
@@ -57,17 +61,27 @@ bool GetProcCmdline(pid_t pid, std::vector<std::string>* proc_cmd_line_args) {
 ProcessIterator::ProcessIterator(const ProcessFilter* filter)
     : filter_(filter) {
   procfs_dir_ = opendir(internal::kProcDir);
+  if (!procfs_dir_) {
+    // On Android, SELinux may prevent reading /proc. See
+    // https://crbug.com/581517 for details.
+    PLOG(ERROR) << "opendir " << internal::kProcDir;
+  }
 }
 
 ProcessIterator::~ProcessIterator() {
   if (procfs_dir_) {
     closedir(procfs_dir_);
-    procfs_dir_ = NULL;
+    procfs_dir_ = nullptr;
   }
 }
 
 bool ProcessIterator::CheckForNextProcess() {
   // TODO(port): skip processes owned by different UID
+
+  if (!procfs_dir_) {
+    DLOG(ERROR) << "Skipping CheckForNextProcess(), no procfs_dir_";
+    return false;
+  }
 
   pid_t pid = kNullProcessId;
   std::vector<std::string> cmd_line_args;

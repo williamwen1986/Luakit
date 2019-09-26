@@ -7,66 +7,28 @@
 
 #include <IOKit/IOKitLib.h>
 
-#include "base/basictypes.h"
-#include "base/compiler_specific.h"
+#include "base/mac/scoped_typeref.h"
 
 namespace base {
 namespace mac {
 
-// Just like ScopedCFTypeRef but for io_object_t and subclasses.
-template<typename IOT>
-class ScopedIOObject {
- public:
-  typedef IOT element_type;
+namespace internal {
 
-  explicit ScopedIOObject(IOT object = IO_OBJECT_NULL)
-      : object_(object) {
+template <typename IOT>
+struct ScopedIOObjectTraits {
+  static IOT InvalidValue() { return IO_OBJECT_NULL; }
+  static IOT Retain(IOT iot) {
+    IOObjectRetain(iot);
+    return iot;
   }
-
-  ~ScopedIOObject() {
-    if (object_)
-      IOObjectRelease(object_);
-  }
-
-  void reset(IOT object = IO_OBJECT_NULL) {
-    if (object_)
-      IOObjectRelease(object_);
-    object_ = object;
-  }
-
-  bool operator==(IOT that) const {
-    return object_ == that;
-  }
-
-  bool operator!=(IOT that) const {
-    return object_ != that;
-  }
-
-  operator IOT() const {
-    return object_;
-  }
-
-  IOT get() const {
-    return object_;
-  }
-
-  void swap(ScopedIOObject& that) {
-    IOT temp = that.object_;
-    that.object_ = object_;
-    object_ = temp;
-  }
-
-  IOT release() WARN_UNUSED_RESULT {
-    IOT temp = object_;
-    object_ = IO_OBJECT_NULL;
-    return temp;
-  }
-
- private:
-  IOT object_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScopedIOObject);
+  static void Release(IOT iot) { IOObjectRelease(iot); }
 };
+
+}  // namespce internal
+
+// Just like ScopedCFTypeRef but for io_object_t and subclasses.
+template <typename IOT>
+using ScopedIOObject = ScopedTypeRef<IOT, internal::ScopedIOObjectTraits<IOT>>;
 
 }  // namespace mac
 }  // namespace base

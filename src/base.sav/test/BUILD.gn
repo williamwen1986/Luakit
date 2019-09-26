@@ -1,0 +1,150 @@
+# Copyright (c) 2013 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+static_library("test_support_base") {
+  external = true
+  sources = [
+    "expectations/expectation.cc",
+    "expectations/expectation.h",
+    "expectations/parser.cc",
+    "expectations/parser.h",
+    "gtest_xml_util.cc",
+    "gtest_xml_util.h",
+    "launcher/test_launcher.cc",
+    "launcher/test_launcher.h",
+    "launcher/test_result.cc",
+    "launcher/test_result.h",
+    "launcher/test_results_tracker.cc",
+    "launcher/test_results_tracker.h",
+    "launcher/unit_test_launcher.cc",
+    "launcher/unit_test_launcher.h",
+    "launcher/unit_test_launcher_ios.cc",
+    "mock_chrome_application_mac.h",
+    "mock_chrome_application_mac.mm",
+    "mock_devices_changed_observer.cc",
+    "mock_devices_changed_observer.h",
+    "mock_time_provider.cc",
+    "mock_time_provider.h",
+    "multiprocess_test.cc",
+    "multiprocess_test.h",
+    "multiprocess_test_android.cc",
+    "null_task_runner.cc",
+    "null_task_runner.h",
+    "perf_log.cc",
+    "perf_log.h",
+    "perf_test_suite.cc",
+    "perf_test_suite.h",
+    "perf_time_logger.cc",
+    "perf_time_logger.h",
+    "power_monitor_test_base.cc",
+    "power_monitor_test_base.h",
+    "scoped_locale.cc",
+    "scoped_locale.h",
+    "scoped_path_override.cc",
+    "scoped_path_override.h",
+    "sequenced_task_runner_test_template.cc",
+    "sequenced_task_runner_test_template.h",
+    "sequenced_worker_pool_owner.cc",
+    "sequenced_worker_pool_owner.h",
+    "simple_test_clock.cc",
+    "simple_test_clock.h",
+    "simple_test_tick_clock.cc",
+    "simple_test_tick_clock.h",
+    "task_runner_test_template.cc",
+    "task_runner_test_template.h",
+    "test_file_util.cc",
+    "test_file_util.h",
+    "test_file_util_linux.cc",
+    "test_file_util_mac.cc",
+    "test_file_util_posix.cc",
+    "test_file_util_win.cc",
+    "test_listener_ios.h",
+    "test_listener_ios.mm",
+    "test_pending_task.cc",
+    "test_pending_task.h",
+    "test_process_killer_win.cc",
+    "test_process_killer_win.h",
+    "test_reg_util_win.cc",
+    "test_reg_util_win.h",
+    "test_shortcut_win.cc",
+    "test_shortcut_win.h",
+    "test_simple_task_runner.cc",
+    "test_simple_task_runner.h",
+    "test_suite.cc",
+    "test_suite.h",
+    "test_support_android.cc",
+    "test_support_android.h",
+    "test_support_ios.h",
+    "test_support_ios.mm",
+    "test_switches.cc",
+    "test_switches.h",
+    "test_timeouts.cc",
+    "test_timeouts.h",
+    "thread_test_helper.cc",
+    "thread_test_helper.h",
+    "trace_event_analyzer.cc",
+    "trace_event_analyzer.h",
+    "values_test_util.cc",
+    "values_test_util.h",
+  ]
+  deps = [
+    "//base",
+    "//base/third_party/dynamic_annotations",
+    "//base:base_i18n",
+    "//base:base_static",
+    "//testing/gmock",
+    "//testing/gtest",
+    "//third_party/libxml"
+  ]
+
+  if (!is_posix) {
+    sources -= [
+      "scoped_locale.cc",
+      "scoped_locale.h",
+    ]
+  }
+  if (is_ios) {
+    # iOS uses its own unit test launcher.
+    sources -= "launcher/unit_test_launcher.cc"
+
+    # Pull in specific Mac files for iOS (which have been filtered out
+    # by file name rules).
+    set_sources_assignment_filter([])
+    sources += "test_file_util_mac.cc"
+  }
+  if (toolkit_uses_gtk) {
+    configs += "//build/config/linux:gtk"
+  }
+}
+
+config("perf_test_config") {
+  defines = [ "PERF_TEST" ]
+}
+
+static_library("test_support_perf") {
+  external = true
+  sources = [
+    "run_all_perftests.cc",
+  ]
+  deps = [
+    "//base",
+    "//testing/gtest",
+  ]
+
+  direct_dependent_configs = [ ":perf_test_config" ]
+
+  if (toolkit_uses_gtk) {
+    configs += "//build/config/linux:gtk"
+  }
+}
+
+static_library("run_all_unittests") {
+  external = true
+  sources = [
+    "run_all_unittests.cc",
+  ]
+  deps = [
+    ":test_support_base",
+  ]
+}

@@ -4,40 +4,223 @@
 
 #include "base/process/process.h"
 
+#include "base/clang_coverage_buildflags.h"
+#include "base/debug/activity_tracker.h"
 #include "base/logging.h"
-#include "base/memory/scoped_ptr.h"
-#include "base/win/windows_version.h"
+#include "base/numerics/safe_conversions.h"
+#include "base/process/kill.h"
+#include "base/threading/thread_restrictions.h"
+
+#include <windows.h>
+
+#if BUILDFLAG(CLANG_COVERAGE)
+#include "base/test/clang_coverage.h"
+#endif
+
+namespace {
+
+DWORD kBasicProcessAccess =
+  PROCESS_TERMINATE | PROCESS_QUERY_INFORMATION | SYNCHRONIZE;
+
+} // namespace
 
 namespace base {
 
-void Process::Close() {
-  if (!process_)
-    return;
-
-  // Don't call CloseHandle on a pseudo-handle.
-  if (process_ != ::GetCurrentProcess())
-    ::CloseHandle(process_);
-
-  process_ = NULL;
+Process::Process(ProcessHandle handle)
+    : process_(handle), is_current_process_(false) {
+  CHECK_NE(handle, ::GetCurrentProcess());
 }
 
-void Process::Terminate(int result_code) {
-  if (!process_)
+Process::Process(Process&& other)
+    : process_(other.process_.Take()),
+      is_current_process_(other.is_current_process_) {
+  other.Close();
+}
+
+Process::~Process() {
+}
+
+Process& Process::operator=(Process&& other) {
+  DCHECK_NE(this, &other);
+  process_.Set(other.process_.Take());
+  is_current_process_ = other.is_current_process_;
+  other.Close();
+  return *this;
+}
+
+// static
+Process Process::Current() {
+  Process process;
+  process.is_current_process_ = true;
+  return process;
+}
+
+// static
+Process Process::Open(ProcessId pid) {
+  return Process(::OpenProcess(kBasicProcessAccess, FALSE, pid));
+}
+
+// static
+Process Process::OpenWithExtraPrivileges(ProcessId pid) {
+  DWORD access = kBasicProcessAccess | PROCESS_DUP_HANDLE | PROCESS_VM_READ;
+  return Process(::OpenProcess(access, FALSE, pid));
+}
+
+// static
+Process Process::OpenWithAccess(ProcessId pid, DWORD desired_access) {
+  return Process(::OpenProcess(desired_access, FALSE, pid));
+}
+
+// static
+Process Process::DeprecatedGetProcessFromHandle(ProcessHandle handle) {
+  DCHECK_NE(handle, ::GetCurrentProcess());
+  ProcessHandle out_handle;
+  if (!::DuplicateHandle(GetCurrentProcess(), handle,
+                         GetCurrentProcess(), &out_handle,
+                         0, FALSE, DUPLICATE_SAME_ACCESS)) {
+    return Process();
+  }
+  return Process(out_handle);
+}
+
+// static
+bool Process::CanBackgroundProcesses() {
+  return true;
+}
+
+// static
+void Process::TerminateCurrentProcessImmediately(int exit_code) {
+#if BUILDFLAG(CLANG_COVERAGE)
+  WriteClangCoverageProfile();
+#endif
+  ::TerminateProcess(GetCurrentProcess(), exit_code);
+  // There is some ambiguity over whether the call above can return. Rather than
+  // hitting confusing crashes later on we should crash right here.
+  IMMEDIATE_CRASH();
+}
+
+bool Process::IsValid() const {
+  return process_.IsValid() || is_current();
+}
+
+ProcessHandle Process::Handle() const {
+  return is_current_process_ ? GetCurrentProcess() : process_.Get();
+}
+
+Process Process::Duplicate() const {
+  if (is_current())
+    return Current();
+
+  ProcessHandle out_handle;
+  if (!IsValid() || !::DuplicateHandle(GetCurrentProcess(),
+                                       Handle(),
+                                       GetCurrentProcess(),
+                                       &out_handle,
+                                       0,
+                                       FALSE,
+                                       DUPLICATE_SAME_ACCESS)) {
+    return Process();
+  }
+  return Process(out_handle);
+}
+
+ProcessId Process::Pid() const {
+  DCHECK(IsValid());
+  return GetProcId(Handle());
+}
+
+Time Process::CreationTime() const {
+  FILETIME creation_time = {};
+  FILETIME ignore1 = {};
+  FILETIME ignore2 = {};
+  FILETIME ignore3 = {};
+  if (!::GetProcessTimes(Handle(), &creation_time, &ignore1, &ignore2,
+                         &ignore3)) {
+    return Time();
+  }
+  return Time::FromFileTime(creation_time);
+}
+
+bool Process::is_current() const {
+  return is_current_process_;
+}
+
+void Process::Close() {
+  is_current_process_ = false;
+  if (!process_.IsValid())
     return;
 
-  // Call NtTerminateProcess directly, without going through the import table,
-  // which might have been hooked with a buggy replacement by third party
-  // software. http://crbug.com/81449.
-  HMODULE module = GetModuleHandle(L"ntdll.dll");
-  typedef UINT (WINAPI *TerminateProcessPtr)(HANDLE handle, UINT code);
-  TerminateProcessPtr terminate_process = reinterpret_cast<TerminateProcessPtr>(
-      GetProcAddress(module, "NtTerminateProcess"));
-  terminate_process(process_, result_code);
+  process_.Close();
+}
+
+bool Process::Terminate(int exit_code, bool wait) const {
+  constexpr DWORD kWaitMs = 60 * 1000;
+
+  // exit_code cannot be implemented.
+  DCHECK(IsValid());
+  bool result = (::TerminateProcess(Handle(), exit_code) != FALSE);
+  if (result) {
+    // The process may not end immediately due to pending I/O
+    if (wait && ::WaitForSingleObject(Handle(), kWaitMs) != WAIT_OBJECT_0)
+      DPLOG(ERROR) << "Error waiting for process exit";
+    Exited(exit_code);
+  } else {
+    // The process can't be terminated, perhaps because it has already exited or
+    // is in the process of exiting. An error code of ERROR_ACCESS_DENIED is the
+    // undocumented-but-expected result if the process has already exited or
+    // started exiting when TerminateProcess is called, so don't print an error
+    // message in that case.
+    if (GetLastError() != ERROR_ACCESS_DENIED)
+      DPLOG(ERROR) << "Unable to terminate process";
+    // A non-zero timeout is necessary here for the same reasons as above.
+    if (::WaitForSingleObject(Handle(), kWaitMs) == WAIT_OBJECT_0) {
+      DWORD actual_exit;
+      Exited(::GetExitCodeProcess(Handle(), &actual_exit) ? actual_exit
+                                                          : exit_code);
+      result = true;
+    }
+  }
+  return result;
+}
+
+bool Process::WaitForExit(int* exit_code) const {
+  return WaitForExitWithTimeout(TimeDelta::FromMilliseconds(INFINITE),
+                                exit_code);
+}
+
+bool Process::WaitForExitWithTimeout(TimeDelta timeout, int* exit_code) const {
+  // Intentionally avoid instantiating ScopedBlockingCallWithBaseSyncPrimitives.
+  // In some cases, this function waits on a child Process doing CPU work.
+  // http://crbug.com/905788
+  if (!timeout.is_zero())
+    internal::AssertBaseSyncPrimitivesAllowed();
+
+  // Record the event that this thread is blocking upon (for hang diagnosis).
+  base::debug::ScopedProcessWaitActivity process_activity(this);
+
+  // Limit timeout to INFINITE.
+  DWORD timeout_ms = saturated_cast<DWORD>(timeout.InMilliseconds());
+  if (::WaitForSingleObject(Handle(), timeout_ms) != WAIT_OBJECT_0)
+    return false;
+
+  DWORD temp_code;  // Don't clobber out-parameters in case of failure.
+  if (!::GetExitCodeProcess(Handle(), &temp_code))
+    return false;
+
+  if (exit_code)
+    *exit_code = temp_code;
+
+  Exited(temp_code);
+  return true;
+}
+
+void Process::Exited(int exit_code) const {
+  base::debug::GlobalActivityTracker::RecordProcessExitIfEnabled(Pid(),
+                                                                 exit_code);
 }
 
 bool Process::IsProcessBackgrounded() const {
-  if (!process_)
-    return false;  // Failure case.
+  DCHECK(IsValid());
   DWORD priority = GetPriority();
   if (priority == 0)
     return false;  // Failure case.
@@ -46,47 +229,24 @@ bool Process::IsProcessBackgrounded() const {
 }
 
 bool Process::SetProcessBackgrounded(bool value) {
-  if (!process_)
-    return false;
+  DCHECK(IsValid());
   // Vista and above introduce a real background mode, which not only
   // sets the priority class on the threads but also on the IO generated
   // by it. Unfortunately it can only be set for the calling process.
   DWORD priority;
-  if ((base::win::GetVersion() >= base::win::VERSION_VISTA) &&
-      (process_ == ::GetCurrentProcess())) {
+  if (is_current()) {
     priority = value ? PROCESS_MODE_BACKGROUND_BEGIN :
                        PROCESS_MODE_BACKGROUND_END;
   } else {
-    priority = value ? BELOW_NORMAL_PRIORITY_CLASS : NORMAL_PRIORITY_CLASS;
+    priority = value ? IDLE_PRIORITY_CLASS : NORMAL_PRIORITY_CLASS;
   }
 
-  return (::SetPriorityClass(process_, priority) != 0);
-}
-
-ProcessId Process::pid() const {
-  if (process_ == 0)
-    return 0;
-
-  return GetProcId(process_);
-}
-
-bool Process::is_current() const {
-  return process_ == GetCurrentProcess();
-}
-
-// static
-Process Process::Current() {
-  return Process(::GetCurrentProcess());
-}
-
-// static
-bool Process::CanBackgroundProcesses() {
-  return true;
+  return (::SetPriorityClass(Handle(), priority) != 0);
 }
 
 int Process::GetPriority() const {
-  DCHECK(process_);
-  return ::GetPriorityClass(process_);
+  DCHECK(IsValid());
+  return ::GetPriorityClass(Handle());
 }
 
 }  // namespace base

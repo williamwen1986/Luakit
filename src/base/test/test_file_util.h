@@ -7,14 +7,21 @@
 
 // File utility functions used only by tests.
 
+#include <stddef.h>
+
 #include <string>
 
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
+#include "base/macros.h"
+#include "build/build_config.h"
 
 #if defined(OS_ANDROID)
 #include <jni.h>
-#include "base/basictypes.h"
+#endif
+
+#if defined(OS_WIN)
+#include <windows.h>
 #endif
 
 namespace base {
@@ -27,65 +34,54 @@ class FilePath;
 // rely on uncached files.
 bool EvictFileFromSystemCacheWithRetry(const FilePath& file);
 
-}  // namespace base
-
-// TODO(brettw) move all of this to the base namespace.
-namespace file_util {
-
 // Wrapper over base::Delete. On Windows repeatedly invokes Delete in case
 // of failure to workaround Windows file locking semantics. Returns true on
 // success.
-bool DieFileDie(const base::FilePath& file, bool recurse);
+bool DieFileDie(const FilePath& file, bool recurse);
+
+// Synchronize all the dirty pages from the page cache to disk (on POSIX
+// systems). The Windows analogy for this operation is to 'Flush file buffers'.
+// Note: This is currently implemented as a no-op on Windows.
+void SyncPageCacheToDisk();
 
 // Clear a specific file from the system cache. After this call, trying
 // to access this file will result in a cold load from the hard drive.
-bool EvictFileFromSystemCache(const base::FilePath& file);
+bool EvictFileFromSystemCache(const FilePath& file);
 
 #if defined(OS_WIN)
-// Returns true if the volume supports Alternate Data Streams.
-bool VolumeSupportsADS(const base::FilePath& path);
-
-// Returns true if the ZoneIdentifier is correctly set to "Internet" (3).
-// Note that this function must be called from the same process as
-// the one that set the zone identifier.  I.e. don't use it in UI/automation
-// based tests.
-bool HasInternetZoneIdentifier(const base::FilePath& full_path);
+// Deny |permission| on the file |path| for the current user. |permission| is an
+// ACCESS_MASK structure which is defined in
+// https://msdn.microsoft.com/en-us/library/windows/desktop/aa374892.aspx
+// Refer to https://msdn.microsoft.com/en-us/library/aa822867.aspx for a list of
+// possible values.
+bool DenyFilePermission(const FilePath& path, DWORD permission);
 #endif  // defined(OS_WIN)
-
-// In general it's not reliable to convert a FilePath to a wstring and we use
-// string16 elsewhere for Unicode strings, but in tests it is frequently
-// convenient to be able to compare paths to literals like L"foobar".
-std::wstring FilePathAsWString(const base::FilePath& path);
-base::FilePath WStringAsFilePath(const std::wstring& path);
 
 // For testing, make the file unreadable or unwritable.
 // In POSIX, this does not apply to the root user.
-bool MakeFileUnreadable(const base::FilePath& path) WARN_UNUSED_RESULT;
-bool MakeFileUnwritable(const base::FilePath& path) WARN_UNUSED_RESULT;
-
-#if defined(OS_ANDROID)
-// Register the ContentUriTestUrils JNI bindings.
-bool RegisterContentUriTestUtils(JNIEnv* env);
-
-// Insert an image file into the MediaStore, and retrieve the content URI for
-// testing purpose.
-base::FilePath InsertImageIntoMediaStore(const base::FilePath& path);
-#endif  // defined(OS_ANDROID)
+bool MakeFileUnreadable(const FilePath& path) WARN_UNUSED_RESULT;
+bool MakeFileUnwritable(const FilePath& path) WARN_UNUSED_RESULT;
 
 // Saves the current permissions for a path, and restores it on destruction.
-class PermissionRestorer {
+class FilePermissionRestorer {
  public:
-  explicit PermissionRestorer(const base::FilePath& path);
-  ~PermissionRestorer();
+  explicit FilePermissionRestorer(const FilePath& path);
+  ~FilePermissionRestorer();
 
  private:
-  const base::FilePath path_;
+  const FilePath path_;
   void* info_;  // The opaque stored permission information.
   size_t length_;  // The length of the stored permission information.
 
-  DISALLOW_COPY_AND_ASSIGN(PermissionRestorer);
+  DISALLOW_COPY_AND_ASSIGN(FilePermissionRestorer);
 };
 
-}  // namespace file_util
+#if defined(OS_ANDROID)
+// Insert an image file into the MediaStore, and retrieve the content URI for
+// testing purpose.
+FilePath InsertImageIntoMediaStore(const FilePath& path);
+#endif  // defined(OS_ANDROID)
+
+}  // namespace base
 
 #endif  // BASE_TEST_TEST_FILE_UTIL_H_

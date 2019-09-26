@@ -21,20 +21,24 @@ import java.util.Arrays;
 public class TestFileUtil {
     public static void createNewHtmlFile(String name, String title, String body)
             throws IOException {
-        File file = new File(name);
+        createNewHtmlFile(new File(name), title, body);
+    }
+
+    public static void createNewHtmlFile(File file, String title, String body)
+            throws IOException {
         if (!file.createNewFile()) {
-            throw new IOException("File \"" + name + "\" already exists");
+            throw new IOException("File \"" + file.getAbsolutePath() + "\" already exists");
         }
 
         Writer writer = null;
         try {
             writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-            writer.write("<html><meta charset=\"UTF-8\" />" +
-                         "<head><title>" + title + "</title></head>" +
-                         "<body>" +
-                         (body != null ? body : "") +
-                         "</body>" +
-                         "</html>");
+            writer.write("<html><meta charset=\"UTF-8\" />"
+                    + "     <head><title>" + title + "</title></head>"
+                    + "     <body>"
+                    + (body != null ? body : "")
+                    + "     </body>"
+                    + "   </html>");
         } finally {
             if (writer != null) {
                 writer.close();
@@ -43,8 +47,12 @@ public class TestFileUtil {
     }
 
     public static void deleteFile(String name) {
-        File file = new File(name);
-        file.delete();
+        deleteFile(new File(name));
+    }
+
+    public static void deleteFile(File file) {
+        boolean deleted = file.delete();
+        assert (deleted || !file.exists());
     }
 
     /**
@@ -60,8 +68,8 @@ public class TestFileUtil {
         try {
             File f = new File(fileName);
             if (f.length() > sizeLimit) {
-                throw new IOException("File " + fileName + " length " + f.length() +
-                        " exceeds limit " + sizeLimit);
+                throw new IOException("File " + fileName + " length " + f.length()
+                        + " exceeds limit " + sizeLimit);
             }
             char[] buffer = new char[(int) f.length()];
             reader = new InputStreamReader(new FileInputStream(f), "UTF-8");

@@ -5,10 +5,10 @@
 #ifndef BASE_POSIX_FILE_DESCRIPTOR_SHUFFLE_H_
 #define BASE_POSIX_FILE_DESCRIPTOR_SHUFFLE_H_
 
-// This code exists to perform the shuffling of file descriptors which is
-// commonly needed when forking subprocesses. The naive approve is very simple,
-// just call dup2 to setup the desired descriptors, but wrong. It's tough to
-// handle the edge cases (like mapping 0 -> 1, 1 -> 0) correctly.
+// This code exists to shuffle file descriptors, which is commonly needed when
+// forking subprocesses. The naive approach (just call dup2 to set up the
+// desired descriptors) is very simple, but wrong: it won't handle edge cases
+// (like mapping 0 -> 1, 1 -> 0) correctly.
 //
 // In order to unittest this code, it's broken into the abstract action (an
 // injective multimap) and the concrete code for dealing with file descriptors.
@@ -42,15 +42,15 @@ class InjectionDelegate {
   virtual void Close(int fd) = 0;
 
  protected:
-  virtual ~InjectionDelegate() {}
+  virtual ~InjectionDelegate() = default;
 };
 
 // An implementation of the InjectionDelegate interface using the file
 // descriptor table of the current process as the domain.
 class BASE_EXPORT FileDescriptorTableInjection : public InjectionDelegate {
-  virtual bool Duplicate(int* result, int fd) OVERRIDE;
-  virtual bool Move(int src, int dest) OVERRIDE;
-  virtual void Close(int fd) OVERRIDE;
+  bool Duplicate(int* result, int fd) override;
+  bool Move(int src, int dest) override;
+  void Close(int fd) override;
 };
 
 // A single arc of the directed graph which describes an injective multimapping.

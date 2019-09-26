@@ -5,21 +5,22 @@
 #include "base/strings/utf_string_conversion_utils.h"
 
 #include "base/third_party/icu/icu_utf.h"
+#include "build/build_config.h"
 
 namespace base {
 
 // ReadUnicodeCharacter --------------------------------------------------------
 
 bool ReadUnicodeCharacter(const char* src,
-                          int32 src_len,
-                          int32* char_index,
-                          uint32* code_point_out) {
+                          int32_t src_len,
+                          int32_t* char_index,
+                          uint32_t* code_point_out) {
   // U8_NEXT expects to be able to use -1 to signal an error, so we must
   // use a signed type for code_point.  But this function returns false
   // on error anyway, so code_point_out is unsigned.
-  int32 code_point;
+  int32_t code_point;
   CBU8_NEXT(src, *char_index, src_len, code_point);
-  *code_point_out = static_cast<uint32>(code_point);
+  *code_point_out = static_cast<uint32_t>(code_point);
 
   // The ICU macro above moves to the next char, we want to point to the last
   // char consumed.
@@ -30,9 +31,9 @@ bool ReadUnicodeCharacter(const char* src,
 }
 
 bool ReadUnicodeCharacter(const char16* src,
-                          int32 src_len,
-                          int32* char_index,
-                          uint32* code_point) {
+                          int32_t src_len,
+                          int32_t* char_index,
+                          uint32_t* code_point) {
   if (CBU16_IS_SURROGATE(src[*char_index])) {
     if (!CBU16_IS_SURROGATE_LEAD(src[*char_index]) ||
         *char_index + 1 >= src_len ||
@@ -55,9 +56,9 @@ bool ReadUnicodeCharacter(const char16* src,
 
 #if defined(WCHAR_T_IS_UTF32)
 bool ReadUnicodeCharacter(const wchar_t* src,
-                          int32 src_len,
-                          int32* char_index,
-                          uint32* code_point) {
+                          int32_t src_len,
+                          int32_t* char_index,
+                          uint32_t* code_point) {
   // Conversion is easy since the source is 32-bit.
   *code_point = src[*char_index];
 
@@ -68,10 +69,10 @@ bool ReadUnicodeCharacter(const wchar_t* src,
 
 // WriteUnicodeCharacter -------------------------------------------------------
 
-size_t WriteUnicodeCharacter(uint32 code_point, std::string* output) {
+size_t WriteUnicodeCharacter(uint32_t code_point, std::string* output) {
   if (code_point <= 0x7f) {
     // Fast path the common case of one byte.
-    output->push_back(code_point);
+    output->push_back(static_cast<char>(code_point));
     return 1;
   }
 
@@ -89,7 +90,7 @@ size_t WriteUnicodeCharacter(uint32 code_point, std::string* output) {
   return char_offset - original_char_offset;
 }
 
-size_t WriteUnicodeCharacter(uint32 code_point, string16* output) {
+size_t WriteUnicodeCharacter(uint32_t code_point, string16* output) {
   if (CBU16_LENGTH(code_point) == 1) {
     // Thie code point is in the Basic Multilingual Plane (BMP).
     output->push_back(static_cast<char16>(code_point));
@@ -121,7 +122,10 @@ void PrepareForUTF8Output(const CHAR* src,
 }
 
 // Instantiate versions we know callers will need.
+#if !defined(OS_WIN)
+// wchar_t and char16 are the same thing on Windows.
 template void PrepareForUTF8Output(const wchar_t*, size_t, std::string*);
+#endif
 template void PrepareForUTF8Output(const char16*, size_t, std::string*);
 
 template<typename STRING>
@@ -142,7 +146,10 @@ void PrepareForUTF16Or32Output(const char* src,
 }
 
 // Instantiate versions we know callers will need.
+#if !defined(OS_WIN)
+// std::wstring and string16 are the same thing on Windows.
 template void PrepareForUTF16Or32Output(const char*, size_t, std::wstring*);
+#endif
 template void PrepareForUTF16Or32Output(const char*, size_t, string16*);
 
 }  // namespace base

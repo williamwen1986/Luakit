@@ -7,30 +7,35 @@
 
 #include "base/files/file_path_watcher.h"
 
+#include "base/macros.h"
+#include "base/memory/ptr_util.h"
+
 namespace base {
 
 namespace {
 
 class FilePathWatcherImpl : public FilePathWatcher::PlatformDelegate {
  public:
-  virtual bool Watch(const FilePath& path,
-                     bool recursive,
-                     const FilePathWatcher::Callback& callback) OVERRIDE {
+  FilePathWatcherImpl() = default;
+  ~FilePathWatcherImpl() override = default;
+
+  bool Watch(const FilePath& path,
+             bool recursive,
+             const FilePathWatcher::Callback& callback) override {
     return false;
   }
 
-  virtual void Cancel() OVERRIDE {}
+  void Cancel() override {}
 
-  virtual void CancelOnMessageLoopThread() OVERRIDE {}
-
- protected:
-  virtual ~FilePathWatcherImpl() {}
+ private:
+  DISALLOW_COPY_AND_ASSIGN(FilePathWatcherImpl);
 };
 
 }  // namespace
 
 FilePathWatcher::FilePathWatcher() {
-  impl_ = new FilePathWatcherImpl();
+  sequence_checker_.DetachFromSequence();
+  impl_ = std::make_unique<FilePathWatcherImpl>();
 }
 
 }  // namespace base

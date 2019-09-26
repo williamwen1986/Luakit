@@ -28,12 +28,14 @@
 //
 // This file operates by providing a close function with the non-$NOCANCEL
 // symbol name expected for the compilation environment as set by <unistd.h>
-// and <sys/cdefs.h> (the DARWIN_ALIAS_C macro). That function calls the
-// $NOCANCEL variant, which is resolved from libsyscall. By linking with this
-// version of close prior to the libsyscall version, close's implementation is
-// overridden.
+// and <sys/cdefs.h> (the DARWIN_ALIAS_C macro). That name is set by an asm
+// label on the declaration of the close function, so the definition of that
+// function receives that name. The function calls the $NOCANCEL variant, which
+// is resolved from libsyscall. By linking with this version of close prior to
+// the libsyscall version, close's implementation is overridden.
 
 #include <sys/cdefs.h>
+#include <unistd.h>
 
 // If the non-cancelable variants of all system calls have already been
 // chosen, do nothing.
@@ -41,37 +43,26 @@
 
 extern "C" {
 
-#if __DARWIN_UNIX03 && !__DARWIN_ONLY_UNIX_CONFORMANCE
+#if !__DARWIN_ONLY_UNIX_CONFORMANCE
 
-// When there's a choice between UNIX2003 and pre-UNIX2003 and UNIX2003 has
-// been chosen:
-#define close_interface close$UNIX2003
-#define close_implementation close$NOCANCEL$UNIX2003
-
-#elif !__DARWIN_UNIX03 && !__DARWIN_ONLY_UNIX_CONFORMANCE
-
-// When there's a choice between UNIX2003 and pre-UNIX2003 and pre-UNIX2003
-// has been chosen. There's no close$NOCANCEL symbol in this case, so use
-// close$NOCANCEL$UNIX2003 as the implementation. It does the same thing
-// that close$NOCANCEL would do.
-#define close_interface close
+// When there's a choice between UNIX2003 and pre-UNIX2003. There's no
+// close$NOCANCEL symbol in this case, so use close$NOCANCEL$UNIX2003 as the
+// implementation. It does the same thing that close$NOCANCEL would do.
 #define close_implementation close$NOCANCEL$UNIX2003
 
 #else  // __DARWIN_ONLY_UNIX_CONFORMANCE
 
 // When only UNIX2003 is supported:
-#define close_interface close
 #define close_implementation close$NOCANCEL
 
 #endif
 
 int close_implementation(int fd);
 
-int close_interface(int fd) {
+int close(int fd) {
   return close_implementation(fd);
 }
 
-#undef close_interface
 #undef close_implementation
 
 }  // extern "C"

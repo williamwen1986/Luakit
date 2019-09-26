@@ -5,18 +5,27 @@
 #ifndef BASE_TEST_TEST_SIMPLE_TASK_RUNNER_H_
 #define BASE_TEST_TEST_SIMPLE_TASK_RUNNER_H_
 
-#include <deque>
-
-#include "base/basictypes.h"
+#include "base/callback.h"
 #include "base/compiler_specific.h"
+#include "base/containers/circular_deque.h"
+#include "base/macros.h"
 #include "base/single_thread_task_runner.h"
+#include "base/synchronization/lock.h"
 #include "base/test/test_pending_task.h"
-#include "base/threading/thread_checker.h"
+#include "base/threading/platform_thread.h"
 
 namespace base {
 
 class TimeDelta;
 
+// ATTENTION: Prefer using base::test::TaskEnvironment and a task runner
+// obtained from base/task/post_task.h over this class. This class isn't as
+// "simple" as it seems specifically because it runs tasks in a surprising order
+// (delays aren't respected and nesting doesn't behave as usual). Should you
+// prefer to flush all tasks regardless of delays,
+// TaskEnvironment::TimeSource::MOCK_TIME and
+// TaskEnvironment::FastForwardUntilNoTasksRemain() have you covered.
+//
 // TestSimpleTaskRunner is a simple TaskRunner implementation that can
 // be used for testing.  It implements SingleThreadTaskRunner as that
 // interface implements SequencedTaskRunner, which in turn implements
@@ -25,8 +34,6 @@ class TimeDelta;
 //
 // TestSimpleTaskRunner has the following properties which make it simple:
 //
-//   - It is non-thread safe; all member functions must be called on
-//     the same thread.
 //   - Tasks are simply stored in a queue in FIFO order, ignoring delay
 //     and nestability.
 //   - Tasks aren't guaranteed to be destroyed immediately after
@@ -36,10 +43,6 @@ class TimeDelta;
 // handles the running of tasks that in turn call back into itself
 // (e.g., to post more tasks).
 //
-// If you need more complicated properties, consider using this class
-// as a template for writing a test TaskRunner implementation using
-// TestPendingTask.
-//
 // Note that, like any TaskRunner, TestSimpleTaskRunner is
 // ref-counted.
 class TestSimpleTaskRunner : public SingleThreadTaskRunner {
@@ -47,36 +50,44 @@ class TestSimpleTaskRunner : public SingleThreadTaskRunner {
   TestSimpleTaskRunner();
 
   // SingleThreadTaskRunner implementation.
-  virtual bool PostDelayedTask(const tracked_objects::Location& from_here,
-                               const Closure& task,
-                               TimeDelta delay) OVERRIDE;
-  virtual bool PostNonNestableDelayedTask(
-      const tracked_objects::Location& from_here,
-      const Closure& task,
-      TimeDelta delay) OVERRIDE;
+  bool PostDelayedTask(const Location& from_here,
+                       OnceClosure task,
+                       TimeDelta delay) override;
+  bool PostNonNestableDelayedTask(const Location& from_here,
+                                  OnceClosure task,
+                                  TimeDelta delay) override;
 
-  virtual bool RunsTasksOnCurrentThread() const OVERRIDE;
+  bool RunsTasksInCurrentSequence() const override;
 
-  const std::deque<TestPendingTask>& GetPendingTasks() const;
+  base::circular_deque<TestPendingTask> TakePendingTasks();
+  size_t NumPendingTasks() const;
   bool HasPendingTask() const;
   base::TimeDelta NextPendingTaskDelay() const;
+  base::TimeDelta FinalPendingTaskDelay() const;
 
   // Clears the queue of pending tasks without running them.
   void ClearPendingTasks();
 
-  // Runs each current pending task in order and clears the queue.
-  // Any tasks posted by the tasks are not run.
+  // Runs each current pending task in order and clears the queue. Tasks posted
+  // by the tasks that run within this call do not run within this call. Can
+  // only be called on the thread that created this TestSimpleTaskRunner.
   void RunPendingTasks();
 
-  // Runs pending tasks until the queue is empty.
+  // Runs pending tasks until the queue is empty. Can only be called on the
+  // thread that created this TestSimpleTaskRunner.
   void RunUntilIdle();
 
  protected:
-  virtual ~TestSimpleTaskRunner();
+  ~TestSimpleTaskRunner() override;
 
  private:
-  ThreadChecker thread_checker_;
-  std::deque<TestPendingTask> pending_tasks_;
+  // Thread on which this was instantiated.
+  const PlatformThreadRef thread_ref_ = PlatformThread::CurrentRef();
+
+  // Synchronizes access to |pending_tasks_|.
+  mutable Lock lock_;
+
+  base::circular_deque<TestPendingTask> pending_tasks_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSimpleTaskRunner);
 };

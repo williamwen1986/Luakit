@@ -5,44 +5,53 @@
 #ifndef BASE_SEQUENCE_CHECKER_IMPL_H_
 #define BASE_SEQUENCE_CHECKER_IMPL_H_
 
+#include <memory>
+
 #include "base/base_export.h"
-#include "base/basictypes.h"
+#include "base/compiler_specific.h"
+#include "base/macros.h"
 #include "base/synchronization/lock.h"
-#include "base/threading/sequenced_worker_pool.h"
-#include "base/threading/thread_checker_impl.h"
+#include "base/thread_annotations.h"
 
 namespace base {
 
-// SequenceCheckerImpl is used to help verify that some methods of a
-// class are called in sequence -- that is, called from the same
-// SequencedTaskRunner. It is a generalization of ThreadChecker; in
-// particular, it behaves exactly like ThreadChecker if constructed
-// on a thread that is not part of a SequencedWorkerPool.
+// Real implementation of SequenceChecker for use in debug mode or for temporary
+// use in release mode (e.g. to CHECK on a threading issue seen only in the
+// wild).
+//
+// Note: You should almost always use the SequenceChecker class to get the right
+// version for your build configuration.
 class BASE_EXPORT SequenceCheckerImpl {
  public:
   SequenceCheckerImpl();
   ~SequenceCheckerImpl();
 
-  // Returns whether the we are being called on the same sequence token
-  // as previous calls. If there is no associated sequence, then returns
-  // whether we are being called on the underlying ThreadChecker's thread.
-  bool CalledOnValidSequencedThread() const;
+  // Allow move construct/assign. This must be called on |other|'s associated
+  // sequence and assignment can only be made into a SequenceCheckerImpl which
+  // is detached or already associated with the current sequence. This isn't
+  // thread-safe (|this| and |other| shouldn't be in use while this move is
+  // performed). If the assignment was legal, the resulting SequenceCheckerImpl
+  // will be bound to the current sequence and |other| will be detached.
+  SequenceCheckerImpl(SequenceCheckerImpl&& other);
+  SequenceCheckerImpl& operator=(SequenceCheckerImpl&& other);
 
-  // Unbinds the checker from the currently associated sequence. The
-  // checker will be re-bound on the next call to CalledOnValidSequence().
+  // Returns true if called in sequence with previous calls to this method and
+  // the constructor.
+  bool CalledOnValidSequence() const WARN_UNUSED_RESULT;
+
+  // Unbinds the checker from the currently associated sequence. The checker
+  // will be re-bound on the next call to CalledOnValidSequence().
   void DetachFromSequence();
 
  private:
-  void EnsureSequenceTokenAssigned() const;
+  class Core;
 
-  // Guards all variables below.
+  // Calls straight to ThreadLocalStorage::HasBeenDestroyed(). Exposed purely
+  // for 'friend' to work.
+  static bool HasThreadLocalStorageBeenDestroyed();
+
   mutable Lock lock_;
-
-  // Used if |sequence_token_| is not valid.
-  ThreadCheckerImpl thread_checker_;
-  mutable bool sequence_token_assigned_;
-
-  mutable SequencedWorkerPool::SequenceToken sequence_token_;
+  mutable std::unique_ptr<Core> core_ GUARDED_BY(lock_);
 
   DISALLOW_COPY_AND_ASSIGN(SequenceCheckerImpl);
 };

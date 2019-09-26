@@ -81,7 +81,7 @@ make_abi() {
                 -DCMAKE_BUILD_TYPE=$CONFIG \
                 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY="$OUTPUT_DIR/$ABI" \
                 -DOPENSSL_ROOT_DIR=../openssl-1.1.1c \
-                -DOPENSSL_LIBRARIES=../openssl-1.1.1c/lib \
+                -DOPENSSL_LIBRARIES="$OUTPUT_DIR/$ABI" \
                 -DANDROID=1 \
                 -DOS_ANDROID=1 \
 
@@ -121,7 +121,7 @@ then
 	export ANDROID_NDK_HOME=$NDK_ROOT
 fi
 
-rm -r obj CMakeFiles 2>/dev/null
+rm -r obj CMakeFiles CMakeCache.txt 2>/dev/null
 if [ .$BUILD = ."NDK_BUILD" ]; then
 $ANDROID_NDK_HOME/ndk-build    NDK_APPLICATION_MK=Application.mk
 cp -a obj/local/* "$OUTPUT_DIR"

@@ -9,17 +9,16 @@
 
 namespace base {
 
+class FilePath;
+
 // Init logging for tests on Android. Logs will be output into Android's logcat.
 BASE_EXPORT void InitAndroidTestLogging();
 
 // Init path providers for tests on Android.
-BASE_EXPORT void InitAndroidTestPaths();
+BASE_EXPORT void InitAndroidTestPaths(const FilePath& test_data_dir);
 
 // Init the message loop for tests on Android.
 BASE_EXPORT void InitAndroidTestMessageLoop();
-
-// Do all of the initializations above.
-BASE_EXPORT void InitAndroidTest();
 
 }  // namespace base
 

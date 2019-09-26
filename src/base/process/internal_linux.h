@@ -5,9 +5,11 @@
 // This file contains internal routines that are called by other files in
 // base/process/.
 
-#ifndef BASE_PROCESS_LINUX_INTERNAL_H_
-#define BASE_PROCESS_LINUX_INTERNAL_H_
+#ifndef BASE_PROCESS_INTERNAL_LINUX_H_
+#define BASE_PROCESS_INTERNAL_LINUX_H_
 
+#include <stddef.h>
+#include <stdint.h>
 #include <unistd.h>
 
 #include "base/files/file_path.h"
@@ -48,31 +50,36 @@ bool ParseProcStats(const std::string& stats_data,
 // If the ordering ever changes, carefully review functions that use these
 // values.
 enum ProcStatsFields {
-  VM_COMM           = 1,   // Filename of executable, without parentheses.
-  VM_STATE          = 2,   // Letter indicating the state of the process.
-  VM_PPID           = 3,   // PID of the parent.
-  VM_PGRP           = 4,   // Process group id.
-  VM_UTIME          = 13,  // Time scheduled in user mode in clock ticks.
-  VM_STIME          = 14,  // Time scheduled in kernel mode in clock ticks.
-  VM_NUMTHREADS     = 19,  // Number of threads.
-  VM_STARTTIME      = 21,  // The time the process started in clock ticks.
-  VM_VSIZE          = 22,  // Virtual memory size in bytes.
-  VM_RSS            = 23,  // Resident Set Size in pages.
+  VM_COMM = 1,         // Filename of executable, without parentheses.
+  VM_STATE = 2,        // Letter indicating the state of the process.
+  VM_PPID = 3,         // PID of the parent.
+  VM_PGRP = 4,         // Process group id.
+  VM_MINFLT = 9,       // Minor page fault count excluding children.
+  VM_MAJFLT = 11,      // Major page fault count excluding children.
+  VM_UTIME = 13,       // Time scheduled in user mode in clock ticks.
+  VM_STIME = 14,       // Time scheduled in kernel mode in clock ticks.
+  VM_NUMTHREADS = 19,  // Number of threads.
+  VM_STARTTIME = 21,   // The time the process started in clock ticks.
+  VM_VSIZE = 22,       // Virtual memory size in bytes.
+  VM_RSS = 23,         // Resident Set Size in pages.
 };
 
 // Reads the |field_num|th field from |proc_stats|. Returns 0 on failure.
 // This version does not handle the first 3 values, since the first value is
 // simply |pid|, and the next two values are strings.
-int64 GetProcStatsFieldAsInt64(const std::vector<std::string>& proc_stats,
-                               ProcStatsFields field_num);
+int64_t GetProcStatsFieldAsInt64(const std::vector<std::string>& proc_stats,
+                                 ProcStatsFields field_num);
 
 // Same as GetProcStatsFieldAsInt64(), but for size_t values.
 size_t GetProcStatsFieldAsSizeT(const std::vector<std::string>& proc_stats,
                                 ProcStatsFields field_num);
 
-// Convenience wrapper around GetProcStatsFieldAsInt64(), ParseProcStats() and
+// Convenience wrappers around GetProcStatsFieldAsInt64(), ParseProcStats() and
 // ReadProcStats(). See GetProcStatsFieldAsInt64() for details.
-int64 ReadProcStatsAndGetFieldAsInt64(pid_t pid, ProcStatsFields field_num);
+int64_t ReadStatsFilendGetFieldAsInt64(const FilePath& stat_file,
+                                       ProcStatsFields field_num);
+int64_t ReadProcStatsAndGetFieldAsInt64(pid_t pid, ProcStatsFields field_num);
+int64_t ReadProcSelfStatsAndGetFieldAsInt64(ProcStatsFields field_num);
 
 // Same as ReadProcStatsAndGetFieldAsInt64() but for size_t values.
 size_t ReadProcStatsAndGetFieldAsSizeT(pid_t pid,
@@ -81,10 +88,13 @@ size_t ReadProcStatsAndGetFieldAsSizeT(pid_t pid,
 // Returns the time that the OS started. Clock ticks are relative to this.
 Time GetBootTime();
 
+// Returns the amount of time spent in user space since boot across all CPUs.
+TimeDelta GetUserCpuTimeSinceBoot();
+
 // Converts Linux clock ticks to a wall time delta.
 TimeDelta ClockTicksToTimeDelta(int clock_ticks);
 
 }  // namespace internal
 }  // namespace base
 
-#endif  // BASE_PROCESS_LINUX_INTERNAL_H_
+#endif  // BASE_PROCESS_INTERNAL_LINUX_H_

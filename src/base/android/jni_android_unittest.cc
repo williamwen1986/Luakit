@@ -13,7 +13,7 @@ namespace android {
 
 namespace {
 
-base::subtle::AtomicWord g_atomic_id = 0;
+std::atomic<jmethodID> g_atomic_id(nullptr);
 int LazyMethodIDCall(JNIEnv* env, jclass clazz, int p) {
   jmethodID id = base::android::MethodID::LazyGet<
       base::android::MethodID::TYPE_STATIC>(
@@ -40,7 +40,7 @@ TEST(JNIAndroidMicrobenchmark, MethodId) {
     o += LazyMethodIDCall(env, clazz.obj(), i);
   base::Time end_lazy = base::Time::Now();
 
-  jmethodID id = reinterpret_cast<jmethodID>(g_atomic_id);
+  jmethodID id = g_atomic_id;
   base::Time start = base::Time::Now();
   for (int i = 0; i < 1024; ++i)
     o += MethodIDCall(env, clazz.obj(), id, i);

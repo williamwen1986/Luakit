@@ -4,20 +4,25 @@
 
 // Multi-threaded tests of ConditionVariable class.
 
+#include "base/synchronization/condition_variable.h"
+
 #include <time.h>
+
 #include <algorithm>
+#include <memory>
 #include <vector>
 
 #include "base/bind.h"
+#include "base/location.h"
 #include "base/logging.h"
-#include "base/memory/scoped_ptr.h"
-#include "base/synchronization/condition_variable.h"
+#include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
-#include "base/synchronization/spin_wait.h"
+#include "base/test/spin_wait.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_collision_warner.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
@@ -64,10 +69,10 @@ class ConditionVariableTest : public PlatformTest {
 class WorkQueue : public PlatformThread::Delegate {
  public:
   explicit WorkQueue(int thread_count);
-  virtual ~WorkQueue();
+  ~WorkQueue() override;
 
   // PlatformThread::Delegate interface.
-  virtual void ThreadMain() OVERRIDE;
+  void ThreadMain() override;
 
   //----------------------------------------------------------------------------
   // Worker threads only call the following methods.
@@ -101,7 +106,6 @@ class WorkQueue : public PlatformThread::Delegate {
   int GetNumThreadsTakingAssignments() const;
   int GetNumThreadsCompletingTasks() const;
   int GetNumberOfCompletedTasks() const;
-  TimeDelta GetWorkTime() const;
 
   void SetWorkTime(TimeDelta delay);
   void SetTaskCount(int count);
@@ -131,7 +135,7 @@ class WorkQueue : public PlatformThread::Delegate {
 
   const int thread_count_;
   int waiting_thread_count_;
-  scoped_ptr<PlatformThreadHandle[]> thread_handles_;
+  std::unique_ptr<PlatformThreadHandle[]> thread_handles_;
   std::vector<int> assignment_history_;  // Number of assignment per worker.
   std::vector<int> completion_history_;  // Number of completions per worker.
   int thread_started_counter_;  // Used to issue unique id to workers.
@@ -197,9 +201,9 @@ void BackInTime(Lock* lock) {
   AutoLock auto_lock(*lock);
 
   timeval tv;
-  gettimeofday(&tv, NULL);
+  gettimeofday(&tv, nullptr);
   tv.tv_sec -= kDiscontinuitySeconds;
-  settimeofday(&tv, NULL);
+  settimeofday(&tv, nullptr);
 }
 
 // Tests that TimedWait ignores changes to the system clock.
@@ -208,9 +212,9 @@ void BackInTime(Lock* lock) {
 // http://crbug.com/293736
 TEST_F(ConditionVariableTest, DISABLED_TimeoutAcrossSetTimeOfDay) {
   timeval tv;
-  gettimeofday(&tv, NULL);
+  gettimeofday(&tv, nullptr);
   tv.tv_sec += kDiscontinuitySeconds;
-  if (settimeofday(&tv, NULL) < 0) {
+  if (settimeofday(&tv, nullptr) < 0) {
     PLOG(ERROR) << "Could not set time of day. Run as root?";
     return;
   }
@@ -221,7 +225,7 @@ TEST_F(ConditionVariableTest, DISABLED_TimeoutAcrossSetTimeOfDay) {
 
   Thread thread("Helper");
   thread.Start();
-  thread.message_loop()->PostTask(FROM_HERE, base::Bind(&BackInTime, &lock));
+  thread.task_runner()->PostTask(FROM_HERE, base::BindOnce(&BackInTime, &lock));
 
   TimeTicks start = TimeTicks::Now();
   const TimeDelta kWaitTime = TimeDelta::FromMilliseconds(300);
@@ -241,10 +245,10 @@ TEST_F(ConditionVariableTest, DISABLED_TimeoutAcrossSetTimeOfDay) {
 }
 #endif
 
-
 // Suddenly got flaky on Win, see http://crbug.com/10607 (starting at
 // comment #15).
-#if defined(OS_WIN)
+// This is also flaky on Fuchsia, see http://crbug.com/738275.
+#if defined(OS_WIN) || defined(OS_FUCHSIA)
 #define MAYBE_MultiThreadConsumerTest DISABLED_MultiThreadConsumerTest
 #else
 #define MAYBE_MultiThreadConsumerTest MultiThreadConsumerTest
@@ -394,7 +398,13 @@ TEST_F(ConditionVariableTest, MAYBE_MultiThreadConsumerTest) {
                                    queue.ThreadSafeCheckShutdown(kThreadCount));
 }
 
-TEST_F(ConditionVariableTest, LargeFastTaskTest) {
+#if defined(OS_FUCHSIA)
+// TODO(crbug.com/751894): This flakily times out on Fuchsia.
+#define MAYBE_LargeFastTaskTest DISABLED_LargeFastTaskTest
+#else
+#define MAYBE_LargeFastTaskTest LargeFastTaskTest
+#endif
+TEST_F(ConditionVariableTest, MAYBE_LargeFastTaskTest) {
   const int kThreadCount = 200;
   WorkQueue queue(kThreadCount);  // Start the threads.
 
@@ -649,10 +659,6 @@ int WorkQueue::GetNumberOfCompletedTasks() const {
   for (int i = 0; i < thread_count_; ++i)
     total += completion_history_[i];
   return total;
-}
-
-TimeDelta WorkQueue::GetWorkTime() const {
-  return worker_delay_;
 }
 
 void WorkQueue::SetWorkTime(TimeDelta delay) {

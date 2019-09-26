@@ -9,7 +9,7 @@
 #ifndef BASE_STRINGS_STRINGIZE_MACROS_H_
 #define BASE_STRINGS_STRINGIZE_MACROS_H_
 
-#include "config/build_config.h"
+#include "build/build_config.h"
 
 // This is not very useful as it does not expand defined symbols if
 // called directly. Use its counterpart without the _NO_EXPANSION

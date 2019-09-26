@@ -12,11 +12,7 @@
 		C57A432F2332682400D893ED /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5218A092331439C001AA895 /* libcurl.a */; };
 		C57A43302332682400D893ED /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57A42B723325E4800D893ED /* libevent.a */; };
 		C5CF5D9C233746B50014735C /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C58B060D2336B67100A125C2 /* libextensions.a */; };
-		C5CF5D9D233746B50014735C /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C58B06072336B66100A125C2 /* liblua.a */; };
-		C5CF5D9E233746B50014735C /* libnetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C58B06132336B68100A125C2 /* libnetwork.a */; };
 		C5CF5D9F233746B50014735C /* libsqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C58B06012336B64700A125C2 /* libsqlite.a */; };
-		C5F2DE322336A04F009DF121 /* oc_helpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = C5F2DE302336A04F009DF121 /* oc_helpers.mm */; };
-		C5F2DE332336A04F009DF121 /* oc_callback.mm in Sources */ = {isa = PBXBuildFile; fileRef = C5F2DE312336A04F009DF121 /* oc_callback.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,33 +86,12 @@
 			remoteGlobalIDString = C58B03C32336A67E00A125C2;
 			remoteInfo = sqlite;
 		};
-		C58B06062336B66100A125C2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C58B06022336B66100A125C2 /* lua.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C58B03252336A14A00A125C2;
-			remoteInfo = lua;
-		};
 		C58B060C2336B67100A125C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C58B06082336B67100A125C2 /* extensions.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C58B055D2336B0E200A125C2;
 			remoteInfo = extensions;
-		};
-		C58B06122336B68100A125C2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C58B060E2336B68100A125C2 /* network.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C58B051C2336AED700A125C2;
-			remoteInfo = network;
-		};
-		C5CF5D8B233746740014735C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C58B060E2336B68100A125C2 /* network.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C58B051B2336AED700A125C2;
-			remoteInfo = network;
 		};
 		C5CF5D8D233746740014735C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -125,19 +100,26 @@
 			remoteGlobalIDString = C58B055C2336B0E200A125C2;
 			remoteInfo = extensions;
 		};
-		C5CF5D8F233746740014735C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C58B06022336B66100A125C2 /* lua.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C58B03242336A14A00A125C2;
-			remoteInfo = lua;
-		};
 		C5CF5D91233746740014735C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C58B05F72336B64700A125C2 /* sqlite.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = C58B03C22336A67E00A125C2;
 			remoteInfo = sqlite;
+		};
+		C5D66A88233BA2700045DEC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C58B06082336B67100A125C2 /* extensions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5F53BB523376173008F114F;
+			remoteInfo = "extensions-macos";
+		};
+		C5D66A91233BA2700045DEC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C58B05F72336B64700A125C2 /* sqlite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5F53C8B2337658C008F114F;
+			remoteInfo = "sqlite-macos";
 		};
 		C5F2DE1E23369F73009DF121 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -193,11 +175,7 @@
 		C58B031A2336A0F500A125C2 /* oc_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = oc_helpers.h; path = Luakit/OCHelper/oc_helpers.h; sourceTree = "<group>"; };
 		C58B031B2336A0F500A125C2 /* oc_callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = oc_callback.h; path = Luakit/OCHelper/oc_callback.h; sourceTree = "<group>"; };
 		C58B05F72336B64700A125C2 /* sqlite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlite.xcodeproj; path = "/MacosExt/Users/larpoux/projmac/luakit/src/curl/../sqlite-amalgamation-3290000/sqlite.xcodeproj"; sourceTree = "<absolute>"; };
-		C58B06022336B66100A125C2 /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = "../src/lua-5.1.5/lua.xcodeproj"; sourceTree = "<group>"; };
 		C58B06082336B67100A125C2 /* extensions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extensions.xcodeproj; path = ../src/extensions/extensions.xcodeproj; sourceTree = "<group>"; };
-		C58B060E2336B68100A125C2 /* network.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = network.xcodeproj; path = ../src/network/network.xcodeproj; sourceTree = "<group>"; };
-		C5F2DE302336A04F009DF121 /* oc_helpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = oc_helpers.mm; path = Luakit/OCHelper/oc_helpers.mm; sourceTree = "<group>"; };
-		C5F2DE312336A04F009DF121 /* oc_callback.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = oc_callback.mm; path = Luakit/OCHelper/oc_callback.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,8 +184,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5CF5D9C233746B50014735C /* libextensions.a in Frameworks */,
-				C5CF5D9D233746B50014735C /* liblua.a in Frameworks */,
-				C5CF5D9E233746B50014735C /* libnetwork.a in Frameworks */,
 				C5CF5D9F233746B50014735C /* libsqlite.a in Frameworks */,
 				C57A432E2332682400D893ED /* libcommon.a in Frameworks */,
 				C57A432F2332682400D893ED /* libcurl.a in Frameworks */,
@@ -222,9 +198,7 @@
 		2883AC8820B43DFB005E1F54 = {
 			isa = PBXGroup;
 			children = (
-				C58B060E2336B68100A125C2 /* network.xcodeproj */,
 				C58B06082336B67100A125C2 /* extensions.xcodeproj */,
-				C58B06022336B66100A125C2 /* lua.xcodeproj */,
 				C58B05F72336B64700A125C2 /* sqlite.xcodeproj */,
 				C58B03192336A0D400A125C2 /* OCHelper */,
 				C57A42B223325E4800D893ED /* event.xcodeproj */,
@@ -295,8 +269,6 @@
 			children = (
 				C58B031B2336A0F500A125C2 /* oc_callback.h */,
 				C58B031A2336A0F500A125C2 /* oc_helpers.h */,
-				C5F2DE312336A04F009DF121 /* oc_callback.mm */,
-				C5F2DE302336A04F009DF121 /* oc_helpers.mm */,
 			);
 			name = OCHelper;
 			sourceTree = "<group>";
@@ -305,14 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				C58B06012336B64700A125C2 /* libsqlite.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C58B06032336B66100A125C2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C58B06072336B66100A125C2 /* liblua.a */,
+				C5D66A92233BA2700045DEC4 /* libsqlite-macos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -321,14 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				C58B060D2336B67100A125C2 /* libextensions.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C58B060F2336B68100A125C2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C58B06132336B68100A125C2 /* libnetwork.a */,
+				C5D66A89233BA2700045DEC4 /* libextensions-macos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -348,9 +306,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				C5CF5D8C233746740014735C /* PBXTargetDependency */,
 				C5CF5D8E233746740014735C /* PBXTargetDependency */,
-				C5CF5D90233746740014735C /* PBXTargetDependency */,
 				C5CF5D92233746740014735C /* PBXTargetDependency */,
 				C57A43092332646C00D893ED /* PBXTargetDependency */,
 				C57A429823325C7A00D893ED /* PBXTargetDependency */,
@@ -408,14 +364,6 @@
 					ProjectRef = C58B06082336B67100A125C2 /* extensions.xcodeproj */;
 				},
 				{
-					ProductGroup = C58B06032336B66100A125C2 /* Products */;
-					ProjectRef = C58B06022336B66100A125C2 /* lua.xcodeproj */;
-				},
-				{
-					ProductGroup = C58B060F2336B68100A125C2 /* Products */;
-					ProjectRef = C58B060E2336B68100A125C2 /* network.xcodeproj */;
-				},
-				{
 					ProductGroup = C58B05F82336B64700A125C2 /* Products */;
 					ProjectRef = C58B05F72336B64700A125C2 /* sqlite.xcodeproj */;
 				},
@@ -470,13 +418,6 @@
 			remoteRef = C58B06002336B64700A125C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C58B06072336B66100A125C2 /* liblua.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblua.a;
-			remoteRef = C58B06062336B66100A125C2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		C58B060D2336B67100A125C2 /* libextensions.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -484,11 +425,18 @@
 			remoteRef = C58B060C2336B67100A125C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C58B06132336B68100A125C2 /* libnetwork.a */ = {
+		C5D66A89233BA2700045DEC4 /* libextensions-macos.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libnetwork.a;
-			remoteRef = C58B06122336B68100A125C2 /* PBXContainerItemProxy */;
+			path = "libextensions-macos.a";
+			remoteRef = C5D66A88233BA2700045DEC4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C5D66A92233BA2700045DEC4 /* libsqlite-macos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libsqlite-macos.a";
+			remoteRef = C5D66A91233BA2700045DEC4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C5F2DE1F23369F73009DF121 /* libbase-macos.a */ = {
@@ -546,8 +494,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F2DE322336A04F009DF121 /* oc_helpers.mm in Sources */,
-				C5F2DE332336A04F009DF121 /* oc_callback.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,20 +520,10 @@
 			name = libevent;
 			targetProxy = C57A43082332646C00D893ED /* PBXContainerItemProxy */;
 		};
-		C5CF5D8C233746740014735C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = network;
-			targetProxy = C5CF5D8B233746740014735C /* PBXContainerItemProxy */;
-		};
 		C5CF5D8E233746740014735C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = extensions;
 			targetProxy = C5CF5D8D233746740014735C /* PBXContainerItemProxy */;
-		};
-		C5CF5D90233746740014735C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = lua;
-			targetProxy = C5CF5D8F233746740014735C /* PBXContainerItemProxy */;
 		};
 		C5CF5D92233746740014735C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -650,12 +586,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/src/common",
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
-					"$(LUAKIT_ROOT)/src",
-					"$(LUAKIT_ROOT)/src/curl/include",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -710,12 +641,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/src/common",
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
-					"$(LUAKIT_ROOT)/src",
-					"$(LUAKIT_ROOT)/src/curl/include",
-				);
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -726,12 +652,12 @@
 		2883AC9B20B43DFB005E1F54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
 					"$(LUAKIT_ROOT)/src",
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/src/curl/include",
 					"$(LUAKIT_ROOT)/src/extensions/Notify",
@@ -749,12 +675,12 @@
 		2883AC9C20B43DFB005E1F54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
 					"$(LUAKIT_ROOT)/src",
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/src/curl/include",
 					"$(LUAKIT_ROOT)/src/extensions/Notify",

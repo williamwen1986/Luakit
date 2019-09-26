@@ -4,6 +4,8 @@
 
 #include "base/process/process_iterator.h"
 
+#include "base/strings/string_util.h"
+
 namespace base {
 
 ProcessIterator::ProcessIterator(const ProcessFilter* filter)
@@ -34,7 +36,7 @@ void ProcessIterator::InitProcessEntry(ProcessEntry* entry) {
 
 bool NamedProcessIterator::IncludeEntry() {
   // Case insensitive.
-  return _wcsicmp(executable_name_.c_str(), entry().exe_file()) == 0 &&
+  return !_wcsicmp(as_wcstr(executable_name_), as_wcstr(entry().exe_file())) &&
          ProcessIterator::IncludeEntry();
 }
 

@@ -26,27 +26,42 @@
 // libc functions with custom, 2-byte-char compatible routines. It is capable
 // of carrying UTF-16-encoded data.
 
+#include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
+
+#include <functional>
 #include <string>
 
 #include "base/base_export.h"
-#include "base/basictypes.h"
+#include "build/build_config.h"
 
 #if defined(WCHAR_T_IS_UTF16)
+
+// Define a macro for wrapping construction of char16 arrays and string16s from
+// a literal string. This indirection allows for an easier migration of
+// base::char16 to char16_t on platforms where WCHAR_T_IS_UTF16, as only a one
+// character change to the macro will be necessary.
+// This macro does not exist when WCHAR_T_IS_UTF32, as it is currently not
+// possible to create a char array form a literal in this case.
+// TODO(https://crbug.com/911896): Remove this macro once base::char16 is
+// char16_t on all platforms.
+#define STRING16_LITERAL(x) L##x
 
 namespace base {
 
 typedef wchar_t char16;
 typedef std::wstring string16;
-typedef std::char_traits<wchar_t> string16_char_traits;
 
 }  // namespace base
 
 #elif defined(WCHAR_T_IS_UTF32)
 
+#include <wchar.h>  // for mbstate_t
+
 namespace base {
 
-typedef uint16 char16;
+typedef uint16_t char16;
 
 // char16 versions of the functions required by string16_char_traits; these
 // are based on the wide character functions of similar names ("w" or "wcs"
@@ -58,13 +73,19 @@ BASE_EXPORT char16* c16memmove(char16* s1, const char16* s2, size_t n);
 BASE_EXPORT char16* c16memcpy(char16* s1, const char16* s2, size_t n);
 BASE_EXPORT char16* c16memset(char16* s, char16 c, size_t n);
 
+// This namespace contains the implementation of base::string16 along with
+// things that need to be found via argument-dependent lookup from a
+// base::string16.
+namespace string16_internals {
+
 struct string16_char_traits {
   typedef char16 char_type;
   typedef int int_type;
 
   // int_type needs to be able to hold each possible value of char_type, and in
   // addition, the distinct value of eof().
-  COMPILE_ASSERT(sizeof(int_type) > sizeof(char_type), unexpected_type_width);
+  static_assert(sizeof(int_type) > sizeof(char_type),
+                "int must be larger than 16 bits wide");
 
   typedef std::streamoff off_type;
   typedef mbstate_t state_type;
@@ -94,7 +115,7 @@ struct string16_char_traits {
     return c16memchr(s, a, n);
   }
 
-  static char_type* move(char_type* s1, const char_type* s2, int_type n) {
+  static char_type* move(char_type* s1, const char_type* s2, size_t n) {
     return c16memmove(s1, s2, n);
   }
 
@@ -127,13 +148,21 @@ struct string16_char_traits {
   }
 };
 
-typedef std::basic_string<char16, base::string16_char_traits> string16;
+}  // namespace string16_internals
+
+typedef std::basic_string<char16,
+                          base::string16_internals::string16_char_traits>
+    string16;
+
+namespace string16_internals {
 
 BASE_EXPORT extern std::ostream& operator<<(std::ostream& out,
                                             const string16& str);
 
 // This is required by googletest to print a readable output on test failures.
 BASE_EXPORT extern void PrintTo(const string16& str, std::ostream* out);
+
+}  // namespace string16_internals
 
 }  // namespace base
 
@@ -176,8 +205,24 @@ BASE_EXPORT extern void PrintTo(const string16& str, std::ostream* out);
 //
 // TODO(mark): File this bug with Apple and update this note with a bug number.
 
-extern template
-class BASE_EXPORT std::basic_string<base::char16, base::string16_char_traits>;
+extern template class BASE_EXPORT
+    std::basic_string<base::char16,
+                      base::string16_internals::string16_char_traits>;
+
+// Specialize std::hash for base::string16. Although the style guide forbids
+// this in general, it is necessary for consistency with WCHAR_T_IS_UTF16
+// platforms, where base::string16 is a type alias for std::wstring.
+namespace std {
+template <>
+struct hash<base::string16> {
+  std::size_t operator()(const base::string16& s) const {
+    std::size_t result = 0;
+    for (base::char16 c : s)
+      result = (result * 131) + c;
+    return result;
+  }
+};
+}  // namespace std
 
 #endif  // WCHAR_T_IS_UTF32
 

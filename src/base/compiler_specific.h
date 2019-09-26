@@ -5,9 +5,13 @@
 #ifndef BASE_COMPILER_SPECIFIC_H_
 #define BASE_COMPILER_SPECIFIC_H_
 
-#include "config/build_config.h"
+#include "build/build_config.h"
 
 #if defined(COMPILER_MSVC)
+
+#if !defined(__clang__)
+#error "Only clang-cl is supported on Windows, see https://crbug.com/988071"
+#endif
 
 // Macros for suppressing and disabling warnings on MSVC.
 //
@@ -20,25 +24,15 @@
 // Using __pragma instead of #pragma inside macros:
 // http://msdn.microsoft.com/en-us/library/d9x1s805.aspx
 
-// MSVC_SUPPRESS_WARNING disables warning |n| for the remainder of the line and
-// for the next line of the source file.
-#define MSVC_SUPPRESS_WARNING(n) __pragma(warning(suppress:n))
-
 // MSVC_PUSH_DISABLE_WARNING pushes |n| onto a stack of warnings to be disabled.
 // The warning remains disabled until popped by MSVC_POP_WARNING.
 #define MSVC_PUSH_DISABLE_WARNING(n) __pragma(warning(push)) \
                                      __pragma(warning(disable:n))
 
-// MSVC_PUSH_WARNING_LEVEL pushes |n| as the global warning level.  The level
-// remains in effect until popped by MSVC_POP_WARNING().  Use 0 to disable all
-// warnings.
-#define MSVC_PUSH_WARNING_LEVEL(n) __pragma(warning(push, n))
-
 // Pop effects of innermost MSVC_PUSH_* macro.
 #define MSVC_POP_WARNING() __pragma(warning(pop))
 
-#define MSVC_DISABLE_OPTIMIZE() __pragma(optimize("", off))
-#define MSVC_ENABLE_OPTIMIZE() __pragma(optimize("", on))
+// Begin Patch [LARPOUX]
 
 // Allows exporting a class that inherits from a non-exported base class.
 // This uses suppress instead of push/pop because the delimiter after the
@@ -55,50 +49,50 @@
 #define NON_EXPORTED_BASE(code) MSVC_SUPPRESS_WARNING(4275) \
                                 code
 
+// End Patch [LARPOUX]
 #else  // Not MSVC
 
-#define MSVC_SUPPRESS_WARNING(n)
 #define MSVC_PUSH_DISABLE_WARNING(n)
-#define MSVC_PUSH_WARNING_LEVEL(n)
 #define MSVC_POP_WARNING()
 #define MSVC_DISABLE_OPTIMIZE()
 #define MSVC_ENABLE_OPTIMIZE()
-#define NON_EXPORTED_BASE(code) code
+#define NON_EXPORTED_BASE(code) code // Patch [LARPOUX]
 
 #endif  // COMPILER_MSVC
 
-
-// The C++ standard requires that static const members have an out-of-class
-// definition (in a single compilation unit), but MSVC chokes on this (when
-// language extensions, which are required, are enabled). (You're only likely to
-// notice the need for a definition if you take the address of the member or,
-// more commonly, pass it to a function that takes it as a reference argument --
-// probably an STL function.) This macro makes MSVC do the right thing. See
-// http://msdn.microsoft.com/en-us/library/34h23df8(v=vs.100).aspx for more
-// information. Use like:
-//
-// In .h file:
-//   struct Foo {
-//     static const int kBar = 5;
-//   };
-//
-// In .cc file:
-//   STATIC_CONST_MEMBER_DEFINITION const int Foo::kBar;
-#if defined(COMPILER_MSVC)
-#define STATIC_CONST_MEMBER_DEFINITION __declspec(selectany)
+// These macros can be helpful when investigating compiler bugs or when
+// investigating issues in local optimized builds, by temporarily disabling
+// optimizations for a single function or file. These macros should never be
+// used to permanently work around compiler bugs or other mysteries, and should
+// not be used in landed changes.
+#if !defined(OFFICIAL_BUILD)
+#if defined(__clang__)
+#define DISABLE_OPTIMIZE() __pragma(clang optimize off)
+#define ENABLE_OPTIMIZE() __pragma(clang optimize on)
+#elif defined(COMPILER_MSVC)
+#define DISABLE_OPTIMIZE() __pragma(optimize("", off))
+#define ENABLE_OPTIMIZE() __pragma(optimize("", on))
 #else
-#define STATIC_CONST_MEMBER_DEFINITION
+// These macros are not currently available for other compiler options.
 #endif
+// These macros are not available in official builds.
+#endif  // !defined(OFFICIAL_BUILD)
 
 // Annotate a variable indicating it's ok if the variable is not used.
 // (Typically used to silence a compiler warning when the assignment
 // is important for some other reason.)
 // Use like:
-//   int x ALLOW_UNUSED = ...;
-#if defined(COMPILER_GCC)
-#define ALLOW_UNUSED __attribute__((unused))
+//   int x = ...;
+//   ALLOW_UNUSED_LOCAL(x);
+#define ALLOW_UNUSED_LOCAL(x) (void)x
+
+// Annotate a typedef or function indicating it's ok if it's not used.
+// Use like:
+//   typedef Foo Bar ALLOW_UNUSED_TYPE;
+#if defined(COMPILER_GCC) || defined(__clang__)
+#define ALLOW_UNUSED_TYPE __attribute__((unused))
 #else
-#define ALLOW_UNUSED
+#define ALLOW_UNUSED_TYPE
 #endif
 
 // Annotate a function indicating it should not be inlined.
@@ -112,66 +106,47 @@
 #define NOINLINE
 #endif
 
+#if defined(COMPILER_GCC) && defined(NDEBUG)
+#define ALWAYS_INLINE inline __attribute__((__always_inline__))
+#elif defined(COMPILER_MSVC) && defined(NDEBUG)
+#define ALWAYS_INLINE __forceinline
+#else
+#define ALWAYS_INLINE inline
+#endif
+
 // Specify memory alignment for structs, classes, etc.
 // Use like:
 //   class ALIGNAS(16) MyClass { ... }
 //   ALIGNAS(16) int array[4];
+//
+// In most places you can use the C++11 keyword "alignas", which is preferred.
+//
+// But compilers have trouble mixing __attribute__((...)) syntax with
+// alignas(...) syntax.
+//
+// Doesn't work in clang or gcc:
+//   struct alignas(16) __attribute__((packed)) S { char c; };
+// Works in clang but not gcc:
+//   struct __attribute__((packed)) alignas(16) S2 { char c; };
+// Works in clang and gcc:
+//   struct alignas(16) S3 { char c; } __attribute__((packed));
+//
+// There are also some attributes that must be specified *before* a class
+// definition: visibility (used for exporting functions/classes) is one of
+// these attributes. This means that it is not possible to use alignas() with a
+// class that is marked as exported.
 #if defined(COMPILER_MSVC)
 #define ALIGNAS(byte_alignment) __declspec(align(byte_alignment))
 #elif defined(COMPILER_GCC)
 #define ALIGNAS(byte_alignment) __attribute__((aligned(byte_alignment)))
 #endif
 
-// Return the byte alignment of the given type (available at compile time).  Use
-// sizeof(type) prior to checking __alignof to workaround Visual C++ bug:
-// http://goo.gl/isH0C
-// Use like:
-//   ALIGNOF(int32)  // this would be 4
-#if defined(COMPILER_MSVC)
-#define ALIGNOF(type) (sizeof(type) - sizeof(type) + __alignof(type))
-#elif defined(COMPILER_GCC)
-#define ALIGNOF(type) __alignof__(type)
-#endif
-
-// Annotate a virtual method indicating it must be overriding a virtual
-// method in the parent class.
-// Use like:
-//   virtual void foo() OVERRIDE;
-#if defined(COMPILER_MSVC)
-#define OVERRIDE override
-#elif defined(__clang__)
-#define OVERRIDE override
-#elif defined(COMPILER_GCC) && __cplusplus >= 201103 && \
-      (__GNUC__ * 10000 + __GNUC_MINOR__ * 100) >= 40700
-// GCC 4.7 supports explicit virtual overrides when C++11 support is enabled.
-#define OVERRIDE override
-#else
-#define OVERRIDE
-#endif
-
-// Annotate a virtual method indicating that subclasses must not override it,
-// or annotate a class to indicate that it cannot be subclassed.
-// Use like:
-//   virtual void foo() FINAL;
-//   class B FINAL : public A {};
-#if defined(COMPILER_MSVC)
-// TODO(jered): Change this to "final" when chromium no longer uses MSVC 2010.
-#define FINAL sealed
-#elif defined(__clang__)
-#define FINAL final
-#elif defined(COMPILER_GCC) && __cplusplus >= 201103 && \
-      (__GNUC__ * 10000 + __GNUC_MINOR__ * 100) >= 40700
-// GCC 4.7 supports explicit virtual overrides when C++11 support is enabled.
-#define FINAL final
-#else
-#define FINAL
-#endif
-
 // Annotate a function indicating the caller must examine the return value.
 // Use like:
 //   int foo() WARN_UNUSED_RESULT;
-// To explicitly ignore a result, see |ignore_result()| in <base/basictypes.h>.
-#if defined(COMPILER_GCC)
+// To explicitly ignore a result, see |ignore_result()| in base/macros.h.
+#undef WARN_UNUSED_RESULT
+#if defined(COMPILER_GCC) || defined(__clang__)
 #define WARN_UNUSED_RESULT __attribute__((warn_unused_result))
 #else
 #define WARN_UNUSED_RESULT
@@ -182,7 +157,8 @@
 // |dots_param| is the one-based index of the "..." parameter.
 // For v*printf functions (which take a va_list), pass 0 for dots_param.
 // (This is undocumented but matches what the system C headers do.)
-#if defined(COMPILER_GCC)
+// For member functions, the implicit this parameter counts as index 1.
+#if defined(COMPILER_GCC) || defined(__clang__)
 #define PRINTF_FORMAT(format_param, dots_param) \
     __attribute__((format(printf, format_param, dots_param)))
 #else
@@ -196,20 +172,44 @@
 // If available, it would look like:
 //   __attribute__((format(wprintf, format_param, dots_param)))
 
+// Sanitizers annotations.
+#if defined(__has_attribute)
+#if __has_attribute(no_sanitize)
+#define NO_SANITIZE(what) __attribute__((no_sanitize(what)))
+#endif
+#endif
+#if !defined(NO_SANITIZE)
+#define NO_SANITIZE(what)
+#endif
 
 // MemorySanitizer annotations.
-#ifdef MEMORY_SANITIZER
-extern "C" {
-void __msan_unpoison(const void *p, unsigned long s);
-}  // extern "C"
+#if defined(MEMORY_SANITIZER) && !defined(OS_NACL)
+#include <sanitizer/msan_interface.h>
 
 // Mark a memory region fully initialized.
 // Use this to annotate code that deliberately reads uninitialized data, for
 // example a GC scavenging root set pointers from the stack.
-#define MSAN_UNPOISON(p, s)  __msan_unpoison(p, s)
+#define MSAN_UNPOISON(p, size)  __msan_unpoison(p, size)
+
+// Check a memory region for initializedness, as if it was being used here.
+// If any bits are uninitialized, crash with an MSan report.
+// Use this to sanitize data which MSan won't be able to track, e.g. before
+// passing data to another process via shared memory.
+#define MSAN_CHECK_MEM_IS_INITIALIZED(p, size) \
+    __msan_check_mem_is_initialized(p, size)
 #else  // MEMORY_SANITIZER
-#define MSAN_UNPOISON(p, s)
+#define MSAN_UNPOISON(p, size)
+#define MSAN_CHECK_MEM_IS_INITIALIZED(p, size)
 #endif  // MEMORY_SANITIZER
+
+// DISABLE_CFI_PERF -- Disable Control Flow Integrity for perf reasons.
+#if !defined(DISABLE_CFI_PERF)
+#if defined(__clang__) && defined(OFFICIAL_BUILD)
+#define DISABLE_CFI_PERF __attribute__((no_sanitize("cfi")))
+#else
+#define DISABLE_CFI_PERF
+#endif
+#endif
 
 // Macro useful for writing cross-platform function pointers.
 #if !defined(CDECL)
@@ -219,5 +219,64 @@ void __msan_unpoison(const void *p, unsigned long s);
 #define CDECL
 #endif  // defined(OS_WIN)
 #endif  // !defined(CDECL)
+
+// Macro for hinting that an expression is likely to be false.
+#if !defined(UNLIKELY)
+#if defined(COMPILER_GCC) || defined(__clang__)
+#define UNLIKELY(x) __builtin_expect(!!(x), 0)
+#else
+#define UNLIKELY(x) (x)
+#endif  // defined(COMPILER_GCC)
+#endif  // !defined(UNLIKELY)
+
+#if !defined(LIKELY)
+#if defined(COMPILER_GCC) || defined(__clang__)
+#define LIKELY(x) __builtin_expect(!!(x), 1)
+#else
+#define LIKELY(x) (x)
+#endif  // defined(COMPILER_GCC)
+#endif  // !defined(LIKELY)
+
+// Compiler feature-detection.
+// clang.llvm.org/docs/LanguageExtensions.html#has-feature-and-has-extension
+#if defined(__has_feature)
+#define HAS_FEATURE(FEATURE) __has_feature(FEATURE)
+#else
+#define HAS_FEATURE(FEATURE) 0
+#endif
+
+// Macro for telling -Wimplicit-fallthrough that a fallthrough is intentional.
+#if defined(__clang__)
+#define FALLTHROUGH [[clang::fallthrough]]
+#else
+#define FALLTHROUGH
+#endif
+
+#if defined(COMPILER_GCC)
+#define PRETTY_FUNCTION __PRETTY_FUNCTION__
+#elif defined(COMPILER_MSVC)
+#define PRETTY_FUNCTION __FUNCSIG__
+#else
+// See https://en.cppreference.com/w/c/language/function_definition#func
+#define PRETTY_FUNCTION __func__
+#endif
+
+#if !defined(CPU_ARM_NEON)
+#if defined(__arm__)
+#if !defined(__ARMEB__) && !defined(__ARM_EABI__) && !defined(__EABI__) && \
+    !defined(__VFP_FP__) && !defined(_WIN32_WCE) && !defined(ANDROID)
+#error Chromium does not support middle endian architecture
+#endif
+#if defined(__ARM_NEON__)
+#define CPU_ARM_NEON 1
+#endif
+#endif  // defined(__arm__)
+#endif  // !defined(CPU_ARM_NEON)
+
+#if !defined(HAVE_MIPS_MSA_INTRINSICS)
+#if defined(__mips_msa) && defined(__mips_isa_rev) && (__mips_isa_rev >= 5)
+#define HAVE_MIPS_MSA_INTRINSICS 1
+#endif
+#endif
 
 #endif  // BASE_COMPILER_SPECIFIC_H_

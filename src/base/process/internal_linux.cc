@@ -4,19 +4,25 @@
 
 #include "base/process/internal_linux.h"
 
+#include <limits.h>
 #include <unistd.h>
 
 #include <map>
 #include <string>
 #include <vector>
 
-#include "base/file_util.h"
+#include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
+
+// Not defined on AIX by default.
+#if defined(OS_AIX)
+#define NAME_MAX 255
+#endif
 
 namespace base {
 namespace internal {
@@ -25,8 +31,8 @@ const char kProcDir[] = "/proc";
 
 const char kStatFile[] = "stat";
 
-base::FilePath GetProcPidDir(pid_t pid) {
-  return base::FilePath(kProcDir).Append(IntToString(pid));
+FilePath GetProcPidDir(pid_t pid) {
+  return FilePath(kProcDir).Append(NumberToString(pid));
 }
 
 pid_t ProcDirSlotToPid(const char* d_name) {
@@ -97,30 +103,29 @@ bool ParseProcStats(const std::string& stats_data,
                         close_parens_idx - (open_parens_idx + 1)));
 
   // Split the rest.
-  std::vector<std::string> other_stats;
-  SplitString(stats_data.substr(close_parens_idx + 2), ' ', &other_stats);
-  for (size_t i = 0; i < other_stats.size(); ++i)
-    proc_stats->push_back(other_stats[i]);
+  std::vector<std::string> other_stats = SplitString(
+      stats_data.substr(close_parens_idx + 2), " ",
+      base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+  for (const auto& i : other_stats)
+    proc_stats->push_back(i);
   return true;
 }
 
 typedef std::map<std::string, std::string> ProcStatMap;
 void ParseProcStat(const std::string& contents, ProcStatMap* output) {
-  typedef std::pair<std::string, std::string> StringPair;
-  std::vector<StringPair> key_value_pairs;
+  StringPairs key_value_pairs;
   SplitStringIntoKeyValuePairs(contents, ' ', '\n', &key_value_pairs);
-  for (size_t i = 0; i < key_value_pairs.size(); ++i) {
-    const StringPair& key_value_pair = key_value_pairs[i];
-    output->insert(key_value_pair);
+  for (auto& i : key_value_pairs) {
+    output->insert(std::move(i));
   }
 }
 
-int64 GetProcStatsFieldAsInt64(const std::vector<std::string>& proc_stats,
-                               ProcStatsFields field_num) {
+int64_t GetProcStatsFieldAsInt64(const std::vector<std::string>& proc_stats,
+                                 ProcStatsFields field_num) {
   DCHECK_GE(field_num, VM_PPID);
   CHECK_LT(static_cast<size_t>(field_num), proc_stats.size());
 
-  int64 value;
+  int64_t value;
   return StringToInt64(proc_stats[field_num], &value) ? value : 0;
 }
 
@@ -133,14 +138,25 @@ size_t GetProcStatsFieldAsSizeT(const std::vector<std::string>& proc_stats,
   return StringToSizeT(proc_stats[field_num], &value) ? value : 0;
 }
 
-int64 ReadProcStatsAndGetFieldAsInt64(pid_t pid, ProcStatsFields field_num) {
+int64_t ReadStatFileAndGetFieldAsInt64(const FilePath& stat_file,
+                                       ProcStatsFields field_num) {
   std::string stats_data;
-  if (!ReadProcStats(pid, &stats_data))
+  if (!ReadProcFile(stat_file, &stats_data))
     return 0;
   std::vector<std::string> proc_stats;
   if (!ParseProcStats(stats_data, &proc_stats))
     return 0;
   return GetProcStatsFieldAsInt64(proc_stats, field_num);
+}
+
+int64_t ReadProcStatsAndGetFieldAsInt64(pid_t pid, ProcStatsFields field_num) {
+  FilePath stat_file = internal::GetProcPidDir(pid).Append(kStatFile);
+  return ReadStatFileAndGetFieldAsInt64(stat_file, field_num);
+}
+
+int64_t ReadProcSelfStatsAndGetFieldAsInt64(ProcStatsFields field_num) {
+  FilePath stat_file = FilePath(kProcDir).Append("self").Append(kStatFile);
+  return ReadStatFileAndGetFieldAsInt64(stat_file, field_num);
 }
 
 size_t ReadProcStatsAndGetFieldAsSizeT(pid_t pid,
@@ -168,6 +184,32 @@ Time GetBootTime() {
   if (!StringToInt(btime_it->second, &btime))
     return Time();
   return Time::FromTimeT(btime);
+}
+
+TimeDelta GetUserCpuTimeSinceBoot() {
+  FilePath path("/proc/stat");
+  std::string contents;
+  if (!ReadProcFile(path, &contents))
+    return TimeDelta();
+
+  ProcStatMap proc_stat;
+  ParseProcStat(contents, &proc_stat);
+  ProcStatMap::const_iterator cpu_it = proc_stat.find("cpu");
+  if (cpu_it == proc_stat.end())
+    return TimeDelta();
+
+  std::vector<std::string> cpu = SplitString(
+      cpu_it->second, kWhitespaceASCII, TRIM_WHITESPACE, SPLIT_WANT_NONEMPTY);
+
+  if (cpu.size() < 2 || cpu[0] != "cpu")
+    return TimeDelta();
+
+  uint64_t user;
+  uint64_t nice;
+  if (!StringToUint64(cpu[0], &user) || !StringToUint64(cpu[1], &nice))
+    return TimeDelta();
+
+  return ClockTicksToTimeDelta(user + nice);
 }
 
 TimeDelta ClockTicksToTimeDelta(int clock_ticks) {

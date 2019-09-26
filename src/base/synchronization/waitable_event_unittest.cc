@@ -4,15 +4,21 @@
 
 #include "base/synchronization/waitable_event.h"
 
+#include <stddef.h>
+
+#include <algorithm>
+
 #include "base/compiler_specific.h"
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
 
 TEST(WaitableEventTest, ManualBasics) {
-  WaitableEvent event(true, false);
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
 
   EXPECT_FALSE(event.IsSignaled());
 
@@ -29,8 +35,28 @@ TEST(WaitableEventTest, ManualBasics) {
   EXPECT_TRUE(event.TimedWait(TimeDelta::FromMilliseconds(10)));
 }
 
+TEST(WaitableEventTest, ManualInitiallySignaled) {
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::SIGNALED);
+
+  EXPECT_TRUE(event.IsSignaled());
+  EXPECT_TRUE(event.IsSignaled());
+
+  event.Reset();
+
+  EXPECT_FALSE(event.IsSignaled());
+  EXPECT_FALSE(event.IsSignaled());
+
+  event.Signal();
+
+  event.Wait();
+  EXPECT_TRUE(event.IsSignaled());
+  EXPECT_TRUE(event.IsSignaled());
+}
+
 TEST(WaitableEventTest, AutoBasics) {
-  WaitableEvent event(false, false);
+  WaitableEvent event(WaitableEvent::ResetPolicy::AUTOMATIC,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
 
   EXPECT_FALSE(event.IsSignaled());
 
@@ -48,12 +74,27 @@ TEST(WaitableEventTest, AutoBasics) {
 
   event.Signal();
   EXPECT_TRUE(event.TimedWait(TimeDelta::FromMilliseconds(10)));
+}
+
+TEST(WaitableEventTest, AutoInitiallySignaled) {
+  WaitableEvent event(WaitableEvent::ResetPolicy::AUTOMATIC,
+                      WaitableEvent::InitialState::SIGNALED);
+
+  EXPECT_TRUE(event.IsSignaled());
+  EXPECT_FALSE(event.IsSignaled());
+
+  event.Signal();
+
+  EXPECT_TRUE(event.IsSignaled());
+  EXPECT_FALSE(event.IsSignaled());
 }
 
 TEST(WaitableEventTest, WaitManyShortcut) {
   WaitableEvent* ev[5];
-  for (unsigned i = 0; i < 5; ++i)
-    ev[i] = new WaitableEvent(false, false);
+  for (auto*& i : ev) {
+    i = new WaitableEvent(WaitableEvent::ResetPolicy::AUTOMATIC,
+                          WaitableEvent::InitialState::NOT_SIGNALED);
+  }
 
   ev[3]->Signal();
   EXPECT_EQ(WaitableEvent::WaitMany(ev, 5), 3u);
@@ -67,42 +108,158 @@ TEST(WaitableEventTest, WaitManyShortcut) {
   ev[0]->Signal();
   EXPECT_EQ(WaitableEvent::WaitMany(ev, 5), 0u);
 
-  for (unsigned i = 0; i < 5; ++i)
-    delete ev[i];
+  for (auto* i : ev)
+    delete i;
+}
+
+TEST(WaitableEventTest, WaitManyLeftToRight) {
+  WaitableEvent* ev[5];
+  for (auto*& i : ev) {
+    i = new WaitableEvent(WaitableEvent::ResetPolicy::AUTOMATIC,
+                          WaitableEvent::InitialState::NOT_SIGNALED);
+  }
+
+  // Test for consistent left-to-right return behavior across all permutations
+  // of the input array. This is to verify that only the indices -- and not
+  // the WaitableEvents' addresses -- are relevant in determining who wins when
+  // multiple events are signaled.
+
+  std::sort(ev, ev + 5);
+  do {
+    ev[0]->Signal();
+    ev[1]->Signal();
+    EXPECT_EQ(0u, WaitableEvent::WaitMany(ev, 5));
+
+    ev[2]->Signal();
+    EXPECT_EQ(1u, WaitableEvent::WaitMany(ev, 5));
+    EXPECT_EQ(2u, WaitableEvent::WaitMany(ev, 5));
+
+    ev[3]->Signal();
+    ev[4]->Signal();
+    ev[0]->Signal();
+    EXPECT_EQ(0u, WaitableEvent::WaitMany(ev, 5));
+    EXPECT_EQ(3u, WaitableEvent::WaitMany(ev, 5));
+    ev[2]->Signal();
+    EXPECT_EQ(2u, WaitableEvent::WaitMany(ev, 5));
+    EXPECT_EQ(4u, WaitableEvent::WaitMany(ev, 5));
+  } while (std::next_permutation(ev, ev + 5));
+
+  for (auto* i : ev)
+    delete i;
 }
 
 class WaitableEventSignaler : public PlatformThread::Delegate {
  public:
-  WaitableEventSignaler(double seconds, WaitableEvent* ev)
-      : seconds_(seconds),
-        ev_(ev) {
+  WaitableEventSignaler(TimeDelta delay, WaitableEvent* event)
+      : delay_(delay),
+        event_(event) {
   }
 
-  virtual void ThreadMain() OVERRIDE {
-    PlatformThread::Sleep(TimeDelta::FromSeconds(static_cast<int>(seconds_)));
-    ev_->Signal();
+  void ThreadMain() override {
+    PlatformThread::Sleep(delay_);
+    event_->Signal();
   }
 
  private:
-  const double seconds_;
-  WaitableEvent *const ev_;
+  const TimeDelta delay_;
+  WaitableEvent* event_;
 };
 
-TEST(WaitableEventTest, WaitMany) {
-  WaitableEvent* ev[5];
-  for (unsigned i = 0; i < 5; ++i)
-    ev[i] = new WaitableEvent(false, false);
+// Tests that a WaitableEvent can be safely deleted when |Wait| is done without
+// additional synchronization.
+TEST(WaitableEventTest, WaitAndDelete) {
+  WaitableEvent* ev =
+      new WaitableEvent(WaitableEvent::ResetPolicy::AUTOMATIC,
+                        WaitableEvent::InitialState::NOT_SIGNALED);
 
-  WaitableEventSignaler signaler(0.1, ev[2]);
+  WaitableEventSignaler signaler(TimeDelta::FromMilliseconds(10), ev);
   PlatformThreadHandle thread;
   PlatformThread::Create(0, &signaler, &thread);
 
-  EXPECT_EQ(WaitableEvent::WaitMany(ev, 5), 2u);
+  ev->Wait();
+  delete ev;
 
   PlatformThread::Join(thread);
+}
 
-  for (unsigned i = 0; i < 5; ++i)
-    delete ev[i];
+// Tests that a WaitableEvent can be safely deleted when |WaitMany| is done
+// without additional synchronization.
+TEST(WaitableEventTest, WaitMany) {
+  WaitableEvent* ev[5];
+  for (auto*& i : ev) {
+    i = new WaitableEvent(WaitableEvent::ResetPolicy::AUTOMATIC,
+                          WaitableEvent::InitialState::NOT_SIGNALED);
+  }
+
+  WaitableEventSignaler signaler(TimeDelta::FromMilliseconds(10), ev[2]);
+  PlatformThreadHandle thread;
+  PlatformThread::Create(0, &signaler, &thread);
+
+  size_t index = WaitableEvent::WaitMany(ev, 5);
+
+  for (auto* i : ev)
+    delete i;
+
+  PlatformThread::Join(thread);
+  EXPECT_EQ(2u, index);
+}
+
+// Tests that using TimeDelta::Max() on TimedWait() is not the same as passing
+// a timeout of 0. (crbug.com/465948)
+TEST(WaitableEventTest, TimedWait) {
+  WaitableEvent* ev =
+      new WaitableEvent(WaitableEvent::ResetPolicy::AUTOMATIC,
+                        WaitableEvent::InitialState::NOT_SIGNALED);
+
+  TimeDelta thread_delay = TimeDelta::FromMilliseconds(10);
+  WaitableEventSignaler signaler(thread_delay, ev);
+  PlatformThreadHandle thread;
+  TimeTicks start = TimeTicks::Now();
+  PlatformThread::Create(0, &signaler, &thread);
+
+  EXPECT_TRUE(ev->TimedWait(TimeDelta::Max()));
+  EXPECT_GE(TimeTicks::Now() - start, thread_delay);
+  delete ev;
+
+  PlatformThread::Join(thread);
+}
+
+// Tests that a sub-ms TimedWait doesn't time out promptly.
+TEST(WaitableEventTest, SubMsTimedWait) {
+  WaitableEvent ev(WaitableEvent::ResetPolicy::AUTOMATIC,
+                   WaitableEvent::InitialState::NOT_SIGNALED);
+
+  TimeDelta delay = TimeDelta::FromMicroseconds(900);
+  TimeTicks start_time = TimeTicks::Now();
+  ev.TimedWait(delay);
+  EXPECT_GE(TimeTicks::Now() - start_time, delay);
+}
+
+// Tests that timeouts of zero return immediately (true if already signaled,
+// false otherwise).
+TEST(WaitableEventTest, ZeroTimeout) {
+  WaitableEvent ev;
+  TimeTicks start_time = TimeTicks::Now();
+  EXPECT_FALSE(ev.TimedWait(TimeDelta()));
+  EXPECT_LT(TimeTicks::Now() - start_time, TimeDelta::FromMilliseconds(1));
+
+  ev.Signal();
+  start_time = TimeTicks::Now();
+  EXPECT_TRUE(ev.TimedWait(TimeDelta()));
+  EXPECT_LT(TimeTicks::Now() - start_time, TimeDelta::FromMilliseconds(1));
+}
+
+// Same as ZeroTimeout for negative timeouts.
+TEST(WaitableEventTest, NegativeTimeout) {
+  WaitableEvent ev;
+  TimeTicks start_time = TimeTicks::Now();
+  EXPECT_FALSE(ev.TimedWait(TimeDelta::FromMilliseconds(-10)));
+  EXPECT_LT(TimeTicks::Now() - start_time, TimeDelta::FromMilliseconds(1));
+
+  ev.Signal();
+  start_time = TimeTicks::Now();
+  EXPECT_TRUE(ev.TimedWait(TimeDelta::FromMilliseconds(-10)));
+  EXPECT_LT(TimeTicks::Now() - start_time, TimeDelta::FromMilliseconds(1));
 }
 
 }  // namespace base

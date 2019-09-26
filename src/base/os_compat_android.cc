@@ -6,16 +6,15 @@
 
 #include <asm/unistd.h>
 #include <errno.h>
+#include <limits.h>
 #include <math.h>
 #include <sys/stat.h>
 #include <sys/syscall.h>
+#include <unistd.h>
 
-#if defined(__LP64__)
-#else
+#if !defined(__LP64__)
 #include <time64.h>
 #endif
-
-#include <unistd.h>
 
 #include "base/rand_util.h"
 #include "base/strings/string_piece.h"
@@ -43,21 +42,19 @@ int futimes(int fd, const struct timeval tv[2]) {
   return syscall(__NR_utimensat, fd, NULL, ts, 0);
 }
 
-// Android has only timegm64() and no timegm().
+#if !defined(__LP64__)
+// 32-bit Android has only timegm64() and not timegm().
 // We replicate the behaviour of timegm() when the result overflows time_t.
 time_t timegm(struct tm* const t) {
   // time_t is signed on Android.
-  static const time_t kTimeMax = ~(1 << (sizeof(time_t) * CHAR_BIT - 1));
-  static const time_t kTimeMin = (1 << (sizeof(time_t) * CHAR_BIT - 1));
-  #if defined(__LP64__)
-  time_t result = timegm(t);
-  #else
+  static const time_t kTimeMax = ~(1L << (sizeof(time_t) * CHAR_BIT - 1));
+  static const time_t kTimeMin = (1L << (sizeof(time_t) * CHAR_BIT - 1));
   time64_t result = timegm64(t);
-  #endif
   if (result < kTimeMin || result > kTimeMax)
     return -1;
   return result;
 }
+#endif
 
 // The following is only needed when building with GCC 4.6 or higher
 // (i.e. not with Android GCC 4.4.3, nor with Clang).

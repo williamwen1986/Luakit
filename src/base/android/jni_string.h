@@ -21,6 +21,8 @@ BASE_EXPORT void ConvertJavaStringToUTF8(JNIEnv* env,
                                          std::string* result);
 BASE_EXPORT std::string ConvertJavaStringToUTF8(JNIEnv* env, jstring str);
 BASE_EXPORT std::string ConvertJavaStringToUTF8(const JavaRef<jstring>& str);
+BASE_EXPORT std::string ConvertJavaStringToUTF8(JNIEnv* env,
+                                                const JavaRef<jstring>& str);
 
 // Convert a std string to Java string.
 BASE_EXPORT ScopedJavaLocalRef<jstring> ConvertUTF8ToJavaString(
@@ -33,6 +35,8 @@ BASE_EXPORT void ConvertJavaStringToUTF16(JNIEnv* env,
                                           string16* result);
 BASE_EXPORT string16 ConvertJavaStringToUTF16(JNIEnv* env, jstring str);
 BASE_EXPORT string16 ConvertJavaStringToUTF16(const JavaRef<jstring>& str);
+BASE_EXPORT string16 ConvertJavaStringToUTF16(JNIEnv* env,
+                                              const JavaRef<jstring>& str);
 
 // Convert a string16 to a Java string.
 BASE_EXPORT ScopedJavaLocalRef<jstring> ConvertUTF16ToJavaString(

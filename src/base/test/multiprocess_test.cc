@@ -6,50 +6,69 @@
 
 #include "base/base_switches.h"
 #include "base/command_line.h"
+#include "base/files/file_path.h"
+#include "base/files/file_util.h"
+#include "base/threading/thread_restrictions.h"
+#include "build/build_config.h"
 
 namespace base {
 
-MultiProcessTest::MultiProcessTest() {
+#if !defined(OS_ANDROID)
+Process SpawnMultiProcessTestChild(const std::string& procname,
+                                   const CommandLine& base_command_line,
+                                   const LaunchOptions& options) {
+  CommandLine command_line(base_command_line);
+  // TODO(viettrungluu): See comment above |MakeCmdLine()| in the header file.
+  // This is a temporary hack, since |MakeCmdLine()| has to provide a full
+  // command line.
+  if (!command_line.HasSwitch(switches::kTestChildProcess))
+    command_line.AppendSwitchASCII(switches::kTestChildProcess, procname);
+
+  return LaunchProcess(command_line, options);
 }
 
-ProcessHandle MultiProcessTest::SpawnChild(const std::string& procname,
-                                           bool debug_on_start) {
+bool WaitForMultiprocessTestChildExit(const Process& process,
+                                      TimeDelta timeout,
+                                      int* exit_code) {
+  return process.WaitForExitWithTimeout(timeout, exit_code);
+}
+
+bool TerminateMultiProcessTestChild(const Process& process,
+                                    int exit_code,
+                                    bool wait) {
+  return process.Terminate(exit_code, wait);
+}
+
+#endif  // !defined(OS_ANDROID)
+
+CommandLine GetMultiProcessTestChildBaseCommandLine() {
+  base::ScopedAllowBlockingForTesting allow_blocking;
+  CommandLine cmd_line = *CommandLine::ForCurrentProcess();
+  cmd_line.SetProgram(MakeAbsoluteFilePath(cmd_line.GetProgram()));
+  return cmd_line;
+}
+
+// MultiProcessTest ------------------------------------------------------------
+
+MultiProcessTest::MultiProcessTest() = default;
+
+Process MultiProcessTest::SpawnChild(const std::string& procname) {
   LaunchOptions options;
 #if defined(OS_WIN)
   options.start_hidden = true;
 #endif
-  return SpawnChildWithOptions(procname, options, debug_on_start);
+  return SpawnChildWithOptions(procname, options);
 }
 
-#if !defined(OS_ANDROID)
-ProcessHandle MultiProcessTest::SpawnChildWithOptions(
-    const std::string& procname,
-    const LaunchOptions& options,
-    bool debug_on_start) {
-  ProcessHandle handle = kNullProcessHandle;
-  LaunchProcess(MakeCmdLine(procname, debug_on_start), options, &handle);
-  return handle;
+Process MultiProcessTest::SpawnChildWithOptions(const std::string& procname,
+                                                const LaunchOptions& options) {
+  return SpawnMultiProcessTestChild(procname, MakeCmdLine(procname), options);
 }
-#endif
 
-#if defined(OS_POSIX)
-ProcessHandle MultiProcessTest::SpawnChild(
-    const std::string& procname,
-    const FileHandleMappingVector& fds_to_map,
-    bool debug_on_start) {
-  LaunchOptions options;
-  options.fds_to_remap = &fds_to_map;
-  return SpawnChildWithOptions(procname, options, debug_on_start);
-}
-#endif
-
-CommandLine MultiProcessTest::MakeCmdLine(const std::string& procname,
-                                          bool debug_on_start) {
-  CommandLine cl(*CommandLine::ForCurrentProcess());
-  cl.AppendSwitchASCII(switches::kTestChildProcess, procname);
-  if (debug_on_start)
-    cl.AppendSwitch(switches::kDebugOnStart);
-  return cl;
+CommandLine MultiProcessTest::MakeCmdLine(const std::string& procname) {
+  CommandLine command_line = GetMultiProcessTestChildBaseCommandLine();
+  command_line.AppendSwitchASCII(switches::kTestChildProcess, procname);
+  return command_line;
 }
 
 }  // namespace base

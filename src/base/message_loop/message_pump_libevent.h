@@ -5,13 +5,13 @@
 #ifndef BASE_MESSAGE_LOOP_MESSAGE_PUMP_LIBEVENT_H_
 #define BASE_MESSAGE_LOOP_MESSAGE_PUMP_LIBEVENT_H_
 
-#include "base/basictypes.h"
+#include <memory>
+
 #include "base/compiler_specific.h"
-#include "base/memory/weak_ptr.h"
+#include "base/macros.h"
 #include "base/message_loop/message_pump.h"
-#include "base/observer_list.h"
+#include "base/message_loop/watchable_io_message_pump_posix.h"
 #include "base/threading/thread_checker.h"
-#include "base/time/time.h"
 
 // Declare structs we need from libevent.h rather than including it
 struct event_base;
@@ -21,124 +21,70 @@ namespace base {
 
 // Class to monitor sockets and issue callbacks when sockets are ready for I/O
 // TODO(dkegel): add support for background file IO somehow
-class BASE_EXPORT MessagePumpLibevent : public MessagePump {
+class BASE_EXPORT MessagePumpLibevent : public MessagePump,
+                                        public WatchableIOMessagePumpPosix {
  public:
-  class IOObserver {
+  class FdWatchController : public FdWatchControllerInterface {
    public:
-    IOObserver() {}
+    explicit FdWatchController(const Location& from_here);
 
-    // An IOObserver is an object that receives IO notifications from the
-    // MessagePump.
-    //
-    // NOTE: An IOObserver implementation should be extremely fast!
-    virtual void WillProcessIOEvent() = 0;
-    virtual void DidProcessIOEvent() = 0;
+    // Implicitly calls StopWatchingFileDescriptor.
+    ~FdWatchController() override;
 
-   protected:
-    virtual ~IOObserver() {}
-  };
-
-  // Used with WatchFileDescriptor to asynchronously monitor the I/O readiness
-  // of a file descriptor.
-  class Watcher {
-   public:
-    // Called from MessageLoop::Run when an FD can be read from/written to
-    // without blocking
-    virtual void OnFileCanReadWithoutBlocking(int fd) = 0;
-    virtual void OnFileCanWriteWithoutBlocking(int fd) = 0;
-
-   protected:
-    virtual ~Watcher() {}
-  };
-
-  // Object returned by WatchFileDescriptor to manage further watching.
-  class FileDescriptorWatcher {
-   public:
-    FileDescriptorWatcher();
-    ~FileDescriptorWatcher();  // Implicitly calls StopWatchingFileDescriptor.
-
-    // NOTE: These methods aren't called StartWatching()/StopWatching() to
-    // avoid confusion with the win32 ObjectWatcher class.
-
-    // Stop watching the FD, always safe to call.  No-op if there's nothing
-    // to do.
-    bool StopWatchingFileDescriptor();
+    // FdWatchControllerInterface:
+    bool StopWatchingFileDescriptor() override;
 
    private:
     friend class MessagePumpLibevent;
     friend class MessagePumpLibeventTest;
 
-    // Called by MessagePumpLibevent, ownership of |e| is transferred to this
-    // object.
-    void Init(event* e);
+    // Called by MessagePumpLibevent.
+    void Init(std::unique_ptr<event> e);
 
-    // Used by MessagePumpLibevent to take ownership of event_.
-    event* ReleaseEvent();
+    // Used by MessagePumpLibevent to take ownership of |event_|.
+    std::unique_ptr<event> ReleaseEvent();
 
     void set_pump(MessagePumpLibevent* pump) { pump_ = pump; }
     MessagePumpLibevent* pump() const { return pump_; }
 
-    void set_watcher(Watcher* watcher) { watcher_ = watcher; }
+    void set_watcher(FdWatcher* watcher) { watcher_ = watcher; }
 
     void OnFileCanReadWithoutBlocking(int fd, MessagePumpLibevent* pump);
     void OnFileCanWriteWithoutBlocking(int fd, MessagePumpLibevent* pump);
 
-    event* event_;
-    MessagePumpLibevent* pump_;
-    Watcher* watcher_;
-    WeakPtrFactory<FileDescriptorWatcher> weak_factory_;
+    std::unique_ptr<event> event_;
+    MessagePumpLibevent* pump_ = nullptr;
+    FdWatcher* watcher_ = nullptr;
+    // If this pointer is non-NULL, the pointee is set to true in the
+    // destructor.
+    bool* was_destroyed_ = nullptr;
 
-    DISALLOW_COPY_AND_ASSIGN(FileDescriptorWatcher);
-  };
-
-  enum Mode {
-    WATCH_READ = 1 << 0,
-    WATCH_WRITE = 1 << 1,
-    WATCH_READ_WRITE = WATCH_READ | WATCH_WRITE
+    DISALLOW_COPY_AND_ASSIGN(FdWatchController);
   };
 
   MessagePumpLibevent();
-  virtual ~MessagePumpLibevent();
+  ~MessagePumpLibevent() override;
 
-  // Have the current thread's message loop watch for a a situation in which
-  // reading/writing to the FD can be performed without blocking.
-  // Callers must provide a preallocated FileDescriptorWatcher object which
-  // can later be used to manage the lifetime of this event.
-  // If a FileDescriptorWatcher is passed in which is already attached to
-  // an event, then the effect is cumulative i.e. after the call |controller|
-  // will watch both the previous event and the new one.
-  // If an error occurs while calling this method in a cumulative fashion, the
-  // event previously attached to |controller| is aborted.
-  // Returns true on success.
-  // Must be called on the same thread the message_pump is running on.
-  // TODO(dkegel): switch to edge-triggered readiness notification
   bool WatchFileDescriptor(int fd,
                            bool persistent,
                            int mode,
-                           FileDescriptorWatcher *controller,
-                           Watcher *delegate);
-
-  void AddIOObserver(IOObserver* obs);
-  void RemoveIOObserver(IOObserver* obs);
+                           FdWatchController* controller,
+                           FdWatcher* delegate);
 
   // MessagePump methods:
-  virtual void Run(Delegate* delegate) OVERRIDE;
-  virtual void Quit() OVERRIDE;
-  virtual void ScheduleWork() OVERRIDE;
-  virtual void ScheduleDelayedWork(const TimeTicks& delayed_work_time) OVERRIDE;
+  void Run(Delegate* delegate) override;
+  void Quit() override;
+  void ScheduleWork() override;
+  void ScheduleDelayedWork(const TimeTicks& delayed_work_time) override;
 
  private:
   friend class MessagePumpLibeventTest;
-
-  void WillProcessIOEvent();
-  void DidProcessIOEvent();
 
   // Risky part of constructor.  Returns true on success.
   bool Init();
 
   // Called by libevent to tell us a registered FD can be read/written to.
-  static void OnLibeventNotification(int fd, short flags,
-                                     void* context);
+  static void OnLibeventNotification(int fd, short flags, void* context);
 
   // Unix pipe used to implement ScheduleWork()
   // ... callback; called by libevent inside Run() when pipe is ready to read
@@ -153,9 +99,6 @@ class BASE_EXPORT MessagePumpLibevent : public MessagePump {
   // This flag is set if libevent has processed I/O events.
   bool processed_io_events_;
 
-  // The time at which we should call DoDelayedWork.
-  TimeTicks delayed_work_time_;
-
   // Libevent dispatcher.  Watches all sockets registered with it, and sends
   // readiness callbacks when a socket is ready for I/O.
   event_base* event_base_;
@@ -167,7 +110,6 @@ class BASE_EXPORT MessagePumpLibevent : public MessagePump {
   // ... libevent wrapper for read end
   event* wakeup_event_;
 
-  ObserverList<IOObserver> io_observers_;
   ThreadChecker watch_file_descriptor_caller_checker_;
   DISALLOW_COPY_AND_ASSIGN(MessagePumpLibevent);
 };

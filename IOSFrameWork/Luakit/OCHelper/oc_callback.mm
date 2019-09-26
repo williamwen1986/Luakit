@@ -8,7 +8,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-#import "lua_helpers.h"
+// #import "lua_helpers.h" // Patch [LARPOUX]
 #import "oc_callback.h"
 
 typedef struct _callback_instance_userdata {

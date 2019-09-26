@@ -6,7 +6,7 @@ then
 fi
 
 if [ -z $IOS_SDK_VERSION ]; then
-	export IOS_SDK_VERSION="13.0"
+	export IOS_SDK_VERSION="12.2"
 fi
 
 if [ -z "$OUTPUT_DIR" ]

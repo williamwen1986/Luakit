@@ -5,37 +5,18 @@
 #ifndef BASE_TASK_RUNNER_UTIL_H_
 #define BASE_TASK_RUNNER_UTIL_H_
 
+#include <memory>
+#include <utility>
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/callback_internal.h"
+#include "base/callback.h"
+#include "base/callback_helpers.h"
 #include "base/logging.h"
+#include "base/post_task_and_reply_with_result_internal.h"
 #include "base/task_runner.h"
 
 namespace base {
-
-namespace internal {
-
-// Adapts a function that produces a result via a return value to
-// one that returns via an output parameter.
-template <typename ReturnType>
-void ReturnAsParamAdapter(const Callback<ReturnType(void)>& func,
-                          ReturnType* result) {
-  *result = func.Run();
-}
-
-// Adapts a T* result to a callblack that expects a T.
-template <typename TaskReturnType, typename ReplyArgType>
-void ReplyAdapter(const Callback<void(ReplyArgType)>& callback,
-                  TaskReturnType* result) {
-  // TODO(ajwong): Remove this conditional and add a DCHECK to enforce that
-  // |reply| must be non-null in PostTaskAndReplyWithResult() below after
-  // current code that relies on this API softness has been removed.
-  // http://crbug.com/162712
-  if (!callback.is_null())
-    callback.Run(CallbackForward(*result));
-}
-
-}  // namespace internal
 
 // When you have these methods
 //
@@ -47,23 +28,34 @@ void ReplyAdapter(const Callback<void(ReplyArgType)>& callback,
 // PostTaskAndReplyWithResult as in this example:
 //
 // PostTaskAndReplyWithResult(
-//     target_thread_.message_loop_proxy(),
+//     target_thread_.task_runner(),
 //     FROM_HERE,
-//     Bind(&DoWorkAndReturn),
-//     Bind(&Callback));
-template <typename TaskReturnType, typename ReplyArgType>
-bool PostTaskAndReplyWithResult(
-    TaskRunner* task_runner,
-    const tracked_objects::Location& from_here,
-    const Callback<TaskReturnType(void)>& task,
-    const Callback<void(ReplyArgType)>& reply) {
-  TaskReturnType* result = new TaskReturnType();
+//     BindOnce(&DoWorkAndReturn),
+//     BindOnce(&Callback));
+//
+// Though RepeatingCallback is convertible to OnceCallback, we need a
+// CallbackType template since we can not use template deduction and object
+// conversion at once on the overload resolution.
+// TODO(crbug.com/714018): Update all callers of the RepeatingCallback version
+// to use OnceCallback and remove the CallbackType template.
+template <template <typename> class CallbackType,
+          typename TaskReturnType,
+          typename ReplyArgType,
+          typename = EnableIfIsBaseCallback<CallbackType>>
+bool PostTaskAndReplyWithResult(TaskRunner* task_runner,
+                                const Location& from_here,
+                                CallbackType<TaskReturnType()> task,
+                                CallbackType<void(ReplyArgType)> reply) {
+  DCHECK(task);
+  DCHECK(reply);
+  // std::unique_ptr used to avoid the need of a default constructor.
+  auto* result = new std::unique_ptr<TaskReturnType>();
   return task_runner->PostTaskAndReply(
       from_here,
-      base::Bind(&internal::ReturnAsParamAdapter<TaskReturnType>, task,
-                 result),
-      base::Bind(&internal::ReplyAdapter<TaskReturnType, ReplyArgType>, reply,
-                 base::Owned(result)));
+      BindOnce(&internal::ReturnAsParamAdapter<TaskReturnType>, std::move(task),
+               result),
+      BindOnce(&internal::ReplyAdapter<TaskReturnType, ReplyArgType>,
+               std::move(reply), Owned(result)));
 }
 
 }  // namespace base

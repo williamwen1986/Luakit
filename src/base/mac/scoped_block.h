@@ -7,86 +7,66 @@
 
 #include <Block.h>
 
-#include "base/basictypes.h"
-#include "base/compiler_specific.h"
-#include "base/memory/scoped_policy.h"
+#include "base/mac/scoped_typeref.h"
+
+#if defined(__has_feature) && __has_feature(objc_arc)
+#define BASE_MAC_BRIDGE_CAST(TYPE, VALUE) (__bridge TYPE)(VALUE)
+#else
+#define BASE_MAC_BRIDGE_CAST(TYPE, VALUE) VALUE
+#endif
 
 namespace base {
 namespace mac {
 
+namespace internal {
+
+template <typename B>
+struct ScopedBlockTraits {
+  static B InvalidValue() { return nullptr; }
+  static B Retain(B block) {
+    return BASE_MAC_BRIDGE_CAST(
+        B, Block_copy(BASE_MAC_BRIDGE_CAST(const void*, block)));
+  }
+  static void Release(B block) {
+    Block_release(BASE_MAC_BRIDGE_CAST(const void*, block));
+  }
+};
+
+}  // namespace internal
+
 // ScopedBlock<> is patterned after ScopedCFTypeRef<>, but uses Block_copy() and
 // Block_release() instead of CFRetain() and CFRelease().
-
-template<typename B>
-class ScopedBlock {
+template <typename B>
+class ScopedBlock : public ScopedTypeRef<B, internal::ScopedBlockTraits<B>> {
  public:
+  using Traits = internal::ScopedBlockTraits<B>;
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
   explicit ScopedBlock(
-      B block = NULL,
+      B block = Traits::InvalidValue(),
       base::scoped_policy::OwnershipPolicy policy = base::scoped_policy::ASSUME)
-      : block_(block) {
-    if (block_ && policy == base::scoped_policy::RETAIN)
-      block_ = Block_copy(block);
-  }
+      : ScopedTypeRef<B, Traits>(block, policy) {}
+#else
+  explicit ScopedBlock(B block = Traits::InvalidValue())
+      : ScopedTypeRef<B, Traits>(block, base::scoped_policy::RETAIN) {}
+#endif
 
-  ScopedBlock(const ScopedBlock<B>& that)
-      : block_(that.block_) {
-    if (block_)
-      block_ = Block_copy(block_);
-  }
-
-  ~ScopedBlock() {
-    if (block_)
-      Block_release(block_);
-  }
-
-  ScopedBlock& operator=(const ScopedBlock<B>& that) {
-    reset(that.get(), base::scoped_policy::RETAIN);
-    return *this;
-  }
-
-  void reset(B block = NULL,
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+  void reset(B block = Traits::InvalidValue(),
              base::scoped_policy::OwnershipPolicy policy =
                  base::scoped_policy::ASSUME) {
-    if (block && policy == base::scoped_policy::RETAIN)
-      block = Block_copy(block);
-    if (block_)
-      Block_release(block_);
-    block_ = block;
+    ScopedTypeRef<B, Traits>::reset(block, policy);
   }
-
-  bool operator==(B that) const {
-    return block_ == that;
+#else
+  void reset(B block = Traits::InvalidValue()) {
+    ScopedTypeRef<B, Traits>::reset(block, base::scoped_policy::RETAIN);
   }
-
-  bool operator!=(B that) const {
-    return block_ != that;
-  }
-
-  operator B() const {
-    return block_;
-  }
-
-  B get() const {
-    return block_;
-  }
-
-  void swap(ScopedBlock& that) {
-    B temp = that.block_;
-    that.block_ = block_;
-    block_ = temp;
-  }
-
-  B release() WARN_UNUSED_RESULT {
-    B temp = block_;
-    block_ = NULL;
-    return temp;
-  }
-
- private:
-  B block_;
+#endif
 };
 
 }  // namespace mac
 }  // namespace base
+
+#undef BASE_MAC_BRIDGE_CAST
 
 #endif  // BASE_MAC_SCOPED_BLOCK_H_

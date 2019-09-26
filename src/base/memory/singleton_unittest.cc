@@ -2,16 +2,27 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <stdint.h>
+
 #include "base/at_exit.h"
 #include "base/memory/singleton.h"
-#include "base/path_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace base {
 namespace {
 
-COMPILE_ASSERT(DefaultSingletonTraits<int>::kRegisterAtExit == true, a);
+static_assert(DefaultSingletonTraits<int>::kRegisterAtExit == true,
+              "object must be deleted on process exit");
 
 typedef void (*CallbackFunc)();
+
+template <size_t alignment>
+class AlignedData {
+ public:
+  AlignedData() = default;
+  ~AlignedData() = default;
+  alignas(alignment) char data_[alignment];
+};
 
 class IntSingleton {
  public:
@@ -60,7 +71,7 @@ struct CallbackTrait : public DefaultSingletonTraits<Type> {
 
 class CallbackSingleton {
  public:
-  CallbackSingleton() : callback_(NULL) { }
+  CallbackSingleton() : callback_(nullptr) {}
   CallbackFunc callback_;
 };
 
@@ -112,11 +123,11 @@ struct CallbackSingletonWithStaticTrait::Trait
 template <class Type>
 class AlignedTestSingleton {
  public:
-  AlignedTestSingleton() {}
-  ~AlignedTestSingleton() {}
+  AlignedTestSingleton() = default;
+  ~AlignedTestSingleton() = default;
   static AlignedTestSingleton* GetInstance() {
     return Singleton<AlignedTestSingleton,
-        StaticMemorySingletonTraits<AlignedTestSingleton> >::get();
+                     StaticMemorySingletonTraits<AlignedTestSingleton>>::get();
   }
 
   Type type_;
@@ -148,13 +159,12 @@ CallbackFunc* GetStaticSingleton() {
   return &CallbackSingletonWithStaticTrait::GetInstance()->callback_;
 }
 
-}  // namespace
 
 class SingletonTest : public testing::Test {
  public:
-  SingletonTest() {}
+  SingletonTest() = default;
 
-  virtual void SetUp() OVERRIDE {
+  void SetUp() override {
     non_leak_called_ = false;
     leaky_called_ = false;
     static_called_ = false;
@@ -208,7 +218,7 @@ TEST_F(SingletonTest, Basic) {
   CallbackFunc* static_singleton;
 
   {
-    base::ShadowingAtExitManager sem;
+    ShadowingAtExitManager sem;
     {
       singleton_int = SingletonInt();
     }
@@ -239,10 +249,10 @@ TEST_F(SingletonTest, Basic) {
   DeleteLeakySingleton();
 
   // The static singleton can't be acquired post-atexit.
-  EXPECT_EQ(NULL, GetStaticSingleton());
+  EXPECT_EQ(nullptr, GetStaticSingleton());
 
   {
-    base::ShadowingAtExitManager sem;
+    ShadowingAtExitManager sem;
     // Verifiy that the variables were reset.
     {
       singleton_int = SingletonInt();
@@ -255,7 +265,7 @@ TEST_F(SingletonTest, Basic) {
     {
       // Resurrect the static singleton, and assert that it
       // still points to the same (static) memory.
-      CallbackSingletonWithStaticTrait::Trait::Resurrect();
+      CallbackSingletonWithStaticTrait::Trait::ResurrectForTesting();
       EXPECT_EQ(GetStaticSingleton(), static_singleton);
     }
   }
@@ -267,22 +277,23 @@ TEST_F(SingletonTest, Basic) {
     EXPECT_EQ(0u, reinterpret_cast<uintptr_t>(ptr) & (align - 1))
 
 TEST_F(SingletonTest, Alignment) {
-  using base::AlignedMemory;
-
   // Create some static singletons with increasing sizes and alignment
   // requirements. By ordering this way, the linker will need to do some work to
   // ensure proper alignment of the static data.
-  AlignedTestSingleton<int32>* align4 =
-      AlignedTestSingleton<int32>::GetInstance();
-  AlignedTestSingleton<AlignedMemory<32, 32> >* align32 =
-      AlignedTestSingleton<AlignedMemory<32, 32> >::GetInstance();
-  AlignedTestSingleton<AlignedMemory<128, 128> >* align128 =
-      AlignedTestSingleton<AlignedMemory<128, 128> >::GetInstance();
-  AlignedTestSingleton<AlignedMemory<4096, 4096> >* align4096 =
-      AlignedTestSingleton<AlignedMemory<4096, 4096> >::GetInstance();
+  AlignedTestSingleton<int32_t>* align4 =
+      AlignedTestSingleton<int32_t>::GetInstance();
+  AlignedTestSingleton<AlignedData<32>>* align32 =
+      AlignedTestSingleton<AlignedData<32>>::GetInstance();
+  AlignedTestSingleton<AlignedData<128>>* align128 =
+      AlignedTestSingleton<AlignedData<128>>::GetInstance();
+  AlignedTestSingleton<AlignedData<4096>>* align4096 =
+      AlignedTestSingleton<AlignedData<4096>>::GetInstance();
 
   EXPECT_ALIGNED(align4, 4);
   EXPECT_ALIGNED(align32, 32);
   EXPECT_ALIGNED(align128, 128);
   EXPECT_ALIGNED(align4096, 4096);
 }
+
+}  // namespace
+}  // namespace base

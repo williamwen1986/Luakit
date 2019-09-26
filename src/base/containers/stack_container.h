@@ -5,13 +5,12 @@
 #ifndef BASE_CONTAINERS_STACK_CONTAINER_H_
 #define BASE_CONTAINERS_STACK_CONTAINER_H_
 
-#include <string>
+#include <stddef.h>
+
 #include <vector>
 
-#include "base/basictypes.h"
-#include "base/memory/aligned_memory.h"
-#include "base/strings/string16.h"
-#include "config/build_config.h"
+#include "base/macros.h"
+#include "build/build_config.h"
 
 namespace base {
 
@@ -47,17 +46,17 @@ class StackAllocator : public std::allocator<T> {
     }
 
     // Casts the buffer in its right type.
-    T* stack_buffer() { return stack_buffer_.template data_as<T>(); }
+    T* stack_buffer() { return reinterpret_cast<T*>(stack_buffer_); }
     const T* stack_buffer() const {
-      return stack_buffer_.template data_as<T>();
+      return reinterpret_cast<const T*>(&stack_buffer_);
     }
 
     // The buffer itself. It is not of type T because we don't want the
     // constructors and destructors to be automatically called. Define a POD
     // buffer of the right size instead.
-    base::AlignedMemory<sizeof(T[stack_capacity]), ALIGNOF(T)> stack_buffer_;
+    alignas(T) char stack_buffer_[sizeof(T[stack_capacity])];
 #if defined(__GNUC__) && !defined(ARCH_CPU_X86_FAMILY)
-    COMPILE_ASSERT(ALIGNOF(T) <= 16, crbug_115612);
+    static_assert(alignof(T) <= 16, "http://crbug.com/115612");
 #endif
 
     // Set when the stack buffer is used for an allocation. We do not track
@@ -88,6 +87,13 @@ class StackAllocator : public std::allocator<T> {
   template<typename U, size_t other_capacity>
   StackAllocator(const StackAllocator<U, other_capacity>& other)
       : source_(NULL) {
+  }
+
+  // This constructor must exist. It creates a default allocator that doesn't
+  // actually have a stack buffer. glibc's std::string() will compare the
+  // current allocator against the default-constructed allocator, so this
+  // should be fast.
+  StackAllocator() : source_(NULL) {
   }
 
   explicit StackAllocator(Source* source) : source_(source) {
@@ -123,6 +129,10 @@ class StackAllocator : public std::allocator<T> {
 // initial capacity of the vector is based on. Growing the container beyond the
 // stack capacity will transparently overflow onto the heap. The container must
 // support reserve().
+//
+// This will not work with std::string since some implementations allocate
+// more bytes than requested in calls to reserve(), forcing the allocation onto
+// the heap.  http://crbug.com/709273
 //
 // WATCH OUT: the ContainerType MUST use the proper StackAllocator for this
 // type. This object is really intended to be used only internally. You'll want
@@ -169,48 +179,35 @@ class StackContainer {
   Allocator allocator_;
   ContainerType container_;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(StackContainer);
 };
 
-// StackString -----------------------------------------------------------------
+// Range-based iteration support for StackContainer.
+template <typename TContainerType, int stack_capacity>
+auto begin(
+    const StackContainer<TContainerType, stack_capacity>& stack_container)
+    -> decltype(begin(stack_container.container())) {
+  return begin(stack_container.container());
+}
 
-template<size_t stack_capacity>
-class StackString : public StackContainer<
-    std::basic_string<char,
-                      std::char_traits<char>,
-                      StackAllocator<char, stack_capacity> >,
-    stack_capacity> {
- public:
-  StackString() : StackContainer<
-      std::basic_string<char,
-                        std::char_traits<char>,
-                        StackAllocator<char, stack_capacity> >,
-      stack_capacity>() {
-  }
+template <typename TContainerType, int stack_capacity>
+auto begin(StackContainer<TContainerType, stack_capacity>& stack_container)
+    -> decltype(begin(stack_container.container())) {
+  return begin(stack_container.container());
+}
 
- private:
-  DISALLOW_COPY_AND_ASSIGN(StackString);
-};
+template <typename TContainerType, int stack_capacity>
+auto end(StackContainer<TContainerType, stack_capacity>& stack_container)
+    -> decltype(end(stack_container.container())) {
+  return end(stack_container.container());
+}
 
-// StackStrin16 ----------------------------------------------------------------
-
-template<size_t stack_capacity>
-class StackString16 : public StackContainer<
-    std::basic_string<char16,
-                      base::string16_char_traits,
-                      StackAllocator<char16, stack_capacity> >,
-    stack_capacity> {
- public:
-  StackString16() : StackContainer<
-      std::basic_string<char16,
-                        base::string16_char_traits,
-                        StackAllocator<char16, stack_capacity> >,
-      stack_capacity>() {
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(StackString16);
-};
+template <typename TContainerType, int stack_capacity>
+auto end(const StackContainer<TContainerType, stack_capacity>& stack_container)
+    -> decltype(end(stack_container.container())) {
+  return end(stack_container.container());
+}
 
 // StackVector -----------------------------------------------------------------
 

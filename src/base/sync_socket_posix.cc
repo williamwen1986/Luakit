@@ -7,6 +7,8 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <poll.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
@@ -16,9 +18,10 @@
 #include <sys/filio.h>
 #endif
 
-#include "base/file_util.h"
+#include "base/files/file_util.h"
 #include "base/logging.h"
-#include "base/threading/thread_restrictions.h"
+#include "base/threading/scoped_blocking_call.h"
+#include "build/build_config.h"
 
 namespace base {
 
@@ -36,8 +39,9 @@ size_t SendHelper(SyncSocket::Handle handle,
   DCHECK_LE(length, kMaxMessageLength);
   DCHECK_NE(handle, SyncSocket::kInvalidHandle);
   const char* charbuffer = static_cast<const char*>(buffer);
-  const int len = file_util::WriteFileDescriptor(handle, charbuffer, length);
-  return len < 0 ? 0 : static_cast<size_t>(len);
+  return WriteFileDescriptor(handle, charbuffer, length)
+             ? static_cast<size_t>(length)
+             : 0;
 }
 
 bool CloseHandle(SyncSocket::Handle handle) {
@@ -96,6 +100,19 @@ bool SyncSocket::CreatePair(SyncSocket* socket_a, SyncSocket* socket_b) {
   return true;
 }
 
+// static
+SyncSocket::Handle SyncSocket::UnwrapHandle(
+    const TransitDescriptor& descriptor) {
+  return descriptor.fd;
+}
+
+bool SyncSocket::PrepareTransitDescriptor(ProcessHandle peer_process_handle,
+                                          TransitDescriptor* descriptor) {
+  descriptor->fd = handle();
+  descriptor->auto_close = false;
+  return descriptor->fd != kInvalidHandle;
+}
+
 bool SyncSocket::Close() {
   const bool retval = CloseHandle(handle_);
   handle_ = kInvalidHandle;
@@ -103,12 +120,12 @@ bool SyncSocket::Close() {
 }
 
 size_t SyncSocket::Send(const void* buffer, size_t length) {
-  ThreadRestrictions::AssertIOAllowed();
+  ScopedBlockingCall scoped_blocking_call(FROM_HERE, BlockingType::MAY_BLOCK);
   return SendHelper(handle_, buffer, length);
 }
 
 size_t SyncSocket::Receive(void* buffer, size_t length) {
-  ThreadRestrictions::AssertIOAllowed();
+  ScopedBlockingCall scoped_blocking_call(FROM_HERE, BlockingType::MAY_BLOCK);
   DCHECK_GT(length, 0u);
   DCHECK_LE(length, kMaxMessageLength);
   DCHECK_NE(handle_, kInvalidHandle);
@@ -121,49 +138,47 @@ size_t SyncSocket::Receive(void* buffer, size_t length) {
 size_t SyncSocket::ReceiveWithTimeout(void* buffer,
                                       size_t length,
                                       TimeDelta timeout) {
-  ThreadRestrictions::AssertIOAllowed();
+  ScopedBlockingCall scoped_blocking_call(FROM_HERE, BlockingType::MAY_BLOCK);
   DCHECK_GT(length, 0u);
   DCHECK_LE(length, kMaxMessageLength);
   DCHECK_NE(handle_, kInvalidHandle);
 
-  // TODO(dalecurtis): There's an undiagnosed issue on OSX where we're seeing
-  // large numbers of open files which prevents select() from being used.  In
-  // this case, the best we can do is Peek() to see if we can Receive() now or
-  // return a timeout error (0) if not.  See http://crbug.com/314364.
-  if (handle_ >= FD_SETSIZE)
-    return Peek() < length ? 0 : Receive(buffer, length);
-
   // Only timeouts greater than zero and less than one second are allowed.
   DCHECK_GT(timeout.InMicroseconds(), 0);
   DCHECK_LT(timeout.InMicroseconds(),
-            base::TimeDelta::FromSeconds(1).InMicroseconds());
+            TimeDelta::FromSeconds(1).InMicroseconds());
 
   // Track the start time so we can reduce the timeout as data is read.
   TimeTicks start_time = TimeTicks::Now();
   const TimeTicks finish_time = start_time + timeout;
 
-  fd_set read_fds;
-  size_t bytes_read_total;
-  for (bytes_read_total = 0;
-       bytes_read_total < length && timeout.InMicroseconds() > 0;
-       timeout = finish_time - base::TimeTicks::Now()) {
-    FD_ZERO(&read_fds);
-    FD_SET(handle_, &read_fds);
+  struct pollfd pollfd;
+  pollfd.fd = handle_;
+  pollfd.events = POLLIN;
+  pollfd.revents = 0;
 
-    // Wait for data to become available.
-    struct timeval timeout_struct =
-        { 0, static_cast<suseconds_t>(timeout.InMicroseconds()) };
-    const int select_result =
-        select(handle_ + 1, &read_fds, NULL, NULL, &timeout_struct);
+  size_t bytes_read_total = 0;
+  while (bytes_read_total < length) {
+    const TimeDelta this_timeout = finish_time - TimeTicks::Now();
+    const int timeout_ms =
+        static_cast<int>(this_timeout.InMillisecondsRoundedUp());
+    if (timeout_ms <= 0)
+      break;
+    const int poll_result = poll(&pollfd, 1, timeout_ms);
     // Handle EINTR manually since we need to update the timeout value.
-    if (select_result == -1 && errno == EINTR)
+    if (poll_result == -1 && errno == EINTR)
       continue;
-    if (select_result <= 0)
+    // Return if other type of error or a timeout.
+    if (poll_result <= 0)
       return bytes_read_total;
 
-    // select() only tells us that data is ready for reading, not how much.  We
+    // poll() only tells us that data is ready for reading, not how much.  We
     // must Peek() for the amount ready for reading to avoid blocking.
-    DCHECK(FD_ISSET(handle_, &read_fds));
+    // At hang up (POLLHUP), the write end has been closed and there might still
+    // be data to be read.
+    // No special handling is needed for error (POLLERR); we can let any of the
+    // following operations fail and handle it there.
+    DCHECK(pollfd.revents & (POLLIN | POLLHUP | POLLERR)) << pollfd.revents;
     const size_t bytes_to_read = std::min(Peek(), length - bytes_read_total);
 
     // There may be zero bytes to read if the socket at the other end closed.
@@ -191,7 +206,13 @@ size_t SyncSocket::Peek() {
   return number_chars;
 }
 
-CancelableSyncSocket::CancelableSyncSocket() {}
+SyncSocket::Handle SyncSocket::Release() {
+  Handle r = handle_;
+  handle_ = kInvalidHandle;
+  return r;
+}
+
+CancelableSyncSocket::CancelableSyncSocket() = default;
 CancelableSyncSocket::CancelableSyncSocket(Handle handle)
     : SyncSocket(handle) {
 }
@@ -206,7 +227,7 @@ size_t CancelableSyncSocket::Send(const void* buffer, size_t length) {
   DCHECK_LE(length, kMaxMessageLength);
   DCHECK_NE(handle_, kInvalidHandle);
 
-  const long flags = fcntl(handle_, F_GETFL, NULL);
+  const int flags = fcntl(handle_, F_GETFL);
   if (flags != -1 && (flags & O_NONBLOCK) == 0) {
     // Set the socket to non-blocking mode for sending if its original mode
     // is blocking.

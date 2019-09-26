@@ -5,7 +5,9 @@
 #ifndef BASE_AUTO_RESET_H_
 #define BASE_AUTO_RESET_H_
 
-#include "base/basictypes.h"
+#include <utility>
+
+#include "base/macros.h"
 
 // base::AutoReset<> is useful for setting a variable to a new value only within
 // a particular scope. An base::AutoReset<> object resets a variable to its
@@ -23,11 +25,29 @@ class AutoReset {
  public:
   AutoReset(T* scoped_variable, T new_value)
       : scoped_variable_(scoped_variable),
-        original_value_(*scoped_variable) {
-    *scoped_variable_ = new_value;
+        original_value_(std::move(*scoped_variable)) {
+    *scoped_variable_ = std::move(new_value);
   }
 
-  ~AutoReset() { *scoped_variable_ = original_value_; }
+  AutoReset(AutoReset&& other)
+      : scoped_variable_(other.scoped_variable_),
+        original_value_(std::move(other.original_value_)) {
+    other.scoped_variable_ = nullptr;
+  }
+
+  ~AutoReset() {
+    if (scoped_variable_)
+      *scoped_variable_ = std::move(original_value_);
+  }
+
+  AutoReset& operator=(AutoReset&& rhs) {
+    if (this != &rhs) {
+      scoped_variable_ = rhs.scoped_variable_;
+      rhs.scoped_variable_ = nullptr;
+      original_value_ = std::move(rhs.original_value_);
+    }
+    return *this;
+  }
 
  private:
   T* scoped_variable_;
@@ -36,6 +56,6 @@ class AutoReset {
   DISALLOW_COPY_AND_ASSIGN(AutoReset);
 };
 
-}
+}  // namespace base
 
 #endif  // BASE_AUTO_RESET_H_

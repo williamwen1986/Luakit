@@ -5,9 +5,12 @@
 #include "base/process/process_iterator.h"
 
 #include <errno.h>
+#include <stddef.h>
 #include <sys/sysctl.h>
 
 #include "base/logging.h"
+#include "base/stl_util.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 
 namespace base {
@@ -25,7 +28,7 @@ ProcessIterator::ProcessIterator(const ProcessFilter* filter)
 
   do {
     size_t len = 0;
-    if (sysctl(mib, arraysize(mib), NULL, &len, NULL, 0) < 0) {
+    if (sysctl(mib, base::size(mib), NULL, &len, NULL, 0) < 0) {
       DLOG(ERROR) << "failed to get the size needed for the process list";
       kinfo_procs_.resize(0);
       done = true;
@@ -36,7 +39,7 @@ ProcessIterator::ProcessIterator(const ProcessFilter* filter)
       num_of_kinfo_proc += 16;
       kinfo_procs_.resize(num_of_kinfo_proc);
       len = num_of_kinfo_proc * sizeof(struct kinfo_proc);
-      if (sysctl(mib, arraysize(mib), &kinfo_procs_[0], &len, NULL, 0) < 0) {
+      if (sysctl(mib, base::size(mib), &kinfo_procs_[0], &len, NULL, 0) < 0) {
         // If we get a mem error, it just means we need a bigger buffer, so
         // loop around again.  Anything else is a real error and give up.
         if (errno != ENOMEM) {
@@ -75,13 +78,13 @@ bool ProcessIterator::CheckForNextProcess() {
 
     // Find out what size buffer we need.
     size_t data_len = 0;
-    if (sysctl(mib, arraysize(mib), NULL, &data_len, NULL, 0) < 0) {
+    if (sysctl(mib, base::size(mib), NULL, &data_len, NULL, 0) < 0) {
       DVPLOG(1) << "failed to figure out the buffer size for a commandline";
       continue;
     }
 
     data.resize(data_len);
-    if (sysctl(mib, arraysize(mib), &data[0], &data_len, NULL, 0) < 0) {
+    if (sysctl(mib, base::size(mib), &data[0], &data_len, NULL, 0) < 0) {
       DVPLOG(1) << "failed to fetch a commandline";
       continue;
     }
@@ -92,7 +95,8 @@ bool ProcessIterator::CheckForNextProcess() {
     // |entry_.cmd_line_args_|.
     std::string delimiters;
     delimiters.push_back('\0');
-    Tokenize(data, delimiters, &entry_.cmd_line_args_);
+    entry_.cmd_line_args_ = SplitString(data, delimiters, KEEP_WHITESPACE,
+                                        SPLIT_WANT_NONEMPTY);
 
     // |data| starts with the full executable path followed by a null character.
     // We search for the first instance of '\0' and extract everything before it

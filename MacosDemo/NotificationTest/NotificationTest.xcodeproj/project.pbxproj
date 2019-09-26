@@ -25,13 +25,6 @@
 			remoteGlobalIDString = 2883AC9120B43DFB005E1F54;
 			remoteInfo = Luakit;
 		};
-		C5BD06DE23351A4800E630F5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C5BD06D123351A4800E630F5 /* Luakit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5BD06BB2334D6CC00E630F5;
-			remoteInfo = "Luakit-dylib";
-		};
 		C5BD06F12335205100E630F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C5BD06D123351A4800E630F5 /* Luakit.xcodeproj */;
@@ -119,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				C5BD06DD23351A4800E630F5 /* libLuakit.a */,
-				C5BD06DF23351A4800E630F5 /* Luakit-dylib.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -189,13 +181,6 @@
 			fileType = archive.ar;
 			path = libLuakit.a;
 			remoteRef = C5BD06DC23351A4800E630F5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C5BD06DF23351A4800E630F5 /* Luakit-dylib.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = "Luakit-dylib.dylib";
-			remoteRef = C5BD06DE23351A4800E630F5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -308,7 +293,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -367,7 +352,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};

@@ -2,20 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// This class defines tests that implementations of SequencedTaskRunner should
-// pass in order to be conformant. See task_runner_test_template.h for a
-// description of how to use the constructs in this file; these work the same.
+// SequencedTaskRunnerTest defines tests that implementations of
+// SequencedTaskRunner should pass in order to be conformant.
+// See task_runner_test_template.h for a description of how to use the
+// constructs in this file; these work the same.
 
-#ifndef BASE_SEQUENCED_TASK_RUNNER_TEST_TEMPLATE_H_
-#define BASE_SEQUENCED_TASK_RUNNER_TEST_TEMPLATE_H_
+#ifndef BASE_TEST_SEQUENCED_TASK_RUNNER_TEST_TEMPLATE_H_
+#define BASE_TEST_SEQUENCED_TASK_RUNNER_TEST_TEMPLATE_H_
 
 #include <cstddef>
 #include <iosfwd>
 #include <vector>
 
-#include "base/basictypes.h"
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
 #include "base/synchronization/condition_variable.h"
@@ -40,25 +41,20 @@ class SequencedTaskTracker : public RefCountedThreadSafe<SequencedTaskTracker> {
   SequencedTaskTracker();
 
   // Posts the non-nestable task |task|, and records its post event.
-  void PostWrappedNonNestableTask(
-      const scoped_refptr<SequencedTaskRunner>& task_runner,
-      const Closure& task);
+  void PostWrappedNonNestableTask(SequencedTaskRunner* task_runner,
+                                  OnceClosure task);
 
   // Posts the nestable task |task|, and records its post event.
-  void PostWrappedNestableTask(
-      const scoped_refptr<SequencedTaskRunner>& task_runner,
-      const Closure& task);
+  void PostWrappedNestableTask(SequencedTaskRunner* task_runner,
+                               OnceClosure task);
 
   // Posts the delayed non-nestable task |task|, and records its post event.
-  void PostWrappedDelayedNonNestableTask(
-      const scoped_refptr<SequencedTaskRunner>& task_runner,
-      const Closure& task,
-      TimeDelta delay);
+  void PostWrappedDelayedNonNestableTask(SequencedTaskRunner* task_runner,
+                                         OnceClosure task,
+                                         TimeDelta delay);
 
   // Posts |task_count| non-nestable tasks.
-  void PostNonNestableTasks(
-      const scoped_refptr<SequencedTaskRunner>& task_runner,
-      int task_count);
+  void PostNonNestableTasks(SequencedTaskRunner* task_runner, int task_count);
 
   const std::vector<TaskEvent>& GetTaskEvents() const;
 
@@ -71,7 +67,7 @@ class SequencedTaskTracker : public RefCountedThreadSafe<SequencedTaskTracker> {
   ~SequencedTaskTracker();
 
   // A task which runs |task|, recording the start and end events.
-  void RunTask(const Closure& task, int task_i);
+  void RunTask(OnceClosure task, int task_i);
 
   // Records a post event for task |i|. The owner is expected to be holding
   // |lock_| (unlike |TaskStarted| and |TaskEnded|).
@@ -126,7 +122,7 @@ class SequencedTaskRunnerTest : public testing::Test {
   TaskRunnerTestDelegate delegate_;
 };
 
-TYPED_TEST_CASE_P(SequencedTaskRunnerTest);
+TYPED_TEST_SUITE_P(SequencedTaskRunnerTest);
 
 // This test posts N non-nestable tasks in sequence, and expects them to run
 // in FIFO order, with no part of any two tasks' execution
@@ -140,9 +136,11 @@ TYPED_TEST_P(SequencedTaskRunnerTest, SequentialNonNestable) {
       this->delegate_.GetTaskRunner();
 
   this->task_tracker_->PostWrappedNonNestableTask(
-      task_runner, Bind(&PlatformThread::Sleep, TimeDelta::FromSeconds(1)));
+      task_runner.get(),
+      BindOnce(&PlatformThread::Sleep, TimeDelta::FromSeconds(1)));
   for (int i = 1; i < kTaskCount; ++i) {
-    this->task_tracker_->PostWrappedNonNestableTask(task_runner, Closure());
+    this->task_tracker_->PostWrappedNonNestableTask(task_runner.get(),
+                                                    OnceClosure());
   }
 
   this->delegate_.StopTaskRunner();
@@ -162,10 +160,11 @@ TYPED_TEST_P(SequencedTaskRunnerTest, SequentialNestable) {
       this->delegate_.GetTaskRunner();
 
   this->task_tracker_->PostWrappedNestableTask(
-      task_runner,
-      Bind(&PlatformThread::Sleep, TimeDelta::FromSeconds(1)));
+      task_runner.get(),
+      BindOnce(&PlatformThread::Sleep, TimeDelta::FromSeconds(1)));
   for (int i = 1; i < kTaskCount; ++i) {
-    this->task_tracker_->PostWrappedNestableTask(task_runner, Closure());
+    this->task_tracker_->PostWrappedNestableTask(task_runner.get(),
+                                                 OnceClosure());
   }
 
   this->delegate_.StopTaskRunner();
@@ -178,13 +177,6 @@ TYPED_TEST_P(SequencedTaskRunnerTest, SequentialNestable) {
 // that that the tasks are run in FIFO order and that there is no execution
 // overlap whatsoever between any two tasks.
 TYPED_TEST_P(SequencedTaskRunnerTest, SequentialDelayedNonNestable) {
-  // TODO(akalin): Remove this check (http://crbug.com/149144).
-  if (!this->delegate_.TaskRunnerHandlesNonZeroDelays()) {
-    DLOG(INFO) << "This SequencedTaskRunner doesn't handle "
-        "non-zero delays; skipping";
-    return;
-  }
-
   const int kTaskCount = 20;
   const int kDelayIncrementMs = 50;
 
@@ -194,8 +186,7 @@ TYPED_TEST_P(SequencedTaskRunnerTest, SequentialDelayedNonNestable) {
 
   for (int i = 0; i < kTaskCount; ++i) {
     this->task_tracker_->PostWrappedDelayedNonNestableTask(
-        task_runner,
-        Closure(),
+        task_runner.get(), OnceClosure(),
         TimeDelta::FromMilliseconds(kDelayIncrementMs * i));
   }
 
@@ -218,12 +209,11 @@ TYPED_TEST_P(SequencedTaskRunnerTest, NonNestablePostFromNonNestableTask) {
       this->delegate_.GetTaskRunner();
 
   for (int i = 0; i < kParentCount; ++i) {
-    Closure task = Bind(
-        &internal::SequencedTaskTracker::PostNonNestableTasks,
-        this->task_tracker_,
-        task_runner,
-        kChildrenPerParent);
-    this->task_tracker_->PostWrappedNonNestableTask(task_runner, task);
+    auto task = BindOnce(&internal::SequencedTaskTracker::PostNonNestableTasks,
+                         this->task_tracker_, RetainedRef(task_runner),
+                         kChildrenPerParent);
+    this->task_tracker_->PostWrappedNonNestableTask(task_runner.get(),
+                                                    std::move(task));
   }
 
   this->delegate_.StopTaskRunner();
@@ -231,35 +221,6 @@ TYPED_TEST_P(SequencedTaskRunnerTest, NonNestablePostFromNonNestableTask) {
   EXPECT_TRUE(CheckNonNestableInvariants(
       this->task_tracker_->GetTaskEvents(),
       kParentCount * (kChildrenPerParent + 1)));
-}
-
-// This test posts a delayed task, and checks that the task is run later than
-// the specified time.
-TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTaskBasic) {
-  // TODO(akalin): Remove this check (http://crbug.com/149144).
-  if (!this->delegate_.TaskRunnerHandlesNonZeroDelays()) {
-    DLOG(INFO) << "This SequencedTaskRunner doesn't handle "
-        "non-zero delays; skipping";
-    return;
-  }
-
-  const int kTaskCount = 1;
-  const TimeDelta kDelay = TimeDelta::FromMilliseconds(100);
-
-  this->delegate_.StartTaskRunner();
-  const scoped_refptr<SequencedTaskRunner> task_runner =
-      this->delegate_.GetTaskRunner();
-
-  Time time_before_run = Time::Now();
-  this->task_tracker_->PostWrappedDelayedNonNestableTask(
-      task_runner, Closure(), kDelay);
-  this->task_tracker_->WaitForCompletedTasks(kTaskCount);
-  this->delegate_.StopTaskRunner();
-  Time time_after_run = Time::Now();
-
-  EXPECT_TRUE(CheckNonNestableInvariants(this->task_tracker_->GetTaskEvents(),
-                                         kTaskCount));
-  EXPECT_LE(kDelay, time_after_run - time_before_run);
 }
 
 // This test posts two tasks with the same delay, and checks that the tasks are
@@ -270,13 +231,6 @@ TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTaskBasic) {
 // posted at the exact same time. It would be nice if the API allowed us to
 // specify the desired run time.
 TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTasksSameDelay) {
-  // TODO(akalin): Remove this check (http://crbug.com/149144).
-  if (!this->delegate_.TaskRunnerHandlesNonZeroDelays()) {
-    DLOG(INFO) << "This SequencedTaskRunner doesn't handle "
-        "non-zero delays; skipping";
-    return;
-  }
-
   const int kTaskCount = 2;
   const TimeDelta kDelay = TimeDelta::FromMilliseconds(100);
 
@@ -284,10 +238,10 @@ TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTasksSameDelay) {
   const scoped_refptr<SequencedTaskRunner> task_runner =
       this->delegate_.GetTaskRunner();
 
-  this->task_tracker_->PostWrappedDelayedNonNestableTask(
-      task_runner, Closure(), kDelay);
-  this->task_tracker_->PostWrappedDelayedNonNestableTask(
-      task_runner, Closure(), kDelay);
+  this->task_tracker_->PostWrappedDelayedNonNestableTask(task_runner.get(),
+                                                         OnceClosure(), kDelay);
+  this->task_tracker_->PostWrappedDelayedNonNestableTask(task_runner.get(),
+                                                         OnceClosure(), kDelay);
   this->task_tracker_->WaitForCompletedTasks(kTaskCount);
   this->delegate_.StopTaskRunner();
 
@@ -299,13 +253,6 @@ TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTasksSameDelay) {
 // delayed task runs after the normal task even if the normal task takes
 // a long time to run.
 TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTaskAfterLongTask) {
-  // TODO(akalin): Remove this check (http://crbug.com/149144).
-  if (!this->delegate_.TaskRunnerHandlesNonZeroDelays()) {
-    DLOG(INFO) << "This SequencedTaskRunner doesn't handle "
-        "non-zero delays; skipping";
-    return;
-  }
-
   const int kTaskCount = 2;
 
   this->delegate_.StartTaskRunner();
@@ -313,10 +260,10 @@ TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTaskAfterLongTask) {
       this->delegate_.GetTaskRunner();
 
   this->task_tracker_->PostWrappedNonNestableTask(
-      task_runner, base::Bind(&PlatformThread::Sleep,
-                              TimeDelta::FromMilliseconds(50)));
+      task_runner.get(),
+      base::BindOnce(&PlatformThread::Sleep, TimeDelta::FromMilliseconds(50)));
   this->task_tracker_->PostWrappedDelayedNonNestableTask(
-      task_runner, Closure(), TimeDelta::FromMilliseconds(10));
+      task_runner.get(), OnceClosure(), TimeDelta::FromMilliseconds(10));
   this->task_tracker_->WaitForCompletedTasks(kTaskCount);
   this->delegate_.StopTaskRunner();
 
@@ -327,13 +274,6 @@ TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTaskAfterLongTask) {
 // Test that a pile of normal tasks and a delayed task run in the
 // time-to-run order.
 TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTaskAfterManyLongTasks) {
-  // TODO(akalin): Remove this check (http://crbug.com/149144).
-  if (!this->delegate_.TaskRunnerHandlesNonZeroDelays()) {
-    DLOG(INFO) << "This SequencedTaskRunner doesn't handle "
-        "non-zero delays; skipping";
-    return;
-  }
-
   const int kTaskCount = 11;
 
   this->delegate_.StartTaskRunner();
@@ -342,11 +282,11 @@ TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTaskAfterManyLongTasks) {
 
   for (int i = 0; i < kTaskCount - 1; i++) {
     this->task_tracker_->PostWrappedNonNestableTask(
-        task_runner, base::Bind(&PlatformThread::Sleep,
-                                TimeDelta::FromMilliseconds(50)));
+        task_runner.get(), base::BindOnce(&PlatformThread::Sleep,
+                                          TimeDelta::FromMilliseconds(50)));
   }
   this->task_tracker_->PostWrappedDelayedNonNestableTask(
-      task_runner, Closure(), TimeDelta::FromMilliseconds(10));
+      task_runner.get(), OnceClosure(), TimeDelta::FromMilliseconds(10));
   this->task_tracker_->WaitForCompletedTasks(kTaskCount);
   this->delegate_.StopTaskRunner();
 
@@ -361,16 +301,50 @@ TYPED_TEST_P(SequencedTaskRunnerTest, DelayedTaskAfterManyLongTasks) {
 // whether the implementation supports nested tasks.
 //
 
-REGISTER_TYPED_TEST_CASE_P(SequencedTaskRunnerTest,
-                           SequentialNonNestable,
-                           SequentialNestable,
-                           SequentialDelayedNonNestable,
-                           NonNestablePostFromNonNestableTask,
-                           DelayedTaskBasic,
-                           DelayedTasksSameDelay,
-                           DelayedTaskAfterLongTask,
-                           DelayedTaskAfterManyLongTasks);
+// The SequencedTaskRunnerTest test case verifies behaviour that is expected
+// from a sequenced task runner in order to be conformant.
+REGISTER_TYPED_TEST_SUITE_P(SequencedTaskRunnerTest,
+                            SequentialNonNestable,
+                            SequentialNestable,
+                            SequentialDelayedNonNestable,
+                            NonNestablePostFromNonNestableTask,
+                            DelayedTasksSameDelay,
+                            DelayedTaskAfterLongTask,
+                            DelayedTaskAfterManyLongTasks);
+
+template <typename TaskRunnerTestDelegate>
+class SequencedTaskRunnerDelayedTest
+    : public SequencedTaskRunnerTest<TaskRunnerTestDelegate> {};
+
+TYPED_TEST_SUITE_P(SequencedTaskRunnerDelayedTest);
+
+// This test posts a delayed task, and checks that the task is run later than
+// the specified time.
+TYPED_TEST_P(SequencedTaskRunnerDelayedTest, DelayedTaskBasic) {
+  const int kTaskCount = 1;
+  const TimeDelta kDelay = TimeDelta::FromMilliseconds(100);
+
+  this->delegate_.StartTaskRunner();
+  const scoped_refptr<SequencedTaskRunner> task_runner =
+      this->delegate_.GetTaskRunner();
+
+  Time time_before_run = Time::Now();
+  this->task_tracker_->PostWrappedDelayedNonNestableTask(task_runner.get(),
+                                                         OnceClosure(), kDelay);
+  this->task_tracker_->WaitForCompletedTasks(kTaskCount);
+  this->delegate_.StopTaskRunner();
+  Time time_after_run = Time::Now();
+
+  EXPECT_TRUE(CheckNonNestableInvariants(this->task_tracker_->GetTaskEvents(),
+                                         kTaskCount));
+  EXPECT_LE(kDelay, time_after_run - time_before_run);
+}
+
+// SequencedTaskRunnerDelayedTest tests that the |delay| parameter of
+// is used to actually wait for |delay| ms before executing the task.
+// This is not mandatory for a SequencedTaskRunner to be compliant.
+REGISTER_TYPED_TEST_SUITE_P(SequencedTaskRunnerDelayedTest, DelayedTaskBasic);
 
 }  // namespace base
 
-#endif  // BASE_TASK_RUNNER_TEST_TEMPLATE_H_
+#endif  // BASE_TEST_SEQUENCED_TASK_RUNNER_TEST_TEMPLATE_H_

@@ -4,9 +4,10 @@
 
 #include <string>
 
-#include "base/file_util.h"
 #include "base/files/file.h"
+#include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -52,7 +53,7 @@ TEST(ScopedTempDir, TempDir) {
   {
     ScopedTempDir dir;
     EXPECT_TRUE(dir.CreateUniqueTempDir());
-    test_path = dir.path();
+    test_path = dir.GetPath();
     EXPECT_TRUE(DirectoryExists(test_path));
     FilePath tmp_dir;
     EXPECT_TRUE(base::GetTempDir(&tmp_dir));
@@ -71,7 +72,7 @@ TEST(ScopedTempDir, UniqueTempDirUnderPath) {
   {
     ScopedTempDir dir;
     EXPECT_TRUE(dir.CreateUniqueTempDirUnderPath(base_path));
-    test_path = dir.path();
+    test_path = dir.GetPath();
     EXPECT_TRUE(DirectoryExists(test_path));
     EXPECT_TRUE(base_path.IsParent(test_path));
     EXPECT_TRUE(test_path.value().find(base_path.value()) != std::string::npos);
@@ -98,12 +99,12 @@ TEST(ScopedTempDir, MultipleInvocations) {
 TEST(ScopedTempDir, LockedTempDir) {
   ScopedTempDir dir;
   EXPECT_TRUE(dir.CreateUniqueTempDir());
-  base::File file(dir.path().Append(FILE_PATH_LITERAL("temp")),
+  base::File file(dir.GetPath().Append(FILE_PATH_LITERAL("temp")),
                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
   EXPECT_TRUE(file.IsValid());
   EXPECT_EQ(base::File::FILE_OK, file.error_details());
   EXPECT_FALSE(dir.Delete());  // We should not be able to delete.
-  EXPECT_FALSE(dir.path().empty());  // We should still have a valid path.
+  EXPECT_FALSE(dir.GetPath().empty());  // We should still have a valid path.
   file.Close();
   // Now, we should be able to delete.
   EXPECT_TRUE(dir.Delete());

@@ -5,6 +5,8 @@
 #ifndef BASE_STRINGS_LATIN1_STRING_CONVERSIONS_H_
 #define BASE_STRINGS_LATIN1_STRING_CONVERSIONS_H_
 
+#include <stddef.h>
+
 #include <string>
 
 #include "base/base_export.h"

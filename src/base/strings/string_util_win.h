@@ -6,6 +6,7 @@
 #define BASE_STRINGS_STRING_UTIL_WIN_H_
 
 #include <stdarg.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 #include <wchar.h>
@@ -20,26 +21,11 @@ inline char* strdup(const char* str) {
   return _strdup(str);
 }
 
-inline int strcasecmp(const char* s1, const char* s2) {
-  return _stricmp(s1, s2);
-}
-
-inline int strncasecmp(const char* s1, const char* s2, size_t count) {
-  return _strnicmp(s1, s2, count);
-}
-
-inline int strncmp16(const char16* s1, const char16* s2, size_t count) {
-  return ::wcsncmp(s1, s2, count);
-}
-
 inline int vsnprintf(char* buffer, size_t size,
                      const char* format, va_list arguments) {
-  int length = _vsprintf_p(buffer, size, format, arguments);
-  if (length < 0) {
-    if (size > 0)
-      buffer[0] = 0;
-    return _vscprintf_p(format, arguments);
-  }
+  int length = vsnprintf_s(buffer, size, size - 1, format, arguments);
+  if (length < 0)
+    return _vscprintf(format, arguments);
   return length;
 }
 
@@ -47,13 +33,23 @@ inline int vswprintf(wchar_t* buffer, size_t size,
                      const wchar_t* format, va_list arguments) {
   DCHECK(IsWprintfFormatPortable(format));
 
-  int length = _vswprintf_p(buffer, size, format, arguments);
-  if (length < 0) {
-    if (size > 0)
-      buffer[0] = 0;
-    return _vscwprintf_p(format, arguments);
-  }
+  int length = _vsnwprintf_s(buffer, size, size - 1, format, arguments);
+  if (length < 0)
+    return _vscwprintf(format, arguments);
   return length;
+}
+
+// Windows only overload of base::WriteInto for std::wstring. See the comment
+// above the cross-platform version in //base/strings/string_util.h for details.
+// TODO(crbug.com/911896): Rename this to WriteInto once base::string16 is
+// std::u16string on all platforms and using the name WriteInto here no longer
+// causes redefinition errors.
+inline wchar_t* WriteIntoW(std::wstring* str, size_t length_with_null) {
+  // Note: As of C++11 std::strings are guaranteed to be 0-terminated. Thus it
+  // is enough to reserve space for one char less.
+  DCHECK_GE(length_with_null, 1u);
+  str->resize(length_with_null - 1);
+  return &((*str)[0]);
 }
 
 }  // namespace base

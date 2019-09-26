@@ -5,39 +5,28 @@
 #ifndef BASE_MEMORY_DISCARDABLE_MEMORY_H_
 #define BASE_MEMORY_DISCARDABLE_MEMORY_H_
 
-#include <string>
-#include <vector>
-
 #include "base/base_export.h"
-#include "base/basictypes.h"
 #include "base/compiler_specific.h"
-#include "base/memory/scoped_ptr.h"
 
 namespace base {
 
-enum DiscardableMemoryType {
-  DISCARDABLE_MEMORY_TYPE_NONE,
-  DISCARDABLE_MEMORY_TYPE_ANDROID,
-  DISCARDABLE_MEMORY_TYPE_MAC,
-  DISCARDABLE_MEMORY_TYPE_EMULATED
-};
+namespace trace_event {
+class MemoryAllocatorDump;
+class ProcessMemoryDump;
+}
 
-enum DiscardableMemoryLockStatus {
-  DISCARDABLE_MEMORY_LOCK_STATUS_FAILED,
-  DISCARDABLE_MEMORY_LOCK_STATUS_PURGED,
-  DISCARDABLE_MEMORY_LOCK_STATUS_SUCCESS
-};
-
-// Platform abstraction for discardable memory. DiscardableMemory is used to
-// cache large objects without worrying about blowing out memory, both on mobile
-// devices where there is no swap, and desktop devices where unused free memory
-// should be used to help the user experience. This is preferable to releasing
-// memory in response to an OOM signal because it is simpler, though it has less
-// flexibility as to which objects get discarded.
+// Discardable memory is used to cache large objects without worrying about
+// blowing out memory, both on mobile devices where there is no swap, and
+// desktop devices where unused free memory should be used to help the user
+// experience. This is preferable to releasing memory in response to an OOM
+// signal because it is simpler and provides system-wide management of
+// purgable memory, though it has less flexibility as to which objects get
+// discarded.
 //
 // Discardable memory has two states: locked and unlocked. While the memory is
-// locked, it will not be discarded. Unlocking the memory allows the OS to
-// reclaim it if needed. Locks do not nest.
+// locked, it will not be discarded. Unlocking the memory allows the
+// discardable memory system and the OS to reclaim it if needed. Locks do not
+// nest.
 //
 // Notes:
 //   - The paging behavior of memory while it is locked is not specified. While
@@ -52,67 +41,36 @@ enum DiscardableMemoryLockStatus {
 //     responsibility of users of discardable memory to ensure there are no
 //     races.
 //
-// References:
-//   - Linux: http://lwn.net/Articles/452035/
-//   - Mac: http://trac.webkit.org/browser/trunk/Source/WebCore/platform/mac/PurgeableBufferMac.cpp
-//          the comment starting with "vm_object_purgable_control" at
-//            http://www.opensource.apple.com/source/xnu/xnu-792.13.8/osfmk/vm/vm_object.c
-//
-// Thread-safety: DiscardableMemory instances are not thread-safe.
 class BASE_EXPORT DiscardableMemory {
  public:
-  virtual ~DiscardableMemory() {}
-
-  // Gets the discardable memory type with a given name.
-  static DiscardableMemoryType GetNamedType(const std::string& name);
-
-  // Gets the name of a discardable memory type.
-  static const char* GetTypeName(DiscardableMemoryType type);
-
-  // Gets system supported discardable memory types. Default preferred type
-  // at the front of vector.
-  static void GetSupportedTypes(std::vector<DiscardableMemoryType>* types);
-
-  // Sets the preferred discardable memory type. This overrides the default
-  // preferred type. Can only be called once prior to GetPreferredType()
-  // or CreateLockedMemory(). Caller is responsible for correct ordering.
-  static void SetPreferredType(DiscardableMemoryType type);
-
-  // Gets the preferred discardable memory type.
-  static DiscardableMemoryType GetPreferredType();
-
-  // Create a DiscardableMemory instance with specified |type| and |size|.
-  static scoped_ptr<DiscardableMemory> CreateLockedMemoryWithType(
-      DiscardableMemoryType type, size_t size);
-
-  // Create a DiscardableMemory instance with preferred type and |size|.
-  static scoped_ptr<DiscardableMemory> CreateLockedMemory(size_t size);
+  DiscardableMemory();
+  virtual ~DiscardableMemory();
 
   // Locks the memory so that it will not be purged by the system. Returns
-  // DISCARDABLE_MEMORY_LOCK_STATUS_SUCCESS on success. If the return value is
-  // DISCARDABLE_MEMORY_LOCK_STATUS_FAILED then this object should be
-  // discarded and a new one should be created. If the return value is
-  // DISCARDABLE_MEMORY_LOCK_STATUS_PURGED then the memory is present but any
-  // data that was in it is gone.
-  virtual DiscardableMemoryLockStatus Lock() WARN_UNUSED_RESULT = 0;
+  // true on success. If the return value is false then this object should be
+  // discarded and a new one should be created.
+  virtual bool Lock() WARN_UNUSED_RESULT = 0;
 
   // Unlocks the memory so that it can be purged by the system. Must be called
   // after every successful lock call.
   virtual void Unlock() = 0;
 
   // Returns the memory address held by this object. The object must be locked
-  // before calling this. Otherwise, this will cause a DCHECK error.
-  virtual void* Memory() const = 0;
+  // before calling this.
+  virtual void* data() const = 0;
 
-  // Testing utility calls.
+  // Handy method to simplify calling data() with a reinterpret_cast.
+  template<typename T> T* data_as() const {
+    return reinterpret_cast<T*>(data());
+  }
 
-  // Check whether a purge of all discardable memory in the system is supported.
-  // Use only for testing!
-  static bool PurgeForTestingSupported();
-
-  // Purge all discardable memory in the system. This call has global effects
-  // across all running processes, so it should only be used for testing!
-  static void PurgeForTesting();
+  // Used for dumping the statistics of discardable memory allocated in tracing.
+  // Returns a new MemoryAllocatorDump in the |pmd| with the size of the
+  // discardable memory. The MemoryAllocatorDump created is owned by |pmd|. See
+  // ProcessMemoryDump::CreateAllocatorDump.
+  virtual trace_event::MemoryAllocatorDump* CreateMemoryAllocatorDump(
+      const char* name,
+      trace_event::ProcessMemoryDump* pmd) const = 0;
 };
 
 }  // namespace base

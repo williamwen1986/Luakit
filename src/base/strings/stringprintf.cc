@@ -5,10 +5,15 @@
 #include "base/strings/stringprintf.h"
 
 #include <errno.h>
+#include <stddef.h>
 
-#include "base/scoped_clear_errno.h"
+#include <vector>
+
+#include "base/scoped_clear_last_error.h"
+#include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 
 namespace base {
 
@@ -27,58 +32,61 @@ inline int vsnprintfT(char* buffer,
   return base::vsnprintf(buffer, buf_size, format, argptr);
 }
 
-#if !defined(OS_ANDROID)
+#if defined(OS_WIN)
 inline int vsnprintfT(wchar_t* buffer,
                       size_t buf_size,
                       const wchar_t* format,
                       va_list argptr) {
   return base::vswprintf(buffer, buf_size, format, argptr);
 }
+inline int vsnprintfT(char16_t* buffer,
+                      size_t buf_size,
+                      const char16_t* format,
+                      va_list argptr) {
+  return base::vswprintf(reinterpret_cast<wchar_t*>(buffer), buf_size,
+                         reinterpret_cast<const wchar_t*>(format), argptr);
+}
 #endif
 
 // Templatized backend for StringPrintF/StringAppendF. This does not finalize
 // the va_list, the caller is expected to do that.
-template <class StringType>
-static void StringAppendVT(StringType* dst,
-                           const typename StringType::value_type* format,
+template <class CharT>
+static void StringAppendVT(std::basic_string<CharT>* dst,
+                           const CharT* format,
                            va_list ap) {
   // First try with a small fixed size buffer.
   // This buffer size should be kept in sync with StringUtilTest.GrowBoundary
   // and StringUtilTest.StringPrintfBounds.
-  typename StringType::value_type stack_buf[1024];
+  CharT stack_buf[1024];
 
   va_list ap_copy;
-  GG_VA_COPY(ap_copy, ap);
+  va_copy(ap_copy, ap);
 
-#if !defined(OS_WIN)
-  ScopedClearErrno clear_errno;
-#endif
-  int result = vsnprintfT(stack_buf, arraysize(stack_buf), format, ap_copy);
+  base::internal::ScopedClearLastError last_error;
+  int result = vsnprintfT(stack_buf, base::size(stack_buf), format, ap_copy);
   va_end(ap_copy);
 
-  if (result >= 0 && result < static_cast<int>(arraysize(stack_buf))) {
+  if (result >= 0 && result < static_cast<int>(base::size(stack_buf))) {
     // It fit.
     dst->append(stack_buf, result);
     return;
   }
 
   // Repeatedly increase buffer size until it fits.
-  int mem_length = arraysize(stack_buf);
+  int mem_length = base::size(stack_buf);
   while (true) {
     if (result < 0) {
-#if !defined(OS_WIN)
+#if defined(OS_WIN)
       // On Windows, vsnprintfT always returns the number of characters in a
       // fully-formatted string, so if we reach this point, something else is
       // wrong and no amount of buffer-doubling is going to fix it.
+      return;
+#else
       if (errno != 0 && errno != EOVERFLOW)
-#endif
-      {
-        // If an error other than overflow occurred, it's never going to work.
-        DLOG(WARNING) << "Unable to printf the requested string due to error.";
         return;
-      }
       // Try doubling the buffer size.
       mem_length *= 2;
+#endif
     } else {
       // We need exactly "result + 1" characters.
       mem_length = result + 1;
@@ -92,11 +100,11 @@ static void StringAppendVT(StringType* dst,
       return;
     }
 
-    std::vector<typename StringType::value_type> mem_buf(mem_length);
+    std::vector<CharT> mem_buf(mem_length);
 
     // NOTE: You can only use a va_list once.  Since we're in a while loop, we
     // need to make a new copy each time so we don't use up the original.
-    GG_VA_COPY(ap_copy, ap);
+    va_copy(ap_copy, ap);
     result = vsnprintfT(&mem_buf[0], mem_length, format, ap_copy);
     va_end(ap_copy);
 
@@ -119,11 +127,20 @@ std::string StringPrintf(const char* format, ...) {
   return result;
 }
 
-#if !defined(OS_ANDROID)
+#if defined(OS_WIN)
 std::wstring StringPrintf(const wchar_t* format, ...) {
   va_list ap;
   va_start(ap, format);
   std::wstring result;
+  StringAppendV(&result, format, ap);
+  va_end(ap);
+  return result;
+}
+
+std::u16string StringPrintf(const char16_t* format, ...) {
+  va_list ap;
+  va_start(ap, format);
+  std::u16string result;
   StringAppendV(&result, format, ap);
   va_end(ap);
   return result;
@@ -145,9 +162,20 @@ const std::string& SStringPrintf(std::string* dst, const char* format, ...) {
   return *dst;
 }
 
-#if !defined(OS_ANDROID)
+#if defined(OS_WIN)
 const std::wstring& SStringPrintf(std::wstring* dst,
                                   const wchar_t* format, ...) {
+  va_list ap;
+  va_start(ap, format);
+  dst->clear();
+  StringAppendV(dst, format, ap);
+  va_end(ap);
+  return *dst;
+}
+
+const std::u16string& SStringPrintf(std::u16string* dst,
+                                    const char16_t* format,
+                                    ...) {
   va_list ap;
   va_start(ap, format);
   dst->clear();
@@ -164,8 +192,15 @@ void StringAppendF(std::string* dst, const char* format, ...) {
   va_end(ap);
 }
 
-#if !defined(OS_ANDROID)
+#if defined(OS_WIN)
 void StringAppendF(std::wstring* dst, const wchar_t* format, ...) {
+  va_list ap;
+  va_start(ap, format);
+  StringAppendV(dst, format, ap);
+  va_end(ap);
+}
+
+void StringAppendF(std::u16string* dst, const char16_t* format, ...) {
   va_list ap;
   va_start(ap, format);
   StringAppendV(dst, format, ap);
@@ -177,8 +212,12 @@ void StringAppendV(std::string* dst, const char* format, va_list ap) {
   StringAppendVT(dst, format, ap);
 }
 
-#if !defined(OS_ANDROID)
+#if defined(OS_WIN)
 void StringAppendV(std::wstring* dst, const wchar_t* format, va_list ap) {
+  StringAppendVT(dst, format, ap);
+}
+
+void StringAppendV(std::u16string* dst, const char16_t* format, va_list ap) {
   StringAppendVT(dst, format, ap);
 }
 #endif

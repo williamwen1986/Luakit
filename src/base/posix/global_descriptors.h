@@ -5,13 +5,15 @@
 #ifndef BASE_POSIX_GLOBAL_DESCRIPTORS_H_
 #define BASE_POSIX_GLOBAL_DESCRIPTORS_H_
 
-#include "config/build_config.h"
+#include "build/build_config.h"
 
 #include <vector>
 #include <utility>
 
 #include <stdint.h>
 
+#include "base/files/memory_mapped_file.h"
+#include "base/files/scoped_file.h"
 #include "base/memory/singleton.h"
 
 namespace base {
@@ -33,11 +35,25 @@ namespace base {
 // It maps from an abstract key to a descriptor. If independent modules each
 // need to define keys, then values should be chosen randomly so as not to
 // collide.
+//
+// Note that this class is deprecated and passing file descriptor should ideally
+// be done through the command line and using FileDescriptorStore.
+// See https://crbugs.com/detail?id=692619
 class BASE_EXPORT GlobalDescriptors {
  public:
   typedef uint32_t Key;
-  typedef std::pair<Key, int> KeyFDPair;
-  typedef std::vector<KeyFDPair> Mapping;
+  struct Descriptor {
+    Descriptor(Key key, int fd);
+    Descriptor(Key key, int fd, base::MemoryMappedFile::Region region);
+
+    // Globally unique key.
+    Key key;
+    // Actual FD.
+    int fd;
+    // Optional region, defaults to kWholeFile.
+    base::MemoryMappedFile::Region region;
+  };
+  typedef std::vector<Descriptor> Mapping;
 
   // Often we want a canonical descriptor for a given Key. In this case, we add
   // the following constant to the key value:
@@ -49,11 +65,23 @@ class BASE_EXPORT GlobalDescriptors {
   // Get a descriptor given a key. It is a fatal error if the key is not known.
   int Get(Key key) const;
 
-  // Get a descriptor give a key. Returns -1 on error.
+  // Get a descriptor given a key. Returns -1 on error.
   int MaybeGet(Key key) const;
 
-  // Set the descriptor for the given key.
+  // Returns a descriptor given a key and removes it from this class mappings.
+  // Also populates |region|.
+  // It is a fatal error if the key is not known.
+  base::ScopedFD TakeFD(Key key, base::MemoryMappedFile::Region* region);
+
+  // Get a region given a key. It is a fatal error if the key is not known.
+  base::MemoryMappedFile::Region GetRegion(Key key) const;
+
+  // Set the descriptor for the given |key|. This sets the region associated
+  // with |key| to kWholeFile.
   void Set(Key key, int fd);
+
+  // Set the descriptor and |region| for the given |key|.
+  void Set(Key key, int fd, base::MemoryMappedFile::Region region);
 
   void Reset(const Mapping& mapping);
 

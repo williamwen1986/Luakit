@@ -6,17 +6,17 @@
 
 #include <CommonCrypto/CommonDigest.h>
 #import <UIKit/UIKit.h>
-
 #include <ifaddrs.h>
 #include <net/if_dl.h>
+#include <stddef.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/sysctl.h>
 
-#include "base/ios/ios_util.h"
+#include <memory>
+
 #include "base/logging.h"
 #include "base/mac/scoped_cftyperef.h"
-#include "base/memory/scoped_ptr.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
@@ -44,13 +44,9 @@ NSString* GenerateClientId() {
   // http://openradar.appspot.com/12377282. If this is the case, revert to
   // generating a new one.
   if (!client_id || [client_id isEqualToString:kZeroUUID]) {
-    if (base::ios::IsRunningOnIOS6OrLater()) {
-      client_id = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-      if ([client_id isEqualToString:kZeroUUID])
-        client_id = base::SysUTF8ToNSString(ios::device_util::GetRandomId());
-    } else {
+    client_id = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    if ([client_id isEqualToString:kZeroUUID])
       client_id = base::SysUTF8ToNSString(ios::device_util::GetRandomId());
-    }
   }
   return client_id;
 }
@@ -64,16 +60,26 @@ std::string GetPlatform() {
   std::string platform;
   size_t size = 0;
   sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-  sysctlbyname("hw.machine", WriteInto(&platform, size), &size, NULL, 0);
+  sysctlbyname("hw.machine", base::WriteInto(&platform, size), &size, NULL, 0);
   return platform;
 }
 
-bool IsRunningOnHighRamDevice() {
+bool RamIsAtLeast512Mb() {
+  // 512MB devices report anywhere from 502-504 MB, use 450 MB just to be safe.
+  return RamIsAtLeast(450);
+}
+
+bool RamIsAtLeast1024Mb() {
+  // 1GB devices report anywhere from 975-999 MB, use 900 MB just to be safe.
+  return RamIsAtLeast(900);
+}
+
+bool RamIsAtLeast(uint64_t ram_in_mb) {
   uint64_t memory_size = 0;
   size_t size = sizeof(memory_size);
   if (sysctlbyname("hw.memsize", &memory_size, &size, NULL, 0) == 0) {
     // Anything >= 500M, call high ram.
-    return memory_size >= 500 * 1024 * 1024;
+    return memory_size >= ram_in_mb * 1024 * 1024;
   }
   return false;
 }
@@ -147,8 +153,15 @@ std::string GetDeviceIdentifier(const char* salt) {
     [defaults synchronize];
   }
 
-  NSData* hash_data = [[NSString stringWithFormat:@"%@%s", client_id,
-      salt ? salt : kDefaultSalt] dataUsingEncoding:NSUTF8StringEncoding];
+  return GetSaltedString(base::SysNSStringToUTF8(client_id),
+                         salt ? salt : kDefaultSalt);
+}
+
+std::string GetSaltedString(const std::string& in_string,
+                            const std::string& salt) {
+  DCHECK(salt.length());
+  NSData* hash_data = [base::SysUTF8ToNSString(in_string + salt)
+      dataUsingEncoding:NSUTF8StringEncoding];
 
   unsigned char hash[CC_SHA256_DIGEST_LENGTH];
   CC_SHA256([hash_data bytes], [hash_data length], hash);

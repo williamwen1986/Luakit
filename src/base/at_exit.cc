@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <ostream>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -19,7 +20,9 @@ namespace base {
 // version of the constructor, and if we are building a dynamic library we may
 // end up with multiple AtExitManagers on the same process.  We don't protect
 // this for thread-safe access, since it will only be modified in testing.
-static AtExitManager* g_top_manager = NULL;
+static AtExitManager* g_top_manager = nullptr;
+
+static bool g_disable_managers = false;
 
 AtExitManager::AtExitManager() : next_manager_(g_top_manager) {
 // If multiple modules instantiate AtExitManagers they'll end up living in this
@@ -37,25 +40,29 @@ AtExitManager::~AtExitManager() {
   }
   DCHECK_EQ(this, g_top_manager);
 
-  ProcessCallbacksNow();
+  if (!g_disable_managers)
+    ProcessCallbacksNow();
   g_top_manager = next_manager_;
 }
 
 // static
 void AtExitManager::RegisterCallback(AtExitCallbackType func, void* param) {
   DCHECK(func);
-  RegisterTask(base::Bind(func, param));
+  RegisterTask(base::BindOnce(func, param));
 }
 
 // static
-void AtExitManager::RegisterTask(base::Closure task) {
+void AtExitManager::RegisterTask(base::OnceClosure task) {
   if (!g_top_manager) {
     NOTREACHED() << "Tried to RegisterCallback without an AtExitManager";
     return;
   }
 
   AutoLock lock(g_top_manager->lock_);
-  g_top_manager->stack_.push(task);
+#if DCHECK_IS_ON()
+  DCHECK(!g_top_manager->processing_callbacks_);
+#endif
+  g_top_manager->stack_.push(std::move(task));
 }
 
 // static
@@ -65,13 +72,38 @@ void AtExitManager::ProcessCallbacksNow() {
     return;
   }
 
-  AutoLock lock(g_top_manager->lock_);
-
-  while (!g_top_manager->stack_.empty()) {
-    base::Closure task = g_top_manager->stack_.top();
-    task.Run();
-    g_top_manager->stack_.pop();
+  // Callbacks may try to add new callbacks, so run them without holding
+  // |lock_|. This is an error and caught by the DCHECK in RegisterTask(), but
+  // handle it gracefully in release builds so we don't deadlock.
+  base::stack<base::OnceClosure> tasks;
+  {
+    AutoLock lock(g_top_manager->lock_);
+    tasks.swap(g_top_manager->stack_);
+#if DCHECK_IS_ON()
+    g_top_manager->processing_callbacks_ = true;
+#endif
   }
+
+  // Relax the cross-thread access restriction to non-thread-safe RefCount.
+  // It's safe since all other threads should be terminated at this point.
+  ScopedAllowCrossThreadRefCountAccess allow_cross_thread_ref_count_access;
+
+  while (!tasks.empty()) {
+    std::move(tasks.top()).Run();
+    tasks.pop();
+  }
+
+#if DCHECK_IS_ON()
+  AutoLock lock(g_top_manager->lock_);
+  // Expect that all callbacks have been run.
+  DCHECK(g_top_manager->stack_.empty());
+  g_top_manager->processing_callbacks_ = false;
+#endif
+}
+
+void AtExitManager::DisableAllAtExitManagers() {
+  AutoLock lock(g_top_manager->lock_);
+  g_disable_managers = true;
 }
 
 AtExitManager::AtExitManager(bool shadow) : next_manager_(g_top_manager) {

@@ -7,6 +7,9 @@
 #include <stdlib.h>
 
 #include "base/compiler_specific.h"
+#include "base/debug/activity_tracker.h"
+#include "base/macros.h"
+#include "base/test/gtest_util.h"
 #include "base/threading/platform_thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -18,7 +21,7 @@ class BasicLockTestThread : public PlatformThread::Delegate {
  public:
   explicit BasicLockTestThread(Lock* lock) : lock_(lock), acquired_(0) {}
 
-  virtual void ThreadMain() OVERRIDE {
+  void ThreadMain() override {
     for (int i = 0; i < 10; i++) {
       lock_->Acquire();
       acquired_++;
@@ -93,7 +96,7 @@ class TryLockTestThread : public PlatformThread::Delegate {
  public:
   explicit TryLockTestThread(Lock* lock) : lock_(lock), got_lock_(false) {}
 
-  virtual void ThreadMain() OVERRIDE {
+  void ThreadMain() override {
     got_lock_ = lock_->Try();
     if (got_lock_)
       lock_->Release();
@@ -145,6 +148,47 @@ TEST(LockTest, TryLock) {
   lock.Release();
 }
 
+TEST(LockTest, TryTrackedLock) {
+  // Enable the activity tracker.
+  debug::GlobalActivityTracker::CreateWithLocalMemory(64 << 10, 0, "", 3, 0);
+
+  Lock lock;
+
+  ASSERT_TRUE(lock.Try());
+  // We now have the lock....
+
+  // This thread will not be able to get the lock.
+  {
+    TryLockTestThread thread(&lock);
+    PlatformThreadHandle handle;
+
+    ASSERT_TRUE(PlatformThread::Create(0, &thread, &handle));
+
+    PlatformThread::Join(handle);
+
+    ASSERT_FALSE(thread.got_lock());
+  }
+
+  lock.Release();
+
+  // This thread will....
+  {
+    TryLockTestThread thread(&lock);
+    PlatformThreadHandle handle;
+
+    ASSERT_TRUE(PlatformThread::Create(0, &thread, &handle));
+
+    PlatformThread::Join(handle);
+
+    ASSERT_TRUE(thread.got_lock());
+    // But it released it....
+    ASSERT_TRUE(lock.Try());
+  }
+
+  lock.Release();
+  debug::GlobalActivityTracker::ReleaseForTesting();
+}
+
 // Tests that locks actually exclude -------------------------------------------
 
 class MutexLockTestThread : public PlatformThread::Delegate {
@@ -162,9 +206,7 @@ class MutexLockTestThread : public PlatformThread::Delegate {
     }
   }
 
-  virtual void ThreadMain() OVERRIDE {
-    DoStuff(lock_, value_);
-  }
+  void ThreadMain() override { DoStuff(lock_, value_); }
 
  private:
   Lock* lock_;
@@ -211,6 +253,36 @@ TEST(LockTest, MutexFourThreads) {
   PlatformThread::Join(handle3);
 
   EXPECT_EQ(4 * 40, value);
+}
+
+TEST(LockTest, AutoLockMaybe) {
+  Lock lock;
+  {
+    AutoLockMaybe auto_lock(&lock);
+    lock.AssertAcquired();
+  }
+  EXPECT_DCHECK_DEATH(lock.AssertAcquired());
+}
+
+TEST(LockTest, AutoLockMaybeNull) {
+  AutoLockMaybe auto_lock(nullptr);
+}
+
+TEST(LockTest, ReleasableAutoLockExplicitRelease) {
+  Lock lock;
+  ReleasableAutoLock auto_lock(&lock);
+  lock.AssertAcquired();
+  auto_lock.Release();
+  EXPECT_DCHECK_DEATH(lock.AssertAcquired());
+}
+
+TEST(LockTest, ReleasableAutoLockImplicitRelease) {
+  Lock lock;
+  {
+    ReleasableAutoLock auto_lock(&lock);
+    lock.AssertAcquired();
+  }
+  EXPECT_DCHECK_DEATH(lock.AssertAcquired());
 }
 
 }  // namespace base

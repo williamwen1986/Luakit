@@ -30,7 +30,7 @@ find . -name "generation" -exec rm -rf {} \;  2> /dev/null
 # Macos
 # -----
 rm -rf src/modp_b64/build               src/modp_b64/DerivedData
-find . -name "build" -exec rm -rf {} \;  2> /dev/null
+#find . -name "build" -exec rm -rf {} \;  2> /dev/null
 find . -name "DerivedData" -exec rm -rf {} \;  2> /dev/null
 
 

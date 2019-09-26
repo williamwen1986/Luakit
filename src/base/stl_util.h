@@ -8,12 +8,151 @@
 #define BASE_STL_UTIL_H_
 
 #include <algorithm>
+#include <deque>
+#include <forward_list>
 #include <functional>
+#include <initializer_list>
 #include <iterator>
+#include <list>
+#include <map>
+#include <set>
 #include <string>
+#include <type_traits>
+#include <unordered_map>
+#include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "base/logging.h"
+#include "base/optional.h"
+#include "base/template_util.h"
+
+namespace base {
+
+namespace internal {
+
+// Calls erase on iterators of matching elements.
+template <typename Container, typename Predicate>
+void IterateAndEraseIf(Container& container, Predicate pred) {
+  for (auto it = container.begin(); it != container.end();) {
+    if (pred(*it))
+      it = container.erase(it);
+    else
+      ++it;
+  }
+}
+
+template <typename Iter>
+constexpr bool IsRandomAccessIter =
+    std::is_same<typename std::iterator_traits<Iter>::iterator_category,
+                 std::random_access_iterator_tag>::value;
+
+// Utility type traits used for specializing base::Contains() below.
+template <typename Container, typename Element, typename = void>
+struct HasFindWithNpos : std::false_type {};
+
+template <typename Container, typename Element>
+struct HasFindWithNpos<
+    Container,
+    Element,
+    void_t<decltype(std::declval<const Container&>().find(
+                        std::declval<const Element&>()) != Container::npos)>>
+    : std::true_type {};
+
+template <typename Container, typename Element, typename = void>
+struct HasFindWithEnd : std::false_type {};
+
+template <typename Container, typename Element>
+struct HasFindWithEnd<Container,
+                      Element,
+                      void_t<decltype(std::declval<const Container&>().find(
+                                          std::declval<const Element&>()) !=
+                                      std::declval<const Container&>().end())>>
+    : std::true_type {};
+
+template <typename Container, typename Element, typename = void>
+struct HasContains : std::false_type {};
+
+template <typename Container, typename Element>
+struct HasContains<Container,
+                   Element,
+                   void_t<decltype(std::declval<const Container&>().contains(
+                       std::declval<const Element&>()))>> : std::true_type {};
+
+}  // namespace internal
+
+// C++14 implementation of C++17's std::size():
+// http://en.cppreference.com/w/cpp/iterator/size
+template <typename Container>
+constexpr auto size(const Container& c) -> decltype(c.size()) {
+  return c.size();
+}
+
+template <typename T, size_t N>
+constexpr size_t size(const T (&array)[N]) noexcept {
+  return N;
+}
+
+// C++14 implementation of C++17's std::empty():
+// http://en.cppreference.com/w/cpp/iterator/empty
+template <typename Container>
+constexpr auto empty(const Container& c) -> decltype(c.empty()) {
+  return c.empty();
+}
+
+template <typename T, size_t N>
+constexpr bool empty(const T (&array)[N]) noexcept {
+  return false;
+}
+
+template <typename T>
+constexpr bool empty(std::initializer_list<T> il) noexcept {
+  return il.size() == 0;
+}
+
+// C++14 implementation of C++17's std::data():
+// http://en.cppreference.com/w/cpp/iterator/data
+template <typename Container>
+constexpr auto data(Container& c) -> decltype(c.data()) {
+  return c.data();
+}
+
+// std::basic_string::data() had no mutable overload prior to C++17 [1].
+// Hence this overload is provided.
+// Note: str[0] is safe even for empty strings, as they are guaranteed to be
+// null-terminated [2].
+//
+// [1] http://en.cppreference.com/w/cpp/string/basic_string/data
+// [2] http://en.cppreference.com/w/cpp/string/basic_string/operator_at
+template <typename CharT, typename Traits, typename Allocator>
+CharT* data(std::basic_string<CharT, Traits, Allocator>& str) {
+  return std::addressof(str[0]);
+}
+
+template <typename Container>
+constexpr auto data(const Container& c) -> decltype(c.data()) {
+  return c.data();
+}
+
+template <typename T, size_t N>
+constexpr T* data(T (&array)[N]) noexcept {
+  return array;
+}
+
+template <typename T>
+constexpr const T* data(std::initializer_list<T> il) noexcept {
+  return il.begin();
+}
+
+// Returns a const reference to the underlying container of a container adapter.
+// Works for std::priority_queue, std::queue, and std::stack.
+template <class A>
+const typename A::container_type& GetUnderlyingContainer(const A& adapter) {
+  struct ExposedAdapter : A {
+    using A::c;
+  };
+  return adapter.*&ExposedAdapter::c;
+}
 
 // Clears internal memory of an STL object.
 // STL clear()/reserve(0) does not always free internal memory allocated
@@ -27,183 +166,264 @@ void STLClearObject(T* obj) {
   obj->reserve(0);
 }
 
-// For a range within a container of pointers, calls delete (non-array version)
-// on these pointers.
-// NOTE: for these three functions, we could just implement a DeleteObject
-// functor and then call for_each() on the range and functor, but this
-// requires us to pull in all of algorithm.h, which seems expensive.
-// For hash_[multi]set, it is important that this deletes behind the iterator
-// because the hash_set may call the hash function on the iterator when it is
-// advanced, which could result in the hash function trying to deference a
-// stale pointer.
-template <class ForwardIterator>
-void STLDeleteContainerPointers(ForwardIterator begin, ForwardIterator end) {
-  while (begin != end) {
-    ForwardIterator temp = begin;
-    ++begin;
-    delete *temp;
+// Counts the number of instances of val in a container.
+template <typename Container, typename T>
+typename std::iterator_traits<
+    typename Container::const_iterator>::difference_type
+STLCount(const Container& container, const T& val) {
+  return std::count(container.begin(), container.end(), val);
+}
+
+// General purpose implementation to check if |container| contains |value|.
+template <typename Container,
+          typename Value,
+          std::enable_if_t<
+              !internal::HasFindWithNpos<Container, Value>::value &&
+              !internal::HasFindWithEnd<Container, Value>::value &&
+              !internal::HasContains<Container, Value>::value>* = nullptr>
+bool Contains(const Container& container, const Value& value) {
+  using std::begin;
+  using std::end;
+  return std::find(begin(container), end(container), value) != end(container);
+}
+
+// Specialized Contains() implementation for when |container| has a find()
+// member function and a static npos member, but no contains() member function.
+template <typename Container,
+          typename Value,
+          std::enable_if_t<internal::HasFindWithNpos<Container, Value>::value &&
+                           !internal::HasContains<Container, Value>::value>* =
+              nullptr>
+bool Contains(const Container& container, const Value& value) {
+  return container.find(value) != Container::npos;
+}
+
+// Specialized Contains() implementation for when |container| has a find()
+// and end() member function, but no contains() member function.
+template <typename Container,
+          typename Value,
+          std::enable_if_t<internal::HasFindWithEnd<Container, Value>::value &&
+                           !internal::HasContains<Container, Value>::value>* =
+              nullptr>
+bool Contains(const Container& container, const Value& value) {
+  return container.find(value) != container.end();
+}
+
+// Specialized Contains() implementation for when |container| has a contains()
+// member function.
+template <
+    typename Container,
+    typename Value,
+    std::enable_if_t<internal::HasContains<Container, Value>::value>* = nullptr>
+bool Contains(const Container& container, const Value& value) {
+  return container.contains(value);
+}
+
+// O(1) implementation of const casting an iterator for any sequence,
+// associative or unordered associative container in the STL.
+//
+// Reference: https://stackoverflow.com/a/10669041
+template <typename Container,
+          typename ConstIter,
+          std::enable_if_t<!internal::IsRandomAccessIter<ConstIter>>* = nullptr>
+constexpr auto ConstCastIterator(Container& c, ConstIter it) {
+  return c.erase(it, it);
+}
+
+// Explicit overload for std::forward_list where erase() is named erase_after().
+template <typename T, typename Allocator>
+constexpr auto ConstCastIterator(
+    std::forward_list<T, Allocator>& c,
+    typename std::forward_list<T, Allocator>::const_iterator it) {
+// The erase_after(it, it) trick used below does not work for libstdc++ [1],
+// thus we need a different way.
+// TODO(crbug.com/972541): Remove this workaround once libstdc++ is fixed on all
+// platforms.
+//
+// [1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=90857
+#if defined(__GLIBCXX__)
+  return c.insert_after(it, {});
+#else
+  return c.erase_after(it, it);
+#endif
+}
+
+// Specialized O(1) const casting for random access iterators. This is
+// necessary, because erase() is either not available (e.g. array-like
+// containers), or has O(n) complexity (e.g. std::deque or std::vector).
+template <typename Container,
+          typename ConstIter,
+          std::enable_if_t<internal::IsRandomAccessIter<ConstIter>>* = nullptr>
+constexpr auto ConstCastIterator(Container& c, ConstIter it) {
+  using std::begin;
+  using std::cbegin;
+  return begin(c) + (it - cbegin(c));
+}
+
+namespace internal {
+
+template <typename Map, typename Key, typename Value>
+std::pair<typename Map::iterator, bool> InsertOrAssignImpl(Map& map,
+                                                           Key&& key,
+                                                           Value&& value) {
+  auto lower = map.lower_bound(key);
+  if (lower != map.end() && !map.key_comp()(key, lower->first)) {
+    // key already exists, perform assignment.
+    lower->second = std::forward<Value>(value);
+    return {lower, false};
   }
+
+  // key did not yet exist, insert it.
+  return {map.emplace_hint(lower, std::forward<Key>(key),
+                           std::forward<Value>(value)),
+          true};
 }
 
-// For a range within a container of pairs, calls delete (non-array version) on
-// BOTH items in the pairs.
-// NOTE: Like STLDeleteContainerPointers, it is important that this deletes
-// behind the iterator because if both the key and value are deleted, the
-// container may call the hash function on the iterator when it is advanced,
-// which could result in the hash function trying to dereference a stale
-// pointer.
-template <class ForwardIterator>
-void STLDeleteContainerPairPointers(ForwardIterator begin,
-                                    ForwardIterator end) {
-  while (begin != end) {
-    ForwardIterator temp = begin;
-    ++begin;
-    delete temp->first;
-    delete temp->second;
+template <typename Map, typename Key, typename Value>
+typename Map::iterator InsertOrAssignImpl(Map& map,
+                                          typename Map::const_iterator hint,
+                                          Key&& key,
+                                          Value&& value) {
+  auto&& key_comp = map.key_comp();
+  if ((hint == map.begin() || key_comp(std::prev(hint)->first, key))) {
+    if (hint == map.end() || key_comp(key, hint->first)) {
+      // *(hint - 1) < key < *hint => key did not exist and hint is correct.
+      return map.emplace_hint(hint, std::forward<Key>(key),
+                              std::forward<Value>(value));
+    }
+
+    if (!key_comp(hint->first, key)) {
+      // key == *hint => key already exists and hint is correct.
+      auto mutable_hint = ConstCastIterator(map, hint);
+      mutable_hint->second = std::forward<Value>(value);
+      return mutable_hint;
+    }
   }
+
+  // hint was not helpful, dispatch to hintless version.
+  return InsertOrAssignImpl(map, std::forward<Key>(key),
+                            std::forward<Value>(value))
+      .first;
 }
 
-// For a range within a container of pairs, calls delete (non-array version) on
-// the FIRST item in the pairs.
-// NOTE: Like STLDeleteContainerPointers, deleting behind the iterator.
-template <class ForwardIterator>
-void STLDeleteContainerPairFirstPointers(ForwardIterator begin,
-                                         ForwardIterator end) {
-  while (begin != end) {
-    ForwardIterator temp = begin;
-    ++begin;
-    delete temp->first;
+template <typename Map, typename Key, typename... Args>
+std::pair<typename Map::iterator, bool> TryEmplaceImpl(Map& map,
+                                                       Key&& key,
+                                                       Args&&... args) {
+  auto lower = map.lower_bound(key);
+  if (lower != map.end() && !map.key_comp()(key, lower->first)) {
+    // key already exists, do nothing.
+    return {lower, false};
   }
+
+  // key did not yet exist, insert it.
+  return {map.emplace_hint(lower, std::piecewise_construct,
+                           std::forward_as_tuple(std::forward<Key>(key)),
+                           std::forward_as_tuple(std::forward<Args>(args)...)),
+          true};
 }
 
-// For a range within a container of pairs, calls delete.
-// NOTE: Like STLDeleteContainerPointers, deleting behind the iterator.
-// Deleting the value does not always invalidate the iterator, but it may
-// do so if the key is a pointer into the value object.
-template <class ForwardIterator>
-void STLDeleteContainerPairSecondPointers(ForwardIterator begin,
-                                          ForwardIterator end) {
-  while (begin != end) {
-    ForwardIterator temp = begin;
-    ++begin;
-    delete temp->second;
+template <typename Map, typename Key, typename... Args>
+typename Map::iterator TryEmplaceImpl(Map& map,
+                                      typename Map::const_iterator hint,
+                                      Key&& key,
+                                      Args&&... args) {
+  auto&& key_comp = map.key_comp();
+  if ((hint == map.begin() || key_comp(std::prev(hint)->first, key))) {
+    if (hint == map.end() || key_comp(key, hint->first)) {
+      // *(hint - 1) < key < *hint => key did not exist and hint is correct.
+      return map.emplace_hint(
+          hint, std::piecewise_construct,
+          std::forward_as_tuple(std::forward<Key>(key)),
+          std::forward_as_tuple(std::forward<Args>(args)...));
+    }
+
+    if (!key_comp(hint->first, key)) {
+      // key == *hint => no-op, return correct hint.
+      return ConstCastIterator(map, hint);
+    }
   }
+
+  // hint was not helpful, dispatch to hintless version.
+  return TryEmplaceImpl(map, std::forward<Key>(key),
+                        std::forward<Args>(args)...)
+      .first;
 }
 
-// To treat a possibly-empty vector as an array, use these functions.
-// If you know the array will never be empty, you can use &*v.begin()
-// directly, but that is undefined behaviour if |v| is empty.
-template<typename T>
-inline T* vector_as_array(std::vector<T>* v) {
-  return v->empty() ? NULL : &*v->begin();
+}  // namespace internal
+
+// Implementation of C++17's std::map::insert_or_assign as a free function.
+template <typename Map, typename Value>
+std::pair<typename Map::iterator, bool>
+InsertOrAssign(Map& map, const typename Map::key_type& key, Value&& value) {
+  return internal::InsertOrAssignImpl(map, key, std::forward<Value>(value));
 }
 
-template<typename T>
-inline const T* vector_as_array(const std::vector<T>* v) {
-  return v->empty() ? NULL : &*v->begin();
+template <typename Map, typename Value>
+std::pair<typename Map::iterator, bool>
+InsertOrAssign(Map& map, typename Map::key_type&& key, Value&& value) {
+  return internal::InsertOrAssignImpl(map, std::move(key),
+                                      std::forward<Value>(value));
 }
 
-// Return a mutable char* pointing to a string's internal buffer,
-// which may not be null-terminated. Writing through this pointer will
-// modify the string.
-//
-// string_as_array(&str)[i] is valid for 0 <= i < str.size() until the
-// next call to a string method that invalidates iterators.
-//
-// As of 2006-04, there is no standard-blessed way of getting a
-// mutable reference to a string's internal buffer. However, issue 530
-// (http://www.open-std.org/JTC1/SC22/WG21/docs/lwg-active.html#530)
-// proposes this as the method. According to Matt Austern, this should
-// already work on all current implementations.
-inline char* string_as_array(std::string* str) {
-  // DO NOT USE const_cast<char*>(str->data())
-  return str->empty() ? NULL : &*str->begin();
+// Implementation of C++17's std::map::insert_or_assign with hint as a free
+// function.
+template <typename Map, typename Value>
+typename Map::iterator InsertOrAssign(Map& map,
+                                      typename Map::const_iterator hint,
+                                      const typename Map::key_type& key,
+                                      Value&& value) {
+  return internal::InsertOrAssignImpl(map, hint, key,
+                                      std::forward<Value>(value));
 }
 
-// The following functions are useful for cleaning up STL containers whose
-// elements point to allocated memory.
-
-// STLDeleteElements() deletes all the elements in an STL container and clears
-// the container.  This function is suitable for use with a vector, set,
-// hash_set, or any other STL container which defines sensible begin(), end(),
-// and clear() methods.
-//
-// If container is NULL, this function is a no-op.
-//
-// As an alternative to calling STLDeleteElements() directly, consider
-// STLElementDeleter (defined below), which ensures that your container's
-// elements are deleted when the STLElementDeleter goes out of scope.
-template <class T>
-void STLDeleteElements(T* container) {
-  if (!container)
-    return;
-  STLDeleteContainerPointers(container->begin(), container->end());
-  container->clear();
+template <typename Map, typename Value>
+typename Map::iterator InsertOrAssign(Map& map,
+                                      typename Map::const_iterator hint,
+                                      typename Map::key_type&& key,
+                                      Value&& value) {
+  return internal::InsertOrAssignImpl(map, hint, std::move(key),
+                                      std::forward<Value>(value));
 }
 
-// Given an STL container consisting of (key, value) pairs, STLDeleteValues
-// deletes all the "value" components and clears the container.  Does nothing
-// in the case it's given a NULL pointer.
-template <class T>
-void STLDeleteValues(T* container) {
-  if (!container)
-    return;
-  for (typename T::iterator i(container->begin()); i != container->end(); ++i)
-    delete i->second;
-  container->clear();
+// Implementation of C++17's std::map::try_emplace as a free function.
+template <typename Map, typename... Args>
+std::pair<typename Map::iterator, bool>
+TryEmplace(Map& map, const typename Map::key_type& key, Args&&... args) {
+  return internal::TryEmplaceImpl(map, key, std::forward<Args>(args)...);
 }
 
-
-// The following classes provide a convenient way to delete all elements or
-// values from STL containers when they goes out of scope.  This greatly
-// simplifies code that creates temporary objects and has multiple return
-// statements.  Example:
-//
-// vector<MyProto *> tmp_proto;
-// STLElementDeleter<vector<MyProto *> > d(&tmp_proto);
-// if (...) return false;
-// ...
-// return success;
-
-// Given a pointer to an STL container this class will delete all the element
-// pointers when it goes out of scope.
-template<class T>
-class STLElementDeleter {
- public:
-  STLElementDeleter<T>(T* container) : container_(container) {}
-  ~STLElementDeleter<T>() { STLDeleteElements(container_); }
-
- private:
-  T* container_;
-};
-
-// Given a pointer to an STL container this class will delete all the value
-// pointers when it goes out of scope.
-template<class T>
-class STLValueDeleter {
- public:
-  STLValueDeleter<T>(T* container) : container_(container) {}
-  ~STLValueDeleter<T>() { STLDeleteValues(container_); }
-
- private:
-  T* container_;
-};
-
-// Test to see if a set, map, hash_set or hash_map contains a particular key.
-// Returns true if the key is in the collection.
-template <typename Collection, typename Key>
-bool ContainsKey(const Collection& collection, const Key& key) {
-  return collection.find(key) != collection.end();
+template <typename Map, typename... Args>
+std::pair<typename Map::iterator, bool> TryEmplace(Map& map,
+                                                   typename Map::key_type&& key,
+                                                   Args&&... args) {
+  return internal::TryEmplaceImpl(map, std::move(key),
+                                  std::forward<Args>(args)...);
 }
 
-namespace base {
+// Implementation of C++17's std::map::try_emplace with hint as a free
+// function.
+template <typename Map, typename... Args>
+typename Map::iterator TryEmplace(Map& map,
+                                  typename Map::const_iterator hint,
+                                  const typename Map::key_type& key,
+                                  Args&&... args) {
+  return internal::TryEmplaceImpl(map, hint, key, std::forward<Args>(args)...);
+}
+
+template <typename Map, typename... Args>
+typename Map::iterator TryEmplace(Map& map,
+                                  typename Map::const_iterator hint,
+                                  typename Map::key_type&& key,
+                                  Args&&... args) {
+  return internal::TryEmplaceImpl(map, hint, std::move(key),
+                                  std::forward<Args>(args)...);
+}
 
 // Returns true if the container is sorted.
 template <typename Container>
 bool STLIsSorted(const Container& cont) {
-  return std::adjacent_find(cont.begin(), cont.end(),
-                            std::greater<typename Container::value_type>())
-      == cont.end();
+  return std::is_sorted(std::begin(cont), std::end(cont));
 }
 
 // Returns a new ResultType containing the difference of two sorted containers.
@@ -216,6 +436,220 @@ ResultType STLSetDifference(const Arg1& a1, const Arg2& a2) {
                       a2.begin(), a2.end(),
                       std::inserter(difference, difference.end()));
   return difference;
+}
+
+// Returns a new ResultType containing the union of two sorted containers.
+template <typename ResultType, typename Arg1, typename Arg2>
+ResultType STLSetUnion(const Arg1& a1, const Arg2& a2) {
+  DCHECK(STLIsSorted(a1));
+  DCHECK(STLIsSorted(a2));
+  ResultType result;
+  std::set_union(a1.begin(), a1.end(),
+                 a2.begin(), a2.end(),
+                 std::inserter(result, result.end()));
+  return result;
+}
+
+// Returns a new ResultType containing the intersection of two sorted
+// containers.
+template <typename ResultType, typename Arg1, typename Arg2>
+ResultType STLSetIntersection(const Arg1& a1, const Arg2& a2) {
+  DCHECK(STLIsSorted(a1));
+  DCHECK(STLIsSorted(a2));
+  ResultType result;
+  std::set_intersection(a1.begin(), a1.end(),
+                        a2.begin(), a2.end(),
+                        std::inserter(result, result.end()));
+  return result;
+}
+
+// Returns true if the sorted container |a1| contains all elements of the sorted
+// container |a2|.
+template <typename Arg1, typename Arg2>
+bool STLIncludes(const Arg1& a1, const Arg2& a2) {
+  DCHECK(STLIsSorted(a1));
+  DCHECK(STLIsSorted(a2));
+  return std::includes(a1.begin(), a1.end(),
+                       a2.begin(), a2.end());
+}
+
+// Erase/EraseIf are based on library fundamentals ts v2 erase/erase_if
+// http://en.cppreference.com/w/cpp/experimental/lib_extensions_2
+// They provide a generic way to erase elements from a container.
+// The functions here implement these for the standard containers until those
+// functions are available in the C++ standard.
+// For Chromium containers overloads should be defined in their own headers
+// (like standard containers).
+// Note: there is no std::erase for standard associative containers so we don't
+// have it either.
+
+template <typename CharT, typename Traits, typename Allocator, typename Value>
+void Erase(std::basic_string<CharT, Traits, Allocator>& container,
+           const Value& value) {
+  container.erase(std::remove(container.begin(), container.end(), value),
+                  container.end());
+}
+
+template <typename CharT, typename Traits, typename Allocator, class Predicate>
+void EraseIf(std::basic_string<CharT, Traits, Allocator>& container,
+             Predicate pred) {
+  container.erase(std::remove_if(container.begin(), container.end(), pred),
+                  container.end());
+}
+
+template <class T, class Allocator, class Value>
+void Erase(std::deque<T, Allocator>& container, const Value& value) {
+  container.erase(std::remove(container.begin(), container.end(), value),
+                  container.end());
+}
+
+template <class T, class Allocator, class Predicate>
+void EraseIf(std::deque<T, Allocator>& container, Predicate pred) {
+  container.erase(std::remove_if(container.begin(), container.end(), pred),
+                  container.end());
+}
+
+template <class T, class Allocator, class Value>
+void Erase(std::vector<T, Allocator>& container, const Value& value) {
+  container.erase(std::remove(container.begin(), container.end(), value),
+                  container.end());
+}
+
+template <class T, class Allocator, class Predicate>
+void EraseIf(std::vector<T, Allocator>& container, Predicate pred) {
+  container.erase(std::remove_if(container.begin(), container.end(), pred),
+                  container.end());
+}
+
+template <class T, class Allocator, class Value>
+void Erase(std::forward_list<T, Allocator>& container, const Value& value) {
+  // Unlike std::forward_list::remove, this function template accepts
+  // heterogeneous types and does not force a conversion to the container's
+  // value type before invoking the == operator.
+  container.remove_if([&](const T& cur) { return cur == value; });
+}
+
+template <class T, class Allocator, class Predicate>
+void EraseIf(std::forward_list<T, Allocator>& container, Predicate pred) {
+  container.remove_if(pred);
+}
+
+template <class T, class Allocator, class Value>
+void Erase(std::list<T, Allocator>& container, const Value& value) {
+  // Unlike std::list::remove, this function template accepts heterogeneous
+  // types and does not force a conversion to the container's value type before
+  // invoking the == operator.
+  container.remove_if([&](const T& cur) { return cur == value; });
+}
+
+template <class T, class Allocator, class Predicate>
+void EraseIf(std::list<T, Allocator>& container, Predicate pred) {
+  container.remove_if(pred);
+}
+
+template <class Key, class T, class Compare, class Allocator, class Predicate>
+void EraseIf(std::map<Key, T, Compare, Allocator>& container, Predicate pred) {
+  internal::IterateAndEraseIf(container, pred);
+}
+
+template <class Key, class T, class Compare, class Allocator, class Predicate>
+void EraseIf(std::multimap<Key, T, Compare, Allocator>& container,
+             Predicate pred) {
+  internal::IterateAndEraseIf(container, pred);
+}
+
+template <class Key, class Compare, class Allocator, class Predicate>
+void EraseIf(std::set<Key, Compare, Allocator>& container, Predicate pred) {
+  internal::IterateAndEraseIf(container, pred);
+}
+
+template <class Key, class Compare, class Allocator, class Predicate>
+void EraseIf(std::multiset<Key, Compare, Allocator>& container,
+             Predicate pred) {
+  internal::IterateAndEraseIf(container, pred);
+}
+
+template <class Key,
+          class T,
+          class Hash,
+          class KeyEqual,
+          class Allocator,
+          class Predicate>
+void EraseIf(std::unordered_map<Key, T, Hash, KeyEqual, Allocator>& container,
+             Predicate pred) {
+  internal::IterateAndEraseIf(container, pred);
+}
+
+template <class Key,
+          class T,
+          class Hash,
+          class KeyEqual,
+          class Allocator,
+          class Predicate>
+void EraseIf(
+    std::unordered_multimap<Key, T, Hash, KeyEqual, Allocator>& container,
+    Predicate pred) {
+  internal::IterateAndEraseIf(container, pred);
+}
+
+template <class Key,
+          class Hash,
+          class KeyEqual,
+          class Allocator,
+          class Predicate>
+void EraseIf(std::unordered_set<Key, Hash, KeyEqual, Allocator>& container,
+             Predicate pred) {
+  internal::IterateAndEraseIf(container, pred);
+}
+
+template <class Key,
+          class Hash,
+          class KeyEqual,
+          class Allocator,
+          class Predicate>
+void EraseIf(std::unordered_multiset<Key, Hash, KeyEqual, Allocator>& container,
+             Predicate pred) {
+  internal::IterateAndEraseIf(container, pred);
+}
+
+// A helper class to be used as the predicate with |EraseIf| to implement
+// in-place set intersection. Helps implement the algorithm of going through
+// each container an element at a time, erasing elements from the first
+// container if they aren't in the second container. Requires each container be
+// sorted. Note that the logic below appears inverted since it is returning
+// whether an element should be erased.
+template <class Collection>
+class IsNotIn {
+ public:
+  explicit IsNotIn(const Collection& collection)
+      : i_(collection.begin()), end_(collection.end()) {}
+
+  bool operator()(const typename Collection::value_type& x) {
+    while (i_ != end_ && *i_ < x)
+      ++i_;
+    if (i_ == end_)
+      return true;
+    if (*i_ == x) {
+      ++i_;
+      return false;
+    }
+    return true;
+  }
+
+ private:
+  typename Collection::const_iterator i_;
+  const typename Collection::const_iterator end_;
+};
+
+// Helper for returning the optional value's address, or nullptr.
+template <class T>
+T* OptionalOrNullptr(base::Optional<T>& optional) {
+  return optional.has_value() ? &optional.value() : nullptr;
+}
+
+template <class T>
+const T* OptionalOrNullptr(const base::Optional<T>& optional) {
+  return optional.has_value() ? &optional.value() : nullptr;
 }
 
 }  // namespace base

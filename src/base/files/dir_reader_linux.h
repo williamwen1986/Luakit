@@ -7,11 +7,13 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 
 #include "base/logging.h"
+#include "base/macros.h"
 #include "base/posix/eintr_wrapper.h"
 
 // See the comments in dir_reader_posix.h about this.
@@ -60,7 +62,7 @@ class DirReaderLinux {
     if (r == 0)
       return false;
     if (r == -1) {
-      DPLOG(FATAL) << "getdents64 returned an error: " << errno;
+      DPLOG(FATAL) << "getdents64 failed";
       return false;
     }
     size_ = r;
@@ -70,7 +72,7 @@ class DirReaderLinux {
 
   const char* name() const {
     if (!size_)
-      return NULL;
+      return nullptr;
 
     const linux_dirent* dirent =
         reinterpret_cast<const linux_dirent*>(&buf_[offset_]);
@@ -87,12 +89,13 @@ class DirReaderLinux {
 
  private:
   const int fd_;
-  unsigned char buf_[512];
-  size_t offset_, size_;
+  alignas(linux_dirent) unsigned char buf_[512];
+  size_t offset_;
+  size_t size_;
 
   DISALLOW_COPY_AND_ASSIGN(DirReaderLinux);
 };
 
 }  // namespace base
 
-#endif // BASE_FILES_DIR_READER_LINUX_H_
+#endif  // BASE_FILES_DIR_READER_LINUX_H_

@@ -2,21 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BASE_FILE_VERSION_INFO_H__
-#define BASE_FILE_VERSION_INFO_H__
+#ifndef BASE_FILE_VERSION_INFO_H_
+#define BASE_FILE_VERSION_INFO_H_
 
-#include "config/build_config.h"
+#include <memory>
+#include <string>
+
+#include "build/build_config.h"
+#include "base/base_export.h"
+#include "base/strings/string16.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
-// http://blogs.msdn.com/oldnewthing/archive/2004/10/25/247180.aspx
-extern "C" IMAGE_DOS_HEADER __ImageBase;
-#endif  // OS_WIN
-
-#include <string>
-
-#include "base/base_export.h"
-#include "base/strings/string16.h"
+#endif
 
 namespace base {
 class FilePath;
@@ -32,36 +30,27 @@ class FilePath;
 // version returns values from the Info.plist as appropriate. TODO(avi): make
 // this a less-obvious Windows-ism.
 
-class FileVersionInfo {
+class BASE_EXPORT FileVersionInfo {
  public:
   virtual ~FileVersionInfo() {}
 #if defined(OS_WIN) || defined(OS_MACOSX)
-  // Creates a FileVersionInfo for the specified path. Returns NULL if something
-  // goes wrong (typically the file does not exit or cannot be opened). The
-  // returned object should be deleted when you are done with it.
-  BASE_EXPORT static FileVersionInfo* CreateFileVersionInfo(
+  // Creates a FileVersionInfo for the specified path. Returns nullptr if
+  // something goes wrong (typically the file does not exit or cannot be
+  // opened).
+  static std::unique_ptr<FileVersionInfo> CreateFileVersionInfo(
       const base::FilePath& file_path);
 #endif  // OS_WIN || OS_MACOSX
 
 #if defined(OS_WIN)
-  // Creates a FileVersionInfo for the specified module. Returns NULL in case
-  // of error. The returned object should be deleted when you are done with it.
-  BASE_EXPORT static FileVersionInfo* CreateFileVersionInfoForModule(
+  // Creates a FileVersionInfo for the specified module. Returns nullptr in
+  // case of error.
+  static std::unique_ptr<FileVersionInfo> CreateFileVersionInfoForModule(
       HMODULE module);
-
-  // Creates a FileVersionInfo for the current module. Returns NULL in case
-  // of error. The returned object should be deleted when you are done with it.
-  // This function should be inlined so that the "current module" is evaluated
-  // correctly, instead of being the module that contains base.
-  __forceinline static FileVersionInfo*
-  CreateFileVersionInfoForCurrentModule() {
-    HMODULE module = reinterpret_cast<HMODULE>(&__ImageBase);
-    return CreateFileVersionInfoForModule(module);
-  }
 #else
-  // Creates a FileVersionInfo for the current module. Returns NULL in case
-  // of error. The returned object should be deleted when you are done with it.
-  BASE_EXPORT static FileVersionInfo* CreateFileVersionInfoForCurrentModule();
+  // Creates a FileVersionInfo for the current module. Returns nullptr in case
+  // of error.
+  static std::unique_ptr<FileVersionInfo>
+  CreateFileVersionInfoForCurrentModule();
 #endif  // OS_WIN
 
   // Accessors to the different version properties.
@@ -72,16 +61,10 @@ class FileVersionInfo {
   virtual base::string16 product_short_name() = 0;
   virtual base::string16 internal_name() = 0;
   virtual base::string16 product_version() = 0;
-  virtual base::string16 private_build() = 0;
   virtual base::string16 special_build() = 0;
-  virtual base::string16 comments() = 0;
   virtual base::string16 original_filename() = 0;
   virtual base::string16 file_description() = 0;
   virtual base::string16 file_version() = 0;
-  virtual base::string16 legal_copyright() = 0;
-  virtual base::string16 legal_trademarks() = 0;
-  virtual base::string16 last_change() = 0;
-  virtual bool is_official_build() = 0;
 };
 
-#endif  // BASE_FILE_VERSION_INFO_H__
+#endif  // BASE_FILE_VERSION_INFO_H_

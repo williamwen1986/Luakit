@@ -4,7 +4,14 @@
 
 #include "base/strings/safe_sprintf.h"
 
+#include <errno.h>
+#include <string.h>
+
+#include <algorithm>
 #include <limits>
+
+#include "base/macros.h"
+#include "build/build_config.h"
 
 #if !defined(NDEBUG)
 // In debug builds, we use RAW_CHECK() to print useful error messages, if
@@ -69,7 +76,7 @@ const char kDownCaseHexDigits[] = "0123456789abcdef";
 #if defined(NDEBUG)
 // We would like to define kSSizeMax as std::numeric_limits<ssize_t>::max(),
 // but C++ doesn't allow us to do that for constants. Instead, we have to
-// use careful casting and shifting. We later use a COMPILE_ASSERT to
+// use careful casting and shifting. We later use a static_assert to
 // verify that this worked correctly.
 namespace {
 const size_t kSSizeMax = kSSizeMaxConst;
@@ -107,14 +114,13 @@ class Buffer {
       : buffer_(buffer),
         size_(size - 1),  // Account for trailing NUL byte
         count_(0) {
-// The following assertion does not build on Mac and Android. This is because
-// static_assert only works with compile-time constants, but mac uses
-// libstdc++4.2 and android uses stlport, which both don't mark
-// numeric_limits::max() as constexp.
-#if __cplusplus >= 201103 && !defined(OS_ANDROID) && !defined(OS_MACOSX) && !defined(OS_IOS)
-    COMPILE_ASSERT(kSSizeMaxConst == \
-                   static_cast<size_t>(std::numeric_limits<ssize_t>::max()),
-                   kSSizeMax_is_the_max_value_of_an_ssize_t);
+// MSVS2013's standard library doesn't mark max() as constexpr yet. cl.exe
+// supports static_cast but doesn't really implement constexpr yet so it doesn't
+// complain, but clang does.
+#if __cplusplus >= 201103 && !(defined(__clang__) && defined(OS_WIN))
+    static_assert(kSSizeMaxConst ==
+                      static_cast<size_t>(std::numeric_limits<ssize_t>::max()),
+                  "kSSizeMaxConst should be the max value of an ssize_t");
 #endif
     DEBUG_CHECK(size > 0);
     DEBUG_CHECK(size <= kSSizeMax);
@@ -172,8 +178,7 @@ class Buffer {
   // overflowed |size_|) at any time during padding.
   inline bool Pad(char pad, size_t padding, size_t len) {
     DEBUG_CHECK(pad);
-    DEBUG_CHECK(padding >= 0 && padding <= kSSizeMax);
-    DEBUG_CHECK(len >= 0);
+    DEBUG_CHECK(padding <= kSSizeMax);
     for (; padding > len; --padding) {
       if (!Out(pad)) {
         if (--padding) {
@@ -232,10 +237,9 @@ class Buffer {
     if (count_ > kSSizeMax - 1 - inc) {
       count_ = kSSizeMax - 1;
       return false;
-    } else {
-      count_ += inc;
-      return true;
     }
+    count_ += inc;
+    return true;
   }
 
   // Convenience method for the common case of incrementing |count_| by one.
@@ -279,7 +283,6 @@ bool Buffer::IToASCII(bool sign, bool upcase, int64_t i, int base,
   DEBUG_CHECK(base <= 16);
   DEBUG_CHECK(!sign || base == 10);
   DEBUG_CHECK(pad == '0' || pad == ' ');
-  DEBUG_CHECK(padding >= 0);
   DEBUG_CHECK(padding <= kSSizeMax);
   DEBUG_CHECK(!(sign && prefix && *prefix));
 
@@ -315,7 +318,7 @@ bool Buffer::IToASCII(bool sign, bool upcase, int64_t i, int base,
   // We cannot choose the easier approach of just reversing the number, as that
   // fails in situations where we need to truncate numbers that have padding
   // and/or prefixes.
-  const char* reverse_prefix = NULL;
+  const char* reverse_prefix = nullptr;
   if (prefix && *prefix) {
     if (pad == '0') {
       while (*prefix) {
@@ -324,13 +327,13 @@ bool Buffer::IToASCII(bool sign, bool upcase, int64_t i, int base,
         }
         Out(*prefix++);
       }
-      prefix = NULL;
+      prefix = nullptr;
     } else {
       for (reverse_prefix = prefix; *reverse_prefix; ++reverse_prefix) {
       }
     }
   } else
-    prefix = NULL;
+    prefix = nullptr;
   const size_t prefix_length = reverse_prefix - prefix;
 
   // Loop until we have converted the entire number. Output at least one
@@ -430,11 +433,9 @@ ssize_t SafeSNPrintf(char* buf, size_t sz, const char* fmt, const Arg* args,
   // never overflows kSSizeMax. Not only does that use up most or all of the
   // address space, it also would result in a return code that cannot be
   // represented.
-  if (static_cast<ssize_t>(sz) < 1) {
+  if (static_cast<ssize_t>(sz) < 1)
     return -1;
-  } else if (sz > kSSizeMax) {
-    sz = kSSizeMax;
-  }
+  sz = std::min(sz, kSSizeMax);
 
   // Iterate over format string and interpret '%' arguments as they are
   // encountered.
@@ -508,11 +509,11 @@ ssize_t SafeSNPrintf(char* buf, size_t sz, const char* fmt, const Arg* args,
         buffer.Pad(' ', padding, 1);
 
         // Convert the argument to an ASCII character and output it.
-        char ch = static_cast<char>(arg.i);
-        if (!ch) {
+        char as_char = static_cast<char>(arg.integer.i);
+        if (!as_char) {
           goto end_of_output_buffer;
         }
-        buffer.Out(ch);
+        buffer.Out(as_char);
         break; }
       case 'd':    // Output a possibly signed decimal value.
       case 'o':    // Output an unsigned octal value.
@@ -527,14 +528,14 @@ ssize_t SafeSNPrintf(char* buf, size_t sz, const char* fmt, const Arg* args,
 
         const Arg& arg = args[cur_arg++];
         int64_t i;
-        const char* prefix = NULL;
+        const char* prefix = nullptr;
         if (ch != 'p') {
           // Check that the argument has the expected type.
           if (arg.type != Arg::INT && arg.type != Arg::UINT) {
             DEBUG_CHECK(arg.type == Arg::INT || arg.type == Arg::UINT);
             goto fail_to_expand;
           }
-          i = arg.i;
+          i = arg.integer.i;
 
           if (ch != 'd') {
             // The Arg() constructor automatically performed sign expansion on
@@ -544,8 +545,8 @@ ssize_t SafeSNPrintf(char* buf, size_t sz, const char* fmt, const Arg* args,
             // We have to do this here, instead of in the Arg() constructor, as
             // the Arg() constructor cannot tell whether we will output a %d
             // or a %x. Only the latter should experience masking.
-            if (arg.width < sizeof(int64_t)) {
-              i &= (1LL << (8*arg.width)) - 1;
+            if (arg.integer.width < sizeof(int64_t)) {
+              i &= (1LL << (8*arg.integer.width)) - 1;
             }
           }
         } else {
@@ -554,8 +555,9 @@ ssize_t SafeSNPrintf(char* buf, size_t sz, const char* fmt, const Arg* args,
             i = reinterpret_cast<uintptr_t>(arg.ptr);
           } else if (arg.type == Arg::STRING) {
             i = reinterpret_cast<uintptr_t>(arg.str);
-          } else if (arg.type == Arg::INT && arg.width == sizeof(NULL) &&
-                     arg.i == 0) {  // Allow C++'s version of NULL
+          } else if (arg.type == Arg::INT &&
+                     arg.integer.width == sizeof(NULL) &&
+                     arg.integer.i == 0) {  // Allow C++'s version of NULL
             i = 0;
           } else {
             DEBUG_CHECK(arg.type == Arg::POINTER || arg.type == Arg::STRING);
@@ -588,8 +590,8 @@ ssize_t SafeSNPrintf(char* buf, size_t sz, const char* fmt, const Arg* args,
         const char *s;
         if (arg.type == Arg::STRING) {
           s = arg.str ? arg.str : "<NULL>";
-        } else if (arg.type == Arg::INT && arg.width == sizeof(NULL) &&
-                   arg.i == 0) {  // Allow C++'s version of NULL
+        } else if (arg.type == Arg::INT && arg.integer.width == sizeof(NULL) &&
+                   arg.integer.i == 0) {  // Allow C++'s version of NULL
           s = "<NULL>";
         } else {
           DEBUG_CHECK(arg.type == Arg::STRING);
@@ -655,11 +657,9 @@ ssize_t SafeSNPrintf(char* buf, size_t sz, const char* fmt) {
   // never overflows kSSizeMax. Not only does that use up most or all of the
   // address space, it also would result in a return code that cannot be
   // represented.
-  if (static_cast<ssize_t>(sz) < 1) {
+  if (static_cast<ssize_t>(sz) < 1)
     return -1;
-  } else if (sz > kSSizeMax) {
-    sz = kSSizeMax;
-  }
+  sz = std::min(sz, kSSizeMax);
 
   Buffer buffer(buf, sz);
 

@@ -5,6 +5,7 @@
 #ifndef BASE_IOS_SCOPED_CRITICAL_ACTION_H_
 #define BASE_IOS_SCOPED_CRITICAL_ACTION_H_
 
+#include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
 
@@ -38,8 +39,12 @@ class ScopedCriticalAction {
    public:
     Core();
 
-    // Informs the OS that the background task has completed.
-    void EndBackgroundTask();
+    // Informs the OS that the background task has started. This is a
+    // static method to ensure that the instance has a non-zero refcount.
+    static void StartBackgroundTask(scoped_refptr<Core> core);
+    // Informs the OS that the background task has completed. This is a
+    // static method to ensure that the instance has a non-zero refcount.
+    static void EndBackgroundTask(scoped_refptr<Core> core);
 
    private:
     friend base::RefCountedThreadSafe<Core>;

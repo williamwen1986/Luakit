@@ -7,12 +7,15 @@
 #ifndef BASE_FILES_FILE_PATH_WATCHER_H_
 #define BASE_FILES_FILE_PATH_WATCHER_H_
 
+#include <memory>
+
 #include "base/base_export.h"
-#include "base/basictypes.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
+#include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/message_loop/message_loop_proxy.h"
+#include "base/sequence_checker.h"
+#include "base/sequenced_task_runner.h"
 
 namespace base {
 
@@ -25,17 +28,21 @@ namespace base {
 // detect the creation and deletion of files in a watched directory, but will
 // not detect modifications to those files. See file_path_watcher_kqueue.cc for
 // details.
+//
+// Must be destroyed on the sequence that invokes Watch().
 class BASE_EXPORT FilePathWatcher {
  public:
   // Callback type for Watch(). |path| points to the file that was updated,
   // and |error| is true if the platform specific code detected an error. In
   // that case, the callback won't be invoked again.
-  typedef base::Callback<void(const FilePath& path, bool error)> Callback;
+  using Callback =
+      base::RepeatingCallback<void(const FilePath& path, bool error)>;
 
   // Used internally to encapsulate different members on different platforms.
-  class PlatformDelegate : public base::RefCountedThreadSafe<PlatformDelegate> {
+  class PlatformDelegate {
    public:
     PlatformDelegate();
+    virtual ~PlatformDelegate();
 
     // Start watching for the given |path| and notify |delegate| about changes.
     virtual bool Watch(const FilePath& path,
@@ -44,26 +51,17 @@ class BASE_EXPORT FilePathWatcher {
 
     // Stop watching. This is called from FilePathWatcher's dtor in order to
     // allow to shut down properly while the object is still alive.
-    // It can be called from any thread.
     virtual void Cancel() = 0;
 
    protected:
-    friend class base::RefCountedThreadSafe<PlatformDelegate>;
     friend class FilePathWatcher;
 
-    virtual ~PlatformDelegate();
-
-    // Stop watching. This is only called on the thread of the appropriate
-    // message loop. Since it can also be called more than once, it should
-    // check |is_cancelled()| to avoid duplicate work.
-    virtual void CancelOnMessageLoopThread() = 0;
-
-    scoped_refptr<base::MessageLoopProxy> message_loop() const {
-      return message_loop_;
+    scoped_refptr<SequencedTaskRunner> task_runner() const {
+      return task_runner_;
     }
 
-    void set_message_loop(base::MessageLoopProxy* loop) {
-      message_loop_ = loop;
+    void set_task_runner(scoped_refptr<SequencedTaskRunner> runner) {
+      task_runner_ = std::move(runner);
     }
 
     // Must be called before the PlatformDelegate is deleted.
@@ -76,29 +74,34 @@ class BASE_EXPORT FilePathWatcher {
     }
 
    private:
-    scoped_refptr<base::MessageLoopProxy> message_loop_;
+    scoped_refptr<SequencedTaskRunner> task_runner_;
     bool cancelled_;
+
+    DISALLOW_COPY_AND_ASSIGN(PlatformDelegate);
   };
 
   FilePathWatcher();
-  virtual ~FilePathWatcher();
+  ~FilePathWatcher();
 
-  // A callback that always cleans up the PlatformDelegate, either when executed
-  // or when deleted without having been executed at all, as can happen during
-  // shutdown.
-  static void CancelWatch(const scoped_refptr<PlatformDelegate>& delegate);
+  // Returns true if the platform and OS version support recursive watches.
+  static bool RecursiveWatchAvailable();
 
   // Invokes |callback| whenever updates to |path| are detected. This should be
-  // called at most once, and from a MessageLoop of TYPE_IO. Set |recursive| to
-  // true, to watch |path| and its children. The callback will be invoked on
-  // the same loop. Returns true on success.
+  // called at most once. Set |recursive| to true to watch |path| and its
+  // children. The callback will be invoked on the same sequence. Returns true
+  // on success.
   //
-  // NOTE: Recursive watch is not supported on all platforms and file systems.
+  // On POSIX, this must be called from a thread that supports
+  // FileDescriptorWatcher.
+  //
+  // Recursive watch is not supported on all platforms and file systems.
   // Watch() will return false in the case of failure.
   bool Watch(const FilePath& path, bool recursive, const Callback& callback);
 
  private:
-  scoped_refptr<PlatformDelegate> impl_;
+  std::unique_ptr<PlatformDelegate> impl_;
+
+  SequenceChecker sequence_checker_;
 
   DISALLOW_COPY_AND_ASSIGN(FilePathWatcher);
 };

@@ -1,8 +1,12 @@
-# Primary OWNER
-jar@chromium.org
-
-# Secondary OWNER; can review simpler changes
+asvitkine@chromium.org
+bcwhite@chromium.org
+holte@chromium.org
 isherman@chromium.org
+jwd@chromium.org
+mpearson@chromium.org
+nikunjb@chromium.org
+rkaplow@chromium.org
 
-# Note that all members of the parent file base/OWNERS can also stamp trivial
-# changes, but will probably defer to Jim for meatier changes.
+per-file field_trial_memory_mac*=rsesek@chromium.org
+
+# COMPONENT: Internals>Metrics

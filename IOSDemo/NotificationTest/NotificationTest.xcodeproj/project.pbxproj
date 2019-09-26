@@ -358,7 +358,7 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(LUAKIT_ROOT)/src",
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/IOSFrameWork/Luakit/OCHelper",
 				);
@@ -385,7 +385,7 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(LUAKIT_ROOT)/src",
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/IOSFrameWork/Luakit/OCHelper",
 				);

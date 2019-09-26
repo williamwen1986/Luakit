@@ -4,50 +4,24 @@
 
 #include "base/rand_util.h"
 
-#include "base/basictypes.h"
-#include "base/lazy_instance.h"
+#include <nacl/nacl_random.h>
+#include <stddef.h>
+#include <stdint.h>
+
 #include "base/logging.h"
-#include "native_client/src/untrusted/irt/irt.h"
-
-namespace {
-
-class NaclRandom {
- public:
-  NaclRandom() {
-    size_t result = nacl_interface_query(NACL_IRT_RANDOM_v0_1,
-                                         &random_, sizeof(random_));
-    CHECK_EQ(result, sizeof(random_));
-  }
-
-  ~NaclRandom() {
-  }
-
-  void GetRandomBytes(char* buffer, uint32_t num_bytes) {
-    while (num_bytes > 0) {
-      size_t nread;
-      int error = random_.get_random_bytes(buffer, num_bytes, &nread);
-      CHECK_EQ(error, 0);
-      CHECK_LE(nread, num_bytes);
-      buffer += nread;
-      num_bytes -= nread;
-    }
-  }
-
- private:
-  nacl_irt_random random_;
-};
-
-base::LazyInstance<NaclRandom>::Leaky g_nacl_random = LAZY_INSTANCE_INITIALIZER;
-
-}  // namespace
 
 namespace base {
 
-uint64 RandUint64() {
-  uint64 result;
-  g_nacl_random.Pointer()->GetRandomBytes(
-      reinterpret_cast<char*>(&result), sizeof(result));
-  return result;
+void RandBytes(void* output, size_t output_length) {
+  char* output_ptr = static_cast<char*>(output);
+  while (output_length > 0) {
+    size_t nread;
+    const int error = nacl_secure_random(output_ptr, output_length, &nread);
+    CHECK_EQ(error, 0);
+    CHECK_LE(nread, output_length);
+    output_ptr += nread;
+    output_length -= nread;
+  }
 }
 
 }  // namespace base

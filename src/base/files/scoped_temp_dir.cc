@@ -4,13 +4,19 @@
 
 #include "base/files/scoped_temp_dir.h"
 
-#include "base/file_util.h"
+#include "base/files/file_util.h"
 #include "base/logging.h"
 
 namespace base {
 
-ScopedTempDir::ScopedTempDir() {
-}
+namespace {
+
+constexpr FilePath::CharType kScopedDirPrefix[] =
+    FILE_PATH_LITERAL("scoped_dir");
+
+}  // namespace
+
+ScopedTempDir::ScopedTempDir() = default;
 
 ScopedTempDir::~ScopedTempDir() {
   if (!path_.empty() && !Delete())
@@ -23,7 +29,7 @@ bool ScopedTempDir::CreateUniqueTempDir() {
 
   // This "scoped_dir" prefix is only used on Windows and serves as a template
   // for the unique name.
-  if (!base::CreateNewTempDirectory(FILE_PATH_LITERAL("scoped_dir"), &path_))
+  if (!base::CreateNewTempDirectory(kScopedDirPrefix, &path_))
     return false;
 
   return true;
@@ -38,9 +44,7 @@ bool ScopedTempDir::CreateUniqueTempDirUnderPath(const FilePath& base_path) {
     return false;
 
   // Create a new, uniquely named directory under |base_path|.
-  if (!base::CreateTemporaryDirInDir(base_path,
-                                     FILE_PATH_LITERAL("scoped_dir_"),
-                                     &path_))
+  if (!base::CreateTemporaryDirInDir(base_path, kScopedDirPrefix, &path_))
     return false;
 
   return true;
@@ -76,8 +80,18 @@ FilePath ScopedTempDir::Take() {
   return ret;
 }
 
+const FilePath& ScopedTempDir::GetPath() const {
+  DCHECK(!path_.empty()) << "Did you call CreateUniqueTempDir* before?";
+  return path_;
+}
+
 bool ScopedTempDir::IsValid() const {
   return !path_.empty() && DirectoryExists(path_);
+}
+
+// static
+const FilePath::CharType* ScopedTempDir::GetTempDirPrefix() {
+  return kScopedDirPrefix;
 }
 
 }  // namespace base

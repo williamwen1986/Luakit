@@ -9,16 +9,24 @@
 // data.  Because the receiving is blocking, they can be used to perform
 // rudimentary cross-process synchronization with low latency.
 
-#include "base/basictypes.h"
+#include <stddef.h>
+
+#include "base/base_export.h"
+#include "base/compiler_specific.h"
+#include "base/macros.h"
+#include "base/process/process_handle.h"
+#include "base/synchronization/waitable_event.h"
+#include "base/time/time.h"
+#include "build/build_config.h"
+
 #if defined(OS_WIN)
 #include <windows.h>
 #endif
 #include <sys/types.h>
 
-#include "base/base_export.h"
-#include "base/compiler_specific.h"
-#include "base/synchronization/waitable_event.h"
-#include "base/time/time.h"
+#if defined(OS_POSIX) || defined(OS_FUCHSIA)
+#include "base/file_descriptor_posix.h"
+#endif
 
 namespace base {
 
@@ -26,8 +34,10 @@ class BASE_EXPORT SyncSocket {
  public:
 #if defined(OS_WIN)
   typedef HANDLE Handle;
-#else
+  typedef Handle TransitDescriptor;
+#elif defined(OS_POSIX) || defined(OS_FUCHSIA)
   typedef int Handle;
+  typedef FileDescriptor TransitDescriptor;
 #endif
   static const Handle kInvalidHandle;
 
@@ -41,6 +51,15 @@ class BASE_EXPORT SyncSocket {
   // |socket_a| and |socket_b| must not hold a valid handle.  Upon successful
   // return, the sockets will both be valid and connected.
   static bool CreatePair(SyncSocket* socket_a, SyncSocket* socket_b);
+
+  // Returns |Handle| wrapped in a |TransitDescriptor|.
+  static Handle UnwrapHandle(const TransitDescriptor& descriptor);
+
+  // Prepares a |TransitDescriptor| which wraps |Handle| used for transit.
+  // This is used to prepare the underlying shared resource before passing back
+  // the handle to be used by the peer process.
+  bool PrepareTransitDescriptor(ProcessHandle peer_process_handle,
+                                TransitDescriptor* descriptor);
 
   // Closes the SyncSocket.  Returns true on success, false on failure.
   virtual bool Close();
@@ -67,14 +86,15 @@ class BASE_EXPORT SyncSocket {
                                     TimeDelta timeout);
 
   // Returns the number of bytes available. If non-zero, Receive() will not
-  // not block when called. NOTE: Some implementations cannot reliably
-  // determine the number of bytes available so avoid using the returned
-  // size as a promise and simply test against zero.
-  size_t Peek();
+  // not block when called.
+  virtual size_t Peek();
 
   // Extracts the contained handle.  Used for transferring between
   // processes.
   Handle handle() const { return handle_; }
+
+  // Extracts and takes ownership of the contained handle.
+  Handle Release();
 
  protected:
   Handle handle_;
@@ -90,7 +110,7 @@ class BASE_EXPORT CancelableSyncSocket : public SyncSocket {
  public:
   CancelableSyncSocket();
   explicit CancelableSyncSocket(Handle handle);
-  virtual ~CancelableSyncSocket() {}
+  ~CancelableSyncSocket() override = default;
 
   // Initializes a pair of cancelable sockets.  See documentation for
   // SyncSocket::CreatePair for more details.
@@ -108,11 +128,11 @@ class BASE_EXPORT CancelableSyncSocket : public SyncSocket {
   // and there isn't a way to cancel a blocking synchronous Read that is
   // supported on <Vista. So, for Windows only, we override these
   // SyncSocket methods in order to support shutting down the 'socket'.
-  virtual bool Close() OVERRIDE;
-  virtual size_t Receive(void* buffer, size_t length) OVERRIDE;
-  virtual size_t ReceiveWithTimeout(void* buffer,
-                                    size_t length,
-                                    TimeDelta timeout) OVERRIDE;
+  bool Close() override;
+  size_t Receive(void* buffer, size_t length) override;
+  size_t ReceiveWithTimeout(void* buffer,
+                            size_t length,
+                            TimeDelta timeout) override;
 #endif
 
   // Send() is overridden to catch cases where the remote end is not responding
@@ -120,7 +140,7 @@ class BASE_EXPORT CancelableSyncSocket : public SyncSocket {
   // implementation of Send() will not block indefinitely as
   // SyncSocket::Send will, but instead return 0, as no bytes could be sent.
   // Note that the socket will not be closed in this case.
-  virtual size_t Send(const void* buffer, size_t length) OVERRIDE;
+  size_t Send(const void* buffer, size_t length) override;
 
  private:
 #if defined(OS_WIN)

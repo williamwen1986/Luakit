@@ -5,92 +5,79 @@
 #ifndef BASE_METRICS_SPARSE_HISTOGRAM_H_
 #define BASE_METRICS_SPARSE_HISTOGRAM_H_
 
+#include <stddef.h>
+#include <stdint.h>
+
 #include <map>
+#include <memory>
 #include <string>
 
 #include "base/base_export.h"
-#include "base/basictypes.h"
-#include "base/compiler_specific.h"
-#include "base/logging.h"
-#include "base/memory/scoped_ptr.h"
+#include "base/macros.h"
 #include "base/metrics/histogram_base.h"
-#include "base/metrics/sample_map.h"
+#include "base/metrics/histogram_samples.h"
 #include "base/synchronization/lock.h"
 
 namespace base {
 
-// The common code for different SparseHistogram macros.
-#define HISTOGRAM_SPARSE_COMMON(name, sample, flag) \
-    do { \
-      base::HistogramBase* histogram( \
-          base::SparseHistogram::FactoryGet(name, flag)); \
-      DCHECK_EQ(histogram->histogram_name(), name); \
-      histogram->Add(sample); \
-    } while (0)
-
-#define HISTOGRAM_SPARSE_SLOWLY(name, sample) \
-    HISTOGRAM_SPARSE_COMMON(name, sample, base::HistogramBase::kNoFlags)
-
-#define UMA_HISTOGRAM_SPARSE_SLOWLY(name, sample) \
-    HISTOGRAM_SPARSE_COMMON(name, sample, \
-                            base::HistogramBase::kUmaTargetedHistogramFlag)
-
-//------------------------------------------------------------------------------
-// Define debug only version of macros.
-#ifndef NDEBUG
-
-#define DHISTOGRAM_SPARSE_SLOWLY(name, sample) \
-    HISTOGRAM_SPARSE_SLOWLY(name, sample)
-
-#else  // NDEBUG
-
-#define DHISTOGRAM_SPARSE_SLOWLY(name, sample) \
-    while (0) { \
-      static_cast<void>(name); \
-      static_cast<void>(sample); \
-    }
-
-#endif  // NDEBUG
-
 class HistogramSamples;
+class PersistentHistogramAllocator;
+class Pickle;
+class PickleIterator;
 
-class BASE_EXPORT_PRIVATE SparseHistogram : public HistogramBase {
+class BASE_EXPORT SparseHistogram : public HistogramBase {
  public:
   // If there's one with same name, return the existing one. If not, create a
   // new one.
-  static HistogramBase* FactoryGet(const std::string& name, int32 flags);
+  static HistogramBase* FactoryGet(const std::string& name, int32_t flags);
 
-  virtual ~SparseHistogram();
+  // Create a histogram using data in persistent storage. The allocator must
+  // live longer than the created sparse histogram.
+  static std::unique_ptr<HistogramBase> PersistentCreate(
+      PersistentHistogramAllocator* allocator,
+      const char* name,
+      HistogramSamples::Metadata* meta,
+      HistogramSamples::Metadata* logged_meta);
+
+  ~SparseHistogram() override;
 
   // HistogramBase implementation:
-  virtual HistogramType GetHistogramType() const OVERRIDE;
-  virtual bool HasConstructionArguments(
-      Sample expected_minimum,
-      Sample expected_maximum,
-      size_t expected_bucket_count) const OVERRIDE;
-  virtual void Add(Sample value) OVERRIDE;
-  virtual void AddSamples(const HistogramSamples& samples) OVERRIDE;
-  virtual bool AddSamplesFromPickle(PickleIterator* iter) OVERRIDE;
-  virtual scoped_ptr<HistogramSamples> SnapshotSamples() const OVERRIDE;
-  virtual void WriteHTMLGraph(std::string* output) const OVERRIDE;
-  virtual void WriteAscii(std::string* output) const OVERRIDE;
+  uint64_t name_hash() const override;
+  HistogramType GetHistogramType() const override;
+  bool HasConstructionArguments(Sample expected_minimum,
+                                Sample expected_maximum,
+                                uint32_t expected_bucket_count) const override;
+  void Add(Sample value) override;
+  void AddCount(Sample value, int count) override;
+  void AddSamples(const HistogramSamples& samples) override;
+  bool AddSamplesFromPickle(base::PickleIterator* iter) override;
+  std::unique_ptr<HistogramSamples> SnapshotSamples() const override;
+  std::unique_ptr<HistogramSamples> SnapshotDelta() override;
+  std::unique_ptr<HistogramSamples> SnapshotFinalDelta() const override;
+  void WriteHTMLGraph(std::string* output) const override;
+  void WriteAscii(std::string* output) const override;
 
  protected:
   // HistogramBase implementation:
-  virtual bool SerializeInfoImpl(Pickle* pickle) const OVERRIDE;
+  void SerializeInfoImpl(base::Pickle* pickle) const override;
 
  private:
   // Clients should always use FactoryGet to create SparseHistogram.
-  explicit SparseHistogram(const std::string& name);
+  explicit SparseHistogram(const char* name);
 
-  friend BASE_EXPORT_PRIVATE HistogramBase* DeserializeHistogramInfo(
-      PickleIterator* iter);
-  static HistogramBase* DeserializeInfoImpl(PickleIterator* iter);
+  SparseHistogram(PersistentHistogramAllocator* allocator,
+                  const char* name,
+                  HistogramSamples::Metadata* meta,
+                  HistogramSamples::Metadata* logged_meta);
 
-  virtual void GetParameters(DictionaryValue* params) const OVERRIDE;
-  virtual void GetCountAndBucketData(Count* count,
-                                     int64* sum,
-                                     ListValue* buckets) const OVERRIDE;
+  friend BASE_EXPORT HistogramBase* DeserializeHistogramInfo(
+      base::PickleIterator* iter);
+  static HistogramBase* DeserializeInfoImpl(base::PickleIterator* iter);
+
+  void GetParameters(DictionaryValue* params) const override;
+  void GetCountAndBucketData(Count* count,
+                             int64_t* sum,
+                             ListValue* buckets) const override;
 
   // Helpers for emitting Ascii graphic.  Each method appends data to output.
   void WriteAsciiImpl(bool graph_it,
@@ -107,7 +94,11 @@ class BASE_EXPORT_PRIVATE SparseHistogram : public HistogramBase {
   // Protects access to |samples_|.
   mutable base::Lock lock_;
 
-  SampleMap samples_;
+  // Flag to indicate if PrepareFinalDelta has been previously called.
+  mutable bool final_delta_created_ = false;
+
+  std::unique_ptr<HistogramSamples> unlogged_samples_;
+  std::unique_ptr<HistogramSamples> logged_samples_;
 
   DISALLOW_COPY_AND_ASSIGN(SparseHistogram);
 };

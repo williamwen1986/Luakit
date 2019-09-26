@@ -9,17 +9,36 @@
 
 namespace base {
 namespace android {
+namespace {
 
-JavaRef<jobject>::JavaRef() : obj_(NULL) {}
+const int kDefaultLocalFrameCapacity = 16;
 
+}  // namespace
+
+ScopedJavaLocalFrame::ScopedJavaLocalFrame(JNIEnv* env) : env_(env) {
+  int failed = env_->PushLocalFrame(kDefaultLocalFrameCapacity);
+  DCHECK(!failed);
+}
+
+ScopedJavaLocalFrame::ScopedJavaLocalFrame(JNIEnv* env, int capacity)
+    : env_(env) {
+  int failed = env_->PushLocalFrame(capacity);
+  DCHECK(!failed);
+}
+
+ScopedJavaLocalFrame::~ScopedJavaLocalFrame() {
+  env_->PopLocalFrame(nullptr);
+}
+
+#if DCHECK_IS_ON()
+// This constructor is inlined when DCHECKs are disabled; don't add anything
+// else here.
 JavaRef<jobject>::JavaRef(JNIEnv* env, jobject obj) : obj_(obj) {
   if (obj) {
     DCHECK(env && env->GetObjectRefType(obj) == JNILocalRefType);
   }
 }
-
-JavaRef<jobject>::~JavaRef() {
-}
+#endif
 
 JNIEnv* JavaRef<jobject>::SetNewLocalRef(JNIEnv* env, jobject obj) {
   if (!env) {
@@ -52,20 +71,20 @@ void JavaRef<jobject>::ResetLocalRef(JNIEnv* env) {
   if (obj_) {
     DCHECK_EQ(env, AttachCurrentThread());  // Is |env| on correct thread.
     env->DeleteLocalRef(obj_);
-    obj_ = NULL;
+    obj_ = nullptr;
   }
 }
 
 void JavaRef<jobject>::ResetGlobalRef() {
   if (obj_) {
     AttachCurrentThread()->DeleteGlobalRef(obj_);
-    obj_ = NULL;
+    obj_ = nullptr;
   }
 }
 
 jobject JavaRef<jobject>::ReleaseInternal() {
   jobject obj = obj_;
-  obj_ = NULL;
+  obj_ = nullptr;
   return obj;
 }
 

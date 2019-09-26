@@ -6,6 +6,7 @@
 
 #include <errno.h>
 #include <limits.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <sys/types.h>
 
@@ -24,6 +25,24 @@ SyncSocket::~SyncSocket() {
 
 // static
 bool SyncSocket::CreatePair(SyncSocket* socket_a, SyncSocket* socket_b) {
+  return false;
+}
+
+// static
+SyncSocket::Handle SyncSocket::UnwrapHandle(
+    const SyncSocket::TransitDescriptor& descriptor) {
+  // TODO(xians): Still unclear how NaCl uses SyncSocket.
+  // See http://crbug.com/409656
+  NOTIMPLEMENTED();
+  return SyncSocket::kInvalidHandle;
+}
+
+bool SyncSocket::PrepareTransitDescriptor(
+    ProcessHandle peer_process_handle,
+    SyncSocket::TransitDescriptor* descriptor) {
+  // TODO(xians): Still unclear how NaCl uses SyncSocket.
+  // See http://crbug.com/409656
+  NOTIMPLEMENTED();
   return false;
 }
 
@@ -54,6 +73,12 @@ size_t SyncSocket::ReceiveWithTimeout(void* buffer, size_t length, TimeDelta) {
 size_t SyncSocket::Peek() {
   NOTIMPLEMENTED();
   return 0;
+}
+
+SyncSocket::Handle SyncSocket::Release() {
+  Handle r = handle_;
+  handle_ = kInvalidHandle;
+  return r;
 }
 
 CancelableSyncSocket::CancelableSyncSocket() {
