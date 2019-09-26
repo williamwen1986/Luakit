@@ -59,6 +59,9 @@ void pushDictObject(lua_State *L, NSDictionary *d)
 {
     lua_newtable(L);
     for (int i = 0; i<d.allKeys.count; i++) {
+        if([d.allKeys[i] isKindOfClass:[NSNull class]] || [d.allValues[i] isKindOfClass:[NSNull class]]){
+            continue;
+        }
         pushOneObject(L, d.allKeys[i]);
         pushOneObject(L, d.allValues[i]);
         lua_rawset(L, -3);
@@ -69,6 +72,9 @@ void pushArrayObject(lua_State *L, NSArray* a)
 {
     lua_newtable(L);
     for (int i = 0; i<a.count; i++) {
+        if([a[i] isKindOfClass:[NSNull class]]){
+            continue;
+        }
         pushOneObject(L, @(i+1));
         pushOneObject(L, a[i]);
         lua_rawset(L, -3);
