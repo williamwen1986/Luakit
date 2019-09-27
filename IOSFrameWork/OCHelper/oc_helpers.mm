@@ -88,28 +88,34 @@ void pushOneObject(lua_State *L, id object)
     if(!object){
         lua_pushnil(L);
     } else if([object isKindOfClass:[NSNumber class]]){
-        switch ([object objCType][0]) {
-            case _C_CHR:
-            case _C_SHT:
-            case _C_INT:
-            case _C_LNG:
-            case _C_LNG_LNG:
-                lua_pushinteger(L, [object integerValue]);
-                break;
-            case _C_USHT:
-            case _C_UINT:
-            case _C_ULNG:
-            case _C_ULNG_LNG:
-                lua_pushinteger(L, [object unsignedIntegerValue]);
-                break;
-            case _C_FLT:
-                lua_pushnumber(L, [object floatValue]);
-            case _C_DBL:
-                lua_pushnumber(L, [object doubleValue]);
-                break;
-            default:
-                lua_pushinteger(L, [object integerValue]);
-                break;
+        const char * objCType = [((NSNumber*)object) objCType];
+        if (strcmp(objCType, @encode(BOOL)) == 0) {
+            BOOL b = [object boolValue];
+            lua_pushboolean(L, b);
+        } else {
+            switch ([object objCType][0]) {
+                case _C_CHR:
+                case _C_SHT:
+                case _C_INT:
+                case _C_LNG:
+                case _C_LNG_LNG:
+                    lua_pushinteger(L, [object integerValue]);
+                    break;
+                case _C_USHT:
+                case _C_UINT:
+                case _C_ULNG:
+                case _C_ULNG_LNG:
+                    lua_pushinteger(L, [object unsignedIntegerValue]);
+                    break;
+                case _C_FLT:
+                    lua_pushnumber(L, [object floatValue]);
+                case _C_DBL:
+                    lua_pushnumber(L, [object doubleValue]);
+                    break;
+                default:
+                    lua_pushinteger(L, [object integerValue]);
+                    break;
+            }
         }
     } else if([object isKindOfClass:[NSString class]]) {
         NSString * s = (NSString *)object;
@@ -183,7 +189,7 @@ id getOneObject(lua_State *L, int stackIndex)
         break;
         case LUA_TBOOLEAN:{
             int ret = lua_toboolean(L, stackIndex);
-            return @(ret);
+            return [NSNumber numberWithBool:ret];
         }
         break;
         case LUA_TNUMBER:{
