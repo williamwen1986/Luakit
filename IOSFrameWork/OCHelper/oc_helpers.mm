@@ -88,8 +88,8 @@ void pushOneObject(lua_State *L, id object)
     if(!object){
         lua_pushnil(L);
     } else if([object isKindOfClass:[NSNumber class]]){
-        const char * objCType = [((NSNumber*)object) objCType];
-        if (strcmp(objCType, @encode(BOOL)) == 0) {
+        const char * objCClass = class_getName([object class]);
+        if (strcmp(objCClass, "__NSCFBoolean") == 0) {
             BOOL b = [object boolValue];
             lua_pushboolean(L, b);
         } else {
