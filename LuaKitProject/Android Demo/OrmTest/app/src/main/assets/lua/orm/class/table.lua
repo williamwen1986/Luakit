@@ -517,10 +517,11 @@ function Table.new(self, tableName)
         if coltype[2].to then
             coltype[2].to = _G.All_Tables[coltype[2].to]
         end
+        local typeStr = coltype[1]
         coltype = fields[coltype[1]](coltype[2])
         coltype.name = colname
         coltype.__table__ = Table_instance
-
+        coltype.typeStr = typeStr
         table.insert(Table_instance.__colnames, coltype)
         if coltype.settings.foreign_key then
             table.insert(Table_instance.__foreign_keys, coltype)

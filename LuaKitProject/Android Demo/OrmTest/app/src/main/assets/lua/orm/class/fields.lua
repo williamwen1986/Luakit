@@ -18,6 +18,8 @@ local Field = {
 
     to_type = Type.to.str,
 
+    pureKeepOrgType = false,
+
     -- Call when create new field in some table
     register = function (self, args)
         if not args then
@@ -44,6 +46,9 @@ local Field = {
 
             -- Cast values to correct type
             to_type = args.to_type or self.to_type,
+
+            -- puredata KeepOrgType
+            pureKeepOrgType = args.pureKeepOrgType or self.pureKeepOrgType,
 
             -- Default settings for type
             settings = args.settings or {},

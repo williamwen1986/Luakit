@@ -1,5 +1,5 @@
 local _weatherManager = {}
-
+print(require('language')('t1'))
 local Table = require('orm.class.table')
 local _weatherTable = Table("weather")
 
