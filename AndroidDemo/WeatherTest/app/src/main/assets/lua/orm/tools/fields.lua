@@ -58,7 +58,8 @@ field.TextField = Field:register({
 })
 
 field.BooleandField = Field:register({
-    __type__ = "bool"
+    __type__ = "bool",
+    pureKeepOrgType = true,
 })
 
 field.DateTimeField = Field:register({
