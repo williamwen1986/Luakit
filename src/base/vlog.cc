@@ -4,12 +4,13 @@
 
 #include "base/vlog.h"
 
-#include <cstddef>
+#include <stddef.h>
+
 #include <ostream>
 #include <utility>
 
-#include "base/basictypes.h"
 #include "base/logging.h"
+#include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 
@@ -48,9 +49,8 @@ VlogInfo::VlogInfo(const std::string& v_switch,
                    const std::string& vmodule_switch,
                    int* min_log_level)
     : min_log_level_(min_log_level) {
-  DCHECK(min_log_level != NULL);
+  DCHECK_NE(min_log_level, nullptr);
 
-  typedef std::pair<std::string, std::string> KVPair;
   int vlog_level = 0;
   if (!v_switch.empty()) {
     if (base::StringToInt(v_switch, &vlog_level)) {
@@ -60,13 +60,13 @@ VlogInfo::VlogInfo(const std::string& v_switch,
     }
   }
 
-  std::vector<KVPair> kv_pairs;
+  base::StringPairs kv_pairs;
   if (!base::SplitStringIntoKeyValuePairs(
           vmodule_switch, '=', ',', &kv_pairs)) {
     DLOG(WARNING) << "Could not fully parse vmodule switch \""
                   << vmodule_switch << "\"";
   }
-  for (std::vector<KVPair>::const_iterator it = kv_pairs.begin();
+  for (base::StringPairs::const_iterator it = kv_pairs.begin();
        it != kv_pairs.end(); ++it) {
     VmodulePattern pattern(it->first);
     if (!base::StringToInt(it->second, &pattern.vlog_level)) {
@@ -78,7 +78,7 @@ VlogInfo::VlogInfo(const std::string& v_switch,
   }
 }
 
-VlogInfo::~VlogInfo() {}
+VlogInfo::~VlogInfo() = default;
 
 namespace {
 
@@ -94,7 +94,7 @@ base::StringPiece GetModule(const base::StringPiece& file) {
   base::StringPiece::size_type extension_start = module.rfind('.');
   module = module.substr(0, extension_start);
   static const char kInlSuffix[] = "-inl";
-  static const int kInlSuffixLen = arraysize(kInlSuffix) - 1;
+  static const int kInlSuffixLen = base::size(kInlSuffix) - 1;
   if (module.ends_with(kInlSuffix))
     module.remove_suffix(kInlSuffixLen);
   return module;
@@ -105,12 +105,11 @@ base::StringPiece GetModule(const base::StringPiece& file) {
 int VlogInfo::GetVlogLevel(const base::StringPiece& file) const {
   if (!vmodule_levels_.empty()) {
     base::StringPiece module(GetModule(file));
-    for (std::vector<VmodulePattern>::const_iterator it =
-             vmodule_levels_.begin(); it != vmodule_levels_.end(); ++it) {
+    for (const auto& it : vmodule_levels_) {
       base::StringPiece target(
-          (it->match_target == VmodulePattern::MATCH_FILE) ? file : module);
-      if (MatchVlogPattern(target, it->pattern))
-        return it->vlog_level;
+          (it.match_target == VmodulePattern::MATCH_FILE) ? file : module);
+      if (MatchVlogPattern(target, it.pattern))
+        return it.vlog_level;
     }
   }
   return GetMaxVlogLevel();
@@ -178,4 +177,4 @@ bool MatchVlogPattern(const base::StringPiece& string,
   return false;
 }
 
-}  // namespace
+}  // namespace logging

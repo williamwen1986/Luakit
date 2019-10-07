@@ -3,7 +3,10 @@
 // found in the LICENSE file.
 
 // This file intentionally does not have header guards, it's included
-// inside a macro to generate enum values.
+// inside a macro to generate enum values. The following line silences a
+// presubmit and Tricium warning that would otherwise be triggered by this:
+// no-include-guard-because-multiply-included
+// NOLINT(build/header_guard)
 
 // This file contains the list of network errors.
 
@@ -87,7 +90,7 @@ NET_ERROR(BLOCKED_BY_CLIENT, -20)
 // The network changed.
 NET_ERROR(NETWORK_CHANGED, -21)
 
-// The request was blocked by the URL blacklist configured by the domain
+// The request was blocked by the URL block list configured by the domain
 // administrator.
 NET_ERROR(BLOCKED_BY_ADMINISTRATOR, -22)
 
@@ -106,6 +109,17 @@ NET_ERROR(UPLOAD_STREAM_REWIND_NOT_SUPPORTED, -25)
 // The request failed because the URLRequestContext is shutting down, or has
 // been shut down.
 NET_ERROR(CONTEXT_SHUT_DOWN, -26)
+
+// The request failed because the response was delivered along with requirements
+// which are not met ('X-Frame-Options' and 'Content-Security-Policy' ancestor
+// checks and 'Cross-Origin-Resource-Policy', for instance).
+NET_ERROR(BLOCKED_BY_RESPONSE, -27)
+
+// Error -28 was removed (BLOCKED_BY_XSS_AUDITOR).
+
+// The request was blocked by system policy disallowing some or all cleartext
+// requests. Used for NetworkSecurityPolicy on Android.
+NET_ERROR(CLEARTEXT_NOT_PERMITTED, -29)
 
 // A connection was closed (corresponding to a TCP FIN).
 NET_ERROR(CONNECTION_CLOSED, -100)
@@ -185,7 +199,7 @@ NET_ERROR(SOCKS_CONNECTION_FAILED, -120)
 NET_ERROR(SOCKS_CONNECTION_HOST_UNREACHABLE, -121)
 
 // The request to negotiate an alternate protocol failed.
-NET_ERROR(NPN_NEGOTIATION_FAILED, -122)
+NET_ERROR(ALPN_NEGOTIATION_FAILED, -122)
 
 // The peer sent an SSL no_renegotiation alert message.
 NET_ERROR(SSL_NO_RENEGOTIATION, -123)
@@ -246,9 +260,12 @@ NET_ERROR(NETWORK_ACCESS_DENIED, -138)
 NET_ERROR(TEMPORARILY_THROTTLED, -139)
 
 // A request to create an SSL tunnel connection through the HTTPS proxy
-// received a non-200 (OK) and non-407 (Proxy Auth) response.  The response
-// body might include a description of why the request failed.
-NET_ERROR(HTTPS_PROXY_TUNNEL_RESPONSE, -140)
+// received a 302 (temporary redirect) response.  The response body might
+// include a description of why the request failed.
+//
+// TODO(https://crbug.com/928551): This is deprecated and should not be used by
+// new code.
+NET_ERROR(HTTPS_PROXY_TUNNEL_RESPONSE_REDIRECT, -140)
 
 // We were unable to sign the CertificateVerify data of an SSL client auth
 // handshake with the client certificate's private key.
@@ -263,8 +280,7 @@ NET_ERROR(SSL_CLIENT_AUTH_SIGNATURE_FAILED, -141)
 // which exceeds size threshold).
 NET_ERROR(MSG_TOO_BIG, -142)
 
-// A SPDY session already exists, and should be used instead of this connection.
-NET_ERROR(SPDY_SESSION_ALREADY_EXISTS, -143)
+// Error -143 was removed (SPDY_SESSION_ALREADY_EXISTS)
 
 // Error -144 was removed (LIMIT_VIOLATION).
 
@@ -291,9 +307,7 @@ NET_ERROR(SSL_PINNED_KEY_NOT_IN_CERT_CHAIN, -150)
 // Server request for client certificate did not contain any types we support.
 NET_ERROR(CLIENT_AUTH_CERT_TYPE_UNSUPPORTED, -151)
 
-// Server requested one type of cert, then requested a different type while the
-// first was still being generated.
-NET_ERROR(ORIGIN_BOUND_CERT_GENERATION_TYPE_MISMATCH, -152)
+// Error -152 was removed (ORIGIN_BOUND_CERT_GENERATION_TYPE_MISMATCH)
 
 // An SSL peer sent us a fatal decrypt_error alert. This typically occurs when
 // a peer could not correctly verify a signature (in CertificateVerify or
@@ -309,12 +323,9 @@ NET_ERROR(WS_THROTTLE_QUEUE_TOO_LARGE, -154)
 // The SSL server certificate changed in a renegotiation.
 NET_ERROR(SSL_SERVER_CERT_CHANGED, -156)
 
-// The SSL server indicated that an unnecessary TLS version fallback was
-// performed.
-NET_ERROR(SSL_INAPPROPRIATE_FALLBACK, -157)
+// Error -157 was removed (SSL_INAPPROPRIATE_FALLBACK).
 
-// Certificate Transparency: All Signed Certificate Timestamps failed to verify.
-NET_ERROR(CT_NO_SCTS_VERIFIED_OK, -158)
+// Error -158 was removed (CT_NO_SCTS_VERIFIED_OK).
 
 // The SSL server sent us a fatal unrecognized_name alert.
 NET_ERROR(SSL_UNRECOGNIZED_NAME_ALERT, -159)
@@ -337,9 +348,7 @@ NET_ERROR(SOCKET_SEND_BUFFER_SIZE_UNCHANGEABLE, -163)
 // library.
 NET_ERROR(SSL_CLIENT_AUTH_CERT_BAD_FORMAT, -164)
 
-// The SSL server requires falling back to a version older than the configured
-// minimum fallback version, and thus fallback failed.
-NET_ERROR(SSL_FALLBACK_BEYOND_MINIMUM_VERSION, -165)
+// Error -165 was removed (SSL_FALLBACK_BEYOND_MINIMUM_VERSION).
 
 // Resolving a hostname to an IP address list included the IPv4 address
 // "127.0.53.53". This is a special IP address which ICANN has recommended to
@@ -351,6 +360,70 @@ NET_ERROR(ICANN_NAME_COLLISION, -166)
 // not a certificate error code as no X509Certificate object is available. This
 // error is fatal.
 NET_ERROR(SSL_SERVER_CERT_BAD_FORMAT, -167)
+
+// Certificate Transparency: Received a signed tree head that failed to parse.
+NET_ERROR(CT_STH_PARSING_FAILED, -168)
+
+// Certificate Transparency: Received a signed tree head whose JSON parsing was
+// OK but was missing some of the fields.
+NET_ERROR(CT_STH_INCOMPLETE, -169)
+
+// The attempt to reuse a connection to send proxy auth credentials failed
+// before the AuthController was used to generate credentials. The caller should
+// reuse the controller with a new connection. This error is only used
+// internally by the network stack.
+NET_ERROR(UNABLE_TO_REUSE_CONNECTION_FOR_PROXY_AUTH, -170)
+
+// Certificate Transparency: Failed to parse the received consistency proof.
+NET_ERROR(CT_CONSISTENCY_PROOF_PARSING_FAILED, -171)
+
+// The SSL server required an unsupported cipher suite that has since been
+// removed. This error will temporarily be signaled on a fallback for one or two
+// releases immediately following a cipher suite's removal, after which the
+// fallback will be removed.
+NET_ERROR(SSL_OBSOLETE_CIPHER, -172)
+
+// When a WebSocket handshake is done successfully and the connection has been
+// upgraded, the URLRequest is cancelled with this error code.
+NET_ERROR(WS_UPGRADE, -173)
+
+// Socket ReadIfReady support is not implemented. This error should not be user
+// visible, because the normal Read() method is used as a fallback.
+NET_ERROR(READ_IF_READY_NOT_IMPLEMENTED, -174)
+
+// Error -175 was removed (SSL_VERSION_INTERFERENCE).
+
+// No socket buffer space is available.
+NET_ERROR(NO_BUFFER_SPACE, -176)
+
+// There were no common signature algorithms between our client certificate
+// private key and the server's preferences.
+NET_ERROR(SSL_CLIENT_AUTH_NO_COMMON_ALGORITHMS, -177)
+
+// TLS 1.3 early data was rejected by the server. This will be received before
+// any data is returned from the socket. The request should be retried with
+// early data disabled.
+NET_ERROR(EARLY_DATA_REJECTED, -178)
+
+// TLS 1.3 early data was offered, but the server responded with TLS 1.2 or
+// earlier. This is an internal error code to account for a
+// backwards-compatibility issue with early data and TLS 1.2. It will be
+// received before any data is returned from the socket. The request should be
+// retried with early data disabled.
+//
+// See https://tools.ietf.org/html/rfc8446#appendix-D.3 for details.
+NET_ERROR(WRONG_VERSION_ON_EARLY_DATA, -179)
+
+// TLS 1.3 was enabled, but a lower version was negotiated and the server
+// returned a value indicating it supported TLS 1.3. This is part of a security
+// check in TLS 1.3, but it may also indicate the user is behind a buggy
+// TLS-terminating proxy which implemented TLS 1.2 incorrectly. (See
+// https://crbug.com/boringssl/226.)
+NET_ERROR(TLS13_DOWNGRADE_DETECTED, -180)
+
+// The server's certificate has a keyUsage extension incompatible with the
+// negotiated TLS key exchange method.
+NET_ERROR(SSL_KEY_USAGE_INCOMPATIBLE, -181)
 
 // Certificate error codes
 //
@@ -455,13 +528,26 @@ NET_ERROR(CERT_NAME_CONSTRAINT_VIOLATION, -212)
 // The certificate's validity period is too long.
 NET_ERROR(CERT_VALIDITY_TOO_LONG, -213)
 
+// Certificate Transparency was required for this connection, but the server
+// did not provide CT information that complied with the policy.
+NET_ERROR(CERTIFICATE_TRANSPARENCY_REQUIRED, -214)
+
+// The certificate chained to a legacy Symantec root that is no longer trusted.
+// https://g.co/chrome/symantecpkicerts
+NET_ERROR(CERT_SYMANTEC_LEGACY, -215)
+
+// The certificate presented on a QUIC connection does not chain to a known root
+// and the origin connected to is not on a list of domains where unknown roots
+// are allowed.
+NET_ERROR(QUIC_CERT_ROOT_NOT_KNOWN, -216)
+
 // Add new certificate error codes here.
 //
 // Update the value of CERT_END whenever you add a new certificate error
 // code.
 
 // The value immediately past the last certificate error code.
-NET_ERROR(CERT_END, -214)
+NET_ERROR(CERT_END, -217)
 
 // The URL is invalid.
 NET_ERROR(INVALID_URL, -300)
@@ -471,6 +557,9 @@ NET_ERROR(DISALLOWED_URL_SCHEME, -301)
 
 // The scheme of the URL is unknown.
 NET_ERROR(UNKNOWN_URL_SCHEME, -302)
+
+// Attempting to load an URL resulted in a redirect to an invalid URL.
+NET_ERROR(INVALID_REDIRECT, -303)
 
 // Attempting to load an URL resulted in too many redirects.
 NET_ERROR(TOO_MANY_REDIRECTS, -310)
@@ -504,8 +593,7 @@ NET_ERROR(EMPTY_RESPONSE, -324)
 // The headers section of the response is too large.
 NET_ERROR(RESPONSE_HEADERS_TOO_BIG, -325)
 
-// The PAC requested by HTTP did not have a valid status code (non-200).
-NET_ERROR(PAC_STATUS_NOT_OK, -326)
+// Error -326 was removed (PAC_STATUS_NOT_OK)
 
 // The evaluation of the PAC script failed.
 NET_ERROR(PAC_SCRIPT_FAILED, -327)
@@ -533,14 +621,14 @@ NET_ERROR(ENCODING_CONVERSION_FAILED, -333)
 // The server sent an FTP directory listing in a format we do not understand.
 NET_ERROR(UNRECOGNIZED_FTP_DIRECTORY_LISTING_FORMAT, -334)
 
-// Attempted use of an unknown SPDY stream id.
-NET_ERROR(INVALID_SPDY_STREAM, -335)
+// Obsolete.  Was only logged in NetLog when an HTTP/2 pushed stream expired.
+// NET_ERROR(INVALID_SPDY_STREAM, -335)
 
 // There are no supported proxies in the provided list.
 NET_ERROR(NO_SUPPORTED_PROXIES, -336)
 
-// There is a SPDY protocol error.
-NET_ERROR(SPDY_PROTOCOL_ERROR, -337)
+// There is an HTTP/2 protocol error.
+NET_ERROR(HTTP2_PROTOCOL_ERROR, -337)
 
 // Credentials could not be established during HTTP Authentication.
 NET_ERROR(INVALID_AUTH_CREDENTIALS, -338)
@@ -571,9 +659,9 @@ NET_ERROR(RESPONSE_BODY_TOO_BIG_TO_DRAIN, -345)
 // The HTTP response contained multiple distinct Content-Length headers.
 NET_ERROR(RESPONSE_HEADERS_MULTIPLE_CONTENT_LENGTH, -346)
 
-// SPDY Headers have been received, but not all of them - status or version
+// HTTP/2 headers have been received, but not all of them - status or version
 // headers are missing, so we're expecting additional frames to complete them.
-NET_ERROR(INCOMPLETE_SPDY_HEADERS, -347)
+NET_ERROR(INCOMPLETE_HTTP2_HEADERS, -347)
 
 // No PAC URL configuration could be retrieved from DHCP. This can indicate
 // either a failure to retrieve the DHCP configuration, or that there was no
@@ -586,12 +674,15 @@ NET_ERROR(RESPONSE_HEADERS_MULTIPLE_CONTENT_DISPOSITION, -349)
 // The HTTP response contained multiple Location headers.
 NET_ERROR(RESPONSE_HEADERS_MULTIPLE_LOCATION, -350)
 
-// SPDY server refused the stream. Client should retry. This should never be a
-// user-visible error.
-NET_ERROR(SPDY_SERVER_REFUSED_STREAM, -351)
+// HTTP/2 server refused the request without processing, and sent either a
+// GOAWAY frame with error code NO_ERROR and Last-Stream-ID lower than the
+// stream id corresponding to the request indicating that this request has not
+// been processed yet, or a RST_STREAM frame with error code REFUSED_STREAM.
+// Client MAY retry (on a different connection).  See RFC7540 Section 8.1.4.
+NET_ERROR(HTTP2_SERVER_REFUSED_STREAM, -351)
 
-// SPDY server didn't respond to the PING message.
-NET_ERROR(SPDY_PING_FAILED, -352)
+// HTTP/2 server didn't respond to the PING message.
+NET_ERROR(HTTP2_PING_FAILED, -352)
 
 // Obsolete.  Kept here to avoid reuse, as the old error can still appear on
 // histograms.
@@ -615,20 +706,21 @@ NET_ERROR(RESPONSE_HEADERS_TRUNCATED, -357)
 // to read any requests sent, so they may be resent.
 NET_ERROR(QUIC_HANDSHAKE_FAILED, -358)
 
-// An https resource was requested over an insecure QUIC connection.
-NET_ERROR(REQUEST_FOR_SECURE_RESOURCE_OVER_INSECURE_QUIC, -359)
+// Obsolete.  Kept here to avoid reuse, as the old error can still appear on
+// histograms.
+// NET_ERROR(REQUEST_FOR_SECURE_RESOURCE_OVER_INSECURE_QUIC, -359)
 
-// Transport security is inadequate for the SPDY version.
-NET_ERROR(SPDY_INADEQUATE_TRANSPORT_SECURITY, -360)
+// Transport security is inadequate for the HTTP/2 version.
+NET_ERROR(HTTP2_INADEQUATE_TRANSPORT_SECURITY, -360)
 
-// The peer violated SPDY flow control.
-NET_ERROR(SPDY_FLOW_CONTROL_ERROR, -361)
+// The peer violated HTTP/2 flow control.
+NET_ERROR(HTTP2_FLOW_CONTROL_ERROR, -361)
 
-// The peer sent an improperly sized SPDY frame.
-NET_ERROR(SPDY_FRAME_SIZE_ERROR, -362)
+// The peer sent an improperly sized HTTP/2 frame.
+NET_ERROR(HTTP2_FRAME_SIZE_ERROR, -362)
 
-// Decoding or encoding of compressed SPDY headers failed.
-NET_ERROR(SPDY_COMPRESSION_ERROR, -363)
+// Decoding or encoding of compressed HTTP/2 headers failed.
+NET_ERROR(HTTP2_COMPRESSION_ERROR, -363)
 
 // Proxy Auth Requested without a valid Client Socket Handle.
 NET_ERROR(PROXY_AUTH_REQUESTED_WITH_NO_CONNECTION, -364)
@@ -642,14 +734,52 @@ NET_ERROR(PROXY_HTTP_1_1_REQUIRED, -366)
 // The PAC script terminated fatally and must be reloaded.
 NET_ERROR(PAC_SCRIPT_TERMINATED, -367)
 
-// The certificate offered by the alternative server is not valid for the
-// origin, a violation of HTTP Alternative Services specification Section 2.1,
-// https://tools.ietf.org/id/draft-ietf-httpbis-alt-svc-06.html#host_auth.
-NET_ERROR(ALTERNATIVE_CERT_NOT_VALID_FOR_ORIGIN, -368)
-
+// Obsolete. Kept here to avoid reuse.
 // Request is throttled because of a Backoff header.
 // See: crbug.com/486891.
-NET_ERROR(TEMPORARY_BACKOFF, -369)
+// NET_ERROR(TEMPORARY_BACKOFF, -369)
+
+// The server was expected to return an HTTP/1.x response, but did not. Rather
+// than treat it as HTTP/0.9, this error is returned.
+NET_ERROR(INVALID_HTTP_RESPONSE, -370)
+
+// Initializing content decoding failed.
+NET_ERROR(CONTENT_DECODING_INIT_FAILED, -371)
+
+// Received HTTP/2 RST_STREAM frame with NO_ERROR error code.  This error should
+// be handled internally by HTTP/2 code, and should not make it above the
+// SpdyStream layer.
+NET_ERROR(HTTP2_RST_STREAM_NO_ERROR_RECEIVED, -372)
+
+// The pushed stream claimed by the request is no longer available.
+NET_ERROR(HTTP2_PUSHED_STREAM_NOT_AVAILABLE, -373)
+
+// A pushed stream was claimed and later reset by the server. When this happens,
+// the request should be retried.
+NET_ERROR(HTTP2_CLAIMED_PUSHED_STREAM_RESET_BY_SERVER, -374)
+
+// An HTTP transaction was retried too many times due for authentication or
+// invalid certificates. This may be due to a bug in the net stack that would
+// otherwise infinite loop, or if the server or proxy continually requests fresh
+// credentials or presents a fresh invalid certificate.
+NET_ERROR(TOO_MANY_RETRIES, -375)
+
+// Received an HTTP/2 frame on a closed stream.
+NET_ERROR(HTTP2_STREAM_CLOSED, -376)
+
+// Client is refusing an HTTP/2 stream.
+NET_ERROR(HTTP2_CLIENT_REFUSED_STREAM, -377)
+
+// A pushed HTTP/2 stream was claimed by a request based on matching URL and
+// request headers, but the pushed response headers do not match the request.
+NET_ERROR(HTTP2_PUSHED_RESPONSE_DOES_NOT_MATCH, -378)
+
+// The server returned a non-2xx HTTP response code.
+//
+// Not that this error is only used by certain APIs that interpret the HTTP
+// response itself. URLRequest for instance just passes most non-2xx
+// response back as success.
+NET_ERROR(HTTP_RESPONSE_CODE_FAILURE, -379)
 
 // The cache does not have the requested entry.
 NET_ERROR(CACHE_MISS, -400)
@@ -693,15 +823,32 @@ NET_ERROR(CACHE_LOCK_TIMEOUT, -409)
 // credentials aren't available.  There isn't a way to get them at that point.
 NET_ERROR(CACHE_AUTH_FAILURE_AFTER_READ, -410)
 
+// Internal not-quite error code for the HTTP cache. In-memory hints suggest
+// that the cache entry would not have been useable with the transaction's
+// current configuration (e.g. load flags, mode, etc.)
+NET_ERROR(CACHE_ENTRY_NOT_SUITABLE, -411)
+
+// The disk cache is unable to doom this entry.
+NET_ERROR(CACHE_DOOM_FAILURE, -412)
+
+// The disk cache is unable to open or create this entry.
+NET_ERROR(CACHE_OPEN_OR_CREATE_FAILURE, -413)
+
 // The server's response was insecure (e.g. there was a cert error).
 NET_ERROR(INSECURE_RESPONSE, -501)
 
-// The server responded to a <keygen> with a generated client cert that we
-// don't have the matching private key for.
+// An attempt to import a client certificate failed, as the user's key
+// database lacked a corresponding private key.
 NET_ERROR(NO_PRIVATE_KEY_FOR_CERT, -502)
 
-// An error adding to the OS certificate database (e.g. OS X Keychain).
+// An error adding a certificate to the OS certificate database.
 NET_ERROR(ADD_USER_CERT_FAILED, -503)
+
+// An error occurred while handling a signed exchange.
+NET_ERROR(INVALID_SIGNED_EXCHANGE, -504)
+
+// An error occurred while handling a bundled-exchanges source.
+NET_ERROR(INVALID_BUNDLED_EXCHANGES, -505)
 
 // *** Code -600 is reserved (was FTP_PASV_COMMAND_FAILED). ***
 
@@ -779,8 +926,7 @@ NET_ERROR(SELF_SIGNED_CERT_GENERATION_FAILED, -713)
 // The certificate database changed in some way.
 NET_ERROR(CERT_DATABASE_CHANGED, -714)
 
-// Failure to import Channel ID.
-NET_ERROR(CHANNEL_ID_IMPORT_FAILED, -715)
+// Error -715 was removed (CHANNEL_ID_IMPORT_FAILED)
 
 // DNS error codes.
 
@@ -804,7 +950,10 @@ NET_ERROR(DNS_SERVER_FAILED, -802)
 // DNS transaction timed out.
 NET_ERROR(DNS_TIMED_OUT, -803)
 
-// The entry was not found in cache, for cache-only lookups.
+// The entry was not found in cache or other local sources, for lookups where
+// only local sources were queried.
+// TODO(ericorth): Consider renaming to DNS_LOCAL_MISS or something like that as
+// the cache is not necessarily queried either.
 NET_ERROR(DNS_CACHE_MISS, -804)
 
 // Suffix search list rules prevent resolution of the given host name.
@@ -812,3 +961,6 @@ NET_ERROR(DNS_SEARCH_EMPTY, -805)
 
 // Failed to sort addresses according to RFC3484.
 NET_ERROR(DNS_SORT_ERROR, -806)
+
+// Failed to resolve over HTTP, fallback to legacy
+NET_ERROR(DNS_HTTP_FAILED, -807)

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "$CONFIG" ]
 then
@@ -52,7 +52,7 @@ fi
     mv libssl.1.1.dylib "$LIB_ROOT/macos-$CONFIG/"
 
      # copy header
-     mkdir -p "$LIB_ROOT/macos-$CONFIG/include-x86_64/openssl-x86_64"
+     mkdir -p "$LIB_ROOT/macos-$CONFIG/include-x86_64/"
      cp -v -r "include/openssl" "$LIB_ROOT/macos-$CONFIG/include-x86_64/"
 
     make clean

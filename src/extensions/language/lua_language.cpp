@@ -3,7 +3,7 @@ extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
 }
-#include "lua_helpers.h"
+// #include "lua_helpers.h" // Patch [LARPOUX]
 #include "lua_language.h"
 #include <string.h>
 #include "languageUtil.h"

@@ -3,7 +3,7 @@ extern "C" {
 #include "lauxlib.h"
 }
 #include "lua_async_socket.h"
-#include "tools/lua_helpers.h"
+// #include "tools/lua_helpers.h" // Patch [LARPOUX]
 #include "network/async_socket.h"
 #include "network/net/io_buffer.h"
 #include "common/base_lambda_support.h"

@@ -6,7 +6,7 @@ extern "C" {
 #include <assert.h>
 #include <string.h>
 }
-#include "lua_helpers.h"
+// #include "lua_helpers.h" // Patch [LARPOUX]
 #include "serialize.h"
 #define TYPE_NIL 0
 #define TYPE_BOOLEAN 1

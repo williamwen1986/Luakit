@@ -8,6 +8,7 @@
 
 #include "base/threading/thread.h"
 #include "common/business_client_thread.h"
+#include "base/compiler_specific.h" // Patch [LARPOUX]
 
 class BusinessThreadImpl
     : public BusinessThread, public base::Thread {
@@ -35,7 +36,7 @@ class BusinessThreadImpl
 
   static bool PostTaskHelper(
       BusinessThreadID identifier,
-      const tracked_objects::Location& from_here,
+      const base::Location& from_here, // Patch [LARPOUX]
       const base::Closure& task,
       base::TimeDelta delay,
       bool nestable);

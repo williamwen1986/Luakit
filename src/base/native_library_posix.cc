@@ -42,7 +42,7 @@ NativeLibrary LoadNativeLibraryWithOptions(const FilePath& library_path,
   if (!dl && error)
     error->message = dlerror();
 
-  return dl;
+  return NativeLibrary(dl); // Patch [LARPOUX]
 }
 
 void UnloadNativeLibrary(NativeLibrary library) {

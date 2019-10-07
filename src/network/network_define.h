@@ -5,10 +5,11 @@
 #include <list>
 
 #include "base/callback.h"
-#include "base/file_util.h"
+#include "base/files/file_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/path_service.h"
-#include "base/platform_file.h"
+#include "base/files/platform_file.h" // Patch [LARPOUX]
+#include "base/basictypes.h" // Patch [LARPOUX]
 
 typedef std::list<std::pair<std::string, std::string> > HTTP_HEADERS;
 
@@ -189,7 +190,7 @@ namespace network {
               return;
           }
           LOG(INFO) << "跟踪FD使用情况! Opened FD: " << platform_file_;
-          base::PlatformFileInfo file_info;
+          base::PlatformFileInfoProto file_info; // Patch [LARPOUX]
           if(base::GetPlatformFileInfo(platform_file_, &file_info)) {
               file_size_ = file_info.size;
           }

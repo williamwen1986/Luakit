@@ -27,6 +27,7 @@
 #ifdef _MSC_VER
 # include <windows.h>
 #endif
+
 #ifdef __cplusplus
 # error "This file should be built as pure C to avoid name mangling"
 #endif
@@ -60,10 +61,10 @@
    folding them. */
 #ifdef __COUNTER__
 #define DYNAMIC_ANNOTATIONS_IMPL \
-  volatile short lineno = (__LINE__ << 8) + __COUNTER__; (void)lineno;
+  volatile unsigned short lineno = (__LINE__ << 8) + __COUNTER__; (void)lineno;
 #else
 #define DYNAMIC_ANNOTATIONS_IMPL \
-  volatile short lineno = (__LINE__ << 8); (void)lineno;
+  volatile unsigned short lineno = (__LINE__ << 8); (void)lineno;
 #endif
 
 /* WARNING: always add new annotations to the end of the list.
@@ -117,11 +118,11 @@ void DYNAMIC_ANNOTATIONS_NAME(AnnotateCondVarSignalAll)(
 
 void DYNAMIC_ANNOTATIONS_NAME(AnnotateHappensBefore)(
     const char *file, int line, const volatile void *obj)
-{DYNAMIC_ANNOTATIONS_IMPL};
+{DYNAMIC_ANNOTATIONS_IMPL}
 
 void DYNAMIC_ANNOTATIONS_NAME(AnnotateHappensAfter)(
     const char *file, int line, const volatile void *obj)
-{DYNAMIC_ANNOTATIONS_IMPL};
+{DYNAMIC_ANNOTATIONS_IMPL}
 
 void DYNAMIC_ANNOTATIONS_NAME(AnnotatePublishMemoryRange)(
     const char *file, int line, const volatile void *address, long size)

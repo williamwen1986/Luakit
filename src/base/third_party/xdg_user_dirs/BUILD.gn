@@ -3,7 +3,7 @@
 # found in the LICENSE file.
 
 static_library("xdg_user_dirs") {
-  external = true
+  visibility = [ "//base/*" ]
   sources = [
     "xdg_user_dir_lookup.cc",
     "xdg_user_dir_lookup.h",

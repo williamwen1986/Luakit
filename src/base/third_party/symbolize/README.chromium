@@ -1,17 +1,14 @@
 Name: google-glog's symbolization library
-URL: http://code.google.com/p/google-glog/
+URL: https://github.com/google/glog
 License: BSD
 
 The following files are copied AS-IS from:
-http://code.google.com/p/google-glog/source/browse/#svn/trunk/src (r76)
+https://github.com/google/glog/tree/5d46e1bcfc92bf06a9ca3b3f1c5bb1dc024d9ecd
 
 - demangle.cc
 - demangle.h
 - symbolize.cc
 - symbolize.h
-
-r137 (https://code.google.com/p/google-glog/source/detail?r=137) was merged
-after that.
 
 The following files are minimal stubs created for use in Chromium:
 

@@ -10,7 +10,7 @@
 
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
-#include "base/sanitizer_buildflags.h"
+#include "build/sanitizer_buildflags.h"
 #include "build/build_config.h"
 
 namespace base {

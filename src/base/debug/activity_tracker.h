@@ -1336,7 +1336,7 @@ class BASE_EXPORT ScopedThreadJoinActivity
 };
 
 // Some systems don't have base::Process
-#if !defined(OS_NACL) && !defined(OS_IOS)
+#if !defined(OS_NACL)// && !defined(OS_IOS) // Patch [LARPOUX]
 class BASE_EXPORT ScopedProcessWaitActivity
     : public GlobalActivityTracker::ScopedThreadActivity {
  public:

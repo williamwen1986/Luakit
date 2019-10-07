@@ -3,7 +3,7 @@
 # found in the LICENSE file.
 
 static_library("xdg_mime") {
-  external = true
+  visibility = [ "//base/*" ]
   sources = [
     "xdgmime.c",
     "xdgmime.h",
@@ -23,6 +23,6 @@ static_library("xdg_mime") {
     "xdgmimeparent.h",
   ]
 
-  configs -= "//build/config/compiler:chromium_code"
-  configs += "//build/config/compiler:no_chromium_code"
+  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs += [ "//build/config/compiler:no_chromium_code" ]
 }

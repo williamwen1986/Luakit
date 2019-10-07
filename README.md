@@ -345,6 +345,9 @@ We provide an AndroidStudio plugin named Luakit, you can develop with AndroidStu
 <li>Region folding</li>
 <li>Lua Check Tool</li>
 
+Luakit Architecture
+-------------------
+[Luakit Architecure](doc/Architecture.md)
 
 
 More

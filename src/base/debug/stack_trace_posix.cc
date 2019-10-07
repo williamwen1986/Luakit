@@ -39,7 +39,7 @@
 #include "base/debug/proc_maps_linux.h"
 #endif
 
-#include "base/cfi_buildflags.h"
+#include "build/cfi_buildflags.h"
 #include "base/debug/debugger.h"
 #include "base/files/scoped_file.h"
 #include "base/logging.h"

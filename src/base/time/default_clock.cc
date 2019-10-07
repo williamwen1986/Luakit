@@ -4,12 +4,20 @@
 
 #include "base/time/default_clock.h"
 
+#include "base/no_destructor.h"
+
 namespace base {
 
-DefaultClock::~DefaultClock() {}
+DefaultClock::~DefaultClock() = default;
 
-Time DefaultClock::Now() {
+Time DefaultClock::Now() const {
   return Time::Now();
+}
+
+// static
+DefaultClock* DefaultClock::GetInstance() {
+  static base::NoDestructor<DefaultClock> instance;
+  return instance.get();
 }
 
 }  // namespace base

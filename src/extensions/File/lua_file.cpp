@@ -2,9 +2,10 @@ extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
 }
-#include "tools/lua_helpers.h"
+// #include "tools/lua_helpers.h" // Patch [LARPOUX]
 #include "lua_file.h"
-#include "base/file_util.h"
+#include "base/files/file_util.h" // Patch [LARPOUX]
+#include "base/basictypes.h" // Patch [LARPOUX]
 
 static int ComputeDirectorySize(lua_State *L);
 static int DeleteFile(lua_State *L);

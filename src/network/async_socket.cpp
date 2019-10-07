@@ -13,6 +13,8 @@
 #include <netinet/tcp.h>
 #if defined(OS_ANDROID)
 #include <asm/fcntl.h>
+#elif defined(OS_LINUX)
+#include <fcntl.h>
 #endif
 using namespace net;
 

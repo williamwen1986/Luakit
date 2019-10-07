@@ -3,7 +3,7 @@ extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
 }
-#include "tools/lua_helpers.h"
+// #include "tools/lua_helpers.h" Patch [LARPOUX]
 #include "serialize.h"
 #include "lua_thread.h"
 #include "common/base_lambda_support.h"

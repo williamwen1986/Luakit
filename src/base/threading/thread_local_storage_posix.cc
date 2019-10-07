@@ -8,42 +8,23 @@
 
 namespace base {
 
-ThreadLocalStorage::Slot::Slot(TLSDestructorFunc destructor) {
-  initialized_ = false;
-  key_ = 0;
-  Initialize(destructor);
+namespace internal {
+
+bool PlatformThreadLocalStorage::AllocTLS(TLSKey* key) {
+  return !pthread_key_create(key,
+      base::internal::PlatformThreadLocalStorage::OnThreadExit);
 }
 
-bool ThreadLocalStorage::StaticSlot::Initialize(TLSDestructorFunc destructor) {
-  DCHECK(!initialized_);
-  int error = pthread_key_create(&key_, destructor);
-  if (error) {
-    NOTREACHED();
-    return false;
-  }
-
-  initialized_ = true;
-  return true;
+void PlatformThreadLocalStorage::FreeTLS(TLSKey key) {
+  int ret = pthread_key_delete(key);
+  DCHECK_EQ(ret, 0);
 }
 
-void ThreadLocalStorage::StaticSlot::Free() {
-  DCHECK(initialized_);
-  int error = pthread_key_delete(key_);
-  if (error)
-    NOTREACHED();
-  initialized_ = false;
+void PlatformThreadLocalStorage::SetTLSValue(TLSKey key, void* value) {
+  int ret = pthread_setspecific(key, value);
+  DCHECK_EQ(ret, 0);
 }
 
-void* ThreadLocalStorage::StaticSlot::Get() const {
-  DCHECK(initialized_);
-  return pthread_getspecific(key_);
-}
-
-void ThreadLocalStorage::StaticSlot::Set(void* value) {
-  DCHECK(initialized_);
-  int error = pthread_setspecific(key_, value);
-  if (error)
-    NOTREACHED();
-}
+}  // namespace internal
 
 }  // namespace base

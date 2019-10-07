@@ -5,19 +5,26 @@
 #include "base/threading/platform_thread.h"
 
 #import <Foundation/Foundation.h>
-#include <algorithm>
-#include <dlfcn.h>
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 #include <mach/thread_policy.h>
+#include <stddef.h>
 #include <sys/resource.h>
+
+#include <algorithm>
 
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/mac/foundation_util.h"
+#include "base/mac/mach_logging.h"
 #include "base/threading/thread_id_name_manager.h"
-#include "base/tracked_objects.h"
+#include "build/build_config.h"
 
 namespace base {
+
+namespace {
+NSString* const kThreadPriorityKey = @"CrThreadPriorityKey";
+}  // namespace
 
 // If Cocoa is to be used on more than one thread, it must know that the
 // application is multithreaded.  Since it's possible to enter Cocoa code
@@ -41,48 +48,23 @@ void InitThreading() {
 }
 
 // static
-void PlatformThread::SetName(const char* name) {
-  ThreadIdNameManager::GetInstance()->SetName(CurrentId(), name);
-  tracked_objects::ThreadData::InitializeThreadContext(name);
-
-  // pthread_setname_np is only available in 10.6 or later, so test
-  // for it at runtime.
-  int (*dynamic_pthread_setname_np)(const char*);
-  *reinterpret_cast<void**>(&dynamic_pthread_setname_np) =
-      dlsym(RTLD_DEFAULT, "pthread_setname_np");
-  if (!dynamic_pthread_setname_np)
-    return;
+void PlatformThread::SetName(const std::string& name) {
+  ThreadIdNameManager::GetInstance()->SetName(name);
 
   // Mac OS X does not expose the length limit of the name, so
   // hardcode it.
   const int kMaxNameLength = 63;
-  std::string shortened_name = std::string(name).substr(0, kMaxNameLength);
+  std::string shortened_name = name.substr(0, kMaxNameLength);
   // pthread_setname() fails (harmlessly) in the sandbox, ignore when it does.
   // See http://crbug.com/47058
-  dynamic_pthread_setname_np(shortened_name.c_str());
+  pthread_setname_np(shortened_name.c_str());
 }
 
 namespace {
 
-void SetPriorityNormal(mach_port_t mach_thread_id) {
-  // Make thread standard policy.
-  // Please note that this call could fail in rare cases depending
-  // on runtime conditions.
-  thread_standard_policy policy;
-  kern_return_t result = thread_policy_set(mach_thread_id,
-                                           THREAD_STANDARD_POLICY,
-                                           (thread_policy_t)&policy,
-                                           THREAD_STANDARD_POLICY_COUNT);
-
-  if (result != KERN_SUCCESS)
-    DVLOG(1) << "thread_policy_set() failure: " << result;
-}
-
 // Enables time-contraint policy and priority suitable for low-latency,
 // glitch-resistant audio.
-void SetPriorityRealtimeAudio(mach_port_t mach_thread_id) {
-  kern_return_t result;
-
+void SetPriorityRealtimeAudio() {
   // Increase thread priority to real-time.
 
   // Please note that the thread_policy_set() calls may fail in
@@ -90,15 +72,19 @@ void SetPriorityRealtimeAudio(mach_port_t mach_thread_id) {
   // and is unable to handle boosting the thread priority.
   // In these cases we just return early and go on with life.
 
+  mach_port_t mach_thread_id =
+      pthread_mach_thread_np(PlatformThread::CurrentHandle().platform_handle());
+
   // Make thread fixed priority.
   thread_extended_policy_data_t policy;
   policy.timeshare = 0;  // Set to 1 for a non-fixed thread.
-  result = thread_policy_set(mach_thread_id,
-                             THREAD_EXTENDED_POLICY,
-                             (thread_policy_t)&policy,
-                             THREAD_EXTENDED_POLICY_COUNT);
+  kern_return_t result =
+      thread_policy_set(mach_thread_id,
+                        THREAD_EXTENDED_POLICY,
+                        reinterpret_cast<thread_policy_t>(&policy),
+                        THREAD_EXTENDED_POLICY_COUNT);
   if (result != KERN_SUCCESS) {
-    DVLOG(1) << "thread_policy_set() failure: " << result;
+    MACH_DVLOG(1, result) << "thread_policy_set";
     return;
   }
 
@@ -107,10 +93,10 @@ void SetPriorityRealtimeAudio(mach_port_t mach_thread_id) {
   precedence.importance = 63;
   result = thread_policy_set(mach_thread_id,
                              THREAD_PRECEDENCE_POLICY,
-                             (thread_policy_t)&precedence,
+                             reinterpret_cast<thread_policy_t>(&precedence),
                              THREAD_PRECEDENCE_POLICY_COUNT);
   if (result != KERN_SUCCESS) {
-    DVLOG(1) << "thread_policy_set() failure: " << result;
+    MACH_DVLOG(1, result) << "thread_policy_set";
     return;
   }
 
@@ -141,7 +127,7 @@ void SetPriorityRealtimeAudio(mach_port_t mach_thread_id) {
   mach_timebase_info_data_t tb_info;
   mach_timebase_info(&tb_info);
   double ms_to_abs_time =
-      ((double)tb_info.denom / (double)tb_info.numer) * 1000000;
+      (static_cast<double>(tb_info.denom) / tb_info.numer) * 1000000;
 
   thread_time_constraint_policy_data_t time_constraints;
   time_constraints.period = kTimeQuantum * ms_to_abs_time;
@@ -149,12 +135,12 @@ void SetPriorityRealtimeAudio(mach_port_t mach_thread_id) {
   time_constraints.constraint = kMaxTimeAllowed * ms_to_abs_time;
   time_constraints.preemptible = 0;
 
-  result = thread_policy_set(mach_thread_id,
-                             THREAD_TIME_CONSTRAINT_POLICY,
-                             (thread_policy_t)&time_constraints,
-                             THREAD_TIME_CONSTRAINT_POLICY_COUNT);
-  if (result != KERN_SUCCESS)
-    DVLOG(1) << "thread_policy_set() failure: " << result;
+  result =
+      thread_policy_set(mach_thread_id,
+                        THREAD_TIME_CONSTRAINT_POLICY,
+                        reinterpret_cast<thread_policy_t>(&time_constraints),
+                        THREAD_TIME_CONSTRAINT_POLICY_COUNT);
+  MACH_DVLOG_IF(1, result != KERN_SUCCESS, result) << "thread_policy_set";
 
   return;
 }
@@ -162,21 +148,53 @@ void SetPriorityRealtimeAudio(mach_port_t mach_thread_id) {
 }  // anonymous namespace
 
 // static
-void PlatformThread::SetThreadPriority(PlatformThreadHandle handle,
-                                       ThreadPriority priority) {
-  // Convert from pthread_t to mach thread identifier.
-  mach_port_t mach_thread_id = pthread_mach_thread_np(handle.handle_);
+bool PlatformThread::CanIncreaseThreadPriority(ThreadPriority priority) {
+  return true;
+}
+
+// static
+void PlatformThread::SetCurrentThreadPriorityImpl(ThreadPriority priority) {
+  // Changing the priority of the main thread causes performance regressions.
+  // https://crbug.com/601270
+  DCHECK(![[NSThread currentThread] isMainThread]);
 
   switch (priority) {
-    case kThreadPriority_Normal:
-      SetPriorityNormal(mach_thread_id);
+    case ThreadPriority::BACKGROUND:
+      [[NSThread currentThread] setThreadPriority:0];
       break;
-    case kThreadPriority_RealtimeAudio:
-      SetPriorityRealtimeAudio(mach_thread_id);
+    case ThreadPriority::NORMAL:
+    case ThreadPriority::DISPLAY:
+      [[NSThread currentThread] setThreadPriority:0.5];
       break;
+    case ThreadPriority::REALTIME_AUDIO:
+      SetPriorityRealtimeAudio();
+      DCHECK_EQ([[NSThread currentThread] threadPriority], 1.0);
+      break;
+  }
+
+  [[NSThread currentThread] threadDictionary][kThreadPriorityKey] =
+      @(static_cast<int>(priority));
+}
+
+// static
+ThreadPriority PlatformThread::GetCurrentThreadPriority() {
+  NSNumber* priority = base::mac::ObjCCast<NSNumber>(
+      [[NSThread currentThread] threadDictionary][kThreadPriorityKey]);
+
+  if (!priority)
+    return ThreadPriority::NORMAL;
+
+  ThreadPriority thread_priority =
+      static_cast<ThreadPriority>(priority.intValue);
+  switch (thread_priority) {
+    case ThreadPriority::BACKGROUND:
+    case ThreadPriority::NORMAL:
+    case ThreadPriority::DISPLAY:
+    case ThreadPriority::REALTIME_AUDIO:
+      return thread_priority;
     default:
       NOTREACHED() << "Unknown priority.";
-      break;
+      return ThreadPriority::NORMAL;
   }
 }
 
@@ -213,9 +231,6 @@ size_t GetDefaultThreadStackSize(const pthread_attr_t& attributes) {
   }
   return default_stack_size;
 #endif
-}
-
-void InitOnThread() {
 }
 
 void TerminateOnThread() {

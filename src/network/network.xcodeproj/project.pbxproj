@@ -8,20 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		C58B05372336AF4000A125C2 /* curl_connection.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05282336AF3F00A125C2 /* curl_connection.h */; };
-		C58B05382336AF4000A125C2 /* async_task_dispatcher.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05292336AF3F00A125C2 /* async_task_dispatcher.h */; };
 		C58B05392336AF4000A125C2 /* curl_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B052A2336AF3F00A125C2 /* curl_connection.cpp */; };
-		C58B053A2336AF4000A125C2 /* async_task_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B052B2336AF3F00A125C2 /* async_task_dispatcher.cpp */; };
 		C58B053B2336AF4000A125C2 /* curl_http_form.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B052C2336AF3F00A125C2 /* curl_http_form.cpp */; };
 		C58B053C2336AF4000A125C2 /* base_connection.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B052D2336AF3F00A125C2 /* base_connection.h */; };
 		C58B053D2336AF4000A125C2 /* socket_watcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B052E2336AF3F00A125C2 /* socket_watcher.cpp */; };
 		C58B053E2336AF4000A125C2 /* network_define.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B052F2336AF3F00A125C2 /* network_define.h */; };
-		C58B053F2336AF4000A125C2 /* async_cgi_task_dispatcher.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05302336AF3F00A125C2 /* async_cgi_task_dispatcher.h */; };
 		C58B05402336AF4000A125C2 /* async_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05312336AF3F00A125C2 /* async_socket.cpp */; };
 		C58B05412336AF4000A125C2 /* curl_http_form.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05322336AF3F00A125C2 /* curl_http_form.h */; };
 		C58B05422336AF4000A125C2 /* async_socket.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05332336AF3F00A125C2 /* async_socket.h */; };
 		C58B05432336AF4000A125C2 /* socket_watcher.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05342336AF3F00A125C2 /* socket_watcher.h */; };
-		C58B05442336AF4000A125C2 /* async_cgi_task_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05352336AF3F00A125C2 /* async_cgi_task_dispatcher.cpp */; };
-		C58B05452336AF4000A125C2 /* base_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05362336AF3F00A125C2 /* base_connection.cpp */; };
 		C58B054E2336AFA000A125C2 /* net_error_list.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05482336AFA000A125C2 /* net_error_list.h */; };
 		C58B054F2336AFA000A125C2 /* io_buffer.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05492336AFA000A125C2 /* io_buffer.h */; };
 		C58B05502336AFA000A125C2 /* net_errors.cc in Sources */ = {isa = PBXBuildFile; fileRef = C58B054A2336AFA000A125C2 /* net_errors.cc */; };
@@ -35,20 +30,15 @@
 		C5F53C44233764D5008F114F /* net_errors.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B054C2336AFA000A125C2 /* net_errors.h */; };
 		C5F53C45233764D5008F114F /* net_errors_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = C58B054D2336AFA000A125C2 /* net_errors_posix.cc */; };
 		C5F53C46233764D5008F114F /* curl_connection.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05282336AF3F00A125C2 /* curl_connection.h */; };
-		C5F53C47233764D5008F114F /* async_task_dispatcher.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05292336AF3F00A125C2 /* async_task_dispatcher.h */; };
 		C5F53C48233764D5008F114F /* curl_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B052A2336AF3F00A125C2 /* curl_connection.cpp */; };
-		C5F53C49233764D5008F114F /* async_task_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B052B2336AF3F00A125C2 /* async_task_dispatcher.cpp */; };
 		C5F53C4A233764D5008F114F /* curl_http_form.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B052C2336AF3F00A125C2 /* curl_http_form.cpp */; };
 		C5F53C4B233764D5008F114F /* base_connection.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B052D2336AF3F00A125C2 /* base_connection.h */; };
 		C5F53C4C233764D5008F114F /* socket_watcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B052E2336AF3F00A125C2 /* socket_watcher.cpp */; };
 		C5F53C4D233764D5008F114F /* network_define.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B052F2336AF3F00A125C2 /* network_define.h */; };
-		C5F53C4E233764D5008F114F /* async_cgi_task_dispatcher.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05302336AF3F00A125C2 /* async_cgi_task_dispatcher.h */; };
 		C5F53C4F233764D5008F114F /* async_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05312336AF3F00A125C2 /* async_socket.cpp */; };
 		C5F53C50233764D5008F114F /* curl_http_form.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05322336AF3F00A125C2 /* curl_http_form.h */; };
 		C5F53C51233764D5008F114F /* async_socket.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05332336AF3F00A125C2 /* async_socket.h */; };
 		C5F53C52233764D5008F114F /* socket_watcher.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05342336AF3F00A125C2 /* socket_watcher.h */; };
-		C5F53C53233764D5008F114F /* async_cgi_task_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05352336AF3F00A125C2 /* async_cgi_task_dispatcher.cpp */; };
-		C5F53C54233764D5008F114F /* base_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05362336AF3F00A125C2 /* base_connection.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,20 +65,15 @@
 /* Begin PBXFileReference section */
 		C58B051C2336AED700A125C2 /* libnetwork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnetwork.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58B05282336AF3F00A125C2 /* curl_connection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = curl_connection.h; sourceTree = "<group>"; };
-		C58B05292336AF3F00A125C2 /* async_task_dispatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = async_task_dispatcher.h; sourceTree = "<group>"; };
 		C58B052A2336AF3F00A125C2 /* curl_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = curl_connection.cpp; sourceTree = "<group>"; };
-		C58B052B2336AF3F00A125C2 /* async_task_dispatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = async_task_dispatcher.cpp; sourceTree = "<group>"; };
 		C58B052C2336AF3F00A125C2 /* curl_http_form.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = curl_http_form.cpp; sourceTree = "<group>"; };
 		C58B052D2336AF3F00A125C2 /* base_connection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = base_connection.h; sourceTree = "<group>"; };
 		C58B052E2336AF3F00A125C2 /* socket_watcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = socket_watcher.cpp; sourceTree = "<group>"; };
 		C58B052F2336AF3F00A125C2 /* network_define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = network_define.h; sourceTree = "<group>"; };
-		C58B05302336AF3F00A125C2 /* async_cgi_task_dispatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = async_cgi_task_dispatcher.h; sourceTree = "<group>"; };
 		C58B05312336AF3F00A125C2 /* async_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = async_socket.cpp; sourceTree = "<group>"; };
 		C58B05322336AF3F00A125C2 /* curl_http_form.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = curl_http_form.h; sourceTree = "<group>"; };
 		C58B05332336AF3F00A125C2 /* async_socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = async_socket.h; sourceTree = "<group>"; };
 		C58B05342336AF3F00A125C2 /* socket_watcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = socket_watcher.h; sourceTree = "<group>"; };
-		C58B05352336AF3F00A125C2 /* async_cgi_task_dispatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = async_cgi_task_dispatcher.cpp; sourceTree = "<group>"; };
-		C58B05362336AF3F00A125C2 /* base_connection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = base_connection.cpp; sourceTree = "<group>"; };
 		C58B05482336AFA000A125C2 /* net_error_list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = net_error_list.h; path = net/net_error_list.h; sourceTree = "<group>"; };
 		C58B05492336AFA000A125C2 /* io_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = io_buffer.h; path = net/io_buffer.h; sourceTree = "<group>"; };
 		C58B054A2336AFA000A125C2 /* net_errors.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = net_errors.cc; path = net/net_errors.cc; sourceTree = "<group>"; };
@@ -137,13 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				C58B05472336AF7600A125C2 /* net */,
-				C58B05352336AF3F00A125C2 /* async_cgi_task_dispatcher.cpp */,
-				C58B05302336AF3F00A125C2 /* async_cgi_task_dispatcher.h */,
 				C58B05312336AF3F00A125C2 /* async_socket.cpp */,
 				C58B05332336AF3F00A125C2 /* async_socket.h */,
-				C58B052B2336AF3F00A125C2 /* async_task_dispatcher.cpp */,
-				C58B05292336AF3F00A125C2 /* async_task_dispatcher.h */,
-				C58B05362336AF3F00A125C2 /* base_connection.cpp */,
 				C58B052D2336AF3F00A125C2 /* base_connection.h */,
 				C58B052A2336AF3F00A125C2 /* curl_connection.cpp */,
 				C58B05282336AF3F00A125C2 /* curl_connection.h */,
@@ -251,20 +231,15 @@
 				C58B05522336AFA000A125C2 /* net_errors.h in Sources */,
 				C58B05532336AFA000A125C2 /* net_errors_posix.cc in Sources */,
 				C58B05372336AF4000A125C2 /* curl_connection.h in Sources */,
-				C58B05382336AF4000A125C2 /* async_task_dispatcher.h in Sources */,
 				C58B05392336AF4000A125C2 /* curl_connection.cpp in Sources */,
-				C58B053A2336AF4000A125C2 /* async_task_dispatcher.cpp in Sources */,
 				C58B053B2336AF4000A125C2 /* curl_http_form.cpp in Sources */,
 				C58B053C2336AF4000A125C2 /* base_connection.h in Sources */,
 				C58B053D2336AF4000A125C2 /* socket_watcher.cpp in Sources */,
 				C58B053E2336AF4000A125C2 /* network_define.h in Sources */,
-				C58B053F2336AF4000A125C2 /* async_cgi_task_dispatcher.h in Sources */,
 				C58B05402336AF4000A125C2 /* async_socket.cpp in Sources */,
 				C58B05412336AF4000A125C2 /* curl_http_form.h in Sources */,
 				C58B05422336AF4000A125C2 /* async_socket.h in Sources */,
 				C58B05432336AF4000A125C2 /* socket_watcher.h in Sources */,
-				C58B05442336AF4000A125C2 /* async_cgi_task_dispatcher.cpp in Sources */,
-				C58B05452336AF4000A125C2 /* base_connection.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,20 +254,15 @@
 				C5F53C44233764D5008F114F /* net_errors.h in Sources */,
 				C5F53C45233764D5008F114F /* net_errors_posix.cc in Sources */,
 				C5F53C46233764D5008F114F /* curl_connection.h in Sources */,
-				C5F53C47233764D5008F114F /* async_task_dispatcher.h in Sources */,
 				C5F53C48233764D5008F114F /* curl_connection.cpp in Sources */,
-				C5F53C49233764D5008F114F /* async_task_dispatcher.cpp in Sources */,
 				C5F53C4A233764D5008F114F /* curl_http_form.cpp in Sources */,
 				C5F53C4B233764D5008F114F /* base_connection.h in Sources */,
 				C5F53C4C233764D5008F114F /* socket_watcher.cpp in Sources */,
 				C5F53C4D233764D5008F114F /* network_define.h in Sources */,
-				C5F53C4E233764D5008F114F /* async_cgi_task_dispatcher.h in Sources */,
 				C5F53C4F233764D5008F114F /* async_socket.cpp in Sources */,
 				C5F53C50233764D5008F114F /* curl_http_form.h in Sources */,
 				C5F53C51233764D5008F114F /* async_socket.h in Sources */,
 				C5F53C52233764D5008F114F /* socket_watcher.h in Sources */,
-				C5F53C53233764D5008F114F /* async_cgi_task_dispatcher.cpp in Sources */,
-				C5F53C54233764D5008F114F /* base_connection.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +389,7 @@
 					"$(LUAKIT_ROOT)/src/curl/include",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(SRCROOT)",
 				);
 				LUAKIT_ROOT = "$(SRCROOT)/../..";
 				OTHER_LDFLAGS = "-ObjC";
@@ -438,6 +409,7 @@
 					"$(LUAKIT_ROOT)/src/curl/include",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(SRCROOT)",
 				);
 				LUAKIT_ROOT = "$(SRCROOT)/../..";
 				OTHER_LDFLAGS = "-ObjC";

@@ -10,7 +10,7 @@
 #include <sys/resource.h>
 #include <sys/wait.h>
 
-#include "base/clang_coverage_buildflags.h"
+#include "build/clang_coverage_buildflags.h" // Patch [LARPOUX]
 #include "base/debug/activity_tracker.h"
 #include "base/files/scoped_file.h"
 #include "base/logging.h"
@@ -18,6 +18,7 @@
 #include "base/process/kill.h"
 #include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
+#include "base/debug/activity_tracker.h" // Patch [LARPOUX]
 
 #if defined(OS_MACOSX)
 #include <sys/event.h>

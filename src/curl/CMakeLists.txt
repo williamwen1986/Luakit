@@ -34,40 +34,11 @@ add_library(
 link_directories(${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs)
 
 
-#add_library( ssl
-#             STATIC
-#             IMPORTED )
-
-#set_target_properties( # Specifies the target library.
-#                       ssl
-#
-#                       # Specifies the parameter you want to define.
-#                       PROPERTIES IMPORTED_LOCATION
-#
-#                      # Provides the path to the library you want to import.
-#                       #${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libssl.a )
-
-#add_library( crypto
-#             STATIC
-#            IMPORTED )
-
-#set_target_properties( # Specifies the target library.
-#                       crypto
-#
-#                       # Specifies the parameter you want to define.
-#                       PROPERTIES IMPORTED_LOCATION
-#
-# Provides the path to the library you want to import.
-#${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libcrypto.a )
-
-
-
-#target_link_libraries( curl ssl crypto)
 # Specifies a path to native header files.
 include_directories(
 	${PROJECT_SOURCE_DIR}/include
 	${PROJECT_SOURCE_DIR}/lib
-	${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/include
-        #${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/lib/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/include
+	#${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/include
+    $ENV{OUTPUT_DIR}/include/
 	/usr/local/Cellar/node/11.5.0/include/node
 )

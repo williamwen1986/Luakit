@@ -7,18 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C58B05AF2336B21100A125C2 /* lua_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05AC2336B1BF00A125C2 /* lua_timer.cpp */; };
 		C58B05B02336B21100A125C2 /* lua_timer.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05AD2336B1BF00A125C2 /* lua_timer.h */; };
-		C58B05B12336B21100A125C2 /* lua_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A72336B1B800A125C2 /* lua_thread.cpp */; };
 		C58B05B22336B21100A125C2 /* lua_thread.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A82336B1B800A125C2 /* lua_thread.h */; };
-		C58B05B32336B21100A125C2 /* serialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A92336B1B800A125C2 /* serialize.cpp */; };
-		C58B05B42336B21100A125C2 /* serialize.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05AA2336B1B800A125C2 /* serialize.h */; };
-		C58B05B52336B21100A125C2 /* LuaNotificationListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B059F2336B1AC00A125C2 /* LuaNotificationListener.cpp */; };
 		C58B05B62336B21100A125C2 /* LuaNotificationListener.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A02336B1AC00A125C2 /* LuaNotificationListener.h */; };
 		C58B05B72336B21100A125C2 /* lua_notification_utility.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A12336B1AC00A125C2 /* lua_notification_utility.h */; };
-		C58B05B82336B21100A125C2 /* lua_notification_utility_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A32336B1AC00A125C2 /* lua_notification_utility_ios.mm */; };
-		C58B05B92336B21100A125C2 /* lua_notify.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A42336B1AC00A125C2 /* lua_notify.cpp */; };
-		C58B05BA2336B21100A125C2 /* lua_notify.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A52336B1AC00A125C2 /* lua_notify.h */; };
 		C58B05BB2336B21100A125C2 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B057E2336B1A400A125C2 /* auxiliar.c */; };
 		C58B05BC2336B21100A125C2 /* auxiliar.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B057F2336B1A400A125C2 /* auxiliar.h */; };
 		C58B05BD2336B21100A125C2 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B05802336B1A400A125C2 /* buffer.c */; };
@@ -53,58 +45,27 @@
 		C58B05DA2336B21100A125C2 /* usocket.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B059D2336B1A400A125C2 /* usocket.h */; };
 		C58B05DC2336B21100A125C2 /* languageUtil.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05792336B18600A125C2 /* languageUtil.h */; };
 		C58B05DD2336B21100A125C2 /* languageUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = C58B057A2336B18600A125C2 /* languageUtil.mm */; };
-		C58B05DE2336B21100A125C2 /* lua_language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B057B2336B18600A125C2 /* lua_language.cpp */; };
 		C58B05DF2336B21100A125C2 /* lua_language.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B057C2336B18600A125C2 /* lua_language.h */; };
-		C58B05E02336B21100A125C2 /* lua_http.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05732336B17F00A125C2 /* lua_http.cpp */; };
 		C58B05E12336B21100A125C2 /* lua_http.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05742336B17F00A125C2 /* lua_http.h */; };
-		C58B05E22336B21100A125C2 /* lua_http_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05752336B17F00A125C2 /* lua_http_task.cpp */; };
 		C58B05E32336B21100A125C2 /* lua_http_task.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05762336B17F00A125C2 /* lua_http_task.h */; };
-		C58B05E42336B21100A125C2 /* lua_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05702336B17700A125C2 /* lua_file.cpp */; };
 		C58B05E52336B21100A125C2 /* lua_file.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05712336B17700A125C2 /* lua_file.h */; };
 		C58B05E62336B21100A125C2 /* mobdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B056D2336B15D00A125C2 /* mobdebug.c */; };
 		C58B05E72336B21100A125C2 /* mobdebug.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B056E2336B15D00A125C2 /* mobdebug.h */; };
-		C58B05E82336B21100A125C2 /* lua_async_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B056A2336B14F00A125C2 /* lua_async_socket.cpp */; };
 		C58B05E92336B21100A125C2 /* lua_async_socket.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B056B2336B14F00A125C2 /* lua_async_socket.h */; };
-		C5CF5DAA233747BD0014735C /* dtoa.c in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA1233747BD0014735C /* dtoa.c */; };
-		C5CF5DAB233747BD0014735C /* strbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA2233747BD0014735C /* strbuf.c */; };
-		C5CF5DAC233747BD0014735C /* lua_cjson.c in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA6233747BD0014735C /* lua_cjson.c */; };
-		C5CF5DAD233747BD0014735C /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA8233747BD0014735C /* fpconv.c */; };
-		C5CF5DAE233747DD0014735C /* dtoa_config.h in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA3233747BD0014735C /* dtoa_config.h */; };
-		C5CF5DAF233747DD0014735C /* fpconv.h in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA5233747BD0014735C /* fpconv.h */; };
-		C5CF5DB0233747DD0014735C /* lua_cjson.h in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA9233747BD0014735C /* lua_cjson.h */; };
-		C5CF5DB1233747DD0014735C /* runtests.sh in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA4233747BD0014735C /* runtests.sh */; };
-		C5CF5DB2233747DD0014735C /* strbuf.h in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA7233747BD0014735C /* strbuf.h */; };
-		C5F53B6D23376173008F114F /* dtoa_config.h in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA3233747BD0014735C /* dtoa_config.h */; };
-		C5F53B6E23376173008F114F /* fpconv.h in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA5233747BD0014735C /* fpconv.h */; };
-		C5F53B6F23376173008F114F /* lua_cjson.h in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA9233747BD0014735C /* lua_cjson.h */; };
-		C5F53B7023376173008F114F /* runtests.sh in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA4233747BD0014735C /* runtests.sh */; };
-		C5F53B7123376173008F114F /* strbuf.h in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA7233747BD0014735C /* strbuf.h */; };
-		C5F53B7223376173008F114F /* lua_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05AC2336B1BF00A125C2 /* lua_timer.cpp */; };
 		C5F53B7323376173008F114F /* lua_timer.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05AD2336B1BF00A125C2 /* lua_timer.h */; };
-		C5F53B7423376173008F114F /* lua_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A72336B1B800A125C2 /* lua_thread.cpp */; };
 		C5F53B7523376173008F114F /* lua_thread.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A82336B1B800A125C2 /* lua_thread.h */; };
-		C5F53B7623376173008F114F /* serialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A92336B1B800A125C2 /* serialize.cpp */; };
-		C5F53B7723376173008F114F /* serialize.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05AA2336B1B800A125C2 /* serialize.h */; };
-		C5F53B7823376173008F114F /* dtoa.c in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA1233747BD0014735C /* dtoa.c */; };
-		C5F53B7923376173008F114F /* LuaNotificationListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B059F2336B1AC00A125C2 /* LuaNotificationListener.cpp */; };
 		C5F53B7A23376173008F114F /* LuaNotificationListener.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A02336B1AC00A125C2 /* LuaNotificationListener.h */; };
 		C5F53B7B23376173008F114F /* lua_notification_utility.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A12336B1AC00A125C2 /* lua_notification_utility.h */; };
-		C5F53B7C23376173008F114F /* lua_notification_utility_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A32336B1AC00A125C2 /* lua_notification_utility_ios.mm */; };
-		C5F53B7D23376173008F114F /* lua_notify.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A42336B1AC00A125C2 /* lua_notify.cpp */; };
-		C5F53B7E23376173008F114F /* lua_notify.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05A52336B1AC00A125C2 /* lua_notify.h */; };
 		C5F53B7F23376173008F114F /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B057E2336B1A400A125C2 /* auxiliar.c */; };
-		C5F53B8023376173008F114F /* lua_cjson.c in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA6233747BD0014735C /* lua_cjson.c */; };
 		C5F53B8123376173008F114F /* auxiliar.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B057F2336B1A400A125C2 /* auxiliar.h */; };
 		C5F53B8223376173008F114F /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B05802336B1A400A125C2 /* buffer.c */; };
 		C5F53B8323376173008F114F /* buffer.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05812336B1A400A125C2 /* buffer.h */; };
 		C5F53B8423376173008F114F /* except.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B05822336B1A400A125C2 /* except.c */; };
-		C5F53B8523376173008F114F /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA8233747BD0014735C /* fpconv.c */; };
 		C5F53B8623376173008F114F /* except.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05832336B1A400A125C2 /* except.h */; };
 		C5F53B8723376173008F114F /* inet.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B05842336B1A400A125C2 /* inet.c */; };
 		C5F53B8823376173008F114F /* inet.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05852336B1A400A125C2 /* inet.h */; };
 		C5F53B8923376173008F114F /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B05862336B1A400A125C2 /* io.c */; };
 		C5F53B8A23376173008F114F /* io.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05872336B1A400A125C2 /* io.h */; };
-		C5F53B8B23376173008F114F /* strbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = C5CF5DA2233747BD0014735C /* strbuf.c */; };
 		C5F53B8C23376173008F114F /* luasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B05882336B1A400A125C2 /* luasocket.c */; };
 		C5F53B8D23376173008F114F /* luasocket.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05892336B1A400A125C2 /* luasocket.h */; };
 		C5F53B8E23376173008F114F /* luasocket_scripts.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B058A2336B1A400A125C2 /* luasocket_scripts.c */; };
@@ -129,17 +90,12 @@
 		C5F53BA123376173008F114F /* usocket.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B059D2336B1A400A125C2 /* usocket.h */; };
 		C5F53BA223376173008F114F /* languageUtil.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05792336B18600A125C2 /* languageUtil.h */; };
 		C5F53BA323376173008F114F /* languageUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = C58B057A2336B18600A125C2 /* languageUtil.mm */; };
-		C5F53BA423376173008F114F /* lua_language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B057B2336B18600A125C2 /* lua_language.cpp */; };
 		C5F53BA523376173008F114F /* lua_language.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B057C2336B18600A125C2 /* lua_language.h */; };
-		C5F53BA623376173008F114F /* lua_http.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05732336B17F00A125C2 /* lua_http.cpp */; };
 		C5F53BA723376173008F114F /* lua_http.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05742336B17F00A125C2 /* lua_http.h */; };
-		C5F53BA823376173008F114F /* lua_http_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05752336B17F00A125C2 /* lua_http_task.cpp */; };
 		C5F53BA923376173008F114F /* lua_http_task.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05762336B17F00A125C2 /* lua_http_task.h */; };
-		C5F53BAA23376173008F114F /* lua_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B05702336B17700A125C2 /* lua_file.cpp */; };
 		C5F53BAB23376173008F114F /* lua_file.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B05712336B17700A125C2 /* lua_file.h */; };
 		C5F53BAC23376173008F114F /* mobdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = C58B056D2336B15D00A125C2 /* mobdebug.c */; };
 		C5F53BAD23376173008F114F /* mobdebug.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B056E2336B15D00A125C2 /* mobdebug.h */; };
-		C5F53BAE23376173008F114F /* lua_async_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C58B056A2336B14F00A125C2 /* lua_async_socket.cpp */; };
 		C5F53BAF23376173008F114F /* lua_async_socket.h in Sources */ = {isa = PBXBuildFile; fileRef = C58B056B2336B14F00A125C2 /* lua_async_socket.h */; };
 /* End PBXBuildFile section */
 
@@ -166,19 +122,14 @@
 
 /* Begin PBXFileReference section */
 		C58B055D2336B0E200A125C2 /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libextensions.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C58B056A2336B14F00A125C2 /* lua_async_socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_async_socket.cpp; sourceTree = "<group>"; };
 		C58B056B2336B14F00A125C2 /* lua_async_socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_async_socket.h; sourceTree = "<group>"; };
 		C58B056D2336B15D00A125C2 /* mobdebug.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mobdebug.c; sourceTree = "<group>"; };
 		C58B056E2336B15D00A125C2 /* mobdebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mobdebug.h; sourceTree = "<group>"; };
-		C58B05702336B17700A125C2 /* lua_file.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_file.cpp; sourceTree = "<group>"; };
 		C58B05712336B17700A125C2 /* lua_file.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_file.h; sourceTree = "<group>"; };
-		C58B05732336B17F00A125C2 /* lua_http.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_http.cpp; sourceTree = "<group>"; };
 		C58B05742336B17F00A125C2 /* lua_http.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_http.h; sourceTree = "<group>"; };
-		C58B05752336B17F00A125C2 /* lua_http_task.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_http_task.cpp; sourceTree = "<group>"; };
 		C58B05762336B17F00A125C2 /* lua_http_task.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_http_task.h; sourceTree = "<group>"; };
 		C58B05792336B18600A125C2 /* languageUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = languageUtil.h; sourceTree = "<group>"; };
 		C58B057A2336B18600A125C2 /* languageUtil.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = languageUtil.mm; sourceTree = "<group>"; };
-		C58B057B2336B18600A125C2 /* lua_language.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_language.cpp; sourceTree = "<group>"; };
 		C58B057C2336B18600A125C2 /* lua_language.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_language.h; sourceTree = "<group>"; };
 		C58B057E2336B1A400A125C2 /* auxiliar.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = auxiliar.c; sourceTree = "<group>"; };
 		C58B057F2336B1A400A125C2 /* auxiliar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = auxiliar.h; sourceTree = "<group>"; };
@@ -212,29 +163,10 @@
 		C58B059B2336B1A400A125C2 /* unix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = unix.h; sourceTree = "<group>"; };
 		C58B059C2336B1A400A125C2 /* usocket.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = usocket.c; sourceTree = "<group>"; };
 		C58B059D2336B1A400A125C2 /* usocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = usocket.h; sourceTree = "<group>"; };
-		C58B059F2336B1AC00A125C2 /* LuaNotificationListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LuaNotificationListener.cpp; sourceTree = "<group>"; };
 		C58B05A02336B1AC00A125C2 /* LuaNotificationListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LuaNotificationListener.h; sourceTree = "<group>"; };
 		C58B05A12336B1AC00A125C2 /* lua_notification_utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_notification_utility.h; sourceTree = "<group>"; };
-		C58B05A22336B1AC00A125C2 /* lua_notification_utility_android.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_notification_utility_android.cpp; sourceTree = "<group>"; };
-		C58B05A32336B1AC00A125C2 /* lua_notification_utility_ios.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = lua_notification_utility_ios.mm; sourceTree = "<group>"; };
-		C58B05A42336B1AC00A125C2 /* lua_notify.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_notify.cpp; sourceTree = "<group>"; };
-		C58B05A52336B1AC00A125C2 /* lua_notify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_notify.h; sourceTree = "<group>"; };
-		C58B05A72336B1B800A125C2 /* lua_thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_thread.cpp; sourceTree = "<group>"; };
 		C58B05A82336B1B800A125C2 /* lua_thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_thread.h; sourceTree = "<group>"; };
-		C58B05A92336B1B800A125C2 /* serialize.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = serialize.cpp; sourceTree = "<group>"; };
-		C58B05AA2336B1B800A125C2 /* serialize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = serialize.h; sourceTree = "<group>"; };
-		C58B05AC2336B1BF00A125C2 /* lua_timer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_timer.cpp; sourceTree = "<group>"; };
 		C58B05AD2336B1BF00A125C2 /* lua_timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_timer.h; sourceTree = "<group>"; };
-		C58B05AE2336B1BF00A125C2 /* lua_timer_android.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_timer_android.cpp; sourceTree = "<group>"; };
-		C5CF5DA1233747BD0014735C /* dtoa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dtoa.c; path = "lua-cjson-master/dtoa.c"; sourceTree = "<group>"; };
-		C5CF5DA2233747BD0014735C /* strbuf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strbuf.c; path = "lua-cjson-master/strbuf.c"; sourceTree = "<group>"; };
-		C5CF5DA3233747BD0014735C /* dtoa_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtoa_config.h; path = "lua-cjson-master/dtoa_config.h"; sourceTree = "<group>"; };
-		C5CF5DA4233747BD0014735C /* runtests.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = runtests.sh; path = "lua-cjson-master/runtests.sh"; sourceTree = "<group>"; };
-		C5CF5DA5233747BD0014735C /* fpconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fpconv.h; path = "lua-cjson-master/fpconv.h"; sourceTree = "<group>"; };
-		C5CF5DA6233747BD0014735C /* lua_cjson.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lua_cjson.c; path = "lua-cjson-master/lua_cjson.c"; sourceTree = "<group>"; };
-		C5CF5DA7233747BD0014735C /* strbuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strbuf.h; path = "lua-cjson-master/strbuf.h"; sourceTree = "<group>"; };
-		C5CF5DA8233747BD0014735C /* fpconv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fpconv.c; path = "lua-cjson-master/fpconv.c"; sourceTree = "<group>"; };
-		C5CF5DA9233747BD0014735C /* lua_cjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lua_cjson.h; path = "lua-cjson-master/lua_cjson.h"; sourceTree = "<group>"; };
 		C5F53BB523376173008F114F /* libextensions-macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libextensions-macos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -259,7 +191,6 @@
 		C58B05542336B0E200A125C2 = {
 			isa = PBXGroup;
 			children = (
-				C5CF5DA02337476D0014735C /* lua-cjson-master */,
 				C58B05AB2336B1BF00A125C2 /* timer */,
 				C58B05A62336B1B800A125C2 /* thread */,
 				C58B059E2336B1AC00A125C2 /* Notify */,
@@ -285,7 +216,6 @@
 		C58B05692336B14F00A125C2 /* AsyncSocket */ = {
 			isa = PBXGroup;
 			children = (
-				C58B056A2336B14F00A125C2 /* lua_async_socket.cpp */,
 				C58B056B2336B14F00A125C2 /* lua_async_socket.h */,
 			);
 			path = AsyncSocket;
@@ -303,7 +233,6 @@
 		C58B056F2336B17700A125C2 /* File */ = {
 			isa = PBXGroup;
 			children = (
-				C58B05702336B17700A125C2 /* lua_file.cpp */,
 				C58B05712336B17700A125C2 /* lua_file.h */,
 			);
 			path = File;
@@ -312,9 +241,7 @@
 		C58B05722336B17F00A125C2 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
-				C58B05732336B17F00A125C2 /* lua_http.cpp */,
 				C58B05742336B17F00A125C2 /* lua_http.h */,
-				C58B05752336B17F00A125C2 /* lua_http_task.cpp */,
 				C58B05762336B17F00A125C2 /* lua_http_task.h */,
 			);
 			path = HTTP;
@@ -325,7 +252,6 @@
 			children = (
 				C58B05792336B18600A125C2 /* languageUtil.h */,
 				C58B057A2336B18600A125C2 /* languageUtil.mm */,
-				C58B057B2336B18600A125C2 /* lua_language.cpp */,
 				C58B057C2336B18600A125C2 /* lua_language.h */,
 			);
 			path = language;
@@ -373,13 +299,8 @@
 		C58B059E2336B1AC00A125C2 /* Notify */ = {
 			isa = PBXGroup;
 			children = (
-				C58B059F2336B1AC00A125C2 /* LuaNotificationListener.cpp */,
 				C58B05A02336B1AC00A125C2 /* LuaNotificationListener.h */,
 				C58B05A12336B1AC00A125C2 /* lua_notification_utility.h */,
-				C58B05A22336B1AC00A125C2 /* lua_notification_utility_android.cpp */,
-				C58B05A32336B1AC00A125C2 /* lua_notification_utility_ios.mm */,
-				C58B05A42336B1AC00A125C2 /* lua_notify.cpp */,
-				C58B05A52336B1AC00A125C2 /* lua_notify.h */,
 			);
 			path = Notify;
 			sourceTree = "<group>";
@@ -387,10 +308,7 @@
 		C58B05A62336B1B800A125C2 /* thread */ = {
 			isa = PBXGroup;
 			children = (
-				C58B05A72336B1B800A125C2 /* lua_thread.cpp */,
 				C58B05A82336B1B800A125C2 /* lua_thread.h */,
-				C58B05A92336B1B800A125C2 /* serialize.cpp */,
-				C58B05AA2336B1B800A125C2 /* serialize.h */,
 			);
 			path = thread;
 			sourceTree = "<group>";
@@ -398,27 +316,9 @@
 		C58B05AB2336B1BF00A125C2 /* timer */ = {
 			isa = PBXGroup;
 			children = (
-				C58B05AC2336B1BF00A125C2 /* lua_timer.cpp */,
 				C58B05AD2336B1BF00A125C2 /* lua_timer.h */,
-				C58B05AE2336B1BF00A125C2 /* lua_timer_android.cpp */,
 			);
 			path = timer;
-			sourceTree = "<group>";
-		};
-		C5CF5DA02337476D0014735C /* lua-cjson-master */ = {
-			isa = PBXGroup;
-			children = (
-				C5CF5DA3233747BD0014735C /* dtoa_config.h */,
-				C5CF5DA1233747BD0014735C /* dtoa.c */,
-				C5CF5DA8233747BD0014735C /* fpconv.c */,
-				C5CF5DA5233747BD0014735C /* fpconv.h */,
-				C5CF5DA6233747BD0014735C /* lua_cjson.c */,
-				C5CF5DA9233747BD0014735C /* lua_cjson.h */,
-				C5CF5DA4233747BD0014735C /* runtests.sh */,
-				C5CF5DA2233747BD0014735C /* strbuf.c */,
-				C5CF5DA7233747BD0014735C /* strbuf.h */,
-			);
-			name = "lua-cjson-master";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -496,37 +396,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5CF5DAE233747DD0014735C /* dtoa_config.h in Sources */,
-				C5CF5DAF233747DD0014735C /* fpconv.h in Sources */,
-				C5CF5DB0233747DD0014735C /* lua_cjson.h in Sources */,
-				C5CF5DB1233747DD0014735C /* runtests.sh in Sources */,
-				C5CF5DB2233747DD0014735C /* strbuf.h in Sources */,
-				C58B05AF2336B21100A125C2 /* lua_timer.cpp in Sources */,
 				C58B05B02336B21100A125C2 /* lua_timer.h in Sources */,
-				C58B05B12336B21100A125C2 /* lua_thread.cpp in Sources */,
 				C58B05B22336B21100A125C2 /* lua_thread.h in Sources */,
-				C58B05B32336B21100A125C2 /* serialize.cpp in Sources */,
-				C58B05B42336B21100A125C2 /* serialize.h in Sources */,
-				C5CF5DAA233747BD0014735C /* dtoa.c in Sources */,
-				C58B05B52336B21100A125C2 /* LuaNotificationListener.cpp in Sources */,
 				C58B05B62336B21100A125C2 /* LuaNotificationListener.h in Sources */,
 				C58B05B72336B21100A125C2 /* lua_notification_utility.h in Sources */,
-				C58B05B82336B21100A125C2 /* lua_notification_utility_ios.mm in Sources */,
-				C58B05B92336B21100A125C2 /* lua_notify.cpp in Sources */,
-				C58B05BA2336B21100A125C2 /* lua_notify.h in Sources */,
 				C58B05BB2336B21100A125C2 /* auxiliar.c in Sources */,
-				C5CF5DAC233747BD0014735C /* lua_cjson.c in Sources */,
 				C58B05BC2336B21100A125C2 /* auxiliar.h in Sources */,
 				C58B05BD2336B21100A125C2 /* buffer.c in Sources */,
 				C58B05BE2336B21100A125C2 /* buffer.h in Sources */,
 				C58B05BF2336B21100A125C2 /* except.c in Sources */,
-				C5CF5DAD233747BD0014735C /* fpconv.c in Sources */,
 				C58B05C02336B21100A125C2 /* except.h in Sources */,
 				C58B05C12336B21100A125C2 /* inet.c in Sources */,
 				C58B05C22336B21100A125C2 /* inet.h in Sources */,
 				C58B05C32336B21100A125C2 /* io.c in Sources */,
 				C58B05C42336B21100A125C2 /* io.h in Sources */,
-				C5CF5DAB233747BD0014735C /* strbuf.c in Sources */,
 				C58B05C52336B21100A125C2 /* luasocket.c in Sources */,
 				C58B05C62336B21100A125C2 /* luasocket.h in Sources */,
 				C58B05C72336B21100A125C2 /* luasocket_scripts.c in Sources */,
@@ -551,17 +434,12 @@
 				C58B05DA2336B21100A125C2 /* usocket.h in Sources */,
 				C58B05DC2336B21100A125C2 /* languageUtil.h in Sources */,
 				C58B05DD2336B21100A125C2 /* languageUtil.mm in Sources */,
-				C58B05DE2336B21100A125C2 /* lua_language.cpp in Sources */,
 				C58B05DF2336B21100A125C2 /* lua_language.h in Sources */,
-				C58B05E02336B21100A125C2 /* lua_http.cpp in Sources */,
 				C58B05E12336B21100A125C2 /* lua_http.h in Sources */,
-				C58B05E22336B21100A125C2 /* lua_http_task.cpp in Sources */,
 				C58B05E32336B21100A125C2 /* lua_http_task.h in Sources */,
-				C58B05E42336B21100A125C2 /* lua_file.cpp in Sources */,
 				C58B05E52336B21100A125C2 /* lua_file.h in Sources */,
 				C58B05E62336B21100A125C2 /* mobdebug.c in Sources */,
 				C58B05E72336B21100A125C2 /* mobdebug.h in Sources */,
-				C58B05E82336B21100A125C2 /* lua_async_socket.cpp in Sources */,
 				C58B05E92336B21100A125C2 /* lua_async_socket.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -570,37 +448,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5F53B6D23376173008F114F /* dtoa_config.h in Sources */,
-				C5F53B6E23376173008F114F /* fpconv.h in Sources */,
-				C5F53B6F23376173008F114F /* lua_cjson.h in Sources */,
-				C5F53B7023376173008F114F /* runtests.sh in Sources */,
-				C5F53B7123376173008F114F /* strbuf.h in Sources */,
-				C5F53B7223376173008F114F /* lua_timer.cpp in Sources */,
 				C5F53B7323376173008F114F /* lua_timer.h in Sources */,
-				C5F53B7423376173008F114F /* lua_thread.cpp in Sources */,
 				C5F53B7523376173008F114F /* lua_thread.h in Sources */,
-				C5F53B7623376173008F114F /* serialize.cpp in Sources */,
-				C5F53B7723376173008F114F /* serialize.h in Sources */,
-				C5F53B7823376173008F114F /* dtoa.c in Sources */,
-				C5F53B7923376173008F114F /* LuaNotificationListener.cpp in Sources */,
 				C5F53B7A23376173008F114F /* LuaNotificationListener.h in Sources */,
 				C5F53B7B23376173008F114F /* lua_notification_utility.h in Sources */,
-				C5F53B7C23376173008F114F /* lua_notification_utility_ios.mm in Sources */,
-				C5F53B7D23376173008F114F /* lua_notify.cpp in Sources */,
-				C5F53B7E23376173008F114F /* lua_notify.h in Sources */,
 				C5F53B7F23376173008F114F /* auxiliar.c in Sources */,
-				C5F53B8023376173008F114F /* lua_cjson.c in Sources */,
 				C5F53B8123376173008F114F /* auxiliar.h in Sources */,
 				C5F53B8223376173008F114F /* buffer.c in Sources */,
 				C5F53B8323376173008F114F /* buffer.h in Sources */,
 				C5F53B8423376173008F114F /* except.c in Sources */,
-				C5F53B8523376173008F114F /* fpconv.c in Sources */,
 				C5F53B8623376173008F114F /* except.h in Sources */,
 				C5F53B8723376173008F114F /* inet.c in Sources */,
 				C5F53B8823376173008F114F /* inet.h in Sources */,
 				C5F53B8923376173008F114F /* io.c in Sources */,
 				C5F53B8A23376173008F114F /* io.h in Sources */,
-				C5F53B8B23376173008F114F /* strbuf.c in Sources */,
 				C5F53B8C23376173008F114F /* luasocket.c in Sources */,
 				C5F53B8D23376173008F114F /* luasocket.h in Sources */,
 				C5F53B8E23376173008F114F /* luasocket_scripts.c in Sources */,
@@ -625,17 +486,12 @@
 				C5F53BA123376173008F114F /* usocket.h in Sources */,
 				C5F53BA223376173008F114F /* languageUtil.h in Sources */,
 				C5F53BA323376173008F114F /* languageUtil.mm in Sources */,
-				C5F53BA423376173008F114F /* lua_language.cpp in Sources */,
 				C5F53BA523376173008F114F /* lua_language.h in Sources */,
-				C5F53BA623376173008F114F /* lua_http.cpp in Sources */,
 				C5F53BA723376173008F114F /* lua_http.h in Sources */,
-				C5F53BA823376173008F114F /* lua_http_task.cpp in Sources */,
 				C5F53BA923376173008F114F /* lua_http_task.h in Sources */,
-				C5F53BAA23376173008F114F /* lua_file.cpp in Sources */,
 				C5F53BAB23376173008F114F /* lua_file.h in Sources */,
 				C5F53BAC23376173008F114F /* mobdebug.c in Sources */,
 				C5F53BAD23376173008F114F /* mobdebug.h in Sources */,
-				C5F53BAE23376173008F114F /* lua_async_socket.cpp in Sources */,
 				C5F53BAF23376173008F114F /* lua_async_socket.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -693,7 +549,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -745,7 +601,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -756,15 +612,18 @@
 		C58B05672336B0E200A125C2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua/tools",
+					"$(LUAKIT_ROOT)/src/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/src",
 					"$(LUAKIT_ROOT)/IOSFrameWork/Luakit/OCHelper",
+					"$(LUAKIT_ROOT)/src/network",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LUAKIT_ROOT = "$(SRCROOT)/../..";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -776,15 +635,18 @@
 		C58B05682336B0E200A125C2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
-					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua/tools",
+					"$(LUAKIT_ROOT)/src/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/src",
 					"$(LUAKIT_ROOT)/IOSFrameWork/Luakit/OCHelper",
+					"$(LUAKIT_ROOT)/src/network",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LUAKIT_ROOT = "$(SRCROOT)/../..";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

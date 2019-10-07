@@ -22,31 +22,29 @@ namespace {
 // when it reaches an invalid item (including the wildcard character). |parsed|
 // is the resulting integer vector. Function returns true if all numbers were
 // parsed successfully, false otherwise.
-bool ParseVersionNumbers(const std::string& version_str,
-                         std::vector<uint16>* parsed) {
-  std::vector<std::string> numbers;
-  SplitString(version_str, '.', &numbers);
+bool ParseVersionNumbers(StringPiece version_str,
+                         std::vector<uint32_t>* parsed) {
+  std::vector<StringPiece> numbers =
+      SplitStringPiece(version_str, ".", KEEP_WHITESPACE, SPLIT_WANT_ALL);
   if (numbers.empty())
     return false;
 
-  for (std::vector<std::string>::const_iterator it = numbers.begin();
-       it != numbers.end(); ++it) {
-    int num;
-    if (!StringToInt(*it, &num))
+  for (auto it = numbers.begin(); it != numbers.end(); ++it) {
+    if (StartsWith(*it, "+", CompareCase::SENSITIVE))
       return false;
 
-    if (num < 0)
+    unsigned int num;
+    if (!StringToUint(*it, &num))
       return false;
 
-    const uint16 max = 0xFFFF;
-    if (num > max)
+    // This throws out leading zeros for the first item only.
+    if (it == numbers.begin() && NumberToString(num) != *it)
       return false;
 
-    // This throws out things like +3, or 032.
-    if (IntToString(num) != *it)
-      return false;
-
-    parsed->push_back(static_cast<uint16>(num));
+    // StringToUint returns unsigned int but Version fields are uint32_t.
+    static_assert(sizeof (uint32_t) == sizeof (unsigned int),
+        "uint32_t must be same as unsigned int");
+    parsed->push_back(num);
   }
   return true;
 }
@@ -54,8 +52,8 @@ bool ParseVersionNumbers(const std::string& version_str,
 // Compares version components in |components1| with components in
 // |components2|. Returns -1, 0 or 1 if |components1| is less than, equal to,
 // or greater than |components2|, respectively.
-int CompareVersionComponents(const std::vector<uint16>& components1,
-                             const std::vector<uint16>& components2) {
+int CompareVersionComponents(const std::vector<uint32_t>& components1,
+                             const std::vector<uint32_t>& components2) {
   const size_t count = std::min(components1.size(), components2.size());
   for (size_t i = 0; i < count; ++i) {
     if (components1[i] > components2[i])
@@ -79,53 +77,49 @@ int CompareVersionComponents(const std::vector<uint16>& components1,
 
 }  // namespace
 
-Version::Version() {
-}
+Version::Version() = default;
 
-Version::~Version() {
-}
+Version::Version(const Version& other) = default;
 
-Version::Version(const std::string& version_str) {
-  std::vector<uint16> parsed;
+Version::~Version() = default;
+
+Version::Version(StringPiece version_str) {
+  std::vector<uint32_t> parsed;
   if (!ParseVersionNumbers(version_str, &parsed))
     return;
 
   components_.swap(parsed);
 }
 
+Version::Version(std::vector<uint32_t> components)
+    : components_(std::move(components)) {}
+
 bool Version::IsValid() const {
   return (!components_.empty());
 }
 
 // static
-bool Version::IsValidWildcardString(const std::string& wildcard_string) {
-  std::string version_string = wildcard_string;
-  if (EndsWith(wildcard_string.c_str(), ".*", false))
-    version_string = wildcard_string.substr(0, wildcard_string.size() - 2);
+bool Version::IsValidWildcardString(StringPiece wildcard_string) {
+  StringPiece version_string = wildcard_string;
+  if (EndsWith(version_string, ".*", CompareCase::SENSITIVE))
+    version_string = version_string.substr(0, version_string.size() - 2);
 
   Version version(version_string);
   return version.IsValid();
 }
 
-bool Version::IsOlderThan(const std::string& version_str) const {
-  Version proposed_ver(version_str);
-  if (!proposed_ver.IsValid())
-    return false;
-  return (CompareTo(proposed_ver) < 0);
-}
-
-int Version::CompareToWildcardString(const std::string& wildcard_string) const {
+int Version::CompareToWildcardString(StringPiece wildcard_string) const {
   DCHECK(IsValid());
   DCHECK(Version::IsValidWildcardString(wildcard_string));
 
   // Default behavior if the string doesn't end with a wildcard.
-  if (!EndsWith(wildcard_string.c_str(), ".*", false)) {
+  if (!EndsWith(wildcard_string, ".*", CompareCase::SENSITIVE)) {
     Version version(wildcard_string);
     DCHECK(version.IsValid());
     return CompareTo(version);
   }
 
-  std::vector<uint16> parsed;
+  std::vector<uint32_t> parsed;
   const bool success = ParseVersionNumbers(
       wildcard_string.substr(0, wildcard_string.length() - 2), &parsed);
   DCHECK(success);
@@ -151,12 +145,6 @@ int Version::CompareToWildcardString(const std::string& wildcard_string) const {
   return 0;
 }
 
-bool Version::Equals(const Version& that) const {
-  DCHECK(IsValid());
-  DCHECK(that.IsValid());
-  return (CompareTo(that) == 0);
-}
-
 int Version::CompareTo(const Version& other) const {
   DCHECK(IsValid());
   DCHECK(other.IsValid());
@@ -168,11 +156,39 @@ const std::string Version::GetString() const {
   std::string version_str;
   size_t count = components_.size();
   for (size_t i = 0; i < count - 1; ++i) {
-    version_str.append(IntToString(components_[i]));
+    version_str.append(NumberToString(components_[i]));
     version_str.append(".");
   }
-  version_str.append(IntToString(components_[count - 1]));
+  version_str.append(NumberToString(components_[count - 1]));
   return version_str;
+}
+
+bool operator==(const Version& v1, const Version& v2) {
+  return v1.CompareTo(v2) == 0;
+}
+
+bool operator!=(const Version& v1, const Version& v2) {
+  return !(v1 == v2);
+}
+
+bool operator<(const Version& v1, const Version& v2) {
+  return v1.CompareTo(v2) < 0;
+}
+
+bool operator<=(const Version& v1, const Version& v2) {
+  return v1.CompareTo(v2) <= 0;
+}
+
+bool operator>(const Version& v1, const Version& v2) {
+  return v1.CompareTo(v2) > 0;
+}
+
+bool operator>=(const Version& v1, const Version& v2) {
+  return v1.CompareTo(v2) >= 0;
+}
+
+std::ostream& operator<<(std::ostream& stream, const Version& v) {
+  return stream << v.GetString();
 }
 
 }  // namespace base

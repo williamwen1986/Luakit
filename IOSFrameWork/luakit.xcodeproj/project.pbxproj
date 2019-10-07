@@ -1,0 +1,843 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C545B5F2233DF59500B44FF2 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B5AF233DF53500B44FF2 /* libbase.a */; };
+		C545B5F3233DF59500B44FF2 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B59B233DF52200B44FF2 /* libcommon.a */; };
+		C545B5F4233DF59500B44FF2 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B5A6233DF52B00B44FF2 /* libcurl.a */; };
+		C545B5F5233DF59500B44FF2 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B5B8233DF54100B44FF2 /* libevent.a */; };
+		C545B5F6233DF59500B44FF2 /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B5C1233DF55100B44FF2 /* libextensions.a */; };
+		C545B5F7233DF59500B44FF2 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B5C9233DF55A00B44FF2 /* liblua.a */; };
+		C545B5F8233DF59500B44FF2 /* libsqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B584233DF4DF00B44FF2 /* libsqlite.a */; };
+		C545B613233DFE3D00B44FF2 /* oc_callback.mm in Sources */ = {isa = PBXBuildFile; fileRef = C545B535233DF38D00B44FF2 /* oc_callback.mm */; };
+		C545B614233DFE3D00B44FF2 /* oc_helpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = C545B537233DF38D00B44FF2 /* oc_helpers.mm */; };
+		C545B624233E012600B44FF2 /* LuakitLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C545B61E233E010300B44FF2 /* LuakitLoader.cpp */; };
+		C545B625233E012600B44FF2 /* lua_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C545B620233E010300B44FF2 /* lua_helpers.cpp */; };
+		C545B626233E012600B44FF2 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C545B622233E010300B44FF2 /* xxtea.cpp */; };
+		C545B62E233E03BE00B44FF2 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = C545B628233E03BE00B44FF2 /* tolua_event.c */; };
+		C545B62F233E03BE00B44FF2 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = C545B62A233E03BE00B44FF2 /* tolua_map.c */; };
+		C545B630233E03BE00B44FF2 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = C545B62B233E03BE00B44FF2 /* tolua_push.c */; };
+		C545B631233E03BE00B44FF2 /* tolua_is.c in Sources */ = {isa = PBXBuildFile; fileRef = C545B62C233E03BE00B44FF2 /* tolua_is.c */; };
+		C545B632233E03BE00B44FF2 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = C545B62D233E03BE00B44FF2 /* tolua_to.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C545B583233DF4DF00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B57E233DF4DF00B44FF2 /* sqlite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C58B03C32336A67E00A125C2;
+			remoteInfo = sqlite;
+		};
+		C545B585233DF4DF00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B57E233DF4DF00B44FF2 /* sqlite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5F53C8B2337658C008F114F;
+			remoteInfo = "sqlite-macos";
+		};
+		C545B58B233DF4F600B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B587233DF4F600B44FF2 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C59F6E84233CFDF80044E10E;
+			remoteInfo = lua;
+		};
+		C545B59A233DF52200B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B594233DF52200B44FF2 /* common.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 04A4FA121D7464E500E42FE3;
+			remoteInfo = common;
+		};
+		C545B59C233DF52200B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B594233DF52200B44FF2 /* common.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BA4685D21DD1C8A200A8CCB4;
+			remoteInfo = common_unittests;
+		};
+		C545B59E233DF52200B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B594233DF52200B44FF2 /* common.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5BD045F2334B0BB00E630F5;
+			remoteInfo = "common-macos";
+		};
+		C545B5A5233DF52B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5A0233DF52B00B44FF2 /* curl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C521881E23313510001AA895;
+			remoteInfo = curl;
+		};
+		C545B5A7233DF52B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5A0233DF52B00B44FF2 /* curl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5BD042A2333F4A800E630F5;
+			remoteInfo = "curl-macos";
+		};
+		C545B5AE233DF53500B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5A9233DF53400B44FF2 /* base.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A24F8E8AF59B46B92FF23F23;
+			remoteInfo = base;
+		};
+		C545B5B0233DF53500B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5A9233DF53400B44FF2 /* base.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5BD05152334B24F00E630F5;
+			remoteInfo = "base-macos";
+		};
+		C545B5B7233DF54100B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5B2233DF54100B44FF2 /* event.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FC3DE02F41FA36BF9BC0714C;
+			remoteInfo = event;
+		};
+		C545B5B9233DF54100B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5B2233DF54100B44FF2 /* event.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5BD05F32334C70A00E630F5;
+			remoteInfo = "event-macos";
+		};
+		C545B5C0233DF55100B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5BB233DF55100B44FF2 /* extensions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C58B055D2336B0E200A125C2;
+			remoteInfo = extensions;
+		};
+		C545B5C2233DF55100B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5BB233DF55100B44FF2 /* extensions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5F53BB523376173008F114F;
+			remoteInfo = "extensions-macos";
+		};
+		C545B5C8233DF55A00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5C4233DF55A00B44FF2 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C59F6E84233CFDF80044E10E;
+			remoteInfo = lua;
+		};
+		C545B5D2233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5C4233DF55A00B44FF2 /* lua.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C59F6E83233CFDF80044E10E;
+			remoteInfo = lua;
+		};
+		C545B5D4233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5BB233DF55100B44FF2 /* extensions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C58B055C2336B0E200A125C2;
+			remoteInfo = extensions;
+		};
+		C545B5D6233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5B2233DF54100B44FF2 /* event.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3957C557EC3642B16CCFD55B;
+			remoteInfo = event;
+		};
+		C545B5D8233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5A9233DF53400B44FF2 /* base.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5272CB5A73F54B4A0E227C3D;
+			remoteInfo = base;
+		};
+		C545B5DA233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5A0233DF52B00B44FF2 /* curl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C521881D23313510001AA895;
+			remoteInfo = curl;
+		};
+		C545B5DC233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B594233DF52200B44FF2 /* common.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 04A4FA111D7464E500E42FE3;
+			remoteInfo = common;
+		};
+		C545B5DE233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B5C4233DF55A00B44FF2 /* lua.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C59F6E83233CFDF80044E10E;
+			remoteInfo = lua;
+		};
+		C545B5E0233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C545B57E233DF4DF00B44FF2 /* sqlite.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C58B03C22336A67E00A125C2;
+			remoteInfo = sqlite;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C545B524233DF2DE00B44FF2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C545B526233DF2DE00B44FF2 /* libluakit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libluakit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C545B533233DF38D00B44FF2 /* NotificationProxyObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationProxyObserver.h; sourceTree = "<group>"; };
+		C545B534233DF38D00B44FF2 /* oc_callback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oc_callback.h; sourceTree = "<group>"; };
+		C545B535233DF38D00B44FF2 /* oc_callback.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_callback.mm; sourceTree = "<group>"; };
+		C545B536233DF38D00B44FF2 /* oc_helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oc_helpers.h; sourceTree = "<group>"; };
+		C545B537233DF38D00B44FF2 /* oc_helpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_helpers.mm; sourceTree = "<group>"; };
+		C545B57E233DF4DF00B44FF2 /* sqlite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlite.xcodeproj; path = "../src/sqlite-amalgamation-3290000/sqlite.xcodeproj"; sourceTree = "<group>"; };
+		C545B587233DF4F600B44FF2 /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = "../src/lua-5.3.5/lua.xcodeproj"; sourceTree = "<group>"; };
+		C545B594233DF52200B44FF2 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../src/common/common.xcodeproj; sourceTree = "<group>"; };
+		C545B5A0233DF52B00B44FF2 /* curl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = curl.xcodeproj; path = ../src/curl/curl.xcodeproj; sourceTree = "<group>"; };
+		C545B5A9233DF53400B44FF2 /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../src/base/base.xcodeproj; sourceTree = "<group>"; };
+		C545B5B2233DF54100B44FF2 /* event.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = event.xcodeproj; path = ../src/libevent/event.xcodeproj; sourceTree = "<group>"; };
+		C545B5BB233DF55100B44FF2 /* extensions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extensions.xcodeproj; path = ../src/extensions/extensions.xcodeproj; sourceTree = "<group>"; };
+		C545B5C4233DF55A00B44FF2 /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = "../src/lua-5.3.5/lua.xcodeproj"; sourceTree = "<group>"; };
+		C545B61E233E010300B44FF2 /* LuakitLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LuakitLoader.cpp; sourceTree = "<group>"; };
+		C545B61F233E010300B44FF2 /* LuakitLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LuakitLoader.h; sourceTree = "<group>"; };
+		C545B620233E010300B44FF2 /* lua_helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_helpers.cpp; sourceTree = "<group>"; };
+		C545B621233E010300B44FF2 /* lua_helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_helpers.h; sourceTree = "<group>"; };
+		C545B622233E010300B44FF2 /* xxtea.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
+		C545B623233E010300B44FF2 /* xxtea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
+		C545B628233E03BE00B44FF2 /* tolua_event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tolua_event.c; path = ../src/toluapp/src/lib/tolua_event.c; sourceTree = "<group>"; };
+		C545B629233E03BE00B44FF2 /* tolua_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tolua_event.h; path = ../src/toluapp/src/lib/tolua_event.h; sourceTree = "<group>"; };
+		C545B62A233E03BE00B44FF2 /* tolua_map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tolua_map.c; path = ../src/toluapp/src/lib/tolua_map.c; sourceTree = "<group>"; };
+		C545B62B233E03BE00B44FF2 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tolua_push.c; path = ../src/toluapp/src/lib/tolua_push.c; sourceTree = "<group>"; };
+		C545B62C233E03BE00B44FF2 /* tolua_is.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tolua_is.c; path = ../src/toluapp/src/lib/tolua_is.c; sourceTree = "<group>"; };
+		C545B62D233E03BE00B44FF2 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tolua_to.c; path = ../src/toluapp/src/lib/tolua_to.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C545B523233DF2DE00B44FF2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C545B5F2233DF59500B44FF2 /* libbase.a in Frameworks */,
+				C545B5F3233DF59500B44FF2 /* libcommon.a in Frameworks */,
+				C545B5F4233DF59500B44FF2 /* libcurl.a in Frameworks */,
+				C545B5F5233DF59500B44FF2 /* libevent.a in Frameworks */,
+				C545B5F6233DF59500B44FF2 /* libextensions.a in Frameworks */,
+				C545B5F7233DF59500B44FF2 /* liblua.a in Frameworks */,
+				C545B5F8233DF59500B44FF2 /* libsqlite.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C545B51D233DF2DE00B44FF2 = {
+			isa = PBXGroup;
+			children = (
+				C545B627233E037700B44FF2 /* toluapp */,
+				C545B61D233E010300B44FF2 /* lua-tools */,
+				C545B5C4233DF55A00B44FF2 /* lua.xcodeproj */,
+				C545B5BB233DF55100B44FF2 /* extensions.xcodeproj */,
+				C545B5B2233DF54100B44FF2 /* event.xcodeproj */,
+				C545B5A9233DF53400B44FF2 /* base.xcodeproj */,
+				C545B5A0233DF52B00B44FF2 /* curl.xcodeproj */,
+				C545B594233DF52200B44FF2 /* common.xcodeproj */,
+				C545B587233DF4F600B44FF2 /* lua.xcodeproj */,
+				C545B57E233DF4DF00B44FF2 /* sqlite.xcodeproj */,
+				C545B532233DF38D00B44FF2 /* OCHelper */,
+				C545B527233DF2DF00B44FF2 /* Products */,
+				C545B5F1233DF59500B44FF2 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C545B527233DF2DF00B44FF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C545B526233DF2DE00B44FF2 /* libluakit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C545B532233DF38D00B44FF2 /* OCHelper */ = {
+			isa = PBXGroup;
+			children = (
+				C545B533233DF38D00B44FF2 /* NotificationProxyObserver.h */,
+				C545B534233DF38D00B44FF2 /* oc_callback.h */,
+				C545B535233DF38D00B44FF2 /* oc_callback.mm */,
+				C545B536233DF38D00B44FF2 /* oc_helpers.h */,
+				C545B537233DF38D00B44FF2 /* oc_helpers.mm */,
+			);
+			path = OCHelper;
+			sourceTree = "<group>";
+		};
+		C545B57F233DF4DF00B44FF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C545B584233DF4DF00B44FF2 /* libsqlite.a */,
+				C545B586233DF4DF00B44FF2 /* libsqlite-macos.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C545B588233DF4F600B44FF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C545B58C233DF4F600B44FF2 /* liblua.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C545B595233DF52200B44FF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C545B59B233DF52200B44FF2 /* libcommon.a */,
+				C545B59D233DF52200B44FF2 /* libcommon_unittests.a */,
+				C545B59F233DF52200B44FF2 /* libcommon-macos.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C545B5A1233DF52B00B44FF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C545B5A6233DF52B00B44FF2 /* libcurl.a */,
+				C545B5A8233DF52B00B44FF2 /* libcurl-macos.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C545B5AA233DF53400B44FF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C545B5AF233DF53500B44FF2 /* libbase.a */,
+				C545B5B1233DF53500B44FF2 /* libbase-macos.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C545B5B3233DF54100B44FF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C545B5B8233DF54100B44FF2 /* libevent.a */,
+				C545B5BA233DF54100B44FF2 /* libevent-macos.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C545B5BC233DF55100B44FF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C545B5C1233DF55100B44FF2 /* libextensions.a */,
+				C545B5C3233DF55100B44FF2 /* libextensions-macos.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C545B5C5233DF55A00B44FF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C545B5C9233DF55A00B44FF2 /* liblua.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C545B5F1233DF59500B44FF2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C545B61D233E010300B44FF2 /* lua-tools */ = {
+			isa = PBXGroup;
+			children = (
+				C545B61E233E010300B44FF2 /* LuakitLoader.cpp */,
+				C545B61F233E010300B44FF2 /* LuakitLoader.h */,
+				C545B620233E010300B44FF2 /* lua_helpers.cpp */,
+				C545B621233E010300B44FF2 /* lua_helpers.h */,
+				C545B622233E010300B44FF2 /* xxtea.cpp */,
+				C545B623233E010300B44FF2 /* xxtea.h */,
+			);
+			name = "lua-tools";
+			path = "../src/lua-tools";
+			sourceTree = "<group>";
+		};
+		C545B627233E037700B44FF2 /* toluapp */ = {
+			isa = PBXGroup;
+			children = (
+				C545B628233E03BE00B44FF2 /* tolua_event.c */,
+				C545B629233E03BE00B44FF2 /* tolua_event.h */,
+				C545B62C233E03BE00B44FF2 /* tolua_is.c */,
+				C545B62A233E03BE00B44FF2 /* tolua_map.c */,
+				C545B62B233E03BE00B44FF2 /* tolua_push.c */,
+				C545B62D233E03BE00B44FF2 /* tolua_to.c */,
+			);
+			name = toluapp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C545B525233DF2DE00B44FF2 /* luakit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C545B52F233DF2DF00B44FF2 /* Build configuration list for PBXNativeTarget "luakit" */;
+			buildPhases = (
+				C545B522233DF2DE00B44FF2 /* Sources */,
+				C545B523233DF2DE00B44FF2 /* Frameworks */,
+				C545B524233DF2DE00B44FF2 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C545B5D3233DF57B00B44FF2 /* PBXTargetDependency */,
+				C545B5D5233DF57B00B44FF2 /* PBXTargetDependency */,
+				C545B5D7233DF57B00B44FF2 /* PBXTargetDependency */,
+				C545B5D9233DF57B00B44FF2 /* PBXTargetDependency */,
+				C545B5DB233DF57B00B44FF2 /* PBXTargetDependency */,
+				C545B5DD233DF57B00B44FF2 /* PBXTargetDependency */,
+				C545B5DF233DF57B00B44FF2 /* PBXTargetDependency */,
+				C545B5E1233DF57B00B44FF2 /* PBXTargetDependency */,
+			);
+			name = luakit;
+			productName = luakit;
+			productReference = C545B526233DF2DE00B44FF2 /* libluakit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C545B51E233DF2DE00B44FF2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = larpoux;
+				TargetAttributes = {
+					C545B525233DF2DE00B44FF2 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = C545B521233DF2DE00B44FF2 /* Build configuration list for PBXProject "luakit" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C545B51D233DF2DE00B44FF2;
+			productRefGroup = C545B527233DF2DF00B44FF2 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C545B5AA233DF53400B44FF2 /* Products */;
+					ProjectRef = C545B5A9233DF53400B44FF2 /* base.xcodeproj */;
+				},
+				{
+					ProductGroup = C545B595233DF52200B44FF2 /* Products */;
+					ProjectRef = C545B594233DF52200B44FF2 /* common.xcodeproj */;
+				},
+				{
+					ProductGroup = C545B5A1233DF52B00B44FF2 /* Products */;
+					ProjectRef = C545B5A0233DF52B00B44FF2 /* curl.xcodeproj */;
+				},
+				{
+					ProductGroup = C545B5B3233DF54100B44FF2 /* Products */;
+					ProjectRef = C545B5B2233DF54100B44FF2 /* event.xcodeproj */;
+				},
+				{
+					ProductGroup = C545B5BC233DF55100B44FF2 /* Products */;
+					ProjectRef = C545B5BB233DF55100B44FF2 /* extensions.xcodeproj */;
+				},
+				{
+					ProductGroup = C545B5C5233DF55A00B44FF2 /* Products */;
+					ProjectRef = C545B5C4233DF55A00B44FF2 /* lua.xcodeproj */;
+				},
+				{
+					ProductGroup = C545B588233DF4F600B44FF2 /* Products */;
+					ProjectRef = C545B587233DF4F600B44FF2 /* lua.xcodeproj */;
+				},
+				{
+					ProductGroup = C545B57F233DF4DF00B44FF2 /* Products */;
+					ProjectRef = C545B57E233DF4DF00B44FF2 /* sqlite.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C545B525233DF2DE00B44FF2 /* luakit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C545B584233DF4DF00B44FF2 /* libsqlite.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libsqlite.a;
+			remoteRef = C545B583233DF4DF00B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B586233DF4DF00B44FF2 /* libsqlite-macos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libsqlite-macos.a";
+			remoteRef = C545B585233DF4DF00B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B58C233DF4F600B44FF2 /* liblua.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblua.a;
+			remoteRef = C545B58B233DF4F600B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B59B233DF52200B44FF2 /* libcommon.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcommon.a;
+			remoteRef = C545B59A233DF52200B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B59D233DF52200B44FF2 /* libcommon_unittests.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcommon_unittests.a;
+			remoteRef = C545B59C233DF52200B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B59F233DF52200B44FF2 /* libcommon-macos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcommon-macos.a";
+			remoteRef = C545B59E233DF52200B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B5A6233DF52B00B44FF2 /* libcurl.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcurl.a;
+			remoteRef = C545B5A5233DF52B00B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B5A8233DF52B00B44FF2 /* libcurl-macos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcurl-macos.a";
+			remoteRef = C545B5A7233DF52B00B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B5AF233DF53500B44FF2 /* libbase.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libbase.a;
+			remoteRef = C545B5AE233DF53500B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B5B1233DF53500B44FF2 /* libbase-macos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libbase-macos.a";
+			remoteRef = C545B5B0233DF53500B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B5B8233DF54100B44FF2 /* libevent.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libevent.a;
+			remoteRef = C545B5B7233DF54100B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B5BA233DF54100B44FF2 /* libevent-macos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libevent-macos.a";
+			remoteRef = C545B5B9233DF54100B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B5C1233DF55100B44FF2 /* libextensions.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libextensions.a;
+			remoteRef = C545B5C0233DF55100B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B5C3233DF55100B44FF2 /* libextensions-macos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libextensions-macos.a";
+			remoteRef = C545B5C2233DF55100B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C545B5C9233DF55A00B44FF2 /* liblua.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblua.a;
+			remoteRef = C545B5C8233DF55A00B44FF2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C545B522233DF2DE00B44FF2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C545B632233E03BE00B44FF2 /* tolua_to.c in Sources */,
+				C545B62E233E03BE00B44FF2 /* tolua_event.c in Sources */,
+				C545B630233E03BE00B44FF2 /* tolua_push.c in Sources */,
+				C545B624233E012600B44FF2 /* LuakitLoader.cpp in Sources */,
+				C545B625233E012600B44FF2 /* lua_helpers.cpp in Sources */,
+				C545B626233E012600B44FF2 /* xxtea.cpp in Sources */,
+				C545B62F233E03BE00B44FF2 /* tolua_map.c in Sources */,
+				C545B613233DFE3D00B44FF2 /* oc_callback.mm in Sources */,
+				C545B614233DFE3D00B44FF2 /* oc_helpers.mm in Sources */,
+				C545B631233E03BE00B44FF2 /* tolua_is.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C545B5D3233DF57B00B44FF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = lua;
+			targetProxy = C545B5D2233DF57B00B44FF2 /* PBXContainerItemProxy */;
+		};
+		C545B5D5233DF57B00B44FF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = extensions;
+			targetProxy = C545B5D4233DF57B00B44FF2 /* PBXContainerItemProxy */;
+		};
+		C545B5D7233DF57B00B44FF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = event;
+			targetProxy = C545B5D6233DF57B00B44FF2 /* PBXContainerItemProxy */;
+		};
+		C545B5D9233DF57B00B44FF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = base;
+			targetProxy = C545B5D8233DF57B00B44FF2 /* PBXContainerItemProxy */;
+		};
+		C545B5DB233DF57B00B44FF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = curl;
+			targetProxy = C545B5DA233DF57B00B44FF2 /* PBXContainerItemProxy */;
+		};
+		C545B5DD233DF57B00B44FF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = common;
+			targetProxy = C545B5DC233DF57B00B44FF2 /* PBXContainerItemProxy */;
+		};
+		C545B5DF233DF57B00B44FF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = lua;
+			targetProxy = C545B5DE233DF57B00B44FF2 /* PBXContainerItemProxy */;
+		};
+		C545B5E1233DF57B00B44FF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = sqlite;
+			targetProxy = C545B5E0233DF57B00B44FF2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C545B52D233DF2DF00B44FF2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C545B52E233DF2DF00B44FF2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C545B530233DF2DF00B44FF2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/src/lua-5.3.5",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/lua-tools",
+					"$(LUAKIT_ROOT)/src/sqlite-amalgamation-3290000",
+					"$(LUAKIT_ROOT)/src/toluapp/include",
+					"$(LUAKIT_ROOT)/src",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/..";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C545B531233DF2DF00B44FF2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/src/lua-5.3.5",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/lua-tools",
+					"$(LUAKIT_ROOT)/src/sqlite-amalgamation-3290000",
+					"$(LUAKIT_ROOT)/src/toluapp/include",
+					"$(LUAKIT_ROOT)/src",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/..";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C545B521233DF2DE00B44FF2 /* Build configuration list for PBXProject "luakit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C545B52D233DF2DF00B44FF2 /* Debug */,
+				C545B52E233DF2DF00B44FF2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C545B52F233DF2DF00B44FF2 /* Build configuration list for PBXNativeTarget "luakit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C545B530233DF2DF00B44FF2 /* Debug */,
+				C545B531233DF2DF00B44FF2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C545B51E233DF2DE00B44FF2 /* Project object */;
+}

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BASE_CLOCK_H_
-#define BASE_CLOCK_H_
+#ifndef BASE_TIME_CLOCK_H_
+#define BASE_TIME_CLOCK_H_
 
 #include "base/base_export.h"
 #include "base/time/time.h"
@@ -32,9 +32,9 @@ class BASE_EXPORT Clock {
   // Now() must be safe to call from any thread.  The caller cannot
   // make any ordering assumptions about the returned Time.  For
   // example, the system clock may change to an earlier time.
-  virtual Time Now() = 0;
+  virtual Time Now() const = 0;
 };
 
 }  // namespace base
 
-#endif  // BASE_CLOCK_H_
+#endif  // BASE_TIME_CLOCK_H_

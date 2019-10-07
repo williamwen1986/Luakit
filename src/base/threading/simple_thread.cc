@@ -11,75 +11,91 @@
 
 namespace base {
 
-SimpleThread::SimpleThread(const std::string& name_prefix)
-    : name_prefix_(name_prefix), name_(name_prefix),
-      thread_(), event_(true, false), tid_(0), joined_(false) {
-}
+SimpleThread::SimpleThread(const std::string& name)
+    : SimpleThread(name, Options()) {}
 
-SimpleThread::SimpleThread(const std::string& name_prefix,
-                           const Options& options)
-    : name_prefix_(name_prefix), name_(name_prefix), options_(options),
-      thread_(), event_(true, false), tid_(0), joined_(false) {
-}
+SimpleThread::SimpleThread(const std::string& name, const Options& options)
+    : name_(name),
+      options_(options),
+      event_(WaitableEvent::ResetPolicy::MANUAL,
+             WaitableEvent::InitialState::NOT_SIGNALED) {}
 
 SimpleThread::~SimpleThread() {
   DCHECK(HasBeenStarted()) << "SimpleThread was never started.";
-  DCHECK(HasBeenJoined()) << "SimpleThread destroyed without being Join()ed.";
+  DCHECK(!options_.joinable || HasBeenJoined())
+      << "Joinable SimpleThread destroyed without being Join()ed.";
 }
 
 void SimpleThread::Start() {
-  DCHECK(!HasBeenStarted()) << "Tried to Start a thread multiple times.";
-  bool success = PlatformThread::Create(options_.stack_size(), this, &thread_);
-  DCHECK(success);
-  base::ThreadRestrictions::ScopedAllowWait allow_wait;
+  StartAsync();
+  ScopedAllowBaseSyncPrimitives allow_wait;
   event_.Wait();  // Wait for the thread to complete initialization.
 }
 
 void SimpleThread::Join() {
-  DCHECK(HasBeenStarted()) << "Tried to Join a never-started thread.";
+  DCHECK(options_.joinable) << "A non-joinable thread can't be joined.";
+  DCHECK(HasStartBeenAttempted()) << "Tried to Join a never-started thread.";
   DCHECK(!HasBeenJoined()) << "Tried to Join a thread multiple times.";
+  BeforeJoin();
   PlatformThread::Join(thread_);
+  thread_ = PlatformThreadHandle();
   joined_ = true;
 }
 
+void SimpleThread::StartAsync() {
+  DCHECK(!HasStartBeenAttempted()) << "Tried to Start a thread multiple times.";
+  start_called_ = true;
+  BeforeStart();
+  bool success =
+      options_.joinable
+          ? PlatformThread::CreateWithPriority(options_.stack_size, this,
+                                               &thread_, options_.priority)
+          : PlatformThread::CreateNonJoinableWithPriority(
+                options_.stack_size, this, options_.priority);
+  CHECK(success);
+}
+
+PlatformThreadId SimpleThread::tid() {
+  DCHECK(HasBeenStarted());
+  return tid_;
+}
+
 bool SimpleThread::HasBeenStarted() {
-  base::ThreadRestrictions::ScopedAllowWait allow_wait;
   return event_.IsSignaled();
 }
 
 void SimpleThread::ThreadMain() {
   tid_ = PlatformThread::CurrentId();
-  // Construct our full name of the form "name_prefix_/TID".
-  name_.push_back('/');
-  name_.append(IntToString(tid_));
-  PlatformThread::SetName(name_.c_str());
+  PlatformThread::SetName(name_);
 
   // We've initialized our new thread, signal that we're done to Start().
   event_.Signal();
 
+  BeforeRun();
   Run();
 }
 
 DelegateSimpleThread::DelegateSimpleThread(Delegate* delegate,
-                                           const std::string& name_prefix)
-    : SimpleThread(name_prefix),
-      delegate_(delegate) {
-}
+                                           const std::string& name)
+    : DelegateSimpleThread(delegate, name, Options()) {}
 
 DelegateSimpleThread::DelegateSimpleThread(Delegate* delegate,
-                                           const std::string& name_prefix,
+                                           const std::string& name,
                                            const Options& options)
-    : SimpleThread(name_prefix, options),
-      delegate_(delegate) {
+    : SimpleThread(name, options), delegate_(delegate) {
+  DCHECK(delegate_);
 }
 
-DelegateSimpleThread::~DelegateSimpleThread() {
-}
+DelegateSimpleThread::~DelegateSimpleThread() = default;
 
 void DelegateSimpleThread::Run() {
   DCHECK(delegate_) << "Tried to call Run without a delegate (called twice?)";
-  delegate_->Run();
-  delegate_ = NULL;
+
+  // Non-joinable DelegateSimpleThreads are allowed to be deleted during Run().
+  // Member state must not be accessed after invoking Run().
+  Delegate* delegate = delegate_;
+  delegate_ = nullptr;
+  delegate->Run();
 }
 
 DelegateSimpleThreadPool::DelegateSimpleThreadPool(
@@ -87,8 +103,8 @@ DelegateSimpleThreadPool::DelegateSimpleThreadPool(
     int num_threads)
     : name_prefix_(name_prefix),
       num_threads_(num_threads),
-      dry_(true, false) {
-}
+      dry_(WaitableEvent::ResetPolicy::MANUAL,
+           WaitableEvent::InitialState::NOT_SIGNALED) {}
 
 DelegateSimpleThreadPool::~DelegateSimpleThreadPool() {
   DCHECK(threads_.empty());
@@ -99,7 +115,10 @@ DelegateSimpleThreadPool::~DelegateSimpleThreadPool() {
 void DelegateSimpleThreadPool::Start() {
   DCHECK(threads_.empty()) << "Start() called with outstanding threads.";
   for (int i = 0; i < num_threads_; ++i) {
-    DelegateSimpleThread* thread = new DelegateSimpleThread(this, name_prefix_);
+    std::string name(name_prefix_);
+    name.push_back('/');
+    name.append(NumberToString(i));
+    DelegateSimpleThread* thread = new DelegateSimpleThread(this, name);
     thread->Start();
     threads_.push_back(thread);
   }
@@ -109,7 +128,7 @@ void DelegateSimpleThreadPool::JoinAll() {
   DCHECK(!threads_.empty()) << "JoinAll() called with no outstanding threads.";
 
   // Tell all our threads to quit their worker loop.
-  AddWork(NULL, num_threads_);
+  AddWork(nullptr, num_threads_);
 
   // Join and destroy all the worker threads.
   for (int i = 0; i < num_threads_; ++i) {
@@ -130,7 +149,7 @@ void DelegateSimpleThreadPool::AddWork(Delegate* delegate, int repeat_count) {
 }
 
 void DelegateSimpleThreadPool::Run() {
-  Delegate* work = NULL;
+  Delegate* work = nullptr;
 
   while (true) {
     dry_.Wait();

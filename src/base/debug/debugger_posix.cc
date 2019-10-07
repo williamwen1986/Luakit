@@ -17,7 +17,7 @@
 #include <memory>
 #include <vector>
 
-#include "base/clang_coverage_buildflags.h"
+#include "build/clang_coverage_buildflags.h"
 #include "base/stl_util.h"
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
@@ -129,6 +129,7 @@ bool BeingDebugged() {
 }
 
 void VerifyDebugger() {
+/* Patch [LARPOUX]
 #if BUILDFLAG(ENABLE_LLDBINIT_WARNING)
   if (Environment::Create()->HasVar("CHROMIUM_LLDBINIT_SOURCED"))
     return;
@@ -143,6 +144,7 @@ void VerifyDebugger() {
          "To continue anyway, type 'continue' in lldb. To always skip this "
          "check, define an environment variable CHROMIUM_LLDBINIT_SOURCED=1";
 #endif
+*/
 }
 
 #elif defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_AIX)

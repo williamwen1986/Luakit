@@ -6,6 +6,6 @@
 
 namespace base {
 
-TickClock::~TickClock() {}
+TickClock::~TickClock() = default;
 
 }  // namespace base

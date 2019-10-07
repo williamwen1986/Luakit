@@ -13,19 +13,19 @@ typedef PlatformTest ThreadIdNameManagerTest;
 
 namespace {
 
-static const char* kAThread = "a thread";
-static const char* kBThread = "b thread";
+const char kAThread[] = "a thread";
+const char kBThread[] = "b thread";
 
 TEST_F(ThreadIdNameManagerTest, AddThreads) {
   base::ThreadIdNameManager* manager = base::ThreadIdNameManager::GetInstance();
   base::Thread thread_a(kAThread);
   base::Thread thread_b(kBThread);
 
-  thread_a.Start();
-  thread_b.Start();
+  thread_a.StartAndWaitForTesting();
+  thread_b.StartAndWaitForTesting();
 
-  EXPECT_STREQ(kAThread, manager->GetName(thread_a.thread_id()));
-  EXPECT_STREQ(kBThread, manager->GetName(thread_b.thread_id()));
+  EXPECT_STREQ(kAThread, manager->GetName(thread_a.GetThreadId()));
+  EXPECT_STREQ(kBThread, manager->GetName(thread_b.GetThreadId()));
 
   thread_b.Stop();
   thread_a.Stop();
@@ -35,30 +35,30 @@ TEST_F(ThreadIdNameManagerTest, RemoveThreads) {
   base::ThreadIdNameManager* manager = base::ThreadIdNameManager::GetInstance();
   base::Thread thread_a(kAThread);
 
-  thread_a.Start();
+  thread_a.StartAndWaitForTesting();
   {
     base::Thread thread_b(kBThread);
-    thread_b.Start();
+    thread_b.StartAndWaitForTesting();
     thread_b.Stop();
   }
-  EXPECT_STREQ(kAThread, manager->GetName(thread_a.thread_id()));
+  EXPECT_STREQ(kAThread, manager->GetName(thread_a.GetThreadId()));
 
   thread_a.Stop();
-  EXPECT_STREQ("", manager->GetName(thread_a.thread_id()));
+  EXPECT_STREQ("", manager->GetName(thread_a.GetThreadId()));
 }
 
 TEST_F(ThreadIdNameManagerTest, RestartThread) {
   base::ThreadIdNameManager* manager = base::ThreadIdNameManager::GetInstance();
   base::Thread thread_a(kAThread);
 
-  thread_a.Start();
-  base::PlatformThreadId a_id = thread_a.thread_id();
+  thread_a.StartAndWaitForTesting();
+  base::PlatformThreadId a_id = thread_a.GetThreadId();
   EXPECT_STREQ(kAThread, manager->GetName(a_id));
   thread_a.Stop();
 
-  thread_a.Start();
+  thread_a.StartAndWaitForTesting();
   EXPECT_STREQ("", manager->GetName(a_id));
-  EXPECT_STREQ(kAThread, manager->GetName(thread_a.thread_id()));
+  EXPECT_STREQ(kAThread, manager->GetName(thread_a.GetThreadId()));
   thread_a.Stop();
 }
 

@@ -13,6 +13,12 @@
 #error "Only clang-cl is supported on Windows, see https://crbug.com/988071"
 #endif
 
+
+// Annotate a virtual method indicating it must be overriding a virtual
+// method in the parent class.
+// Use like:
+//   virtual void foo() OVERRIDE; // Add [LARPOUX]
+
 // Macros for suppressing and disabling warnings on MSVC.
 //
 // Warning numbers are enumerated at:
@@ -59,6 +65,22 @@
 #define NON_EXPORTED_BASE(code) code // Patch [LARPOUX]
 
 #endif  // COMPILER_MSVC
+
+
+#if defined(COMPILER_MSVC)
+#define OVERRIDE override
+#elif defined(__clang__)
+#define OVERRIDE override
+#elif defined(COMPILER_GCC) && __cplusplus >= 201103 && \
+      (__GNUC__ * 10000 + __GNUC_MINOR__ * 100) >= 40700
+// GCC 4.7 supports explicit virtual overrides when C++11 support is enabled.
+#define OVERRIDE override
+#else
+#define OVERRIDE
+#endif
+// End Add [LARPOUX]
+
+
 
 // These macros can be helpful when investigating compiler bugs or when
 // investigating issues in local optimized builds, by temporarily disabling

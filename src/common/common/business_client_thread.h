@@ -11,7 +11,7 @@
 #include "base/basictypes.h"
 #include "base/callback.h"
 #include "base/location.h"
-#include "base/message_loop/message_loop_proxy.h"
+// #include "base/message_loop/message_loop_proxy.h" // Patch [LARPOUX]
 #include "base/task_runner_util.h"
 #include "base/time/time.h"
 extern "C" {
@@ -103,40 +103,40 @@ class BusinessThread {
   // even if the task is posted, there's no guarantee that it will run, since
   // the target thread may already have a Quit message in its queue.
   static bool PostTask(BusinessThreadID identifier,
-                       const tracked_objects::Location& from_here,
+                       const base::Location& from_here, // Patch [LARPOUX]
                        const base::Closure& task);
   static bool PostDelayedTask(BusinessThreadID identifier,
-                              const tracked_objects::Location& from_here,
+                              const base::Location& from_here, // Patch [LARPOUX]
                               const base::Closure& task,
                               int64 delay_ms);
   static bool PostDelayedTask(BusinessThreadID identifier,
-                              const tracked_objects::Location& from_here,
+                              const base::Location& from_here, // Patch [LARPOUX]
                               const base::Closure& task,
                               base::TimeDelta delay);
   static bool PostNonNestableTask(BusinessThreadID identifier,
-                                  const tracked_objects::Location& from_here,
+                                  const base::Location& from_here, // Patch [LARPOUX]
                                   const base::Closure& task);
   static bool PostNonNestableDelayedTask(
       BusinessThreadID identifier,
-      const tracked_objects::Location& from_here,
+      const base::Location& from_here, // Patch [LARPOUX]
       const base::Closure& task,
       int64 delay_ms);
   static bool PostNonNestableDelayedTask(
       BusinessThreadID identifier,
-      const tracked_objects::Location& from_here,
+      const base::Location& from_here, // Patch [LARPOUX]
       const base::Closure& task,
       base::TimeDelta delay);
 
   static bool PostTaskAndReply(
       BusinessThreadID identifier,
-      const tracked_objects::Location& from_here,
+      const base::Location& from_here, // Patch [LARPOUX],
       const base::Closure& task,
       const base::Closure& reply);
-
+/* Patch [LARPOUX]
   template <typename ReturnType>
   static bool PostTaskAndReplyWithResult(
       BusinessThreadID identifier,
-      const tracked_objects::Location& from_here,
+      const base::Location& from_here,  // Patch [LARPOUX],
       const base::Callback<ReturnType(void)>& task,
       const base::Callback<void(ReturnType)>& reply) {
     scoped_refptr<base::MessageLoopProxy> message_loop_proxy =
@@ -144,10 +144,42 @@ class BusinessThread {
     return base::PostTaskAndReplyWithResult<ReturnType>(
         message_loop_proxy.get(), from_here, task, reply);
   }
+  
+  template <template <typename> class CallbackType,
+          typename TaskReturnType,
+          typename ReplyArgType,
+          typename = EnableIfIsBaseCallback<CallbackType>>
+  bool PostTaskAndReplyWithResult(const base::Location& from_here,
+                                base::Callback<TaskReturnType()> task,
+                                base::Callback<void(ReplyArgType)> reply) {
+  return PostTaskAndReplyWithResult(from_here, {ThreadPool()}, std::move(task),
+                                    std::move(reply));
+  }
+
+  template <template <typename> class CallbackType,
+          typename TaskReturnType,
+          typename ReplyArgType,
+          typename = EnableIfIsBaseCallback<CallbackType>>
+  bool PostTaskAndReplyWithResult(TaskRunner* task_runner,
+                                const base::Location& from_here,
+                                base::Callback<TaskReturnType()> task,
+                                base::Callback<void(ReplyArgType)> reply) {
+  DCHECK(task);
+  DCHECK(reply);
+  // std::unique_ptr used to avoid the need of a default constructor.
+  auto* result = new std::unique_ptr<TaskReturnType>();
+  return task_runner->PostTaskAndReply(
+      from_here,
+      BindOnce(&internal::ReturnAsParamAdapter<TaskReturnType>, std::move(task),
+               result),
+      BindOnce(&internal::ReplyAdapter<TaskReturnType, ReplyArgType>,
+               std::move(reply), Owned(result)));
+  }
+
 
   template <class T>
   static bool DeleteSoon(BusinessThreadID identifier,
-                         const tracked_objects::Location& from_here,
+                         const base::Location& from_here, // Patch [LARPOUX],
                          const T* object) {
     return GetMessageLoopProxyForThread(identifier)->DeleteSoon(
         from_here, object);
@@ -155,11 +187,12 @@ class BusinessThread {
 
   template <class T>
   static bool ReleaseSoon(BusinessThreadID identifier,
-                          const tracked_objects::Location& from_here,
+                          const base::Location& from_here, // Patch [LARPOUX],
                           const T* object) {
     return GetMessageLoopProxyForThread(identifier)->ReleaseSoon(
         from_here, object);
   }
+*/ // End patch [LARPOUX]
 
   // Simplified wrappers for posting to the blocking thread pool. Use this
   // for doing things like blocking I/O.
@@ -178,15 +211,15 @@ class BusinessThread {
   // lookup and is guaranteed unique without you having to come up with a
   // unique string), you can access the sequenced worker pool directly via
   // GetBlockingPool().
-  static bool PostBlockingPoolTask(const tracked_objects::Location& from_here,
+  static bool PostBlockingPoolTask(const base::Location& from_here, // Patch [LARPOUX],
                                    const base::Closure& task);
   static bool PostBlockingPoolTaskAndReply(
-      const tracked_objects::Location& from_here,
+      const base::Location& from_here, // Patch [LARPOUX],
       const base::Closure& task,
       const base::Closure& reply);
   static bool PostBlockingPoolSequencedTask(
       const std::string& sequence_token_name,
-      const tracked_objects::Location& from_here,
+      const base::Location& from_here, // Patch [LARPOUX],
       const base::Closure& task);
 
   // Returns the thread pool used for blocking file I/O. Use this object to
@@ -218,8 +251,7 @@ class BusinessThread {
   static int getThreadCount();
   // Callers can hold on to a refcounted MessageLoopProxy beyond the lifetime
   // of the thread.
-  static scoped_refptr<base::MessageLoopProxy> GetMessageLoopProxyForThread(
-      BusinessThreadID identifier);
+  // static scoped_refptr<base::MessageLoopProxy> GetMessageLoopProxyForThread(BusinessThreadID identifier); // Patch [LARPOUX]
 
   // Returns a pointer to the thread's message loop, which will become
   // invalid during shutdown, so you probably shouldn't hold onto it.

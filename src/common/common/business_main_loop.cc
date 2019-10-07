@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "config/build_config.h"
+#include "build/build_config.h"
 #include "common/business_main_loop.h"
 
 #include "base/bind.h"
@@ -74,7 +74,7 @@ void BusinessMainLoop::Init() {
 // BusinessMainLoop stages ==================================================
 
 void BusinessMainLoop::EarlyInitialization() {
-#if defined(USE_X11)
+#if defined(USE_X11) && !defined(OS_LINUX) // Patch [LARPOUX]
   if (parsed_command_line_.HasSwitch(switches::kSingleProcess) ||
       parsed_command_line_.HasSwitch(switches::kInProcessGPU)) {
     if (!XInitThreads()) {
@@ -111,7 +111,7 @@ void BusinessMainLoop::EarlyInitialization() {
   }
 #endif  // !defined(USE_OPENSSL)
   
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && !defined(OS_LINUX) // Patch [LARPOUX]
   SetupSandbox(parsed_command_line_);
 #endif
 

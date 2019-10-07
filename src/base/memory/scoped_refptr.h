@@ -18,6 +18,8 @@
 template <class T>
 class scoped_refptr;
 
+template< class T >
+using decay_t = typename std::decay<T>::type;
 namespace base {
 
 template <class, typename>
@@ -45,16 +47,16 @@ enum StartRefCountFromOneTag { kStartRefCountFromOneTag };
 template <typename T, typename U, typename V>
 constexpr bool IsRefCountPreferenceOverridden(const T*,
                                               const RefCounted<U, V>*) {
-  return !std::is_same<std::decay_t<decltype(T::kRefCountPreference)>,
-                       std::decay_t<decltype(U::kRefCountPreference)>>::value;
+  return !std::is_same<decay_t<decltype(T::kRefCountPreference)>,
+                       decay_t<decltype(U::kRefCountPreference)>>::value;
 }
 
 template <typename T, typename U, typename V>
 constexpr bool IsRefCountPreferenceOverridden(
     const T*,
     const RefCountedThreadSafe<U, V>*) {
-  return !std::is_same<std::decay_t<decltype(T::kRefCountPreference)>,
-                       std::decay_t<decltype(U::kRefCountPreference)>>::value;
+  return !std::is_same<decay_t<decltype(T::kRefCountPreference)>,
+                       decay_t<decltype(U::kRefCountPreference)>>::value;
 }
 
 constexpr bool IsRefCountPreferenceOverridden(...) {
@@ -68,7 +70,7 @@ constexpr bool IsRefCountPreferenceOverridden(...) {
 // from 1 instead of 0.
 template <typename T>
 scoped_refptr<T> AdoptRef(T* obj) {
-  using Tag = std::decay_t<decltype(T::kRefCountPreference)>;
+  using Tag = decay_t<decltype(T::kRefCountPreference)>;
   static_assert(std::is_same<subtle::StartRefCountFromOneTag, Tag>::value,
                 "Use AdoptRef only if the reference count starts from one.");
 

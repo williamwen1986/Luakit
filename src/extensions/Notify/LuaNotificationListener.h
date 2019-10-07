@@ -6,7 +6,7 @@
 #include "common/notification_service.h"
 #include "common/notification_source.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/scoped_ptr.h"
+// #include "base/memory/scoped_ptr.h" // Patch [LARPOUX]
 #include "LuaNotificationListener.h"
 #include "common/business_runtime.h"
 #include <set>

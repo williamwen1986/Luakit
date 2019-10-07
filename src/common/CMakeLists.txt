@@ -20,54 +20,6 @@ file(GLOB ALL_SRCS
         "${PROJECT_SOURCE_DIR}/common/*.c"
         "${PROJECT_SOURCE_DIR}/common/*.cc"
 
- 
-	"${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../extensions/debug/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/debug/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/debug/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../extensions/File/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/File/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/File/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../extensions/HTTP/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/HTTP/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/HTTP/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../extensions/language/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/language/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/language/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../extensions/luasocket/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/luasocket/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/luasocket/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../extensions/Notify/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/Notify/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/Notify/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../extensions/thread/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/thread/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/thread/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../extensions/timer/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../extensions/timer/*.c"
-	"${PROJECT_SOURCE_DIR}/../extensions/timer/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../network/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../network/*.c"
-	"${PROJECT_SOURCE_DIR}/../network/*.cc"
-
-	"${PROJECT_SOURCE_DIR}/../network/net/*.cpp"
-	"${PROJECT_SOURCE_DIR}/../network/net/*.c"
-	"${PROJECT_SOURCE_DIR}/../network/net/*.cc"
 )
 
 list(FILTER ALL_SRCS EXCLUDE REGEX ".*lua_timer.cpp$")

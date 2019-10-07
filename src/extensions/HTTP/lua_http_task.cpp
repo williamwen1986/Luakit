@@ -1,7 +1,7 @@
 extern "C" {
 #include "lua.h"
 }
-#include "tools/lua_helpers.h"
+// #include "tools/lua_helpers.h" // Patch [LARPOUX]
 #include "lua_http_task.h"
 #include "common/base_lambda_support.h"
 #include "base/guid.h"

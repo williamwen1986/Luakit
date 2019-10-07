@@ -22,6 +22,7 @@
 
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
+#include "base/macros.h"
 #include "base/synchronization/condition_variable.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/platform_thread.h"
@@ -65,7 +66,8 @@ class BASE_EXPORT Watchdog {
    public:
     explicit ThreadDelegate(Watchdog* watchdog) : watchdog_(watchdog) {
     }
-    virtual void ThreadMain() OVERRIDE;
+    void ThreadMain() override;
+
    private:
     void SetThreadName() const;
 
