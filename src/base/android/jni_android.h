@@ -8,47 +8,10 @@
 #include <jni.h>
 #include <sys/types.h>
 
-#include <atomic>
-#include <string>
-
 #include "base/android/scoped_java_ref.h"
 #include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
-#include "base/debug/debugging_buildflags.h"
-#include "base/debug/stack_trace.h"
-#include "base/macros.h"
-
-#if BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
-
-// When profiling is enabled (enable_profiling=true) this macro is added to
-// all generated JNI stubs so that it becomes the last thing that runs before
-// control goes into Java.
-//
-// This macro saves stack frame pointer of the current function. Saved value
-// used later by JNI_LINK_SAVED_FRAME_POINTER.
-#define JNI_SAVE_FRAME_POINTER \
-  base::android::JNIStackFrameSaver jni_frame_saver(__builtin_frame_address(0))
-
-// When profiling is enabled (enable_profiling=true) this macro is added to
-// all generated JNI callbacks so that it becomes the first thing that runs
-// after control returns from Java.
-//
-// This macro links stack frame of the current function to the stack frame
-// saved by JNI_SAVE_FRAME_POINTER, allowing frame-based unwinding
-// (used by the heap profiler) to produce complete traces.
-#define JNI_LINK_SAVED_FRAME_POINTER                    \
-  base::debug::ScopedStackFrameLinker jni_frame_linker( \
-      __builtin_frame_address(0),                       \
-      base::android::JNIStackFrameSaver::SavedFrame())
-
-#else
-
-// Frame-based stack unwinding is not supported, do nothing.
-#define JNI_SAVE_FRAME_POINTER
-#define JNI_LINK_SAVED_FRAME_POINTER
-
-#endif  // BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
 
 namespace base {
 namespace android {
@@ -62,33 +25,29 @@ struct RegistrationMethod {
   bool (*func)(JNIEnv* env);
 };
 
-// Attaches the current thread to the VM (if necessary) and return the JNIEnv*.
+// Attach the current thread to the VM (if necessary) and return the JNIEnv*.
 BASE_EXPORT JNIEnv* AttachCurrentThread();
 
-// Same to AttachCurrentThread except that thread name will be set to
-// |thread_name| if it is the first call. Otherwise, thread_name won't be
-// changed. AttachCurrentThread() doesn't regard underlying platform thread
-// name, but just resets it to "Thread-???". This function should be called
-// right after new thread is created if it is important to keep thread name.
-BASE_EXPORT JNIEnv* AttachCurrentThreadWithName(const std::string& thread_name);
-
-// Detaches the current thread from VM if it is attached.
+// Detach the current thread from VM if it is attached.
 BASE_EXPORT void DetachFromVM();
 
-// Initializes the global JVM.
+// Initializes the global JVM. It is not necessarily called before
+// InitApplicationContext().
 BASE_EXPORT void InitVM(JavaVM* vm);
 
 // Returns true if the global JVM has been initialized.
 BASE_EXPORT bool IsVMInitialized();
 
-// Initializes the global ClassLoader used by the GetClass and LazyGetClass
-// methods. This is needed because JNI will use the base ClassLoader when there
-// is no Java code on the stack. The base ClassLoader doesn't know about any of
-// the application classes and will fail to lookup anything other than system
-// classes.
-BASE_EXPORT void InitReplacementClassLoader(
-    JNIEnv* env,
-    const JavaRef<jobject>& class_loader);
+// Initializes the global application context object. The |context| can be any
+// valid reference to the application context. Internally holds a global ref to
+// the context. InitVM and InitApplicationContext maybe called in either order.
+BASE_EXPORT void InitApplicationContext(JNIEnv* env,
+                                        const JavaRef<jobject>& context);
+
+// Gets a global ref to the application context set with
+// InitApplicationContext(). Ownership is retained by the function - the caller
+// must NOT release it.
+const BASE_EXPORT jobject GetApplicationContext();
 
 // Finds the class named |class_name| and returns it.
 // Use this method instead of invoking directly the JNI FindClass method (to
@@ -97,17 +56,6 @@ BASE_EXPORT void InitReplacementClassLoader(
 // Use HasClass if you need to check whether the class exists.
 BASE_EXPORT ScopedJavaLocalRef<jclass> GetClass(JNIEnv* env,
                                                 const char* class_name);
-
-// The method will initialize |atomic_class_id| to contain a global ref to the
-// class. And will return that ref on subsequent calls.  It's the caller's
-// responsibility to release the ref when it is no longer needed.
-// The caller is responsible to zero-initialize |atomic_method_id|.
-// It's fine to simultaneously call this on multiple threads referencing the
-// same |atomic_method_id|.
-BASE_EXPORT jclass LazyGetClass(
-    JNIEnv* env,
-    const char* class_name,
-    std::atomic<jclass>* atomic_class_id);
 
 // This class is a wrapper for JNIEnv Get(Static)MethodID.
 class BASE_EXPORT MethodID {
@@ -133,7 +81,7 @@ class BASE_EXPORT MethodID {
                            jclass clazz,
                            const char* method_name,
                            const char* jni_signature,
-                           std::atomic<jmethodID>* atomic_method_id);
+                           base::subtle::AtomicWord* atomic_method_id);
 };
 
 // Returns true if an exception is pending in the provided JNIEnv*.
@@ -145,28 +93,6 @@ BASE_EXPORT bool ClearException(JNIEnv* env);
 
 // This function will call CHECK() macro if there's any pending exception.
 BASE_EXPORT void CheckException(JNIEnv* env);
-
-// This returns a string representation of the java stack trace.
-BASE_EXPORT std::string GetJavaExceptionInfo(JNIEnv* env,
-                                             jthrowable java_throwable);
-
-#if BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
-
-// Saves caller's PC and stack frame in a thread-local variable.
-// Implemented only when profiling is enabled (enable_profiling=true).
-class BASE_EXPORT JNIStackFrameSaver {
- public:
-  JNIStackFrameSaver(void* current_fp);
-  ~JNIStackFrameSaver();
-  static void* SavedFrame();
-
- private:
-  void* previous_fp_;
-
-  DISALLOW_COPY_AND_ASSIGN(JNIStackFrameSaver);
-};
-
-#endif  // BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
 
 }  // namespace android
 }  // namespace base

@@ -6,7 +6,6 @@
 #define BASE_ANDROID_MEMORY_PRESSURE_LISTENER_ANDROID_H_
 
 #include "base/android/jni_android.h"
-#include "base/macros.h"
 
 namespace base {
 namespace android {
@@ -14,7 +13,9 @@ namespace android {
 // Implements the C++ counter part of MemoryPressureListener.java
 class BASE_EXPORT MemoryPressureListenerAndroid {
  public:
-  static void Initialize(JNIEnv* env);
+  static bool Register(JNIEnv* env);
+
+  static void RegisterSystemCallback(JNIEnv* env);
 
   // Called by JNI.
   static void OnMemoryPressure(int memory_pressure_type);

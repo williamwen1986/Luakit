@@ -7,17 +7,16 @@
 
 #include <Security/Authorization.h>
 
-#include "base/base_export.h"
+#include "base/basictypes.h"
 #include "base/compiler_specific.h"
-#include "base/macros.h"
 
 // ScopedAuthorizationRef maintains ownership of an AuthorizationRef.  It is
-// patterned after the unique_ptr interface.
+// patterned after the scoped_ptr interface.
 
 namespace base {
 namespace mac {
 
-class BASE_EXPORT ScopedAuthorizationRef {
+class ScopedAuthorizationRef {
  public:
   explicit ScopedAuthorizationRef(AuthorizationRef authorization = NULL)
       : authorization_(authorization) {
@@ -25,14 +24,14 @@ class BASE_EXPORT ScopedAuthorizationRef {
 
   ~ScopedAuthorizationRef() {
     if (authorization_) {
-      FreeInternal();
+      AuthorizationFree(authorization_, kAuthorizationFlagDestroyRights);
     }
   }
 
   void reset(AuthorizationRef authorization = NULL) {
     if (authorization_ != authorization) {
       if (authorization_) {
-        FreeInternal();
+        AuthorizationFree(authorization_, kAuthorizationFlagDestroyRights);
       }
       authorization_ = authorization;
     }
@@ -50,7 +49,9 @@ class BASE_EXPORT ScopedAuthorizationRef {
     return authorization_;
   }
 
-  AuthorizationRef* get_pointer() { return &authorization_; }
+  AuthorizationRef* operator&() {
+    return &authorization_;
+  }
 
   AuthorizationRef get() const {
     return authorization_;
@@ -62,9 +63,10 @@ class BASE_EXPORT ScopedAuthorizationRef {
     authorization_ = temp;
   }
 
-  // ScopedAuthorizationRef::release() is like std::unique_ptr<>::release. It is
-  // NOT a wrapper for AuthorizationFree(). To force a ScopedAuthorizationRef
-  // object to call AuthorizationFree(), use ScopedAuthorizationRef::reset().
+  // ScopedAuthorizationRef::release() is like scoped_ptr<>::release.  It is
+  // NOT a wrapper for AuthorizationFree().  To force a
+  // ScopedAuthorizationRef object to call AuthorizationFree(), use
+  // ScopedAuthorizationRef::reset().
   AuthorizationRef release() WARN_UNUSED_RESULT {
     AuthorizationRef temp = authorization_;
     authorization_ = NULL;
@@ -72,13 +74,6 @@ class BASE_EXPORT ScopedAuthorizationRef {
   }
 
  private:
-  // Calling AuthorizationFree, defined in Security.framework, from an inline
-  // function, results in link errors when linking dynamically with
-  // libbase.dylib. So wrap the call in an un-inlined method. This method
-  // doesn't check if |authorization_| is null; that check should be in the
-  // inlined callers.
-  void FreeInternal();
-
   AuthorizationRef authorization_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedAuthorizationRef);

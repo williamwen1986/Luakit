@@ -5,8 +5,8 @@
 #ifndef BASE_TEST_SCOPED_PATH_OVERRIDE_H_
 #define BASE_TEST_SCOPED_PATH_OVERRIDE_H_
 
+#include "base/basictypes.h"
 #include "base/files/scoped_temp_dir.h"
-#include "base/macros.h"
 
 namespace base {
 
@@ -18,17 +18,10 @@ class FilePath;
 // scope of the test is left.
 class ScopedPathOverride {
  public:
-  // Contructor that initializes the override to a scoped temp directory.
+  // Contructor that intializes the override to a scoped temp directory.
   explicit ScopedPathOverride(int key);
-
   // Constructor that would use a path provided by the user.
   ScopedPathOverride(int key, const FilePath& dir);
-
-  // See PathService::OverrideAndCreateIfNeeded.
-  ScopedPathOverride(int key,
-                     const FilePath& path,
-                     bool is_absolute,
-                     bool create);
   ~ScopedPathOverride();
 
  private:

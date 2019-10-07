@@ -15,20 +15,20 @@ import java.lang.annotation.Target;
  *     @Restriction({RESTRICTION_TYPE_PHONE, RESTRICTION_TYPE_SMALL_MEMORY})
  * Test classes are free to define restrictions and enforce them using reflection at runtime.
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Restriction {
+    /** Specifies the test is only valid on phone form factors. */
+    public static final String RESTRICTION_TYPE_PHONE = "Phone";
+
+    /** Specifies the test is only valid on tablet form factors. */
+    public static final String RESTRICTION_TYPE_TABLET = "Tablet";
+
     /** Specifies the test is only valid on low end devices that have less memory. */
     public static final String RESTRICTION_TYPE_LOW_END_DEVICE = "Low_End_Device";
 
     /** Specifies the test is only valid on non-low end devices. */
     public static final String RESTRICTION_TYPE_NON_LOW_END_DEVICE = "Non_Low_End_Device";
-
-    /** Specifies the test is only valid on a device that can reach the internet. */
-    public static final String RESTRICTION_TYPE_INTERNET = "Internet";
-
-    /** Specifies the test is only valid on a device that has a camera. */
-    public static final String RESTRICTION_TYPE_HAS_CAMERA = "Has_Camera";
 
     /**
      * @return A list of restrictions.

@@ -23,52 +23,51 @@ SequencedTaskTracker::SequencedTaskTracker()
 }
 
 void SequencedTaskTracker::PostWrappedNonNestableTask(
-    SequencedTaskRunner* task_runner,
-    OnceClosure task) {
+    const scoped_refptr<SequencedTaskRunner>& task_runner,
+    const Closure& task) {
   AutoLock event_lock(lock_);
   const int post_i = next_post_i_++;
-  auto wrapped_task =
-      BindOnce(&SequencedTaskTracker::RunTask, this, std::move(task), post_i);
-  task_runner->PostNonNestableTask(FROM_HERE, std::move(wrapped_task));
+  Closure wrapped_task = Bind(&SequencedTaskTracker::RunTask, this,
+                              task, post_i);
+  task_runner->PostNonNestableTask(FROM_HERE, wrapped_task);
   TaskPosted(post_i);
 }
 
 void SequencedTaskTracker::PostWrappedNestableTask(
-    SequencedTaskRunner* task_runner,
-    OnceClosure task) {
+    const scoped_refptr<SequencedTaskRunner>& task_runner,
+    const Closure& task) {
   AutoLock event_lock(lock_);
   const int post_i = next_post_i_++;
-  auto wrapped_task =
-      BindOnce(&SequencedTaskTracker::RunTask, this, std::move(task), post_i);
-  task_runner->PostTask(FROM_HERE, std::move(wrapped_task));
+  Closure wrapped_task = Bind(&SequencedTaskTracker::RunTask, this,
+                              task, post_i);
+  task_runner->PostTask(FROM_HERE, wrapped_task);
   TaskPosted(post_i);
 }
 
 void SequencedTaskTracker::PostWrappedDelayedNonNestableTask(
-    SequencedTaskRunner* task_runner,
-    OnceClosure task,
+    const scoped_refptr<SequencedTaskRunner>& task_runner,
+    const Closure& task,
     TimeDelta delay) {
   AutoLock event_lock(lock_);
   const int post_i = next_post_i_++;
-  auto wrapped_task =
-      BindOnce(&SequencedTaskTracker::RunTask, this, std::move(task), post_i);
-  task_runner->PostNonNestableDelayedTask(FROM_HERE, std::move(wrapped_task),
-                                          delay);
+  Closure wrapped_task = Bind(&SequencedTaskTracker::RunTask, this,
+                              task, post_i);
+  task_runner->PostNonNestableDelayedTask(FROM_HERE, wrapped_task, delay);
   TaskPosted(post_i);
 }
 
 void SequencedTaskTracker::PostNonNestableTasks(
-    SequencedTaskRunner* task_runner,
+    const scoped_refptr<SequencedTaskRunner>& task_runner,
     int task_count) {
   for (int i = 0; i < task_count; ++i) {
-    PostWrappedNonNestableTask(task_runner, OnceClosure());
+    PostWrappedNonNestableTask(task_runner, Closure());
   }
 }
 
-void SequencedTaskTracker::RunTask(OnceClosure task, int task_i) {
+void SequencedTaskTracker::RunTask(const Closure& task, int task_i) {
   TaskStarted(task_i);
   if (!task.is_null())
-    std::move(task).Run();
+    task.Run();
   TaskEnded(task_i);
 }
 
@@ -100,7 +99,8 @@ void SequencedTaskTracker::WaitForCompletedTasks(int count) {
     task_end_cv_.Wait();
 }
 
-SequencedTaskTracker::~SequencedTaskTracker() = default;
+SequencedTaskTracker::~SequencedTaskTracker() {
+}
 
 void PrintTo(const TaskEvent& event, std::ostream* os) {
   *os << "(i=" << event.i << ", type=";

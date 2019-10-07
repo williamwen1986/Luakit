@@ -2,31 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BASE_TIME_DEFAULT_TICK_CLOCK_H_
-#define BASE_TIME_DEFAULT_TICK_CLOCK_H_
+#ifndef BASE_DEFAULT_TICK_CLOCK_H_
+#define BASE_DEFAULT_TICK_CLOCK_H_
 
 #include "base/base_export.h"
+#include "base/compiler_specific.h"
 #include "base/time/tick_clock.h"
 
 namespace base {
 
-// DefaultTickClock is a TickClock implementation that uses TimeTicks::Now().
-// This is typically used by components that expose a SetTickClockForTesting().
-// Note: Overriding Time/TimeTicks altogether via
-// TaskEnvironment::TimeSource::MOCK_TIME is now the preferred of
-// overriding time in unit tests. As such, there shouldn't be many new use cases
-// for TickClock/DefaultTickClock anymore.
+// DefaultClock is a Clock implementation that uses TimeTicks::Now().
 class BASE_EXPORT DefaultTickClock : public TickClock {
  public:
-  ~DefaultTickClock() override;
+  virtual ~DefaultTickClock();
 
   // Simply returns TimeTicks::Now().
-  TimeTicks NowTicks() const override;
-
-  // Returns a shared instance of DefaultTickClock. This is thread-safe.
-  static const DefaultTickClock* GetInstance();
+  virtual TimeTicks NowTicks() OVERRIDE;
 };
 
 }  // namespace base
 
-#endif  // BASE_TIME_DEFAULT_TICK_CLOCK_H_
+#endif  // BASE_DEFAULT_CLOCK_H_

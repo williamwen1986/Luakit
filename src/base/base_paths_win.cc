@@ -3,20 +3,50 @@
 // found in the LICENSE file.
 
 #include <windows.h>
-#include <KnownFolders.h>
 #include <shlobj.h>
 
 #include "base/base_paths.h"
-#include "base/environment.h"
 #include "base/files/file_path.h"
 #include "base/path_service.h"
-#include "base/strings/string_util.h"
-#include "base/strings/utf_string_conversions.h"
-#include "base/win/current_module.h"
 #include "base/win/scoped_co_mem.h"
 #include "base/win/windows_version.h"
 
+// http://blogs.msdn.com/oldnewthing/archive/2004/10/25/247180.aspx
+extern "C" IMAGE_DOS_HEADER __ImageBase;
+
 using base::FilePath;
+
+namespace {
+
+bool GetQuickLaunchPath(bool default_user, FilePath* result) {
+  if (default_user) {
+    wchar_t system_buffer[MAX_PATH];
+    system_buffer[0] = 0;
+    // As per MSDN, passing -1 for |hToken| indicates the Default user:
+    // http://msdn.microsoft.com/library/windows/desktop/bb762181.aspx
+    if (FAILED(SHGetFolderPath(NULL, CSIDL_APPDATA,
+                               reinterpret_cast<HANDLE>(-1), SHGFP_TYPE_CURRENT,
+                               system_buffer))) {
+      return false;
+    }
+    *result = FilePath(system_buffer);
+  } else if (!PathService::Get(base::DIR_APP_DATA, result)) {
+    // For the current user, grab the APPDATA directory directly from the
+    // PathService cache.
+    return false;
+  }
+  // According to various sources, appending
+  // "Microsoft\Internet Explorer\Quick Launch" to %appdata% is the only
+  // reliable way to get the quick launch folder across all versions of Windows.
+  // http://stackoverflow.com/questions/76080/how-do-you-reliably-get-the-quick-
+  // http://www.microsoft.com/technet/scriptcenter/resources/qanda/sept05/hey0901.mspx
+  *result = result->AppendASCII("Microsoft");
+  *result = result->AppendASCII("Internet Explorer");
+  *result = result->AppendASCII("Quick Launch");
+  return true;
+}
+
+}  // namespace
 
 namespace base {
 
@@ -26,103 +56,96 @@ bool PathProviderWin(int key, FilePath* result) {
   // designed for it either, with the exception of GetTempPath (but other
   // things will surely break if the temp path is too long, so we don't bother
   // handling it.
-  char16 system_buffer[MAX_PATH];
+  wchar_t system_buffer[MAX_PATH];
   system_buffer[0] = 0;
-  wchar_t* wsystem_buffer = as_writable_wcstr(system_buffer);
 
   FilePath cur;
   switch (key) {
     case base::FILE_EXE:
-      if (GetModuleFileName(NULL, wsystem_buffer, MAX_PATH) == 0)
-        return false;
+      GetModuleFileName(NULL, system_buffer, MAX_PATH);
       cur = FilePath(system_buffer);
       break;
     case base::FILE_MODULE: {
       // the resource containing module is assumed to be the one that
       // this code lives in, whether that's a dll or exe
-      if (GetModuleFileName(CURRENT_MODULE(), wsystem_buffer, MAX_PATH) == 0)
-        return false;
+      HMODULE this_module = reinterpret_cast<HMODULE>(&__ImageBase);
+      GetModuleFileName(this_module, system_buffer, MAX_PATH);
       cur = FilePath(system_buffer);
       break;
     }
     case base::DIR_WINDOWS:
-      GetWindowsDirectory(wsystem_buffer, MAX_PATH);
+      GetWindowsDirectory(system_buffer, MAX_PATH);
       cur = FilePath(system_buffer);
       break;
     case base::DIR_SYSTEM:
-      GetSystemDirectory(wsystem_buffer, MAX_PATH);
+      GetSystemDirectory(system_buffer, MAX_PATH);
       cur = FilePath(system_buffer);
       break;
     case base::DIR_PROGRAM_FILESX86:
-      if (win::OSInfo::GetArchitecture() != win::OSInfo::X86_ARCHITECTURE) {
+      if (base::win::OSInfo::GetInstance()->architecture() !=
+          base::win::OSInfo::X86_ARCHITECTURE) {
         if (FAILED(SHGetFolderPath(NULL, CSIDL_PROGRAM_FILESX86, NULL,
-                                   SHGFP_TYPE_CURRENT, wsystem_buffer)))
+                                   SHGFP_TYPE_CURRENT, system_buffer)))
           return false;
         cur = FilePath(system_buffer);
         break;
       }
       // Fall through to base::DIR_PROGRAM_FILES if we're on an X86 machine.
-      FALLTHROUGH;
     case base::DIR_PROGRAM_FILES:
       if (FAILED(SHGetFolderPath(NULL, CSIDL_PROGRAM_FILES, NULL,
-                                 SHGFP_TYPE_CURRENT, wsystem_buffer)))
-        return false;
-      cur = FilePath(system_buffer);
-      break;
-    case base::DIR_PROGRAM_FILES6432:
-#if !defined(_WIN64)
-      if (base::win::OSInfo::GetInstance()->wow64_status() ==
-          base::win::OSInfo::WOW64_ENABLED) {
-        std::unique_ptr<base::Environment> env(base::Environment::Create());
-        std::string programfiles_w6432;
-        // 32-bit process running in WOW64 sets ProgramW6432 environment
-        // variable. See
-        // https://msdn.microsoft.com/library/windows/desktop/aa384274.aspx.
-        if (!env->GetVar("ProgramW6432", &programfiles_w6432))
-          return false;
-        // GetVar returns UTF8 - convert back to Wide.
-        cur = FilePath(UTF8ToWide(programfiles_w6432));
-        break;
-      }
-#endif
-      if (FAILED(SHGetFolderPath(NULL, CSIDL_PROGRAM_FILES, NULL,
-                                 SHGFP_TYPE_CURRENT, wsystem_buffer)))
+                                 SHGFP_TYPE_CURRENT, system_buffer)))
         return false;
       cur = FilePath(system_buffer);
       break;
     case base::DIR_IE_INTERNET_CACHE:
       if (FAILED(SHGetFolderPath(NULL, CSIDL_INTERNET_CACHE, NULL,
-                                 SHGFP_TYPE_CURRENT, wsystem_buffer)))
+                                 SHGFP_TYPE_CURRENT, system_buffer)))
         return false;
       cur = FilePath(system_buffer);
       break;
     case base::DIR_COMMON_START_MENU:
       if (FAILED(SHGetFolderPath(NULL, CSIDL_COMMON_PROGRAMS, NULL,
-                                 SHGFP_TYPE_CURRENT, wsystem_buffer)))
+                                 SHGFP_TYPE_CURRENT, system_buffer)))
         return false;
       cur = FilePath(system_buffer);
       break;
     case base::DIR_START_MENU:
-      if (FAILED(SHGetFolderPath(NULL, CSIDL_PROGRAMS, NULL, SHGFP_TYPE_CURRENT,
-                                 wsystem_buffer)))
+      if (FAILED(SHGetFolderPath(NULL, CSIDL_PROGRAMS, NULL,
+                                 SHGFP_TYPE_CURRENT, system_buffer)))
         return false;
       cur = FilePath(system_buffer);
       break;
     case base::DIR_APP_DATA:
       if (FAILED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, SHGFP_TYPE_CURRENT,
-                                 wsystem_buffer)))
+                                 system_buffer)))
         return false;
       cur = FilePath(system_buffer);
       break;
     case base::DIR_COMMON_APP_DATA:
       if (FAILED(SHGetFolderPath(NULL, CSIDL_COMMON_APPDATA, NULL,
-                                 SHGFP_TYPE_CURRENT, wsystem_buffer)))
+                                 SHGFP_TYPE_CURRENT, system_buffer)))
         return false;
       cur = FilePath(system_buffer);
       break;
+    case base::DIR_PROFILE:
+      if (FAILED(SHGetFolderPath(NULL, CSIDL_PROFILE, NULL, SHGFP_TYPE_CURRENT,
+                                 system_buffer)))
+        return false;
+      cur = FilePath(system_buffer);
+      break;
+    case base::DIR_LOCAL_APP_DATA_LOW:
+      if (win::GetVersion() < win::VERSION_VISTA)
+        return false;
+
+      // TODO(nsylvain): We should use SHGetKnownFolderPath instead. Bug 1281128
+      if (FAILED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, SHGFP_TYPE_CURRENT,
+                                 system_buffer)))
+        return false;
+      cur = FilePath(system_buffer).DirName().AppendASCII("LocalLow");
+      break;
     case base::DIR_LOCAL_APP_DATA:
       if (FAILED(SHGetFolderPath(NULL, CSIDL_LOCAL_APPDATA, NULL,
-                                 SHGFP_TYPE_CURRENT, wsystem_buffer)))
+                                 SHGFP_TYPE_CURRENT, system_buffer)))
         return false;
       cur = FilePath(system_buffer);
       break;
@@ -135,7 +158,7 @@ bool PathProviderWin(int key, FilePath* result) {
       break;
     }
     case base::DIR_APP_SHORTCUTS: {
-      if (win::GetVersion() < win::Version::WIN8)
+      if (win::GetVersion() < win::VERSION_WIN8)
         return false;
 
       base::win::ScopedCoMem<wchar_t> path_buf;
@@ -143,54 +166,36 @@ bool PathProviderWin(int key, FilePath* result) {
                                       &path_buf)))
         return false;
 
-      cur = FilePath(as_u16cstr(path_buf.get()));
+      cur = FilePath(string16(path_buf));
       break;
     }
     case base::DIR_USER_DESKTOP:
       if (FAILED(SHGetFolderPath(NULL, CSIDL_DESKTOPDIRECTORY, NULL,
-                                 SHGFP_TYPE_CURRENT, wsystem_buffer))) {
+                                 SHGFP_TYPE_CURRENT, system_buffer))) {
         return false;
       }
       cur = FilePath(system_buffer);
       break;
     case base::DIR_COMMON_DESKTOP:
       if (FAILED(SHGetFolderPath(NULL, CSIDL_COMMON_DESKTOPDIRECTORY, NULL,
-                                 SHGFP_TYPE_CURRENT, wsystem_buffer))) {
+                                 SHGFP_TYPE_CURRENT, system_buffer))) {
         return false;
       }
       cur = FilePath(system_buffer);
       break;
     case base::DIR_USER_QUICK_LAUNCH:
-      if (!PathService::Get(base::DIR_APP_DATA, &cur))
+      if (!GetQuickLaunchPath(false, &cur))
         return false;
-      // According to various sources, appending
-      // "Microsoft\Internet Explorer\Quick Launch" to %appdata% is the only
-      // reliable way to get the quick launch folder across all versions of
-      // Windows.
-      // http://stackoverflow.com/questions/76080/how-do-you-reliably-get-the-quick-
-      // http://www.microsoft.com/technet/scriptcenter/resources/qanda/sept05/hey0901.mspx
-      cur = cur.Append(FILE_PATH_LITERAL("Microsoft"))
-                .Append(FILE_PATH_LITERAL("Internet Explorer"))
-                .Append(FILE_PATH_LITERAL("Quick Launch"));
+      break;
+    case base::DIR_DEFAULT_USER_QUICK_LAUNCH:
+      if (!GetQuickLaunchPath(true, &cur))
+        return false;
       break;
     case base::DIR_TASKBAR_PINS:
       if (!PathService::Get(base::DIR_USER_QUICK_LAUNCH, &cur))
         return false;
-      cur = cur.Append(FILE_PATH_LITERAL("User Pinned"))
-                .Append(FILE_PATH_LITERAL("TaskBar"));
-      break;
-    case base::DIR_IMPLICIT_APP_SHORTCUTS:
-      if (!PathService::Get(base::DIR_USER_QUICK_LAUNCH, &cur))
-        return false;
-      cur = cur.Append(FILE_PATH_LITERAL("User Pinned"))
-                .Append(FILE_PATH_LITERAL("ImplicitAppShortcuts"));
-      break;
-    case base::DIR_WINDOWS_FONTS:
-      if (FAILED(SHGetFolderPath(NULL, CSIDL_FONTS, NULL, SHGFP_TYPE_CURRENT,
-                                 wsystem_buffer))) {
-        return false;
-      }
-      cur = FilePath(system_buffer);
+      cur = cur.AppendASCII("User Pinned");
+      cur = cur.AppendASCII("TaskBar");
       break;
     default:
       return false;

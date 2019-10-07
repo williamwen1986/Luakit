@@ -4,15 +4,12 @@
 
 #include "base/android/memory_pressure_listener_android.h"
 
-#include "base/base_jni_headers/MemoryPressureListener_jni.h"
 #include "base/memory/memory_pressure_listener.h"
-
-using base::android::JavaParamRef;
+#include "jni/MemoryPressureListener_jni.h"
 
 // Defined and called by JNI.
-static void JNI_MemoryPressureListener_OnMemoryPressure(
-    JNIEnv* env,
-    jint memory_pressure_level) {
+static void OnMemoryPressure(
+    JNIEnv* env, jclass clazz, jint memory_pressure_level) {
   base::MemoryPressureListener::NotifyMemoryPressure(
       static_cast<base::MemoryPressureListener::MemoryPressureLevel>(
           memory_pressure_level));
@@ -21,8 +18,13 @@ static void JNI_MemoryPressureListener_OnMemoryPressure(
 namespace base {
 namespace android {
 
-void MemoryPressureListenerAndroid::Initialize(JNIEnv* env) {
-  Java_MemoryPressureListener_addNativeCallback(env);
+bool MemoryPressureListenerAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
+void MemoryPressureListenerAndroid::RegisterSystemCallback(JNIEnv* env) {
+  Java_MemoryPressureListener_registerSystemCallback(
+      env, GetApplicationContext());
 }
 
 }  // namespace android

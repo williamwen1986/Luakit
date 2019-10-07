@@ -11,48 +11,39 @@
 
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
-#include "build/build_config.h"
 
 namespace base {
 
 // Return a C++ string given printf-like input.
 BASE_EXPORT std::string StringPrintf(const char* format, ...)
-    PRINTF_FORMAT(1, 2) WARN_UNUSED_RESULT;
-#if defined(OS_WIN)
-// Note: Unfortunately compile time checking of the format string for UTF-16
-// strings is not supported by any compiler, thus these functions should be used
-// carefully and sparingly. Also applies to SStringPrintf and StringAppendV
-// below.
+    PRINTF_FORMAT(1, 2);
+// OS_ANDROID's libc does not support wchar_t, so several overloads are omitted.
+#if !defined(OS_ANDROID)
 BASE_EXPORT std::wstring StringPrintf(const wchar_t* format, ...)
-    WPRINTF_FORMAT(1, 2) WARN_UNUSED_RESULT;
-BASE_EXPORT std::u16string StringPrintf(const char16_t* format, ...)
-    WPRINTF_FORMAT(1, 2) WARN_UNUSED_RESULT;
+    WPRINTF_FORMAT(1, 2);
 #endif
 
 // Return a C++ string given vprintf-like input.
 BASE_EXPORT std::string StringPrintV(const char* format, va_list ap)
-    PRINTF_FORMAT(1, 0) WARN_UNUSED_RESULT;
+    PRINTF_FORMAT(1, 0);
 
 // Store result into a supplied string and return it.
 BASE_EXPORT const std::string& SStringPrintf(std::string* dst,
-                                             const char* format,
-                                             ...) PRINTF_FORMAT(2, 3);
-#if defined(OS_WIN)
+                                             const char* format, ...)
+    PRINTF_FORMAT(2, 3);
+#if !defined(OS_ANDROID)
 BASE_EXPORT const std::wstring& SStringPrintf(std::wstring* dst,
-                                              const wchar_t* format,
-                                              ...) WPRINTF_FORMAT(2, 3);
-BASE_EXPORT const std::u16string& SStringPrintf(std::u16string* dst,
-                                                const char16_t* format,
-                                                ...) WPRINTF_FORMAT(2, 3);
+                                              const wchar_t* format, ...)
+    WPRINTF_FORMAT(2, 3);
 #endif
 
 // Append result to a supplied string.
 BASE_EXPORT void StringAppendF(std::string* dst, const char* format, ...)
     PRINTF_FORMAT(2, 3);
-#if defined(OS_WIN)
+#if !defined(OS_ANDROID)
+// TODO(evanm): this is only used in a few places in the code;
+// replace with string16 version.
 BASE_EXPORT void StringAppendF(std::wstring* dst, const wchar_t* format, ...)
-    WPRINTF_FORMAT(2, 3);
-BASE_EXPORT void StringAppendF(std::u16string* dst, const char16_t* format, ...)
     WPRINTF_FORMAT(2, 3);
 #endif
 
@@ -60,13 +51,10 @@ BASE_EXPORT void StringAppendF(std::u16string* dst, const char16_t* format, ...)
 // string.  All other routines are just convenience wrappers around it.
 BASE_EXPORT void StringAppendV(std::string* dst, const char* format, va_list ap)
     PRINTF_FORMAT(2, 0);
-#if defined(OS_WIN)
+#if !defined(OS_ANDROID)
 BASE_EXPORT void StringAppendV(std::wstring* dst,
-                               const wchar_t* format,
-                               va_list ap) WPRINTF_FORMAT(2, 0);
-BASE_EXPORT void StringAppendV(std::u16string* dst,
-                               const char16_t* format,
-                               va_list ap) WPRINTF_FORMAT(2, 0);
+                               const wchar_t* format, va_list ap)
+    WPRINTF_FORMAT(2, 0);
 #endif
 
 }  // namespace base

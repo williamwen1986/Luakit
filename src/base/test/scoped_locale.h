@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "base/macros.h"
+#include "base/basictypes.h"
 
 namespace base {
 

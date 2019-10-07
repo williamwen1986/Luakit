@@ -7,20 +7,23 @@
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/files/file_path.h"
-#include "base/test/base_unittests_jni_headers/ContentUriTestUtils_jni.h"
+#include "jni/ContentUriTestUtils_jni.h"
 
-using base::android::ScopedJavaLocalRef;
+namespace file_util {
 
-namespace base {
+bool RegisterContentUriTestUtils(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
 
-FilePath InsertImageIntoMediaStore(const FilePath& path) {
+base::FilePath InsertImageIntoMediaStore(const base::FilePath& path) {
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jstring> j_path =
       base::android::ConvertUTF8ToJavaString(env, path.value());
   ScopedJavaLocalRef<jstring> j_uri =
-      Java_ContentUriTestUtils_insertImageIntoMediaStore(env, j_path);
+      Java_ContentUriTestUtils_insertImageIntoMediaStore(
+          env, base::android::GetApplicationContext(), j_path.obj());
   std::string uri = base::android::ConvertJavaStringToUTF8(j_uri);
-  return FilePath(uri);
+  return base::FilePath(uri);
 }
 
-}  // namespace base
+}  // namespace file_util

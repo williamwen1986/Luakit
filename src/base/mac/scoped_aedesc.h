@@ -7,7 +7,7 @@
 
 #import <CoreServices/CoreServices.h>
 
-#include "base/macros.h"
+#include "base/basictypes.h"
 
 namespace base {
 namespace mac {

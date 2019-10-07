@@ -4,8 +4,6 @@
 
 #include "base/process/process_handle.h"
 
-#include <libproc.h>
-#include <stddef.h>
 #include <sys/sysctl.h>
 #include <sys/types.h>
 
@@ -24,14 +22,6 @@ ProcessId GetParentProcessId(ProcessHandle process) {
   if (length == 0)
     return -1;
   return info.kp_eproc.e_ppid;
-}
-
-FilePath GetProcessExecutablePath(ProcessHandle process) {
-  char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
-  if (!proc_pidpath(process, pathbuf, sizeof(pathbuf)))
-    return FilePath();
-
-  return FilePath(pathbuf);
 }
 
 }  // namespace base

@@ -15,8 +15,7 @@ import java.lang.annotation.Target;
  * Tests with this annotation will not be run on any of the normal bots.
  * Please note that they might eventually run on a special bot.
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DisabledTest {
-    String message() default "";
 }

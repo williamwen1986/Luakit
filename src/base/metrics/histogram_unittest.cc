@@ -2,118 +2,52 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/metrics/histogram.h"
-
-#include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
+// Test of Histogram class
 
 #include <climits>
-#include <memory>
-#include <string>
+#include <algorithm>
 #include <vector>
 
-#include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/memory/scoped_ptr.h"
 #include "base/metrics/bucket_ranges.h"
-#include "base/metrics/dummy_histogram.h"
-#include "base/metrics/histogram_macros.h"
-#include "base/metrics/metrics_hashes.h"
-#include "base/metrics/persistent_histogram_allocator.h"
-#include "base/metrics/persistent_memory_allocator.h"
-#include "base/metrics/record_histogram_checker.h"
+#include "base/metrics/histogram.h"
 #include "base/metrics/sample_vector.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/pickle.h"
-#include "base/strings/stringprintf.h"
-#include "base/test/gtest_util.h"
 #include "base/time/time.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using std::vector;
+
 namespace base {
-namespace {
 
-const char kExpiredHistogramName[] = "ExpiredHistogram";
-
-// Test implementation of RecordHistogramChecker interface.
-class TestRecordHistogramChecker : public RecordHistogramChecker {
- public:
-  ~TestRecordHistogramChecker() override = default;
-
-  // RecordHistogramChecker:
-  bool ShouldRecord(uint64_t histogram_hash) const override {
-    return histogram_hash != HashMetricName(kExpiredHistogramName);
-  }
-};
-
-}  // namespace
-
-// Test parameter indicates if a persistent memory allocator should be used
-// for histogram allocation. False will allocate histograms from the process
-// heap.
-class HistogramTest : public testing::TestWithParam<bool> {
+class HistogramTest : public testing::Test {
  protected:
-  const int32_t kAllocatorMemorySize = 8 << 20;  // 8 MiB
-
-  HistogramTest() : use_persistent_histogram_allocator_(GetParam()) {}
-
-  void SetUp() override {
-    if (use_persistent_histogram_allocator_)
-      CreatePersistentHistogramAllocator();
-
+  virtual void SetUp() {
     // Each test will have a clean state (no Histogram / BucketRanges
     // registered).
     InitializeStatisticsRecorder();
   }
 
-  void TearDown() override {
-    if (allocator_) {
-      ASSERT_FALSE(allocator_->IsFull());
-      ASSERT_FALSE(allocator_->IsCorrupt());
-    }
+  virtual void TearDown() {
     UninitializeStatisticsRecorder();
-    DestroyPersistentHistogramAllocator();
   }
 
   void InitializeStatisticsRecorder() {
-    DCHECK(!statistics_recorder_);
-    statistics_recorder_ = StatisticsRecorder::CreateTemporaryForTesting();
+    statistics_recorder_ = new StatisticsRecorder();
   }
 
   void UninitializeStatisticsRecorder() {
-    statistics_recorder_.reset();
+    delete statistics_recorder_;
+    statistics_recorder_ = NULL;
   }
 
-  void CreatePersistentHistogramAllocator() {
-    GlobalHistogramAllocator::CreateWithLocalMemory(
-        kAllocatorMemorySize, 0, "HistogramAllocatorTest");
-    allocator_ = GlobalHistogramAllocator::Get()->memory_allocator();
-  }
-
-  void DestroyPersistentHistogramAllocator() {
-    allocator_ = nullptr;
-    GlobalHistogramAllocator::ReleaseForTesting();
-  }
-
-  std::unique_ptr<SampleVector> SnapshotAllSamples(Histogram* h) {
-    return h->SnapshotAllSamples();
-  }
-
-  const bool use_persistent_histogram_allocator_;
-
-  std::unique_ptr<StatisticsRecorder> statistics_recorder_;
-  std::unique_ptr<char[]> allocator_memory_;
-  PersistentMemoryAllocator* allocator_ = nullptr;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(HistogramTest);
+  StatisticsRecorder* statistics_recorder_;
 };
 
-// Run all HistogramTest cases with both heap and persistent memory.
-INSTANTIATE_TEST_SUITE_P(HeapAndPersistent, HistogramTest, testing::Bool());
-
 // Check for basic syntax and use.
-TEST_P(HistogramTest, BasicTest) {
+TEST_F(HistogramTest, BasicTest) {
   // Try basic construction
   HistogramBase* histogram = Histogram::FactoryGet(
       "TestHistogram", 1, 1000, 10, HistogramBase::kNoFlags);
@@ -123,106 +57,38 @@ TEST_P(HistogramTest, BasicTest) {
       "TestLinearHistogram", 1, 1000, 10, HistogramBase::kNoFlags);
   EXPECT_TRUE(linear_histogram);
 
-  std::vector<int> custom_ranges;
+  vector<int> custom_ranges;
   custom_ranges.push_back(1);
   custom_ranges.push_back(5);
   HistogramBase* custom_histogram = CustomHistogram::FactoryGet(
       "TestCustomHistogram", custom_ranges, HistogramBase::kNoFlags);
   EXPECT_TRUE(custom_histogram);
 
-  // Macros that create histograms have an internal static variable which will
-  // continue to point to those from the very first run of this method even
-  // during subsequent runs.
-  static bool already_run = false;
-  if (already_run)
-    return;
-  already_run = true;
-
   // Use standard macros (but with fixed samples)
-  LOCAL_HISTOGRAM_TIMES("Test2Histogram", TimeDelta::FromDays(1));
-  LOCAL_HISTOGRAM_COUNTS("Test3Histogram", 30);
+  HISTOGRAM_TIMES("Test2Histogram", TimeDelta::FromDays(1));
+  HISTOGRAM_COUNTS("Test3Histogram", 30);
 
-  LOCAL_HISTOGRAM_ENUMERATION("Test6Histogram", 129, 130);
+  DHISTOGRAM_TIMES("Test4Histogram", TimeDelta::FromDays(1));
+  DHISTOGRAM_COUNTS("Test5Histogram", 30);
+
+  HISTOGRAM_ENUMERATION("Test6Histogram", 129, 130);
 }
 
 // Check that the macro correctly matches histograms by name and records their
 // data together.
-TEST_P(HistogramTest, NameMatchTest) {
-  // Macros that create histograms have an internal static variable which will
-  // continue to point to those from the very first run of this method even
-  // during subsequent runs.
-  static bool already_run = false;
-  if (already_run)
-    return;
-  already_run = true;
-
-  LOCAL_HISTOGRAM_PERCENTAGE("DuplicatedHistogram", 10);
-  LOCAL_HISTOGRAM_PERCENTAGE("DuplicatedHistogram", 10);
+TEST_F(HistogramTest, NameMatchTest) {
+  HISTOGRAM_PERCENTAGE("DuplicatedHistogram", 10);
+  HISTOGRAM_PERCENTAGE("DuplicatedHistogram", 10);
   HistogramBase* histogram = LinearHistogram::FactoryGet(
       "DuplicatedHistogram", 1, 101, 102, HistogramBase::kNoFlags);
 
-  std::unique_ptr<HistogramSamples> samples = histogram->SnapshotSamples();
+  scoped_ptr<HistogramSamples> samples = histogram->SnapshotSamples();
   EXPECT_EQ(2, samples->TotalCount());
   EXPECT_EQ(2, samples->GetCount(10));
 }
 
-// Check that delta calculations work correctly.
-TEST_P(HistogramTest, DeltaTest) {
-  HistogramBase* histogram =
-      Histogram::FactoryGet("DeltaHistogram", 1, 64, 8,
-                            HistogramBase::kNoFlags);
-  histogram->Add(1);
-  histogram->Add(10);
-  histogram->Add(50);
-
-  std::unique_ptr<HistogramSamples> samples = histogram->SnapshotDelta();
-  EXPECT_EQ(3, samples->TotalCount());
-  EXPECT_EQ(1, samples->GetCount(1));
-  EXPECT_EQ(1, samples->GetCount(10));
-  EXPECT_EQ(1, samples->GetCount(50));
-  EXPECT_EQ(samples->TotalCount(), samples->redundant_count());
-
-  samples = histogram->SnapshotDelta();
-  EXPECT_EQ(0, samples->TotalCount());
-
-  histogram->Add(10);
-  histogram->Add(10);
-  samples = histogram->SnapshotDelta();
-  EXPECT_EQ(2, samples->TotalCount());
-  EXPECT_EQ(2, samples->GetCount(10));
-
-  samples = histogram->SnapshotDelta();
-  EXPECT_EQ(0, samples->TotalCount());
-}
-
-// Check that final-delta calculations work correctly.
-TEST_P(HistogramTest, FinalDeltaTest) {
-  HistogramBase* histogram =
-      Histogram::FactoryGet("FinalDeltaHistogram", 1, 64, 8,
-                            HistogramBase::kNoFlags);
-  histogram->Add(1);
-  histogram->Add(10);
-  histogram->Add(50);
-
-  std::unique_ptr<HistogramSamples> samples = histogram->SnapshotDelta();
-  EXPECT_EQ(3, samples->TotalCount());
-  EXPECT_EQ(1, samples->GetCount(1));
-  EXPECT_EQ(1, samples->GetCount(10));
-  EXPECT_EQ(1, samples->GetCount(50));
-  EXPECT_EQ(samples->TotalCount(), samples->redundant_count());
-
-  histogram->Add(2);
-  histogram->Add(50);
-
-  samples = histogram->SnapshotFinalDelta();
-  EXPECT_EQ(2, samples->TotalCount());
-  EXPECT_EQ(1, samples->GetCount(2));
-  EXPECT_EQ(1, samples->GetCount(50));
-  EXPECT_EQ(samples->TotalCount(), samples->redundant_count());
-}
-
-TEST_P(HistogramTest, ExponentialRangesTest) {
-  // Check that we got a nice exponential when there was enough room.
+TEST_F(HistogramTest, ExponentialRangesTest) {
+  // Check that we got a nice exponential when there was enough rooom.
   BucketRanges ranges(9);
   Histogram::InitializeBucketRanges(1, 64, &ranges);
   EXPECT_EQ(0, ranges.range(0));
@@ -266,7 +132,7 @@ TEST_P(HistogramTest, ExponentialRangesTest) {
   EXPECT_TRUE(ranges2.Equals(histogram2->bucket_ranges()));
 }
 
-TEST_P(HistogramTest, LinearRangesTest) {
+TEST_F(HistogramTest, LinearRangesTest) {
   BucketRanges ranges(9);
   LinearHistogram::InitializeBucketRanges(1, 7, &ranges);
   // Gets a nice linear set of bucket ranges.
@@ -294,29 +160,10 @@ TEST_P(HistogramTest, LinearRangesTest) {
   EXPECT_TRUE(ranges2.Equals(histogram2->bucket_ranges()));
 }
 
-TEST_P(HistogramTest, SingleValueEnumerationHistogram) {
-  // Make sure its possible to construct a linear histogram with only the two
-  // required outlier buckets (underflow and overflow).
-  HistogramBase* histogram = LinearHistogram::FactoryGet(
-      "SingleValueEnum", 1, 1, 2, HistogramBase::kNoFlags);
-  EXPECT_TRUE(histogram);
-
-  // Make sure the macros work properly. This can only be run when
-  // there is no persistent allocator which can be discarded and leave
-  // dangling pointers.
-  if (!use_persistent_histogram_allocator_) {
-    enum EnumWithMax {
-      kSomething = 0,
-      kMaxValue = kSomething,
-    };
-    UMA_HISTOGRAM_ENUMERATION("h1", kSomething);
-  }
-}
-
-TEST_P(HistogramTest, ArrayToCustomEnumRangesTest) {
+TEST_F(HistogramTest, ArrayToCustomRangesTest) {
   const HistogramBase::Sample ranges[3] = {5, 10, 20};
-  std::vector<HistogramBase::Sample> ranges_vec =
-      CustomHistogram::ArrayToCustomEnumRanges(ranges);
+  vector<HistogramBase::Sample> ranges_vec =
+      CustomHistogram::ArrayToCustomRanges(ranges, 3);
   ASSERT_EQ(6u, ranges_vec.size());
   EXPECT_EQ(5, ranges_vec[0]);
   EXPECT_EQ(6, ranges_vec[1]);
@@ -326,9 +173,9 @@ TEST_P(HistogramTest, ArrayToCustomEnumRangesTest) {
   EXPECT_EQ(21, ranges_vec[5]);
 }
 
-TEST_P(HistogramTest, CustomHistogramTest) {
+TEST_F(HistogramTest, CustomHistogramTest) {
   // A well prepared custom ranges.
-  std::vector<HistogramBase::Sample> custom_ranges;
+  vector<HistogramBase::Sample> custom_ranges;
   custom_ranges.push_back(1);
   custom_ranges.push_back(2);
 
@@ -372,13 +219,13 @@ TEST_P(HistogramTest, CustomHistogramTest) {
   EXPECT_EQ(HistogramBase::kSampleType_MAX, ranges->range(3));
 }
 
-TEST_P(HistogramTest, CustomHistogramWithOnly2Buckets) {
+TEST_F(HistogramTest, CustomHistogramWithOnly2Buckets) {
   // This test exploits the fact that the CustomHistogram can have 2 buckets,
   // while the base class Histogram is *supposed* to have at least 3 buckets.
   // We should probably change the restriction on the base class (or not inherit
   // the base class!).
 
-  std::vector<HistogramBase::Sample> custom_ranges;
+  vector<HistogramBase::Sample> custom_ranges;
   custom_ranges.push_back(4);
 
   Histogram* histogram = static_cast<Histogram*>(
@@ -391,75 +238,8 @@ TEST_P(HistogramTest, CustomHistogramWithOnly2Buckets) {
   EXPECT_EQ(HistogramBase::kSampleType_MAX, ranges->range(2));
 }
 
-TEST_P(HistogramTest, AddCountTest) {
-  const size_t kBucketCount = 50;
-  Histogram* histogram = static_cast<Histogram*>(
-      Histogram::FactoryGet("AddCountHistogram", 10, 100, kBucketCount,
-                            HistogramBase::kNoFlags));
-
-  histogram->AddCount(20, 15);
-  histogram->AddCount(30, 14);
-
-  std::unique_ptr<HistogramSamples> samples = histogram->SnapshotSamples();
-  EXPECT_EQ(29, samples->TotalCount());
-  EXPECT_EQ(15, samples->GetCount(20));
-  EXPECT_EQ(14, samples->GetCount(30));
-
-  histogram->AddCount(20, 25);
-  histogram->AddCount(30, 24);
-
-  std::unique_ptr<HistogramSamples> samples2 = histogram->SnapshotSamples();
-  EXPECT_EQ(78, samples2->TotalCount());
-  EXPECT_EQ(40, samples2->GetCount(20));
-  EXPECT_EQ(38, samples2->GetCount(30));
-}
-
-TEST_P(HistogramTest, AddCount_LargeValuesDontOverflow) {
-  const size_t kBucketCount = 50;
-  Histogram* histogram = static_cast<Histogram*>(
-      Histogram::FactoryGet("AddCountHistogram", 10, 1000000000, kBucketCount,
-                            HistogramBase::kNoFlags));
-
-  histogram->AddCount(200000000, 15);
-  histogram->AddCount(300000000, 14);
-
-  std::unique_ptr<HistogramSamples> samples = histogram->SnapshotSamples();
-  EXPECT_EQ(29, samples->TotalCount());
-  EXPECT_EQ(15, samples->GetCount(200000000));
-  EXPECT_EQ(14, samples->GetCount(300000000));
-
-  histogram->AddCount(200000000, 25);
-  histogram->AddCount(300000000, 24);
-
-  std::unique_ptr<HistogramSamples> samples2 = histogram->SnapshotSamples();
-  EXPECT_EQ(78, samples2->TotalCount());
-  EXPECT_EQ(40, samples2->GetCount(200000000));
-  EXPECT_EQ(38, samples2->GetCount(300000000));
-  EXPECT_EQ(19400000000LL, samples2->sum());
-}
-
-// Some metrics are designed so that they are guaranteed not to overflow between
-// snapshots, but could overflow over a long-running session.
-// Make sure that counts returned by Histogram::SnapshotDelta do not overflow
-// even when a total count (returned by Histogram::SnapshotSample) does.
-TEST_P(HistogramTest, AddCount_LargeCountsDontOverflow) {
-  const size_t kBucketCount = 10;
-  Histogram* histogram = static_cast<Histogram*>(Histogram::FactoryGet(
-      "AddCountHistogram", 10, 50, kBucketCount, HistogramBase::kNoFlags));
-
-  const int count = (1 << 30) - 1;
-
-  // Repeat N times to make sure that there is no internal value overflow.
-  for (int i = 0; i < 10; ++i) {
-    histogram->AddCount(42, count);
-    std::unique_ptr<HistogramSamples> samples = histogram->SnapshotDelta();
-    EXPECT_EQ(count, samples->TotalCount());
-    EXPECT_EQ(count, samples->GetCount(42));
-  }
-}
-
 // Make sure histogram handles out-of-bounds data gracefully.
-TEST_P(HistogramTest, BoundsTest) {
+TEST_F(HistogramTest, BoundsTest) {
   const size_t kBucketCount = 50;
   Histogram* histogram = static_cast<Histogram*>(
       Histogram::FactoryGet("Bounded", 10, 100, kBucketCount,
@@ -473,7 +253,7 @@ TEST_P(HistogramTest, BoundsTest) {
   histogram->Add(10000);
 
   // Verify they landed in the underflow, and overflow buckets.
-  std::unique_ptr<SampleVector> samples = histogram->SnapshotAllSamples();
+  scoped_ptr<SampleVector> samples = histogram->SnapshotSampleVector();
   EXPECT_EQ(2, samples->GetCountAtIndex(0));
   EXPECT_EQ(0, samples->GetCountAtIndex(1));
   size_t array_size = histogram->bucket_count();
@@ -481,7 +261,7 @@ TEST_P(HistogramTest, BoundsTest) {
   EXPECT_EQ(0, samples->GetCountAtIndex(array_size - 2));
   EXPECT_EQ(2, samples->GetCountAtIndex(array_size - 1));
 
-  std::vector<int> custom_ranges;
+  vector<int> custom_ranges;
   custom_ranges.push_back(10);
   custom_ranges.push_back(50);
   custom_ranges.push_back(100);
@@ -497,8 +277,8 @@ TEST_P(HistogramTest, BoundsTest) {
   test_custom_histogram->Add(INT_MAX);
 
   // Verify they landed in the underflow, and overflow buckets.
-  std::unique_ptr<SampleVector> custom_samples =
-      test_custom_histogram->SnapshotAllSamples();
+  scoped_ptr<SampleVector> custom_samples =
+      test_custom_histogram->SnapshotSampleVector();
   EXPECT_EQ(2, custom_samples->GetCountAtIndex(0));
   EXPECT_EQ(0, custom_samples->GetCountAtIndex(1));
   size_t bucket_count = test_custom_histogram->bucket_count();
@@ -507,7 +287,7 @@ TEST_P(HistogramTest, BoundsTest) {
 }
 
 // Check to be sure samples land as expected is "correct" buckets.
-TEST_P(HistogramTest, BucketPlacementTest) {
+TEST_F(HistogramTest, BucketPlacementTest) {
   Histogram* histogram = static_cast<Histogram*>(
       Histogram::FactoryGet("Histogram", 1, 64, 8, HistogramBase::kNoFlags));
 
@@ -521,19 +301,12 @@ TEST_P(HistogramTest, BucketPlacementTest) {
   }
 
   // Check to see that the bucket counts reflect our additions.
-  std::unique_ptr<SampleVector> samples = histogram->SnapshotAllSamples();
+  scoped_ptr<SampleVector> samples = histogram->SnapshotSampleVector();
   for (int i = 0; i < 8; i++)
     EXPECT_EQ(i + 1, samples->GetCountAtIndex(i));
 }
 
-TEST_P(HistogramTest, CorruptSampleCounts) {
-  // The internal code creates histograms via macros and thus keeps static
-  // pointers to them. If those pointers are to persistent memory which will
-  // be free'd then any following calls to that code will crash with a
-  // segmentation violation.
-  if (use_persistent_histogram_allocator_)
-    return;
-
+TEST_F(HistogramTest, CorruptSampleCounts) {
   Histogram* histogram = static_cast<Histogram*>(
       Histogram::FactoryGet("Histogram", 1, 64, 8, HistogramBase::kNoFlags));
 
@@ -541,30 +314,30 @@ TEST_P(HistogramTest, CorruptSampleCounts) {
   histogram->Add(20);
   histogram->Add(40);
 
-  std::unique_ptr<SampleVector> snapshot = histogram->SnapshotAllSamples();
+  scoped_ptr<SampleVector> snapshot = histogram->SnapshotSampleVector();
   EXPECT_EQ(HistogramBase::NO_INCONSISTENCIES,
             histogram->FindCorruption(*snapshot));
   EXPECT_EQ(2, snapshot->redundant_count());
   EXPECT_EQ(2, snapshot->TotalCount());
 
-  snapshot->counts()[3] += 100;  // Sample count won't match redundant count.
+  snapshot->counts_[3] += 100;  // Sample count won't match redundant count.
   EXPECT_EQ(HistogramBase::COUNT_LOW_ERROR,
             histogram->FindCorruption(*snapshot));
-  snapshot->counts()[2] -= 200;
+  snapshot->counts_[2] -= 200;
   EXPECT_EQ(HistogramBase::COUNT_HIGH_ERROR,
             histogram->FindCorruption(*snapshot));
 
   // But we can't spot a corruption if it is compensated for.
-  snapshot->counts()[1] += 100;
+  snapshot->counts_[1] += 100;
   EXPECT_EQ(HistogramBase::NO_INCONSISTENCIES,
             histogram->FindCorruption(*snapshot));
 }
 
-TEST_P(HistogramTest, CorruptBucketBounds) {
+TEST_F(HistogramTest, CorruptBucketBounds) {
   Histogram* histogram = static_cast<Histogram*>(
       Histogram::FactoryGet("Histogram", 1, 64, 8, HistogramBase::kNoFlags));
 
-  std::unique_ptr<HistogramSamples> snapshot = histogram->SnapshotSamples();
+  scoped_ptr<SampleVector> snapshot = histogram->SnapshotSampleVector();
   EXPECT_EQ(HistogramBase::NO_INCONSISTENCIES,
             histogram->FindCorruption(*snapshot));
 
@@ -579,7 +352,7 @@ TEST_P(HistogramTest, CorruptBucketBounds) {
 
   bucket_ranges->set_range(2, bucket_ranges->range(1));
   bucket_ranges->set_range(1, tmp);
-  EXPECT_EQ(0U, histogram->FindCorruption(*snapshot));
+  EXPECT_EQ(0, histogram->FindCorruption(*snapshot));
 
   // Show that two simple changes don't offset each other
   bucket_ranges->set_range(3, bucket_ranges->range(3) + 1);
@@ -595,7 +368,7 @@ TEST_P(HistogramTest, CorruptBucketBounds) {
   bucket_ranges->set_range(4, bucket_ranges->range(4) + 1);
 }
 
-TEST_P(HistogramTest, HistogramSerializeInfo) {
+TEST_F(HistogramTest, HistogramSerializeInfo) {
   Histogram* histogram = static_cast<Histogram*>(
       Histogram::FactoryGet("Histogram", 1, 64, 8,
                             HistogramBase::kIPCSerializationSourceFlag));
@@ -614,8 +387,7 @@ TEST_P(HistogramTest, HistogramSerializeInfo) {
 
   int flag;
   EXPECT_TRUE(iter.ReadInt(&flag));
-  EXPECT_EQ(HistogramBase::kIPCSerializationSourceFlag,
-            flag & ~HistogramBase::kIsPersistent);
+  EXPECT_EQ(HistogramBase::kIPCSerializationSourceFlag, flag);
 
   int min;
   EXPECT_TRUE(iter.ReadInt(&min));
@@ -625,11 +397,11 @@ TEST_P(HistogramTest, HistogramSerializeInfo) {
   EXPECT_TRUE(iter.ReadInt(&max));
   EXPECT_EQ(64, max);
 
-  uint32_t bucket_count;
-  EXPECT_TRUE(iter.ReadUInt32(&bucket_count));
-  EXPECT_EQ(8u, bucket_count);
+  int64 bucket_count;
+  EXPECT_TRUE(iter.ReadInt64(&bucket_count));
+  EXPECT_EQ(8, bucket_count);
 
-  uint32_t checksum;
+  uint32 checksum;
   EXPECT_TRUE(iter.ReadUInt32(&checksum));
   EXPECT_EQ(histogram->bucket_ranges()->checksum(), checksum);
 
@@ -637,8 +409,8 @@ TEST_P(HistogramTest, HistogramSerializeInfo) {
   EXPECT_FALSE(iter.SkipBytes(1));
 }
 
-TEST_P(HistogramTest, CustomHistogramSerializeInfo) {
-  std::vector<int> custom_ranges;
+TEST_F(HistogramTest, CustomHistogramSerializeInfo) {
+  vector<int> custom_ranges;
   custom_ranges.push_back(10);
   custom_ranges.push_back(100);
 
@@ -654,12 +426,12 @@ TEST_P(HistogramTest, CustomHistogramSerializeInfo) {
 
   int i;
   std::string s;
-  uint32_t bucket_count;
-  uint32_t ui32;
+  int64 bucket_count;
+  uint32 ui32;
   EXPECT_TRUE(iter.ReadInt(&i) && iter.ReadString(&s) && iter.ReadInt(&i) &&
               iter.ReadInt(&i) && iter.ReadInt(&i) &&
-              iter.ReadUInt32(&bucket_count) && iter.ReadUInt32(&ui32));
-  EXPECT_EQ(3u, bucket_count);
+              iter.ReadInt64(&bucket_count) && iter.ReadUInt32(&ui32));
+  EXPECT_EQ(3, bucket_count);
 
   int range;
   EXPECT_TRUE(iter.ReadInt(&range));
@@ -671,129 +443,7 @@ TEST_P(HistogramTest, CustomHistogramSerializeInfo) {
   EXPECT_FALSE(iter.SkipBytes(1));
 }
 
-TEST_P(HistogramTest, BadConstruction) {
-  HistogramBase* histogram = Histogram::FactoryGet(
-      "BadConstruction", 0, 100, 8, HistogramBase::kNoFlags);
-  EXPECT_TRUE(histogram->HasConstructionArguments(1, 100, 8));
-
-  // Try to get the same histogram name with different arguments.
-  HistogramBase* bad_histogram = Histogram::FactoryGet(
-      "BadConstruction", 0, 100, 7, HistogramBase::kNoFlags);
-  EXPECT_EQ(DummyHistogram::GetInstance(), bad_histogram);
-  bad_histogram = Histogram::FactoryGet(
-      "BadConstruction", 0, 99, 8, HistogramBase::kNoFlags);
-  EXPECT_EQ(DummyHistogram::GetInstance(), bad_histogram);
-
-  HistogramBase* linear_histogram = LinearHistogram::FactoryGet(
-      "BadConstructionLinear", 0, 100, 8, HistogramBase::kNoFlags);
-  EXPECT_TRUE(linear_histogram->HasConstructionArguments(1, 100, 8));
-
-  // Try to get the same histogram name with different arguments.
-  bad_histogram = LinearHistogram::FactoryGet(
-      "BadConstructionLinear", 0, 100, 7, HistogramBase::kNoFlags);
-  EXPECT_EQ(DummyHistogram::GetInstance(), bad_histogram);
-  bad_histogram = LinearHistogram::FactoryGet(
-      "BadConstructionLinear", 10, 100, 8, HistogramBase::kNoFlags);
-  EXPECT_EQ(DummyHistogram::GetInstance(), bad_histogram);
-}
-
-TEST_P(HistogramTest, FactoryTime) {
-  const int kTestCreateCount = 1 << 14;  // Must be power-of-2.
-  const int kTestLookupCount = 100000;
-  const int kTestAddCount = 1000000;
-
-  // Create all histogram names in advance for accurate timing below.
-  std::vector<std::string> histogram_names;
-  for (int i = 0; i < kTestCreateCount; ++i) {
-    histogram_names.push_back(
-        StringPrintf("TestHistogram.%d", i % kTestCreateCount));
-  }
-
-  // Calculate cost of creating histograms.
-  TimeTicks create_start = TimeTicks::Now();
-  for (int i = 0; i < kTestCreateCount; ++i) {
-    Histogram::FactoryGet(histogram_names[i], 1, 100, 10,
-                          HistogramBase::kNoFlags);
-  }
-  TimeDelta create_ticks = TimeTicks::Now() - create_start;
-  int64_t create_ms = create_ticks.InMilliseconds();
-
-  VLOG(1) << kTestCreateCount << " histogram creations took " << create_ms
-          << "ms or about "
-          << (create_ms * 1000000) / kTestCreateCount
-          << "ns each.";
-
-  // Calculate cost of looking up existing histograms.
-  TimeTicks lookup_start = TimeTicks::Now();
-  for (int i = 0; i < kTestLookupCount; ++i) {
-    // 6007 is co-prime with kTestCreateCount and so will do lookups in an
-    // order less likely to be cacheable (but still hit them all) should the
-    // underlying storage use the exact histogram name as the key.
-    const int i_mult = 6007;
-    static_assert(i_mult < INT_MAX / kTestCreateCount, "Multiplier too big");
-    int index = (i * i_mult) & (kTestCreateCount - 1);
-    Histogram::FactoryGet(histogram_names[index], 1, 100, 10,
-                          HistogramBase::kNoFlags);
-  }
-  TimeDelta lookup_ticks = TimeTicks::Now() - lookup_start;
-  int64_t lookup_ms = lookup_ticks.InMilliseconds();
-
-  VLOG(1) << kTestLookupCount << " histogram lookups took " << lookup_ms
-          << "ms or about "
-          << (lookup_ms * 1000000) / kTestLookupCount
-          << "ns each.";
-
-  // Calculate cost of accessing histograms.
-  HistogramBase* histogram = Histogram::FactoryGet(
-      histogram_names[0], 1, 100, 10, HistogramBase::kNoFlags);
-  ASSERT_TRUE(histogram);
-  TimeTicks add_start = TimeTicks::Now();
-  for (int i = 0; i < kTestAddCount; ++i)
-    histogram->Add(i & 127);
-  TimeDelta add_ticks = TimeTicks::Now() - add_start;
-  int64_t add_ms = add_ticks.InMilliseconds();
-
-  VLOG(1) << kTestAddCount << " histogram adds took " << add_ms
-          << "ms or about "
-          << (add_ms * 1000000) / kTestAddCount
-          << "ns each.";
-}
-
-TEST_P(HistogramTest, ScaledLinearHistogram) {
-  ScaledLinearHistogram scaled("SLH", 1, 5, 6, 100, HistogramBase::kNoFlags);
-
-  scaled.AddScaledCount(0, 1);
-  scaled.AddScaledCount(1, 49);
-  scaled.AddScaledCount(2, 50);
-  scaled.AddScaledCount(3, 101);
-  scaled.AddScaledCount(4, 160);
-  scaled.AddScaledCount(5, 130);
-  scaled.AddScaledCount(6, 140);
-
-  std::unique_ptr<SampleVector> samples =
-      SnapshotAllSamples(scaled.histogram());
-  EXPECT_EQ(0, samples->GetCountAtIndex(0));
-  EXPECT_EQ(0, samples->GetCountAtIndex(1));
-  EXPECT_EQ(1, samples->GetCountAtIndex(2));
-  EXPECT_EQ(1, samples->GetCountAtIndex(3));
-  EXPECT_EQ(2, samples->GetCountAtIndex(4));
-  EXPECT_EQ(3, samples->GetCountAtIndex(5));
-
-  // Make sure the macros compile properly. This can only be run when
-  // there is no persistent allocator which can be discarded and leave
-  // dangling pointers.
-  if (!use_persistent_histogram_allocator_) {
-    enum EnumWithMax {
-      kA = 0,
-      kB = 1,
-      kC = 2,
-      kMaxValue = kC,
-    };
-    UMA_HISTOGRAM_SCALED_EXACT_LINEAR("h1", 1, 5000, 5, 100);
-    UMA_HISTOGRAM_SCALED_ENUMERATION("h2", kB, 5000, 100);
-  }
-}
-
+#if GTEST_HAS_DEATH_TEST
 // For Histogram, LinearHistogram and CustomHistogram, the minimum for a
 // declared range is 1, while the maximum is (HistogramBase::kSampleType_MAX -
 // 1). But we accept ranges exceeding those limits, and silently clamped to
@@ -813,7 +463,7 @@ TEST(HistogramDeathTest, BadRangesTest) {
       linear_histogram->HasConstructionArguments(
           1, HistogramBase::kSampleType_MAX - 1, 8));
 
-  std::vector<int> custom_ranges;
+  vector<int> custom_ranges;
   custom_ranges.push_back(0);
   custom_ranges.push_back(5);
   Histogram* custom_histogram = static_cast<Histogram*>(
@@ -827,74 +477,17 @@ TEST(HistogramDeathTest, BadRangesTest) {
 
   // CustomHistogram does not accepts kSampleType_MAX as range.
   custom_ranges.push_back(HistogramBase::kSampleType_MAX);
-  EXPECT_DEATH_IF_SUPPORTED(
-      CustomHistogram::FactoryGet("BadRangesCustom2", custom_ranges,
-                                  HistogramBase::kNoFlags),
+  EXPECT_DEATH(CustomHistogram::FactoryGet("BadRangesCustom2", custom_ranges,
+                                           HistogramBase::kNoFlags),
                "");
 
   // CustomHistogram needs at least 1 valid range.
   custom_ranges.clear();
   custom_ranges.push_back(0);
-  EXPECT_DEATH_IF_SUPPORTED(
-      CustomHistogram::FactoryGet("BadRangesCustom3", custom_ranges,
-                                  HistogramBase::kNoFlags),
+  EXPECT_DEATH(CustomHistogram::FactoryGet("BadRangesCustom3", custom_ranges,
+                                           HistogramBase::kNoFlags),
                "");
 }
-
-TEST_P(HistogramTest, ExpiredHistogramTest) {
-  auto record_checker = std::make_unique<TestRecordHistogramChecker>();
-  StatisticsRecorder::SetRecordChecker(std::move(record_checker));
-
-  HistogramBase* expired = Histogram::FactoryGet(kExpiredHistogramName, 1, 1000,
-                                                 10, HistogramBase::kNoFlags);
-  ASSERT_TRUE(expired);
-  expired->Add(5);
-  expired->Add(500);
-  auto samples = expired->SnapshotDelta();
-  EXPECT_EQ(0, samples->TotalCount());
-
-  HistogramBase* linear_expired = LinearHistogram::FactoryGet(
-      kExpiredHistogramName, 1, 1000, 10, HistogramBase::kNoFlags);
-  ASSERT_TRUE(linear_expired);
-  linear_expired->Add(5);
-  linear_expired->Add(500);
-  samples = linear_expired->SnapshotDelta();
-  EXPECT_EQ(0, samples->TotalCount());
-
-  std::vector<int> custom_ranges;
-  custom_ranges.push_back(1);
-  custom_ranges.push_back(5);
-  HistogramBase* custom_expired = CustomHistogram::FactoryGet(
-      kExpiredHistogramName, custom_ranges, HistogramBase::kNoFlags);
-  ASSERT_TRUE(custom_expired);
-  custom_expired->Add(2);
-  custom_expired->Add(4);
-  samples = custom_expired->SnapshotDelta();
-  EXPECT_EQ(0, samples->TotalCount());
-
-  HistogramBase* valid = Histogram::FactoryGet("ValidHistogram", 1, 1000, 10,
-                                               HistogramBase::kNoFlags);
-  ASSERT_TRUE(valid);
-  valid->Add(5);
-  valid->Add(500);
-  samples = valid->SnapshotDelta();
-  EXPECT_EQ(2, samples->TotalCount());
-
-  HistogramBase* linear_valid = LinearHistogram::FactoryGet(
-      "LinearHistogram", 1, 1000, 10, HistogramBase::kNoFlags);
-  ASSERT_TRUE(linear_valid);
-  linear_valid->Add(5);
-  linear_valid->Add(500);
-  samples = linear_valid->SnapshotDelta();
-  EXPECT_EQ(2, samples->TotalCount());
-
-  HistogramBase* custom_valid = CustomHistogram::FactoryGet(
-      "CustomHistogram", custom_ranges, HistogramBase::kNoFlags);
-  ASSERT_TRUE(custom_valid);
-  custom_valid->Add(2);
-  custom_valid->Add(4);
-  samples = custom_valid->SnapshotDelta();
-  EXPECT_EQ(2, samples->TotalCount());
-}
+#endif
 
 }  // namespace base

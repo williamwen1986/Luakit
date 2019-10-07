@@ -6,17 +6,17 @@
 
 namespace base {
 
-namespace test {
+namespace internal {
 
 TaskTracker::TaskTracker() : task_runs_(0), task_runs_cv_(&lock_) {}
 
-TaskTracker::~TaskTracker() = default;
+TaskTracker::~TaskTracker() {}
 
-RepeatingClosure TaskTracker::WrapTask(RepeatingClosure task, int i) {
-  return BindRepeating(&TaskTracker::RunTask, this, std::move(task), i);
+Closure TaskTracker::WrapTask(const Closure& task, int i) {
+  return Bind(&TaskTracker::RunTask, this, task, i);
 }
 
-void TaskTracker::RunTask(RepeatingClosure task, int i) {
+void TaskTracker::RunTask(const Closure& task, int i) {
   AutoLock lock(lock_);
   if (!task.is_null()) {
     task.Run();
@@ -37,11 +37,12 @@ void TaskTracker::WaitForCompletedTasks(int count) {
     task_runs_cv_.Wait();
 }
 
-void ExpectRunsTasksInCurrentSequence(bool expected_value,
-                                      TaskRunner* task_runner) {
-  EXPECT_EQ(expected_value, task_runner->RunsTasksInCurrentSequence());
+void ExpectRunsTasksOnCurrentThread(
+    bool expected_value,
+    const scoped_refptr<TaskRunner>& task_runner) {
+  EXPECT_EQ(expected_value, task_runner->RunsTasksOnCurrentThread());
 }
 
-}  // namespace test
+}  // namespace internal
 
 }  // namespace base

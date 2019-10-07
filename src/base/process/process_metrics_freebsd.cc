@@ -4,42 +4,92 @@
 
 #include "base/process/process_metrics.h"
 
-#include <stddef.h>
-#include <sys/sysctl.h>
-#include <sys/user.h>
-#include <unistd.h>
-
-#include "base/macros.h"
-#include "base/memory/ptr_util.h"
-#include "base/process/process_metrics_iocounters.h"
-#include "base/stl_util.h"
-
 namespace base {
 
 ProcessMetrics::ProcessMetrics(ProcessHandle process)
     : process_(process),
-      last_cpu_(0) {}
-
-// static
-std::unique_ptr<ProcessMetrics> ProcessMetrics::CreateProcessMetrics(
-    ProcessHandle process) {
-  return WrapUnique(new ProcessMetrics(process));
+      last_time_(0),
+      last_system_time_(0),
+      last_cpu_(0) {
+  processor_count_ = base::SysInfo::NumberOfProcessors();
 }
 
-double ProcessMetrics::GetPlatformIndependentCPUUsage() {
+// static
+ProcessMetrics* ProcessMetrics::CreateProcessMetrics(ProcessHandle process) {
+  return new ProcessMetrics(process);
+}
+
+size_t ProcessMetrics::GetPagefileUsage() const {
   struct kinfo_proc info;
-  int mib[] = {CTL_KERN, KERN_PROC, KERN_PROC_PID, process_};
+  int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, process_ };
   size_t length = sizeof(info);
 
-  if (sysctl(mib, base::size(mib), &info, &length, NULL, 0) < 0)
+  if (sysctl(mib, arraysize(mib), &info, &length, NULL, 0) < 0)
+    return 0;
+
+  return info.ki_size;
+}
+
+size_t ProcessMetrics::GetPeakPagefileUsage() const {
+  return 0;
+}
+
+size_t ProcessMetrics::GetWorkingSetSize() const {
+  struct kinfo_proc info;
+  int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, process_ };
+  size_t length = sizeof(info);
+
+  if (sysctl(mib, arraysize(mib), &info, &length, NULL, 0) < 0)
+    return 0;
+
+  return info.ki_rssize * getpagesize();
+}
+
+size_t ProcessMetrics::GetPeakWorkingSetSize() const {
+  return 0;
+}
+
+bool ProcessMetrics::GetMemoryBytes(size_t* private_bytes,
+                                    size_t* shared_bytes) {
+  WorkingSetKBytes ws_usage;
+  if (!GetWorkingSetKBytes(&ws_usage))
+    return false;
+
+  if (private_bytes)
+    *private_bytes = ws_usage.priv << 10;
+
+  if (shared_bytes)
+    *shared_bytes = ws_usage.shared * 1024;
+
+  return true;
+}
+
+bool ProcessMetrics::GetWorkingSetKBytes(WorkingSetKBytes* ws_usage) const {
+// TODO(bapt) be sure we can't be precise
+  size_t priv = GetWorkingSetSize();
+  if (!priv)
+    return false;
+  ws_usage->priv = priv / 1024;
+  ws_usage->shareable = 0;
+  ws_usage->shared = 0;
+
+  return true;
+}
+
+double ProcessMetrics::GetCPUUsage() {
+  struct kinfo_proc info;
+  int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, process_ };
+  size_t length = sizeof(info);
+
+  struct timeval now;
+  int retval = gettimeofday(&now, NULL);
+  if (retval)
+    return 0;
+
+  if (sysctl(mib, arraysize(mib), &info, &length, NULL, 0) < 0)
     return 0;
 
   return (info.ki_pctcpu / FSCALE) * 100.0;
-}
-
-TimeDelta ProcessMetrics::GetCumulativeCPUUsage() {
-  NOTREACHED();
-  return TimeDelta();
 }
 
 bool ProcessMetrics::GetIOCounters(IoCounters* io_counters) const {
@@ -51,7 +101,7 @@ size_t GetSystemCommitCharge() {
   unsigned long mem_total, mem_free, mem_inactive;
   size_t length = sizeof(mem_total);
 
-  if (sysctl(mib, base::size(mib), &mem_total, &length, NULL, 0) < 0)
+  if (sysctl(mib, arraysize(mib), &mem_total, &length, NULL, 0) < 0)
     return 0;
 
   length = sizeof(mem_free);

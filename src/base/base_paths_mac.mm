@@ -8,19 +8,16 @@
 #include <dlfcn.h>
 #import <Foundation/Foundation.h>
 #include <mach-o/dyld.h>
-#include <stdint.h>
 
 #include "base/base_paths.h"
 #include "base/compiler_specific.h"
+#include "base/file_util.h"
 #include "base/files/file_path.h"
-#include "base/files/file_util.h"
 #include "base/logging.h"
-#include "base/mac/bundle_locations.h"
 #include "base/mac/foundation_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
-#include "base/threading/thread_restrictions.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 namespace {
 
@@ -32,17 +29,14 @@ void GetNSExecutablePath(base::FilePath* path) {
   _NSGetExecutablePath(NULL, &executable_length);
   DCHECK_GT(executable_length, 1u);
   std::string executable_path;
-  int rv = _NSGetExecutablePath(
-      base::WriteInto(&executable_path, executable_length),
-                      &executable_length);
+  int rv = _NSGetExecutablePath(WriteInto(&executable_path, executable_length),
+                                &executable_length);
   DCHECK_EQ(rv, 0);
 
   // _NSGetExecutablePath may return paths containing ./ or ../ which makes
   // FilePath::DirName() work incorrectly, convert it to absolute path so that
   // paths such as DIR_SOURCE_ROOT can work, since we expect absolute paths to
   // be returned here.
-  // TODO(bauerb): http://crbug.com/259796, http://crbug.com/373477
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
   *path = base::MakeAbsoluteFilePath(base::FilePath(executable_path));
 }
 
@@ -74,7 +68,7 @@ bool PathProviderMac(int key, base::FilePath* result) {
     case base::DIR_APP_DATA: {
       bool success = base::mac::GetUserDirectory(NSApplicationSupportDirectory,
                                                  result);
-#if defined(OS_IOS)
+#if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
       // On IOS, this directory does not exist unless it is created explicitly.
       if (success && !base::PathExists(*result))
         success = base::CreateDirectory(*result);
@@ -89,7 +83,7 @@ bool PathProviderMac(int key, base::FilePath* result) {
       // Start with the executable's directory.
       *result = result->DirName();
 
-#if !defined(OS_IOS)
+#if !defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
       if (base::mac::AmIBundled()) {
         // The bundled app executables (Chromium, TestShell, etc) live five
         // levels down, eg:
@@ -103,27 +97,24 @@ bool PathProviderMac(int key, base::FilePath* result) {
 #endif
       return true;
     case base::DIR_USER_DESKTOP:
-#if defined(OS_IOS)
+#if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
       // iOS does not have desktop directories.
       NOTIMPLEMENTED();
       return false;
 #else
       return base::mac::GetUserDirectory(NSDesktopDirectory, result);
 #endif
-    case base::DIR_ASSETS:
-#if defined(OS_IOS)
-      // TODO(https://crbug.com/957792): Assets live alongside the executable.
-      return PathService::Get(base::DIR_MODULE, result);
-#else
-      if (!base::mac::AmIBundled()) {
-        return PathService::Get(base::DIR_MODULE, result);
-      }
-      *result = base::mac::FrameworkBundlePath().Append(
-          FILE_PATH_LITERAL("Resources"));
-      return true;
-#endif  // !defined(OS_IOS)
     case base::DIR_CACHE:
       return base::mac::GetUserDirectory(NSCachesDirectory, result);
+    case base::DIR_HOME:
+      *result = base::mac::NSStringToFilePath(NSHomeDirectory());
+      return true;
+#if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
+    case base::DIR_DOCUMENTS:
+      return base::mac::GetUserDirectory(NSDocumentDirectory, result);
+    case base::DIR_LIBRARY:
+      return base::mac::GetUserDirectory(NSLibraryDirectory, result);
+#endif
     default:
       return false;
   }

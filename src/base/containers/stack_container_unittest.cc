@@ -4,12 +4,10 @@
 
 #include "base/containers/stack_container.h"
 
-#include <stddef.h>
-
 #include <algorithm>
 
+#include "base/memory/aligned_memory.h"
 #include "base/memory/ref_counted.h"
-#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -79,6 +77,7 @@ TEST(StackContainer, Vector) {
 TEST(StackContainer, VectorDoubleDelete) {
   // Regression testing for double-delete.
   typedef StackVector<scoped_refptr<Dummy>, 2> Vector;
+  typedef Vector::ContainerType Container;
   Vector vect;
 
   int alive = 0;
@@ -89,10 +88,10 @@ TEST(StackContainer, VectorDoubleDelete) {
   EXPECT_EQ(alive, 1);
 
   Dummy* dummy_unref = dummy.get();
-  dummy = nullptr;
+  dummy = NULL;
   EXPECT_EQ(alive, 1);
 
-  auto itr = std::find(vect->begin(), vect->end(), dummy_unref);
+  Container::iterator itr = std::find(vect->begin(), vect->end(), dummy_unref);
   EXPECT_EQ(itr->get(), dummy_unref);
   vect->erase(itr);
   EXPECT_EQ(alive, 0);
@@ -105,9 +104,9 @@ namespace {
 template <size_t alignment>
 class AlignedData {
  public:
-  AlignedData() { memset(data_, 0, alignment); }
-  ~AlignedData() = default;
-  alignas(alignment) char data_[alignment];
+  AlignedData() { memset(data_.void_data(), 0, alignment); }
+  ~AlignedData() {}
+  base::AlignedMemory<alignment, alignment> data_;
 };
 
 }  // anonymous namespace
@@ -118,11 +117,11 @@ class AlignedData {
 TEST(StackContainer, BufferAlignment) {
   StackVector<wchar_t, 16> text;
   text->push_back(L'A');
-  EXPECT_ALIGNED(&text[0], alignof(wchar_t));
+  EXPECT_ALIGNED(&text[0], ALIGNOF(wchar_t));
 
   StackVector<double, 1> doubles;
   doubles->push_back(0.0);
-  EXPECT_ALIGNED(&doubles[0], alignof(double));
+  EXPECT_ALIGNED(&doubles[0], ALIGNOF(double));
 
   StackVector<AlignedData<16>, 1> aligned16;
   aligned16->push_back(AlignedData<16>());
@@ -140,36 +139,5 @@ TEST(StackContainer, BufferAlignment) {
 
 template class StackVector<int, 2>;
 template class StackVector<scoped_refptr<Dummy>, 2>;
-
-template <typename T, size_t size>
-void CheckStackVectorElements(const StackVector<T, size>& vec,
-                              std::initializer_list<T> expected) {
-  auto expected_it = expected.begin();
-  EXPECT_EQ(vec->size(), expected.size());
-  for (T t : vec) {
-    EXPECT_NE(expected.end(), expected_it);
-    EXPECT_EQ(*expected_it, t);
-    ++expected_it;
-  }
-  EXPECT_EQ(expected.end(), expected_it);
-}
-
-TEST(StackContainer, Iteration) {
-  StackVector<int, 3> vect;
-  vect->push_back(7);
-  vect->push_back(11);
-
-  CheckStackVectorElements(vect, {7, 11});
-  for (int& i : vect) {
-    ++i;
-  }
-  CheckStackVectorElements(vect, {8, 12});
-  vect->push_back(13);
-  CheckStackVectorElements(vect, {8, 12, 13});
-  vect->resize(5);
-  CheckStackVectorElements(vect, {8, 12, 13, 0, 0});
-  vect->resize(1);
-  CheckStackVectorElements(vect, {8});
-}
 
 }  // namespace base

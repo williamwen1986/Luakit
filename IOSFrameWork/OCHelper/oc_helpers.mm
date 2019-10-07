@@ -1,4 +1,3 @@
-#define LUA_COMPAT_5_1
 #import "oc_helpers.h"
 #import <objc/runtime.h>
 #ifdef __cplusplus
@@ -10,19 +9,19 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-#import "luaconf.h"
 #import "oc_callback.h"
 #include "common/notification_service.h"
-// #include "lua_notify.h" Patch [LARPOUX]
+//#include "lua_notify.h" // Patch [LARPOUX]
+#include "luaconf.h"
 #include "NotificationProxyObserver.h"
 #include "lua_helpers.h"
 
 #include "base/command_line.h"
-// #include "base/memory/scoped_ptr.h" // Patch [LARPOUX]
+#include "base/memory/scoped_ptr.h"
 #include "common/business_main_delegate.h"
 #include "common/business_runtime.h"
-#include "lua-tools/lua_helpers.h"
-// #include "base/thread_task_runner_handle.h" // Patch [LARPOUX]
+#include "lua-tools/lua_helpers.h" // Patch [LARPOUX]
+#include "base/thread_task_runner_handle.h"
 #include "common/base_lambda_support.h"
 
 lua_State *getCurrentThreadLuaState(){
@@ -39,7 +38,7 @@ void startLuakit(int argc, char * argv[])
 {
     static bool hasStartLuakit = false;
     if (!hasStartLuakit) {
-        base::CommandLine::Init(argc, argv); // Patch [LARPOUX]
+        CommandLine::Init(argc, argv);
         std::string  bundlePath = [[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding];
         bundlePath += "/lua"; // Patch [LARPOUX]
         if (luaGetPackagePath().size() == 0) {

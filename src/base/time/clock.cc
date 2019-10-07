@@ -6,6 +6,6 @@
 
 namespace base {
 
-Clock::~Clock() = default;
+Clock::~Clock() {}
 
 }  // namespace base

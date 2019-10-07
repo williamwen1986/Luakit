@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// This is a "No Compile Test" suite.
-// http://dev.chromium.org/developers/testing/no-compile-tests
-
 #include "base/memory/weak_ptr.h"
 
 namespace base {
@@ -17,7 +14,7 @@ struct MultiplyDerivedProducer : Producer,
 struct Unrelated {};
 struct DerivedUnrelated : Unrelated {};
 
-#if defined(NCTEST_AUTO_DOWNCAST)  // [r"cannot initialize a variable of type 'base::DerivedProducer \*' with an rvalue of type 'base::Producer \*'"]
+#if defined(NCTEST_AUTO_DOWNCAST)  // [r"invalid conversion from"]
 
 void WontCompile() {
   Producer f;
@@ -25,7 +22,7 @@ void WontCompile() {
   WeakPtr<DerivedProducer> derived_ptr = ptr;
 }
 
-#elif defined(NCTEST_STATIC_DOWNCAST)  // [r"cannot initialize a variable of type 'base::DerivedProducer \*' with an rvalue of type 'base::Producer \*'"]
+#elif defined(NCTEST_STATIC_DOWNCAST)  // [r"invalid conversion from"]
 
 void WontCompile() {
   Producer f;
@@ -34,7 +31,7 @@ void WontCompile() {
       static_cast<WeakPtr<DerivedProducer> >(ptr);
 }
 
-#elif defined(NCTEST_AUTO_REF_DOWNCAST)  // [r"fatal error: non-const lvalue reference to type 'WeakPtr<base::DerivedProducer>' cannot bind to a value of unrelated type 'WeakPtr<base::Producer>'"]
+#elif defined(NCTEST_AUTO_REF_DOWNCAST)  // [r"invalid initialization of reference"]
 
 void WontCompile() {
   Producer f;
@@ -42,7 +39,7 @@ void WontCompile() {
   WeakPtr<DerivedProducer>& derived_ptr = ptr;
 }
 
-#elif defined(NCTEST_STATIC_REF_DOWNCAST)  // [r"fatal error: non-const lvalue reference to type 'WeakPtr<base::DerivedProducer>' cannot bind to a value of unrelated type 'WeakPtr<base::Producer>'"]
+#elif defined(NCTEST_STATIC_REF_DOWNCAST)  // [r"invalid static_cast"]
 
 void WontCompile() {
   Producer f;
@@ -59,7 +56,7 @@ void WontCompile() {
       SupportsWeakPtr<Producer>::StaticAsWeakPtr<DerivedProducer>(&f);
 }
 
-#elif defined(NCTEST_UNSAFE_HELPER_DOWNCAST)  // [r"cannot initialize a variable of type 'base::DerivedProducer \*' with an rvalue of type 'base::Producer \*'"]
+#elif defined(NCTEST_UNSAFE_HELPER_DOWNCAST)  // [r"invalid conversion from"]
 
 void WontCompile() {
   Producer f;
@@ -73,35 +70,35 @@ void WontCompile() {
   WeakPtr<DerivedProducer> ptr = AsWeakPtr<DerivedProducer>(&f);
 }
 
-#elif defined(NCTEST_UNSAFE_WRONG_INSANTIATED_HELPER_DOWNCAST)  // [r"cannot initialize a variable of type 'base::DerivedProducer \*' with an rvalue of type 'base::Producer \*'"]
+#elif defined(NCTEST_UNSAFE_WRONG_INSANTIATED_HELPER_DOWNCAST)  // [r"invalid conversion from"]
 
 void WontCompile() {
-  Producer f;
+  Producer f; 
   WeakPtr<DerivedProducer> ptr = AsWeakPtr<Producer>(&f);
 }
 
-#elif defined(NCTEST_UNSAFE_HELPER_CAST)  // [r"cannot initialize a variable of type 'base::OtherDerivedProducer \*' with an rvalue of type 'base::DerivedProducer \*'"]
+#elif defined(NCTEST_UNSAFE_HELPER_CAST)  // [r"cannot convert"]
 
 void WontCompile() {
   DerivedProducer f;
   WeakPtr<OtherDerivedProducer> ptr = AsWeakPtr(&f);
 }
 
-#elif defined(NCTEST_UNSAFE_INSTANTIATED_HELPER_SIDECAST)  // [r"fatal error: no matching function for call to 'AsWeakPtr'"]
+#elif defined(NCTEST_UNSAFE_INSTANTIATED_HELPER_SIDECAST)  // [r"no matching function"]
 
 void WontCompile() {
   DerivedProducer f;
   WeakPtr<OtherDerivedProducer> ptr = AsWeakPtr<OtherDerivedProducer>(&f);
 }
 
-#elif defined(NCTEST_UNSAFE_WRONG_INSTANTIATED_HELPER_SIDECAST)  // [r"cannot initialize a variable of type 'base::OtherDerivedProducer \*' with an rvalue of type 'base::DerivedProducer \*'"]
+#elif defined(NCTEST_UNSAFE_WRONG_INSTANTIATED_HELPER_SIDECAST)  // [r"cannot convert"]
 
 void WontCompile() {
   DerivedProducer f;
   WeakPtr<OtherDerivedProducer> ptr = AsWeakPtr<DerivedProducer>(&f);
 }
 
-#elif defined(NCTEST_UNRELATED_HELPER)  // [r"cannot initialize a variable of type 'base::Unrelated \*' with an rvalue of type 'base::DerivedProducer \*'"]
+#elif defined(NCTEST_UNRELATED_HELPER)  // [r"cannot convert"]
 
 void WontCompile() {
   DerivedProducer f;
@@ -115,24 +112,21 @@ void WontCompile() {
   WeakPtr<Unrelated> ptr = AsWeakPtr<Unrelated>(&f);
 }
 
-// TODO(hans): Remove .* and update the static_assert expectations once we roll
-// past Clang r313315. https://crbug.com/765692.
-
-#elif defined(NCTEST_COMPLETELY_UNRELATED_HELPER)  // [r"fatal error: static_assert failed .*\"AsWeakPtr argument must inherit from SupportsWeakPtr\""]
+#elif defined(NCTEST_COMPLETELY_UNRELATED_HELPER)  // [r"size of array is negative"]
 
 void WontCompile() {
   Unrelated f;
   WeakPtr<Unrelated> ptr = AsWeakPtr(&f);
 }
 
-#elif defined(NCTEST_DERIVED_COMPLETELY_UNRELATED_HELPER)  // [r"fatal error: static_assert failed .*\"AsWeakPtr argument must inherit from SupportsWeakPtr\""]
+#elif defined(NCTEST_DERIVED_COMPLETELY_UNRELATED_HELPER)  // [r"size of array is negative"]
 
 void WontCompile() {
   DerivedUnrelated f;
   WeakPtr<Unrelated> ptr = AsWeakPtr(&f);
 }
 
-#elif defined(NCTEST_AMBIGUOUS_ANCESTORS)  // [r"fatal error: use of undeclared identifier 'AsWeakPtrImpl'"]
+#elif defined(NCTEST_AMBIGUOUS_ANCESTORS)  // [r"ambiguous base"]
 
 void WontCompile() {
   MultiplyDerivedProducer f;

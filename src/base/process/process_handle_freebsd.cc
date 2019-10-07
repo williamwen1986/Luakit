@@ -3,13 +3,9 @@
 // found in the LICENSE file.
 
 #include "base/process/process_handle.h"
-#include "base/stl_util.h"
 
-#include <limits.h>
-#include <stddef.h>
 #include <sys/sysctl.h>
 #include <sys/types.h>
-#include <sys/user.h>
 #include <unistd.h>
 
 namespace base {
@@ -19,7 +15,7 @@ ProcessId GetParentProcessId(ProcessHandle process) {
   size_t length;
   int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, process };
 
-  if (sysctl(mib, base::size(mib), &info, &length, NULL, 0) < 0)
+  if (sysctl(mib, arraysize(mib), &info, &length, NULL, 0) < 0)
     return -1;
 
   return info.ki_ppid;
@@ -32,7 +28,7 @@ FilePath GetProcessExecutablePath(ProcessHandle process) {
 
   length = sizeof(pathname);
 
-  if (sysctl(mib, base::size(mib), pathname, &length, NULL, 0) < 0 ||
+  if (sysctl(mib, arraysize(mib), pathname, &length, NULL, 0) < 0 ||
       length == 0) {
     return FilePath();
   }

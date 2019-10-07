@@ -5,32 +5,40 @@
 #ifndef BASE_FILE_VERSION_INFO_MAC_H_
 #define BASE_FILE_VERSION_INFO_MAC_H_
 
-#include <CoreFoundation/CoreFoundation.h>
 #include <string>
 
 #include "base/file_version_info.h"
 #include "base/mac/scoped_nsobject.h"
-#include "base/macros.h"
 
+#ifdef __OBJC__
 @class NSBundle;
+#else
+class NSBundle;
+#endif
 
 class FileVersionInfoMac : public FileVersionInfo {
  public:
   explicit FileVersionInfoMac(NSBundle *bundle);
-  ~FileVersionInfoMac() override;
+  virtual ~FileVersionInfoMac();
 
   // Accessors to the different version properties.
   // Returns an empty string if the property is not found.
-  base::string16 company_name() override;
-  base::string16 company_short_name() override;
-  base::string16 product_name() override;
-  base::string16 product_short_name() override;
-  base::string16 internal_name() override;
-  base::string16 product_version() override;
-  base::string16 special_build() override;
-  base::string16 original_filename() override;
-  base::string16 file_description() override;
-  base::string16 file_version() override;
+  virtual base::string16 company_name() OVERRIDE;
+  virtual base::string16 company_short_name() OVERRIDE;
+  virtual base::string16 product_name() OVERRIDE;
+  virtual base::string16 product_short_name() OVERRIDE;
+  virtual base::string16 internal_name() OVERRIDE;
+  virtual base::string16 product_version() OVERRIDE;
+  virtual base::string16 private_build() OVERRIDE;
+  virtual base::string16 special_build() OVERRIDE;
+  virtual base::string16 comments() OVERRIDE;
+  virtual base::string16 original_filename() OVERRIDE;
+  virtual base::string16 file_description() OVERRIDE;
+  virtual base::string16 file_version() OVERRIDE;
+  virtual base::string16 legal_copyright() OVERRIDE;
+  virtual base::string16 legal_trademarks() OVERRIDE;
+  virtual base::string16 last_change() OVERRIDE;
+  virtual bool is_official_build() OVERRIDE;
 
  private:
   // Returns a base::string16 value for a property name.

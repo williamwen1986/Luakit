@@ -6,7 +6,7 @@
 #define BASE_MAC_SCOPED_NSAUTORELEASE_POOL_H_
 
 #include "base/base_export.h"
-#include "base/macros.h"
+#include "base/basictypes.h"
 
 #if defined(__OBJC__)
 @class NSAutoreleasePool;
@@ -21,8 +21,6 @@ namespace mac {
 // sends it a -drain message when destroyed.  This allows an autorelease pool to
 // be maintained in ordinary C++ code without bringing in any direct Objective-C
 // dependency.
-//
-// Use only in C++ code; use @autoreleasepool in Obj-C(++) code.
 
 class BASE_EXPORT ScopedNSAutoreleasePool {
  public:

@@ -6,8 +6,10 @@
 
 namespace base {
 
-MockDevicesChangedObserver::MockDevicesChangedObserver() = default;
+MockDevicesChangedObserver::MockDevicesChangedObserver() {
+}
 
-MockDevicesChangedObserver::~MockDevicesChangedObserver() = default;
+MockDevicesChangedObserver::~MockDevicesChangedObserver() {
+}
 
 }  // namespace base

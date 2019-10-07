@@ -1,4 +1,3 @@
-#define LUA_COMPAT_MODULE // Patch [LARPOUX]
 #import "oc_helpers.h"
 #import <objc/runtime.h>
 #ifdef __cplusplus
@@ -9,7 +8,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-#import "lua_helpers.h" 
+#import "lua_helpers.h"
 #import "oc_callback.h"
 
 typedef struct _callback_instance_userdata {

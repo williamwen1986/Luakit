@@ -8,11 +8,11 @@
 
 namespace base {
 
-SimpleTestTickClock::SimpleTestTickClock() = default;
+SimpleTestTickClock::SimpleTestTickClock() {}
 
-SimpleTestTickClock::~SimpleTestTickClock() = default;
+SimpleTestTickClock::~SimpleTestTickClock() {}
 
-TimeTicks SimpleTestTickClock::NowTicks() const {
+TimeTicks SimpleTestTickClock::NowTicks() {
   AutoLock lock(lock_);
   return now_ticks_;
 }
@@ -21,11 +21,6 @@ void SimpleTestTickClock::Advance(TimeDelta delta) {
   AutoLock lock(lock_);
   DCHECK(delta >= TimeDelta());
   now_ticks_ += delta;
-}
-
-void SimpleTestTickClock::SetNowTicks(TimeTicks ticks) {
-  AutoLock lock(lock_);
-  now_ticks_ = ticks;
 }
 
 }  // namespace base

@@ -6,15 +6,14 @@ package org.chromium.base.test.util;
 
 /**
  * Utility class for scaling various timeouts by a common factor.
- * For example, to run tests under slow memory tools, you might do
- * something like this:
+ * For example, to run tests under Valgrind, you might want the following:
  *   adb shell "echo 20.0 > /data/local/tmp/chrome_timeout_scale"
  */
 public class ScalableTimeout {
-    private static Double sTimeoutScale;
-    public static final String PROPERTY_FILE = "/data/local/tmp/chrome_timeout_scale";
+    private static Double sTimeoutScale = null;
+    private static final String PROPERTY_FILE = "/data/local/tmp/chrome_timeout_scale";
 
-    public static long scaleTimeout(long timeout) {
+    public static long ScaleTimeout(long timeout) {
         if (sTimeoutScale == null) {
             try {
                 char[] data = TestFileUtil.readUtf8File(PROPERTY_FILE, 32);
@@ -24,6 +23,6 @@ public class ScalableTimeout {
                 sTimeoutScale = 1.0;
             }
         }
-        return (long) (timeout * sTimeoutScale);
+        return (long)(timeout * sTimeoutScale);
     }
 }

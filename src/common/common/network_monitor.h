@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include "base/macros.h"
-#include "common/scoped_ptr.h" 
+#include "base/memory/scoped_ptr.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 

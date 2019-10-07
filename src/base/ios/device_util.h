@@ -5,8 +5,6 @@
 #ifndef BASE_IOS_DEVICE_UTIL_H_
 #define BASE_IOS_DEVICE_UTIL_H_
 
-#include <stdint.h>
-
 #include <string>
 
 namespace ios {
@@ -42,21 +40,8 @@ namespace device_util {
 // x86_64     -> Simulator
 std::string GetPlatform();
 
-// Returns true if the application is running on a device with 512MB or more
-// RAM.
-bool RamIsAtLeast512Mb();
-
-// Returns true if the application is running on a device with 1024MB or more
-// RAM.
-bool RamIsAtLeast1024Mb();
-
-// Returns true if the application is running on a device with |ram_in_mb| MB or
-// more RAM.
-// Use with caution! Actual RAM reported by devices is less than the commonly
-// used powers-of-two values. For example, a 512MB device may report only 502MB
-// RAM. The convenience methods above should be used in most cases because they
-// correctly handle this issue.
-bool RamIsAtLeast(uint64_t ram_in_mb);
+// Returns true if the application is running on a high-ram device. (>=500M).
+bool IsRunningOnHighRamDevice();
 
 // Returns true if the device has only one core.
 bool IsSingleCoreDevice();
@@ -73,12 +58,6 @@ std::string GetRandomId();
 // |salt| is NULL, a default value is used. Unless you are using this value for
 // something that should be anonymous, you should probably pass NULL.
 std::string GetDeviceIdentifier(const char* salt);
-
-// Returns a hashed version of |in_string| using |salt| (which must not be
-// zero-length). Different salt values should result in differently hashed
-// strings.
-std::string GetSaltedString(const std::string& in_string,
-                            const std::string& salt);
 
 }  // namespace device_util
 }  // namespace ios

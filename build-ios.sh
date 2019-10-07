@@ -46,33 +46,50 @@ checkError() {
 rm -r "$OUTPUT_DIR"/*
 
 
-cd src/openssl-1.1.1c
+cd third-party/openssl-1.1.1c
 ./build-ios.sh
 checkError
 cd ../..
 
-
-cd src/modp_b64
+cd third-party/dynamic_annotations
 ./build-ios.sh
 checkError
 cd ../..
 
-
-cd src/libevent
+cd third-party/dmg_fp
 ./build-ios.sh
 checkError
 cd ../..
 
-cd src/libxml
+cd third-party/toluapp
 ./build-ios.sh
 checkError
 cd ../..
 
-cd src/curl
+cd third-party/modp_b64
 ./build-ios.sh
 checkError
 cd ../..
 
+cd third-party/lua-5.3.5
+./build-ios.sh
+checkError
+cd ../..
+
+cd third-party/curl
+./build-ios.sh
+checkError
+cd ../..
+
+cd third-party/libxml
+./build-ios.sh
+checkError
+cd ../..
+
+cd third-party/libevent
+./build-ios.sh
+checkError
+cd ../..
 
 cd src/common
 ./build-ios.sh

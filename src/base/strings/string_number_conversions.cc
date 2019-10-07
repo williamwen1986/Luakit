@@ -10,51 +10,92 @@
 #include <wctype.h>
 
 #include <limits>
-#include <type_traits>
 
 #include "base/logging.h"
-#include "base/no_destructor.h"
-#include "base/numerics/safe_math.h"
-#include "base/strings/string_util.h"
+#include "base/scoped_clear_errno.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/third_party/double_conversion/double-conversion/double-conversion.h"
+#include "dmg_fp/dmg_fp.h" // Patch [LARPOUX]
 
 namespace base {
 
 namespace {
 
-template <typename STR, typename INT>
+template <typename STR, typename INT, typename UINT, bool NEG>
 struct IntToStringT {
+  // This is to avoid a compiler warning about unary minus on unsigned type.
+  // For example, say you had the following code:
+  //   template <typename INT>
+  //   INT abs(INT value) { return value < 0 ? -value : value; }
+  // Even though if INT is unsigned, it's impossible for value < 0, so the
+  // unary minus will never be taken, the compiler will still generate a
+  // warning.  We do a little specialization dance...
+  template <typename INT2, typename UINT2, bool NEG2>
+  struct ToUnsignedT {};
+
+  template <typename INT2, typename UINT2>
+  struct ToUnsignedT<INT2, UINT2, false> {
+    static UINT2 ToUnsigned(INT2 value) {
+      return static_cast<UINT2>(value);
+    }
+  };
+
+  template <typename INT2, typename UINT2>
+  struct ToUnsignedT<INT2, UINT2, true> {
+    static UINT2 ToUnsigned(INT2 value) {
+      return static_cast<UINT2>(value < 0 ? -value : value);
+    }
+  };
+
+  // This set of templates is very similar to the above templates, but
+  // for testing whether an integer is negative.
+  template <typename INT2, bool NEG2>
+  struct TestNegT {};
+  template <typename INT2>
+  struct TestNegT<INT2, false> {
+    static bool TestNeg(INT2 value) {
+      // value is unsigned, and can never be negative.
+      return false;
+    }
+  };
+  template <typename INT2>
+  struct TestNegT<INT2, true> {
+    static bool TestNeg(INT2 value) {
+      return value < 0;
+    }
+  };
+
   static STR IntToString(INT value) {
     // log10(2) ~= 0.3 bytes needed per bit or per byte log10(2**8) ~= 2.4.
     // So round up to allocate 3 output characters per byte, plus 1 for '-'.
-    const size_t kOutputBufSize =
-        3 * sizeof(INT) + std::numeric_limits<INT>::is_signed;
+    const int kOutputBufSize = 3 * sizeof(INT) + 1;
 
-    // Create the string in a temporary buffer, write it back to front, and
+    // Allocate the whole string right away, we will right back to front, and
     // then return the substr of what we ended up using.
-    using CHR = typename STR::value_type;
-    CHR outbuf[kOutputBufSize];
+    STR outbuf(kOutputBufSize, 0);
 
-    // The ValueOrDie call below can never fail, because UnsignedAbs is valid
-    // for all valid inputs.
-    typename std::make_unsigned<INT>::type res =
-        CheckedNumeric<INT>(value).UnsignedAbs().ValueOrDie();
+    bool is_neg = TestNegT<INT, NEG>::TestNeg(value);
+    // Even though is_neg will never be true when INT is parameterized as
+    // unsigned, even the presence of the unary operation causes a warning.
+    UINT res = ToUnsignedT<INT, UINT, NEG>::ToUnsigned(value);
 
-    CHR* end = outbuf + kOutputBufSize;
-    CHR* i = end;
-    do {
-      --i;
-      DCHECK(i != outbuf);
-      *i = static_cast<CHR>((res % 10) + '0');
+    for (typename STR::iterator it = outbuf.end();;) {
+      --it;
+      DCHECK(it != outbuf.begin());
+      *it = static_cast<typename STR::value_type>((res % 10) + '0');
       res /= 10;
-    } while (res != 0);
-    if (IsValueNegative(value)) {
-      --i;
-      DCHECK(i != outbuf);
-      *i = static_cast<CHR>('-');
+
+      // We're done..
+      if (res == 0) {
+        if (is_neg) {
+          --it;
+          DCHECK(it != outbuf.begin());
+          *it = static_cast<typename STR::value_type>('-');
+        }
+        return STR(it, outbuf.end());
+      }
     }
-    return STR(i, end);
+    NOTREACHED();
+    return STR();
   }
 };
 
@@ -65,9 +106,9 @@ template<typename CHAR, int BASE, bool BASE_LTE_10> class BaseCharToDigit {
 // Faster specialization for bases <= 10
 template<typename CHAR, int BASE> class BaseCharToDigit<CHAR, BASE, true> {
  public:
-  static bool Convert(CHAR c, uint8_t* digit) {
+  static bool Convert(CHAR c, uint8* digit) {
     if (c >= '0' && c < '0' + BASE) {
-      *digit = static_cast<uint8_t>(c - '0');
+      *digit = c - '0';
       return true;
     }
     return false;
@@ -77,7 +118,7 @@ template<typename CHAR, int BASE> class BaseCharToDigit<CHAR, BASE, true> {
 // Specialization for bases where 10 < base <= 36
 template<typename CHAR, int BASE> class BaseCharToDigit<CHAR, BASE, false> {
  public:
-  static bool Convert(CHAR c, uint8_t* digit) {
+  static bool Convert(CHAR c, uint8* digit) {
     if (c >= '0' && c <= '9') {
       *digit = c - '0';
     } else if (c >= 'a' && c < 'a' + BASE - 10) {
@@ -91,15 +132,14 @@ template<typename CHAR, int BASE> class BaseCharToDigit<CHAR, BASE, false> {
   }
 };
 
-template <int BASE, typename CHAR>
-bool CharToDigit(CHAR c, uint8_t* digit) {
+template<int BASE, typename CHAR> bool CharToDigit(CHAR c, uint8* digit) {
   return BaseCharToDigit<CHAR, BASE, BASE <= 10>::Convert(c, digit);
 }
 
-// There is an IsUnicodeWhitespace for wchars defined in string_util.h, but it
-// is locale independent, whereas the functions we are replacing were
-// locale-dependent. TBD what is desired, but for the moment let's not
-// introduce a change in behaviour.
+// There is an IsWhitespace for wchars defined in string_util.h, but it is
+// locale independent, whereas the functions we are replacing were
+// locale-dependent. TBD what is desired, but for the moment let's not introduce
+// a change in behaviour.
 template<typename CHAR> class WhitespaceHelper {
 };
 
@@ -148,7 +188,6 @@ class IteratorRangeToNumber {
 
     if (begin != end && *begin == '-') {
       if (!std::numeric_limits<value_type>::is_signed) {
-        *output = 0;
         valid = false;
       } else if (!Negative::Invoke(begin + 1, end, output)) {
         valid = false;
@@ -190,7 +229,7 @@ class IteratorRangeToNumber {
       }
 
       for (const_iterator current = begin; current != end; ++current) {
-        uint8_t new_digit = 0;
+        uint8 new_digit = 0;
 
         if (!CharToDigit<traits::kBase>(*current, &new_digit)) {
           return false;
@@ -211,7 +250,7 @@ class IteratorRangeToNumber {
 
   class Positive : public Base<Positive> {
    public:
-    static bool CheckBounds(value_type* output, uint8_t new_digit) {
+    static bool CheckBounds(value_type* output, uint8 new_digit) {
       if (*output > static_cast<value_type>(traits::max() / traits::kBase) ||
           (*output == static_cast<value_type>(traits::max() / traits::kBase) &&
            new_digit > traits::max() % traits::kBase)) {
@@ -220,14 +259,14 @@ class IteratorRangeToNumber {
       }
       return true;
     }
-    static void Increment(uint8_t increment, value_type* output) {
+    static void Increment(uint8 increment, value_type* output) {
       *output += increment;
     }
   };
 
   class Negative : public Base<Negative> {
    public:
-    static bool CheckBounds(value_type* output, uint8_t new_digit) {
+    static bool CheckBounds(value_type* output, uint8 new_digit) {
       if (*output < traits::min() / traits::kBase ||
           (*output == traits::min() / traits::kBase &&
            new_digit > 0 - traits::min() % traits::kBase)) {
@@ -236,7 +275,7 @@ class IteratorRangeToNumber {
       }
       return true;
     }
-    static void Increment(uint8_t increment, value_type* output) {
+    static void Increment(uint8 increment, value_type* output) {
       *output -= increment;
     }
   };
@@ -261,17 +300,20 @@ class BaseHexIteratorRangeToIntTraits
     : public BaseIteratorRangeToNumberTraits<ITERATOR, int, 16> {
 };
 
-template <typename ITERATOR>
+template<typename ITERATOR>
 class BaseHexIteratorRangeToUIntTraits
-    : public BaseIteratorRangeToNumberTraits<ITERATOR, uint32_t, 16> {};
+    : public BaseIteratorRangeToNumberTraits<ITERATOR, uint32, 16> {
+};
 
-template <typename ITERATOR>
+template<typename ITERATOR>
 class BaseHexIteratorRangeToInt64Traits
-    : public BaseIteratorRangeToNumberTraits<ITERATOR, int64_t, 16> {};
+    : public BaseIteratorRangeToNumberTraits<ITERATOR, int64, 16> {
+};
 
-template <typename ITERATOR>
+template<typename ITERATOR>
 class BaseHexIteratorRangeToUInt64Traits
-    : public BaseIteratorRangeToNumberTraits<ITERATOR, uint64_t, 16> {};
+    : public BaseIteratorRangeToNumberTraits<ITERATOR, uint64, 16> {
+};
 
 typedef BaseHexIteratorRangeToIntTraits<StringPiece::const_iterator>
     HexIteratorRangeToIntTraits;
@@ -285,6 +327,23 @@ typedef BaseHexIteratorRangeToInt64Traits<StringPiece::const_iterator>
 typedef BaseHexIteratorRangeToUInt64Traits<StringPiece::const_iterator>
     HexIteratorRangeToUInt64Traits;
 
+template<typename STR>
+bool HexStringToBytesT(const STR& input, std::vector<uint8>* output) {
+  DCHECK_EQ(output->size(), 0u);
+  size_t count = input.size();
+  if (count == 0 || (count % 2) != 0)
+    return false;
+  for (uintptr_t i = 0; i < count / 2; ++i) {
+    uint8 msb = 0;  // most significant 4 bits
+    uint8 lsb = 0;  // least significant 4 bits
+    if (!CharToDigit<16>(input[i * 2], &msb) ||
+        !CharToDigit<16>(input[i * 2 + 1], &lsb))
+      return false;
+    output->push_back((msb << 4) | lsb);
+  }
+  return true;
+}
+
 template <typename VALUE, int BASE>
 class StringPieceToNumberTraits
     : public BaseIteratorRangeToNumberTraits<StringPiece::const_iterator,
@@ -293,7 +352,7 @@ class StringPieceToNumberTraits
 };
 
 template <typename VALUE>
-bool StringToIntImpl(StringPiece input, VALUE* output) {
+bool StringToIntImpl(const StringPiece& input, VALUE* output) {
   return IteratorRangeToNumber<StringPieceToNumberTraits<VALUE, 10> >::Invoke(
       input.begin(), input.end(), output);
 }
@@ -306,157 +365,128 @@ class StringPiece16ToNumberTraits
 };
 
 template <typename VALUE>
-bool String16ToIntImpl(StringPiece16 input, VALUE* output) {
+bool String16ToIntImpl(const StringPiece16& input, VALUE* output) {
   return IteratorRangeToNumber<StringPiece16ToNumberTraits<VALUE, 10> >::Invoke(
       input.begin(), input.end(), output);
 }
 
 }  // namespace
 
-std::string NumberToString(int value) {
-  return IntToStringT<std::string, int>::IntToString(value);
+std::string IntToString(int value) {
+  return IntToStringT<std::string, int, unsigned int, true>::
+      IntToString(value);
 }
 
-string16 NumberToString16(int value) {
-  return IntToStringT<string16, int>::IntToString(value);
+string16 IntToString16(int value) {
+  return IntToStringT<string16, int, unsigned int, true>::
+      IntToString(value);
 }
 
-std::string NumberToString(unsigned value) {
-  return IntToStringT<std::string, unsigned>::IntToString(value);
+std::string UintToString(unsigned int value) {
+  return IntToStringT<std::string, unsigned int, unsigned int, false>::
+      IntToString(value);
 }
 
-string16 NumberToString16(unsigned value) {
-  return IntToStringT<string16, unsigned>::IntToString(value);
+string16 UintToString16(unsigned int value) {
+  return IntToStringT<string16, unsigned int, unsigned int, false>::
+      IntToString(value);
 }
 
-std::string NumberToString(long value) {
-  return IntToStringT<std::string, long>::IntToString(value);
+std::string Int64ToString(int64 value) {
+  return IntToStringT<std::string, int64, uint64, true>::
+      IntToString(value);
 }
 
-string16 NumberToString16(long value) {
-  return IntToStringT<string16, long>::IntToString(value);
+string16 Int64ToString16(int64 value) {
+  return IntToStringT<string16, int64, uint64, true>::IntToString(value);
 }
 
-std::string NumberToString(unsigned long value) {
-  return IntToStringT<std::string, unsigned long>::IntToString(value);
+std::string Uint64ToString(uint64 value) {
+  return IntToStringT<std::string, uint64, uint64, false>::
+      IntToString(value);
 }
 
-string16 NumberToString16(unsigned long value) {
-  return IntToStringT<string16, unsigned long>::IntToString(value);
+string16 Uint64ToString16(uint64 value) {
+  return IntToStringT<string16, uint64, uint64, false>::
+      IntToString(value);
 }
 
-std::string NumberToString(long long value) {
-  return IntToStringT<std::string, long long>::IntToString(value);
-}
-
-string16 NumberToString16(long long value) {
-  return IntToStringT<string16, long long>::IntToString(value);
-}
-
-std::string NumberToString(unsigned long long value) {
-  return IntToStringT<std::string, unsigned long long>::IntToString(value);
-}
-
-string16 NumberToString16(unsigned long long value) {
-  return IntToStringT<string16, unsigned long long>::IntToString(value);
-}
-
-static const double_conversion::DoubleToStringConverter*
-GetDoubleToStringConverter() {
-  static NoDestructor<double_conversion::DoubleToStringConverter> converter(
-      double_conversion::DoubleToStringConverter::EMIT_POSITIVE_EXPONENT_SIGN,
-      nullptr, nullptr, 'e', -6, 12, 0, 0);
-  return converter.get();
-}
-
-std::string NumberToString(double value) {
+std::string DoubleToString(double value) {
+  // According to g_fmt.cc, it is sufficient to declare a buffer of size 32.
   char buffer[32];
-  double_conversion::StringBuilder builder(buffer, sizeof(buffer));
-  GetDoubleToStringConverter()->ToShortest(value, &builder);
-  return std::string(buffer, builder.position());
+  dmg_fp::g_fmt(buffer, value);
+  return std::string(buffer);
 }
 
-base::string16 NumberToString16(double value) {
-  char buffer[32];
-  double_conversion::StringBuilder builder(buffer, sizeof(buffer));
-  GetDoubleToStringConverter()->ToShortest(value, &builder);
-
-  // The number will be ASCII. This creates the string using the "input
-  // iterator" variant which promotes from 8-bit to 16-bit via "=".
-  return base::string16(&buffer[0], &buffer[builder.position()]);
-}
-
-bool StringToInt(StringPiece input, int* output) {
+bool StringToInt(const StringPiece& input, int* output) {
   return StringToIntImpl(input, output);
 }
 
-bool StringToInt(StringPiece16 input, int* output) {
+bool StringToInt(const StringPiece16& input, int* output) {
   return String16ToIntImpl(input, output);
 }
 
-bool StringToUint(StringPiece input, unsigned* output) {
+bool StringToUint(const StringPiece& input, unsigned* output) {
   return StringToIntImpl(input, output);
 }
 
-bool StringToUint(StringPiece16 input, unsigned* output) {
+bool StringToUint(const StringPiece16& input, unsigned* output) {
   return String16ToIntImpl(input, output);
 }
 
-bool StringToInt64(StringPiece input, int64_t* output) {
+bool StringToInt64(const StringPiece& input, int64* output) {
   return StringToIntImpl(input, output);
 }
 
-bool StringToInt64(StringPiece16 input, int64_t* output) {
+bool StringToInt64(const StringPiece16& input, int64* output) {
   return String16ToIntImpl(input, output);
 }
 
-bool StringToUint64(StringPiece input, uint64_t* output) {
+bool StringToUint64(const StringPiece& input, uint64* output) {
   return StringToIntImpl(input, output);
 }
 
-bool StringToUint64(StringPiece16 input, uint64_t* output) {
+bool StringToUint64(const StringPiece16& input, uint64* output) {
   return String16ToIntImpl(input, output);
 }
 
-bool StringToSizeT(StringPiece input, size_t* output) {
+bool StringToSizeT(const StringPiece& input, size_t* output) {
   return StringToIntImpl(input, output);
 }
 
-bool StringToSizeT(StringPiece16 input, size_t* output) {
+bool StringToSizeT(const StringPiece16& input, size_t* output) {
   return String16ToIntImpl(input, output);
 }
 
-template <typename STRING, typename CHAR>
-bool StringToDoubleImpl(STRING input, const CHAR* data, double* output) {
-  static NoDestructor<double_conversion::StringToDoubleConverter> converter(
-      double_conversion::StringToDoubleConverter::ALLOW_LEADING_SPACES |
-          double_conversion::StringToDoubleConverter::ALLOW_TRAILING_JUNK,
-      0.0, 0, nullptr, nullptr);
+bool StringToDouble(const std::string& input, double* output) {
+  // Thread-safe?  It is on at least Mac, Linux, and Windows.
+  ScopedClearErrno clear_errno;
 
-  int processed_characters_count;
-  *output = converter->StringToDouble(data, input.size(),
-                                      &processed_characters_count);
+  char* endptr = NULL;
+  *output = dmg_fp::strtod(input.c_str(), &endptr);
 
   // Cases to return false:
+  //  - If errno is ERANGE, there was an overflow or underflow.
   //  - If the input string is empty, there was nothing to parse.
-  //  - If the value saturated to HUGE_VAL.
-  //  - If the entire string was not processed, there are either characters
-  //    remaining in the string after a parsed number, or the string does not
-  //    begin with a parseable number.
+  //  - If endptr does not point to the end of the string, there are either
+  //    characters remaining in the string after a parsed number, or the string
+  //    does not begin with a parseable number.  endptr is compared to the
+  //    expected end given the string's stated length to correctly catch cases
+  //    where the string contains embedded NUL characters.
   //  - If the first character is a space, there was leading whitespace
-  return !input.empty() && *output != HUGE_VAL && *output != -HUGE_VAL &&
-         static_cast<size_t>(processed_characters_count) == input.size() &&
-         !IsUnicodeWhitespace(input[0]);
+  return errno == 0 &&
+         !input.empty() &&
+         input.c_str() + input.length() == endptr &&
+         !isspace(input[0]);
 }
 
-bool StringToDouble(StringPiece input, double* output) {
-  return StringToDoubleImpl(input, input.data(), output);
-}
+// Note: if you need to add String16ToDouble, first ask yourself if it's
+// really necessary. If it is, probably the best implementation here is to
+// convert to 8-bit and then use the 8-bit version.
 
-bool StringToDouble(StringPiece16 input, double* output) {
-  return StringToDoubleImpl(
-      input, reinterpret_cast<const uint16_t*>(input.data()), output);
-}
+// Note: if you need to add an iterator range version of StringToDouble, first
+// ask yourself if it's really necessary. If it is, probably the best
+// implementation here is to instantiate a string and use the string version.
 
 std::string HexEncode(const void* bytes, size_t size) {
   static const char kHexChars[] = "0123456789ABCDEF";
@@ -472,45 +502,28 @@ std::string HexEncode(const void* bytes, size_t size) {
   return ret;
 }
 
-std::string HexEncode(base::span<const uint8_t> bytes) {
-  return HexEncode(bytes.data(), bytes.size());
-}
-
-bool HexStringToInt(StringPiece input, int* output) {
+bool HexStringToInt(const StringPiece& input, int* output) {
   return IteratorRangeToNumber<HexIteratorRangeToIntTraits>::Invoke(
     input.begin(), input.end(), output);
 }
 
-bool HexStringToUInt(StringPiece input, uint32_t* output) {
+bool HexStringToUInt(const StringPiece& input, uint32* output) {
   return IteratorRangeToNumber<HexIteratorRangeToUIntTraits>::Invoke(
       input.begin(), input.end(), output);
 }
 
-bool HexStringToInt64(StringPiece input, int64_t* output) {
+bool HexStringToInt64(const StringPiece& input, int64* output) {
   return IteratorRangeToNumber<HexIteratorRangeToInt64Traits>::Invoke(
     input.begin(), input.end(), output);
 }
 
-bool HexStringToUInt64(StringPiece input, uint64_t* output) {
+bool HexStringToUInt64(const StringPiece& input, uint64* output) {
   return IteratorRangeToNumber<HexIteratorRangeToUInt64Traits>::Invoke(
       input.begin(), input.end(), output);
 }
 
-bool HexStringToBytes(StringPiece input, std::vector<uint8_t>* output) {
-  DCHECK_EQ(output->size(), 0u);
-  size_t count = input.size();
-  if (count == 0 || (count % 2) != 0)
-    return false;
-  for (uintptr_t i = 0; i < count / 2; ++i) {
-    uint8_t msb = 0;  // most significant 4 bits
-    uint8_t lsb = 0;  // least significant 4 bits
-    if (!CharToDigit<16>(input[i * 2], &msb) ||
-        !CharToDigit<16>(input[i * 2 + 1], &lsb)) {
-      return false;
-    }
-    output->push_back((msb << 4) | lsb);
-  }
-  return true;
+bool HexStringToBytes(const std::string& input, std::vector<uint8>* output) {
+  return HexStringToBytesT(input, output);
 }
 
 }  // namespace base

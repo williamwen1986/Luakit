@@ -3,14 +3,12 @@
 // found in the LICENSE file.
 
 #include "base/process/process_iterator.h"
-#include "build/build_config.h"
 
 namespace base {
 
-#if defined(OS_POSIX) || defined(OS_FUCHSIA)
+#if defined(OS_POSIX)
 ProcessEntry::ProcessEntry() : pid_(0), ppid_(0), gid_(0) {}
-ProcessEntry::ProcessEntry(const ProcessEntry& other) = default;
-ProcessEntry::~ProcessEntry() = default;
+ProcessEntry::~ProcessEntry() {}
 #endif
 
 const ProcessEntry* ProcessIterator::NextProcessEntry() {
@@ -20,7 +18,7 @@ const ProcessEntry* ProcessIterator::NextProcessEntry() {
   } while (result && !IncludeEntry());
   if (result)
     return &entry_;
-  return nullptr;
+  return NULL;
 }
 
 ProcessIterator::ProcessEntries ProcessIterator::Snapshot() {
@@ -52,7 +50,8 @@ NamedProcessIterator::NamedProcessIterator(
 #endif
 }
 
-NamedProcessIterator::~NamedProcessIterator() = default;
+NamedProcessIterator::~NamedProcessIterator() {
+}
 
 int GetProcessCount(const FilePath::StringType& executable_name,
                     const ProcessFilter* filter) {

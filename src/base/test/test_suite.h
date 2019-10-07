@@ -9,15 +9,10 @@
 // instantiate this class in your main function and call its Run method to run
 // any gtest based tests that are linked into your executable.
 
-#include <memory>
 #include <string>
 
 #include "base/at_exit.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/test/scoped_feature_list.h"
-#include "base/test/trace_to_file.h"
-#include "build/build_config.h"
+#include "base/memory/scoped_ptr.h"
 
 namespace testing {
 class TestInfo;
@@ -25,10 +20,8 @@ class TestInfo;
 
 namespace base {
 
-class XmlUnitTestResultPrinter;
-
 // Instantiates TestSuite, runs it and returns exit code.
-int RunUnitTestsUsingBaseTestSuite(int argc, char** argv);
+int RunUnitTestsUsingBaseTestSuite(int argc, char **argv);
 
 class TestSuite {
  public:
@@ -36,27 +29,31 @@ class TestSuite {
   typedef bool (*TestMatch)(const testing::TestInfo&);
 
   TestSuite(int argc, char** argv);
-#if defined(OS_WIN)
-  TestSuite(int argc, wchar_t** argv);
-#endif  // defined(OS_WIN)
   virtual ~TestSuite();
+
+  // Returns true if the test is marked as "MAYBE_".
+  // When using different prefixes depending on platform, we use MAYBE_ and
+  // preprocessor directives to replace MAYBE_ with the target prefix.
+  static bool IsMarkedMaybe(const testing::TestInfo& test);
+
+  void CatchMaybeTests();
+
+  void ResetCommandLine();
+
+  void AddTestLauncherResultPrinter();
 
   int Run();
 
-  // Disables checks for process priority. Most tests should not use this.
-  void DisableCheckForProcessPriority();
-
-  // Disables checks for certain global objects being leaked across tests.
-  void DisableCheckForLeakedGlobals();
-
  protected:
+  // This constructor is only accessible to specialized test suite
+  // implementations which need to control the creation of an AtExitManager
+  // instance for the duration of the test.
+  TestSuite(int argc, char** argv, bool create_at_exit_manager);
+
   // By default fatal log messages (e.g. from DCHECKs) result in error dialogs
   // which gum up buildbots. Use a minimalistic assert handler which just
   // terminates the process.
-  void UnitTestAssertHandler(const char* file,
-                             int line,
-                             const base::StringPiece summary,
-                             const base::StringPiece stack_trace);
+  static void UnitTestAssertHandler(const std::string& str);
 
   // Disable crash dialogs so that it doesn't gum up the buildbot
   virtual void SuppressErrorDialogs();
@@ -69,37 +66,21 @@ class TestSuite {
 
   // Make sure that we setup an AtExitManager so Singleton objects will be
   // destroyed.
-  std::unique_ptr<base::AtExitManager> at_exit_manager_;
+  scoped_ptr<base::AtExitManager> at_exit_manager_;
 
  private:
-  void AddTestLauncherResultPrinter();
-
-  void InitializeFromCommandLine(int argc, char** argv);
-#if defined(OS_WIN)
-  void InitializeFromCommandLine(int argc, wchar_t** argv);
-#endif  // defined(OS_WIN)
-
   // Basic initialization for the test suite happens here.
-  void PreInitialize();
+  void PreInitialize(int argc, char** argv, bool create_at_exit_manager);
 
-  test::TraceToFile trace_to_file_;
-
-  bool initialized_command_line_ = false;
-
-  test::ScopedFeatureList scoped_feature_list_;
-
-  XmlUnitTestResultPrinter* printer_ = nullptr;
-
-  std::unique_ptr<logging::ScopedLogAssertHandler> assert_handler_;
-
-  bool check_for_leaked_globals_ = true;
-  bool check_for_process_priority_ = true;
-
-  bool is_initialized_ = false;
+  bool initialized_command_line_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSuite);
 };
 
 }  // namespace base
+
+// TODO(brettw) remove this. This is a temporary hack to allow WebKit to compile
+// until we can update it to use "base::" (preventing a two-sided patch).
+using base::TestSuite;
 
 #endif  // BASE_TEST_TEST_SUITE_H_

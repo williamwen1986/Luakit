@@ -7,28 +7,22 @@
 #ifndef BASE_PROCESS_PROCESS_ITERATOR_H_
 #define BASE_PROCESS_PROCESS_ITERATOR_H_
 
-#include <stddef.h>
-
 #include <list>
 #include <string>
 #include <vector>
 
 #include "base/base_export.h"
+#include "base/basictypes.h"
 #include "base/files/file_path.h"
-#include "base/macros.h"
 #include "base/process/process.h"
-#include "base/strings/string16.h"
-#include "base/strings/string_util.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
 #include <tlhelp32.h>
-#elif defined(OS_MACOSX) || defined(OS_OPENBSD)
+#elif defined(OS_MACOSX) || defined(OS_BSD)
 #include <sys/sysctl.h>
-#elif defined(OS_FREEBSD)
-#include <sys/user.h>
-#elif defined(OS_POSIX) || defined(OS_FUCHSIA)
+#elif defined(OS_POSIX)
 #include <dirent.h>
 #endif
 
@@ -38,12 +32,31 @@ namespace base {
 struct ProcessEntry : public PROCESSENTRY32 {
   ProcessId pid() const { return th32ProcessID; }
   ProcessId parent_pid() const { return th32ParentProcessID; }
-  const char16* exe_file() const { return as_u16cstr(szExeFile); }
+  const wchar_t* exe_file() const { return szExeFile; }
 };
-#elif defined(OS_POSIX) || defined(OS_FUCHSIA)
+
+// Process access masks. These constants provide platform-independent
+// definitions for the standard Windows access masks.
+// See http://msdn.microsoft.com/en-us/library/ms684880(VS.85).aspx for
+// the specific semantics of each mask value.
+const uint32 kProcessAccessTerminate              = PROCESS_TERMINATE;
+const uint32 kProcessAccessCreateThread           = PROCESS_CREATE_THREAD;
+const uint32 kProcessAccessSetSessionId           = PROCESS_SET_SESSIONID;
+const uint32 kProcessAccessVMOperation            = PROCESS_VM_OPERATION;
+const uint32 kProcessAccessVMRead                 = PROCESS_VM_READ;
+const uint32 kProcessAccessVMWrite                = PROCESS_VM_WRITE;
+const uint32 kProcessAccessDuplicateHandle        = PROCESS_DUP_HANDLE;
+const uint32 kProcessAccessCreateProcess          = PROCESS_CREATE_PROCESS;
+const uint32 kProcessAccessSetQuota               = PROCESS_SET_QUOTA;
+const uint32 kProcessAccessSetInformation         = PROCESS_SET_INFORMATION;
+const uint32 kProcessAccessQueryInformation       = PROCESS_QUERY_INFORMATION;
+const uint32 kProcessAccessSuspendResume          = PROCESS_SUSPEND_RESUME;
+const uint32 kProcessAccessQueryLimitedInfomation =
+    PROCESS_QUERY_LIMITED_INFORMATION;
+const uint32 kProcessAccessWaitForTermination     = SYNCHRONIZE;
+#elif defined(OS_POSIX)
 struct BASE_EXPORT ProcessEntry {
   ProcessEntry();
-  ProcessEntry(const ProcessEntry& other);
   ~ProcessEntry();
 
   ProcessId pid() const { return pid_; }
@@ -60,7 +73,24 @@ struct BASE_EXPORT ProcessEntry {
   std::string exe_file_;
   std::vector<std::string> cmd_line_args_;
 };
-#endif  // defined(OS_WIN)
+
+// Process access masks. They are not used on Posix because access checking
+// does not happen during handle creation.
+const uint32 kProcessAccessTerminate              = 0;
+const uint32 kProcessAccessCreateThread           = 0;
+const uint32 kProcessAccessSetSessionId           = 0;
+const uint32 kProcessAccessVMOperation            = 0;
+const uint32 kProcessAccessVMRead                 = 0;
+const uint32 kProcessAccessVMWrite                = 0;
+const uint32 kProcessAccessDuplicateHandle        = 0;
+const uint32 kProcessAccessCreateProcess          = 0;
+const uint32 kProcessAccessSetQuota               = 0;
+const uint32 kProcessAccessSetInformation         = 0;
+const uint32 kProcessAccessQueryInformation       = 0;
+const uint32 kProcessAccessSuspendResume          = 0;
+const uint32 kProcessAccessQueryLimitedInfomation = 0;
+const uint32 kProcessAccessWaitForTermination     = 0;
+#endif  // defined(OS_POSIX)
 
 // Used to filter processes by process ID.
 class ProcessFilter {
@@ -70,7 +100,7 @@ class ProcessFilter {
   virtual bool Includes(const ProcessEntry& entry) const = 0;
 
  protected:
-  virtual ~ProcessFilter() = default;
+  virtual ~ProcessFilter() {}
 };
 
 // This class provides a way to iterate through a list of processes on the
@@ -114,7 +144,7 @@ class BASE_EXPORT ProcessIterator {
 #elif defined(OS_MACOSX) || defined(OS_BSD)
   std::vector<kinfo_proc> kinfo_procs_;
   size_t index_of_kinfo_proc_;
-#elif defined(OS_POSIX) || defined(OS_FUCHSIA)
+#elif defined(OS_POSIX)
   DIR* procfs_dir_;
 #endif
   ProcessEntry entry_;
@@ -131,10 +161,10 @@ class BASE_EXPORT NamedProcessIterator : public ProcessIterator {
  public:
   NamedProcessIterator(const FilePath::StringType& executable_name,
                        const ProcessFilter* filter);
-  ~NamedProcessIterator() override;
+  virtual ~NamedProcessIterator();
 
  protected:
-  bool IncludeEntry() override;
+  virtual bool IncludeEntry() OVERRIDE;
 
  private:
   FilePath::StringType executable_name_;

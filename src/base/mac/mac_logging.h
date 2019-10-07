@@ -5,10 +5,8 @@
 #ifndef BASE_MAC_MAC_LOGGING_H_
 #define BASE_MAC_MAC_LOGGING_H_
 
-#include "base/base_export.h"
 #include "base/logging.h"
-#include "base/macros.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #if defined(OS_IOS)
 #include <MacTypes.h>
@@ -29,9 +27,6 @@
 
 namespace logging {
 
-// Returns a UTF8 description from an OS X Status error.
-BASE_EXPORT std::string DescriptionFromOSStatus(OSStatus err);
-
 class BASE_EXPORT OSStatusLogMessage : public logging::LogMessage {
  public:
   OSStatusLogMessage(const char* file_path,
@@ -47,12 +42,6 @@ class BASE_EXPORT OSStatusLogMessage : public logging::LogMessage {
 };
 
 }  // namespace logging
-
-#if defined(NDEBUG)
-#define MAC_DVLOG_IS_ON(verbose_level) 0
-#else
-#define MAC_DVLOG_IS_ON(verbose_level) VLOG_IS_ON(verbose_level)
-#endif
 
 #define OSSTATUS_LOG_STREAM(severity, status) \
     COMPACT_GOOGLE_LOG_EX_ ## severity(OSStatusLogMessage, status).stream()
@@ -84,15 +73,15 @@ class BASE_EXPORT OSStatusLogMessage : public logging::LogMessage {
                 DLOG_IS_ON(severity) && (condition))
 
 #define OSSTATUS_DVLOG(verbose_level, status) \
-    LAZY_STREAM(OSSTATUS_VLOG_STREAM(verbose_level, status), \
-                MAC_DVLOG_IS_ON(verbose_level))
+    LAZY_STREAM(OSSTATUS_VPLOG_STREAM(verbose_level, status), \
+                DVLOG_IS_ON(verbose_level))
 #define OSSTATUS_DVLOG_IF(verbose_level, condition, status) \
-    LAZY_STREAM(OSSTATUS_VLOG_STREAM(verbose_level, status), \
-                MAC_DVLOG_IS_ON(verbose_level) && (condition))
+    LAZY_STREAM(OSSTATUS_VPLOG_STREAM(verbose_level, status) \
+                DVLOG_IS_ON(verbose_level) && (condition))
 
-#define OSSTATUS_DCHECK(condition, status)        \
-  LAZY_STREAM(OSSTATUS_LOG_STREAM(FATAL, status), \
-              DCHECK_IS_ON() && !(condition))     \
-      << "Check failed: " #condition << ". "
+#define OSSTATUS_DCHECK(condition, status) \
+    LAZY_STREAM(OSSTATUS_LOG_STREAM(FATAL, status), \
+                DCHECK_IS_ON() && !(condition)) \
+    << "Check failed: " # condition << ". "
 
 #endif  // BASE_MAC_MAC_LOGGING_H_

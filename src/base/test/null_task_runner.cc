@@ -6,24 +6,26 @@
 
 namespace base {
 
-NullTaskRunner::NullTaskRunner() = default;
+NullTaskRunner::NullTaskRunner() {}
 
-NullTaskRunner::~NullTaskRunner() = default;
+NullTaskRunner::~NullTaskRunner() {}
 
-bool NullTaskRunner::PostDelayedTask(const Location& from_here,
-                                     OnceClosure task,
-                                     base::TimeDelta delay) {
+bool NullTaskRunner::PostDelayedTask(
+    const tracked_objects::Location& from_here,
+    const base::Closure& task,
+    base::TimeDelta delay) {
   return false;
 }
 
-bool NullTaskRunner::PostNonNestableDelayedTask(const Location& from_here,
-                                                OnceClosure task,
-                                                base::TimeDelta delay) {
+bool NullTaskRunner::PostNonNestableDelayedTask(
+    const tracked_objects::Location& from_here,
+    const base::Closure& task,
+    base::TimeDelta delay) {
   return false;
 }
 
-bool NullTaskRunner::RunsTasksInCurrentSequence() const {
+bool NullTaskRunner::RunsTasksOnCurrentThread() const {
   return true;
 }
 
-}  // namespace base
+}  // namespace

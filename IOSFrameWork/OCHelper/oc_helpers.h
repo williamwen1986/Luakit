@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#define LUA_COMPAT_5_1 // Patch [LARPOUX]
 #ifdef __cplusplus
 extern "C" {
 #endif

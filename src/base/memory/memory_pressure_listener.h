@@ -3,16 +3,19 @@
 // found in the LICENSE file.
 
 // MemoryPressure provides static APIs for handling memory pressure on
-// platforms that have such signals, such as Android and ChromeOS.
+// platforms that have such signals, such as Android.
 // The app will try to discard buffers that aren't deemed essential (individual
 // modules will implement their own policy).
+//
+// Refer to memory_pressure_level_list.h for information about what sorts of
+// signals can be sent under what conditions.
 
-#ifndef BASE_MEMORY_MEMORY_PRESSURE_LISTENER_H_
-#define BASE_MEMORY_MEMORY_PRESSURE_LISTENER_H_
+#ifndef BASE_MEMORY_PRESSURE_LISTENER_H_
+#define BASE_MEMORY_PRESSURE_LISTENER_H_
 
 #include "base/base_export.h"
+#include "base/basictypes.h"
 #include "base/callback.h"
-#include "base/macros.h"
 
 namespace base {
 
@@ -23,10 +26,11 @@ namespace base {
 // the listener.
 // Note that even on the same thread, the callback is not guaranteed to be
 // called synchronously within the system memory pressure broadcast.
-// Please see notes in MemoryPressureLevel enum below: some levels are
-// absolutely critical, and if not enough memory is returned to the system,
-// it'll potentially kill the app, and then later the app will have to be
+// Please see notes on memory_pressure_level_list.h: some levels are absolutely
+// critical, and if not enough memory is returned to the system, it'll
+// potentially kill the app, and then later the app will have to be
 // cold-started.
+//
 //
 // Example:
 //
@@ -35,69 +39,39 @@ namespace base {
 //    }
 //
 //    // Start listening.
-//    auto listener = std::make_unique<MemoryPressureListener>(
-//        base::BindRepeating(&OnMemoryPressure));
+//    MemoryPressureListener* my_listener =
+//        new MemoryPressureListener(base::Bind(&OnMemoryPressure));
 //
 //    ...
 //
 //    // Stop listening.
-//    listener.reset();
+//    delete my_listener;
 //
 class BASE_EXPORT MemoryPressureListener {
  public:
-  // A Java counterpart will be generated for this enum.
-  // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.base
   enum MemoryPressureLevel {
-    // No problems, there is enough memory to use. This event is not sent via
-    // callback, but the enum is used in other places to find out the current
-    // state of the system.
-    MEMORY_PRESSURE_LEVEL_NONE,
-
-    // Modules are advised to free buffers that are cheap to re-allocate and not
-    // immediately needed.
-    MEMORY_PRESSURE_LEVEL_MODERATE,
-
-    // At this level, modules are advised to free all possible memory.  The
-    // alternative is to be killed by the system, which means all memory will
-    // have to be re-created, plus the cost of a cold start.
-    MEMORY_PRESSURE_LEVEL_CRITICAL,
+#define DEFINE_MEMORY_PRESSURE_LEVEL(name, value) name = value,
+#include "base/memory/memory_pressure_level_list.h"
+#undef DEFINE_MEMORY_PRESSURE_LEVEL
   };
 
-  using MemoryPressureCallback = RepeatingCallback<void(MemoryPressureLevel)>;
-  using SyncMemoryPressureCallback =
-      RepeatingCallback<void(MemoryPressureLevel)>;
+  typedef base::Callback<void(MemoryPressureLevel)> MemoryPressureCallback;
 
   explicit MemoryPressureListener(
       const MemoryPressureCallback& memory_pressure_callback);
-  MemoryPressureListener(
-      const MemoryPressureCallback& memory_pressure_callback,
-      const SyncMemoryPressureCallback& sync_memory_pressure_callback);
-
   ~MemoryPressureListener();
 
   // Intended for use by the platform specific implementation.
   static void NotifyMemoryPressure(MemoryPressureLevel memory_pressure_level);
 
-  // These methods should not be used anywhere else but in memory measurement
-  // code, where they are intended to maintain stable conditions across
-  // measurements.
-  static bool AreNotificationsSuppressed();
-  static void SetNotificationsSuppressed(bool suppressed);
-  static void SimulatePressureNotification(
-      MemoryPressureLevel memory_pressure_level);
-
-  void Notify(MemoryPressureLevel memory_pressure_level);
-  void SyncNotify(MemoryPressureLevel memory_pressure_level);
-
  private:
-  static void DoNotifyMemoryPressure(MemoryPressureLevel memory_pressure_level);
+  void Notify(MemoryPressureLevel memory_pressure_level);
 
   MemoryPressureCallback callback_;
-  SyncMemoryPressureCallback sync_memory_pressure_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(MemoryPressureListener);
 };
 
 }  // namespace base
 
-#endif  // BASE_MEMORY_MEMORY_PRESSURE_LISTENER_H_
+#endif  // BASE_MEMORY_PRESSURE_LISTENER_H_

@@ -11,8 +11,8 @@
 #include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
 #include "base/message_loop/message_loop.h"
-// #include "base/message_loop/message_loop_proxy.h" // Patch [LARPOUX]
-// #include "base/threading/sequenced_worker_pool.h" // Patch [LARPOUX]
+#include "base/message_loop/message_loop_proxy.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "common/business_client_thread_delegate.h"
 #include "lua-tools/lua_helpers.h"
@@ -151,7 +151,7 @@ void BusinessThreadImpl::ThreadMain(){
 // static
 bool BusinessThreadImpl::PostTaskHelper(
     BusinessThreadID identifier,
-    const base::Location& from_here,
+    const tracked_objects::Location& from_here,
     const base::Closure& task,
     base::TimeDelta delay,
     bool nestable) {

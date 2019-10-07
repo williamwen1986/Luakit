@@ -4,12 +4,10 @@
 
 #include "base/strings/sys_string_conversions.h"
 
-#include <stddef.h>
 #include <wchar.h>
 
 #include "base/strings/string_piece.h"
 #include "base/strings/utf_string_conversions.h"
-#include "build/build_config.h"
 
 namespace base {
 
@@ -18,7 +16,7 @@ std::string SysWideToUTF8(const std::wstring& wide) {
   // than our ICU, but this will do for now.
   return WideToUTF8(wide);
 }
-std::wstring SysUTF8ToWide(StringPiece utf8) {
+std::wstring SysUTF8ToWide(const StringPiece& utf8) {
   // In theory this should be using the system-provided conversion rather
   // than our ICU, but this will do for now.
   std::wstring out;
@@ -26,15 +24,16 @@ std::wstring SysUTF8ToWide(StringPiece utf8) {
   return out;
 }
 
-#if defined(SYSTEM_NATIVE_UTF8) || defined(OS_ANDROID)
+#if defined(OS_CHROMEOS) || defined(OS_ANDROID)
 // TODO(port): Consider reverting the OS_ANDROID when we have wcrtomb()
 // support and a better understanding of what calls these routines.
 
+// ChromeOS always runs in UTF-8 locale.
 std::string SysWideToNativeMB(const std::wstring& wide) {
   return WideToUTF8(wide);
 }
 
-std::wstring SysNativeMBToWide(StringPiece native_mb) {
+std::wstring SysNativeMBToWide(const StringPiece& native_mb) {
   return SysUTF8ToWide(native_mb);
 }
 
@@ -47,7 +46,8 @@ std::string SysWideToNativeMB(const std::wstring& wide) {
   // without writing the output, counting the number of multi-byte characters.
   size_t num_out_chars = 0;
   memset(&ps, 0, sizeof(ps));
-  for (auto src : wide) {
+  for (size_t i = 0; i < wide.size(); ++i) {
+    const wchar_t src = wide[i];
     // Use a temp buffer since calling wcrtomb with an output of NULL does not
     // calculate the output length.
     char buf[16];
@@ -99,7 +99,7 @@ std::string SysWideToNativeMB(const std::wstring& wide) {
   return out;
 }
 
-std::wstring SysNativeMBToWide(StringPiece native_mb) {
+std::wstring SysNativeMBToWide(const StringPiece& native_mb) {
   mbstate_t ps;
 
   // Calculate the number of wide characters.  We walk through the string
@@ -108,7 +108,7 @@ std::wstring SysNativeMBToWide(StringPiece native_mb) {
   memset(&ps, 0, sizeof(ps));
   for (size_t i = 0; i < native_mb.size(); ) {
     const char* src = native_mb.data() + i;
-    size_t res = mbrtowc(nullptr, src, native_mb.size() - i, &ps);
+    size_t res = mbrtowc(NULL, src, native_mb.size() - i, &ps);
     switch (res) {
       // Handle any errors and return an empty string.
       case static_cast<size_t>(-2):
@@ -117,8 +117,7 @@ std::wstring SysNativeMBToWide(StringPiece native_mb) {
         break;
       case 0:
         // We hit an embedded null byte, keep going.
-        i += 1;
-        FALLTHROUGH;
+        i += 1;  // Fall through.
       default:
         i += res;
         ++num_out_chars;
@@ -157,6 +156,6 @@ std::wstring SysNativeMBToWide(StringPiece native_mb) {
   return out;
 }
 
-#endif  // defined(SYSTEM_NATIVE_UTF8) || defined(OS_ANDROID)
+#endif  // OS_CHROMEOS
 
 }  // namespace base

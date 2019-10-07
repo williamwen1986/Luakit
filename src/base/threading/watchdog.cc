@@ -5,8 +5,8 @@
 #include "base/threading/watchdog.h"
 
 #include "base/compiler_specific.h"
+#include "base/lazy_instance.h"
 #include "base/logging.h"
-#include "base/no_destructor.h"
 #include "base/threading/platform_thread.h"
 
 namespace base {
@@ -31,10 +31,7 @@ struct StaticData {
   TimeDelta last_debugged_alarm_delay;
 };
 
-StaticData* GetStaticData() {
-  static base::NoDestructor<StaticData> static_data;
-  return static_data.get();
-}
+LazyInstance<StaticData>::Leaky g_static_data = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -63,14 +60,17 @@ Watchdog::~Watchdog() {
     return;
   if (!IsJoinable())
     Cleanup();
+  condition_variable_.Signal();
   PlatformThread::Join(handle_);
 }
 
 void Watchdog::Cleanup() {
   if (!enabled_)
     return;
-  AutoLock lock(lock_);
-  state_ = SHUTDOWN;
+  {
+    AutoLock lock(lock_);
+    state_ = SHUTDOWN;
+  }
   condition_variable_.Signal();
 }
 
@@ -91,9 +91,11 @@ void Watchdog::ArmSomeTimeDeltaAgo(const TimeDelta& time_delta) {
 
 // Start clock for watchdog.
 void Watchdog::ArmAtStartTime(const TimeTicks start_time) {
-  AutoLock lock(lock_);
-  start_time_ = start_time;
-  state_ = ARMED;
+  {
+    AutoLock lock(lock_);
+    start_time_ = start_time;
+    state_ = ARMED;
+  }
   // Force watchdog to wake up, and go to sleep with the timer ticking with the
   // proper duration.
   condition_variable_.Signal();
@@ -117,7 +119,7 @@ void Watchdog::Alarm() {
 void Watchdog::ThreadDelegate::ThreadMain() {
   SetThreadName();
   TimeDelta remaining_duration;
-  StaticData* static_data = GetStaticData();
+  StaticData* static_data = g_static_data.Pointer();
   while (1) {
     AutoLock lock(watchdog_->lock_);
     while (DISARMED == watchdog_->state_)
@@ -151,7 +153,7 @@ void Watchdog::ThreadDelegate::ThreadMain() {
     watchdog_->state_ = DISARMED;  // Only alarm at most once.
     TimeTicks last_alarm_time = TimeTicks::Now();
     {
-      AutoUnlock unlock(watchdog_->lock_);
+      AutoUnlock lock(watchdog_->lock_);
       watchdog_->Alarm();  // Set a break point here to debug on alarms.
     }
     TimeDelta last_alarm_delay = TimeTicks::Now() - last_alarm_time;
@@ -167,16 +169,15 @@ void Watchdog::ThreadDelegate::ThreadMain() {
 
 void Watchdog::ThreadDelegate::SetThreadName() const {
   std::string name = watchdog_->thread_watched_name_ + " Watchdog";
-  PlatformThread::SetName(name);
+  PlatformThread::SetName(name.c_str());
   DVLOG(1) << "Watchdog active: " << name;
 }
 
 // static
 void Watchdog::ResetStaticData() {
-  StaticData* static_data = GetStaticData();
+  StaticData* static_data = g_static_data.Pointer();
   AutoLock lock(static_data->lock);
-  // See https://crbug.com/734232 for why this cannot be zero-initialized.
-  static_data->last_debugged_alarm_time = TimeTicks::Min();
+  static_data->last_debugged_alarm_time = TimeTicks();
   static_data->last_debugged_alarm_delay = TimeDelta();
 }
 

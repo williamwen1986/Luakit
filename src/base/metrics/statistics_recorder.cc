@@ -4,412 +4,321 @@
 
 #include "base/metrics/statistics_recorder.h"
 
-#include <memory>
-
 #include "base/at_exit.h"
-#include "base/debug/leak_annotations.h"
-#include "base/json/string_escape.h"
+//#include "base/debug/leak_annotations.h"
+//#include "base/json/string_escape.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
+#include "base/memory/scoped_ptr.h"
 #include "base/metrics/histogram.h"
-#include "base/metrics/histogram_snapshot_manager.h"
-#include "base/metrics/metrics_hashes.h"
-#include "base/metrics/persistent_histogram_allocator.h"
-#include "base/metrics/record_histogram_checker.h"
-#include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/synchronization/lock.h"
 #include "base/values.h"
 
-namespace base {
+using std::list;
+using std::string;
+
 namespace {
-
-bool HistogramNameLesser(const base::HistogramBase* a,
-                         const base::HistogramBase* b) {
-  return strcmp(a->histogram_name(), b->histogram_name()) < 0;
-}
-
+// Initialize histogram statistics gathering system.
+base::LazyInstance<base::StatisticsRecorder>::Leaky g_statistics_recorder_ =
+    LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 
-// static
-LazyInstance<Lock>::Leaky StatisticsRecorder::lock_;
+namespace base {
 
 // static
-StatisticsRecorder* StatisticsRecorder::top_ = nullptr;
-
-// static
-bool StatisticsRecorder::is_vlog_initialized_ = false;
-
-size_t StatisticsRecorder::BucketRangesHash::operator()(
-    const BucketRanges* const a) const {
-  return a->checksum();
+void StatisticsRecorder::Initialize() {
+  // Ensure that an instance of the StatisticsRecorder object is created.
+  g_statistics_recorder_.Get();
 }
 
-bool StatisticsRecorder::BucketRangesEqual::operator()(
-    const BucketRanges* const a,
-    const BucketRanges* const b) const {
-  return a->Equals(b);
-}
-
-StatisticsRecorder::~StatisticsRecorder() {
-  const AutoLock auto_lock(lock_.Get());
-  DCHECK_EQ(this, top_);
-  top_ = previous_;
-}
 
 // static
-void StatisticsRecorder::EnsureGlobalRecorderWhileLocked() {
-  lock_.Get().AssertAcquired();
-  if (top_)
-    return;
-
-  const StatisticsRecorder* const p = new StatisticsRecorder;
-  // The global recorder is never deleted.
-  ANNOTATE_LEAKING_OBJECT_PTR(p);
-  DCHECK_EQ(p, top_);
-}
-
-// static
-void StatisticsRecorder::RegisterHistogramProvider(
-    const WeakPtr<HistogramProvider>& provider) {
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-  top_->providers_.push_back(provider);
+bool StatisticsRecorder::IsActive() {
+  if (lock_ == NULL)
+    return false;
+  base::AutoLock auto_lock(*lock_);
+  return NULL != histograms_;
 }
 
 // static
 HistogramBase* StatisticsRecorder::RegisterOrDeleteDuplicate(
     HistogramBase* histogram) {
-  // Declared before |auto_lock| to ensure correct destruction order.
-  std::unique_ptr<HistogramBase> histogram_deleter;
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
+  // As per crbug.com/79322 the histograms are intentionally leaked, so we need
+  // to annotate them. Because ANNOTATE_LEAKING_OBJECT_PTR may be used only once
+  // for an object, the duplicates should not be annotated.
+  // Callers are responsible for not calling RegisterOrDeleteDuplicate(ptr)
+  // twice if (lock_ == NULL) || (!histograms_).
+  if (lock_ == NULL) {
+//    ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
+    return histogram;
+  }
 
-  const char* const name = histogram->histogram_name();
-  HistogramBase*& registered = top_->histograms_[name];
-
-  if (!registered) {
-    // |name| is guaranteed to never change or be deallocated so long
-    // as the histogram is alive (which is forever).
-    registered = histogram;
-    ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
-    // If there are callbacks for this histogram, we set the kCallbackExists
-    // flag.
-    const auto callback_iterator = top_->callbacks_.find(name);
-    if (callback_iterator != top_->callbacks_.end()) {
-      if (!callback_iterator->second.is_null())
-        histogram->SetFlags(HistogramBase::kCallbackExists);
-      else
-        histogram->ClearFlags(HistogramBase::kCallbackExists);
+  HistogramBase* histogram_to_delete = NULL;
+  HistogramBase* histogram_to_return = NULL;
+  {
+    base::AutoLock auto_lock(*lock_);
+    if (histograms_ == NULL) {
+      histogram_to_return = histogram;
+    } else {
+      const string& name = histogram->histogram_name();
+      HistogramMap::iterator it = histograms_->find(name);
+      if (histograms_->end() == it) {
+        (*histograms_)[name] = histogram;
+//        ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
+        histogram_to_return = histogram;
+      } else if (histogram == it->second) {
+        // The histogram was registered before.
+        histogram_to_return = histogram;
+      } else {
+        // We already have one histogram with this name.
+        histogram_to_return = it->second;
+        histogram_to_delete = histogram;
+      }
     }
-    return histogram;
   }
-
-  if (histogram == registered) {
-    // The histogram was registered before.
-    return histogram;
-  }
-
-  // We already have one histogram with this name.
-  histogram_deleter.reset(histogram);
-  return registered;
+  delete histogram_to_delete;
+  return histogram_to_return;
 }
 
 // static
 const BucketRanges* StatisticsRecorder::RegisterOrDeleteDuplicateRanges(
     const BucketRanges* ranges) {
   DCHECK(ranges->HasValidChecksum());
+  scoped_ptr<const BucketRanges> ranges_deleter;
 
-  // Declared before |auto_lock| to ensure correct destruction order.
-  std::unique_ptr<const BucketRanges> ranges_deleter;
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-
-  const BucketRanges* const registered = *top_->ranges_.insert(ranges).first;
-  if (registered == ranges) {
-    ANNOTATE_LEAKING_OBJECT_PTR(ranges);
-  } else {
-    ranges_deleter.reset(ranges);
+  if (lock_ == NULL) {
+//    ANNOTATE_LEAKING_OBJECT_PTR(ranges);
+    return ranges;
   }
 
-  return registered;
+  base::AutoLock auto_lock(*lock_);
+  if (ranges_ == NULL) {
+//    ANNOTATE_LEAKING_OBJECT_PTR(ranges);
+    return ranges;
+  }
+
+  list<const BucketRanges*>* checksum_matching_list;
+  RangesMap::iterator ranges_it = ranges_->find(ranges->checksum());
+  if (ranges_->end() == ranges_it) {
+    // Add a new matching list to map.
+    checksum_matching_list = new list<const BucketRanges*>();
+//    ANNOTATE_LEAKING_OBJECT_PTR(checksum_matching_list);
+    (*ranges_)[ranges->checksum()] = checksum_matching_list;
+  } else {
+    checksum_matching_list = ranges_it->second;
+  }
+
+  list<const BucketRanges*>::iterator checksum_matching_list_it;
+  for (checksum_matching_list_it = checksum_matching_list->begin();
+       checksum_matching_list_it != checksum_matching_list->end();
+       ++checksum_matching_list_it) {
+    const BucketRanges* existing_ranges = *checksum_matching_list_it;
+    if (existing_ranges->Equals(ranges)) {
+      if (existing_ranges == ranges) {
+        return ranges;
+      } else {
+        ranges_deleter.reset(ranges);
+        return existing_ranges;
+      }
+    }
+  }
+  // We haven't found a BucketRanges which has the same ranges. Register the
+  // new BucketRanges.
+  checksum_matching_list->push_front(ranges);
+  return ranges;
 }
 
 // static
 void StatisticsRecorder::WriteHTMLGraph(const std::string& query,
                                         std::string* output) {
-  for (const HistogramBase* const histogram :
-       Sort(WithName(GetHistograms(), query))) {
-    histogram->WriteHTMLGraph(output);
-    *output += "<br><hr><br>";
+  if (!IsActive())
+    return;
+
+  Histograms snapshot;
+  GetSnapshot(query, &snapshot);
+  for (Histograms::iterator it = snapshot.begin();
+       it != snapshot.end();
+       ++it) {
+    (*it)->WriteHTMLGraph(output);
+    output->append("<br><hr><br>");
   }
 }
 
 // static
 void StatisticsRecorder::WriteGraph(const std::string& query,
                                     std::string* output) {
+  if (!IsActive())
+    return;
   if (query.length())
     StringAppendF(output, "Collections of histograms for %s\n", query.c_str());
   else
     output->append("Collections of all histograms\n");
 
-  for (const HistogramBase* const histogram :
-       Sort(WithName(GetHistograms(), query))) {
-    histogram->WriteAscii(output);
+  Histograms snapshot;
+  GetSnapshot(query, &snapshot);
+  for (Histograms::iterator it = snapshot.begin();
+       it != snapshot.end();
+       ++it) {
+    (*it)->WriteAscii(output);
     output->append("\n");
   }
 }
 
 // static
-std::string StatisticsRecorder::ToJSON(JSONVerbosityLevel verbosity_level) {
-  std::string output = "{\"histograms\":[";
-  const char* sep = "";
-  for (const HistogramBase* const histogram : Sort(GetHistograms())) {
-    output += sep;
-    sep = ",";
-    std::string json;
-    histogram->WriteJSON(&json, verbosity_level);
-    output += json;
-  }
-  output += "]}";
-  return output;
-}
+//std::string StatisticsRecorder::ToJSON(const std::string& query) {
+//  if (!IsActive())
+//    return std::string();
+//
+//  std::string output("{");
+//  if (!query.empty()) {
+//    output += "\"query\":";
+//    EscapeJSONString(query, true, &output);
+//    output += ",";
+//  }
+//
+//  Histograms snapshot;
+//  GetSnapshot(query, &snapshot);
+//  output += "\"histograms\":[";
+//  bool first_histogram = true;
+//  for (Histograms::const_iterator it = snapshot.begin(); it != snapshot.end();
+//       ++it) {
+//    if (first_histogram)
+//      first_histogram = false;
+//    else
+//      output += ",";
+//    std::string json;
+//    (*it)->WriteJSON(&json);
+//    output += json;
+//  }
+//  output += "]}";
+//  return output;
+//}
 
 // static
-std::vector<const BucketRanges*> StatisticsRecorder::GetBucketRanges() {
-  std::vector<const BucketRanges*> out;
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-  out.reserve(top_->ranges_.size());
-  out.assign(top_->ranges_.begin(), top_->ranges_.end());
-  return out;
-}
-
-// static
-HistogramBase* StatisticsRecorder::FindHistogram(base::StringPiece name) {
-  // This must be called *before* the lock is acquired below because it will
-  // call back into this object to register histograms. Those called methods
-  // will acquire the lock at that time.
-  ImportGlobalPersistentHistograms();
-
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-
-  const HistogramMap::const_iterator it = top_->histograms_.find(name);
-  return it != top_->histograms_.end() ? it->second : nullptr;
-}
-
-// static
-StatisticsRecorder::HistogramProviders
-StatisticsRecorder::GetHistogramProviders() {
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-  return top_->providers_;
-}
-
-// static
-void StatisticsRecorder::ImportProvidedHistograms() {
-  // Merge histogram data from each provider in turn.
-  for (const WeakPtr<HistogramProvider>& provider : GetHistogramProviders()) {
-    // Weak-pointer may be invalid if the provider was destructed, though they
-    // generally never are.
-    if (provider)
-      provider->MergeHistogramDeltas();
-  }
-}
-
-// static
-void StatisticsRecorder::PrepareDeltas(
-    bool include_persistent,
-    HistogramBase::Flags flags_to_set,
-    HistogramBase::Flags required_flags,
-    HistogramSnapshotManager* snapshot_manager) {
-  Histograms histograms = GetHistograms();
-  if (!include_persistent)
-    histograms = NonPersistent(std::move(histograms));
-  snapshot_manager->PrepareDeltas(Sort(std::move(histograms)), flags_to_set,
-                                  required_flags);
-}
-
-// static
-void StatisticsRecorder::InitLogOnShutdown() {
-  const AutoLock auto_lock(lock_.Get());
-  InitLogOnShutdownWhileLocked();
-}
-
-// static
-bool StatisticsRecorder::SetCallback(const std::string& name,
-                                     StatisticsRecorder::OnSampleCallback cb) {
-  DCHECK(!cb.is_null());
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-
-  if (!top_->callbacks_.insert({name, std::move(cb)}).second)
-    return false;
-
-  const HistogramMap::const_iterator it = top_->histograms_.find(name);
-  if (it != top_->histograms_.end())
-    it->second->SetFlags(HistogramBase::kCallbackExists);
-
-  return true;
-}
-
-// static
-void StatisticsRecorder::ClearCallback(const std::string& name) {
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-
-  top_->callbacks_.erase(name);
-
-  // We also clear the flag from the histogram (if it exists).
-  const HistogramMap::const_iterator it = top_->histograms_.find(name);
-  if (it != top_->histograms_.end())
-    it->second->ClearFlags(HistogramBase::kCallbackExists);
-}
-
-// static
-StatisticsRecorder::OnSampleCallback StatisticsRecorder::FindCallback(
-    const std::string& name) {
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-  const auto it = top_->callbacks_.find(name);
-  return it != top_->callbacks_.end() ? it->second : OnSampleCallback();
-}
-
-// static
-size_t StatisticsRecorder::GetHistogramCount() {
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-  return top_->histograms_.size();
-}
-
-// static
-void StatisticsRecorder::ForgetHistogramForTesting(base::StringPiece name) {
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-
-  const HistogramMap::iterator found = top_->histograms_.find(name);
-  if (found == top_->histograms_.end())
+void StatisticsRecorder::GetHistograms(Histograms* output) {
+  if (lock_ == NULL)
+    return;
+  base::AutoLock auto_lock(*lock_);
+  if (histograms_ == NULL)
     return;
 
-  HistogramBase* const base = found->second;
-  if (base->GetHistogramType() != SPARSE_HISTOGRAM) {
-    // When forgetting a histogram, it's likely that other information is
-    // also becoming invalid. Clear the persistent reference that may no
-    // longer be valid. There's no danger in this as, at worst, duplicates
-    // will be created in persistent memory.
-    static_cast<Histogram*>(base)->bucket_ranges()->set_persistent_reference(0);
+  for (HistogramMap::iterator it = histograms_->begin();
+       histograms_->end() != it;
+       ++it) {
+    DCHECK_EQ(it->first, it->second->histogram_name());
+    output->push_back(it->second);
   }
-
-  top_->histograms_.erase(found);
 }
 
 // static
-std::unique_ptr<StatisticsRecorder>
-StatisticsRecorder::CreateTemporaryForTesting() {
-  const AutoLock auto_lock(lock_.Get());
-  return WrapUnique(new StatisticsRecorder());
+void StatisticsRecorder::GetBucketRanges(
+    std::vector<const BucketRanges*>* output) {
+  if (lock_ == NULL)
+    return;
+  base::AutoLock auto_lock(*lock_);
+  if (ranges_ == NULL)
+    return;
+
+  for (RangesMap::iterator it = ranges_->begin();
+       ranges_->end() != it;
+       ++it) {
+    list<const BucketRanges*>* ranges_list = it->second;
+    list<const BucketRanges*>::iterator ranges_list_it;
+    for (ranges_list_it = ranges_list->begin();
+         ranges_list_it != ranges_list->end();
+         ++ranges_list_it) {
+      output->push_back(*ranges_list_it);
+    }
+  }
 }
 
 // static
-void StatisticsRecorder::SetRecordChecker(
-    std::unique_ptr<RecordHistogramChecker> record_checker) {
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-  top_->record_checker_ = std::move(record_checker);
+HistogramBase* StatisticsRecorder::FindHistogram(const std::string& name) {
+  if (lock_ == NULL)
+    return NULL;
+  base::AutoLock auto_lock(*lock_);
+  if (histograms_ == NULL)
+    return NULL;
+
+  HistogramMap::iterator it = histograms_->find(name);
+  if (histograms_->end() == it)
+    return NULL;
+  return it->second;
 }
 
-// static
-bool StatisticsRecorder::ShouldRecordHistogram(uint64_t histogram_hash) {
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-  return !top_->record_checker_ ||
-         top_->record_checker_->ShouldRecord(histogram_hash);
-}
+// private static
+void StatisticsRecorder::GetSnapshot(const std::string& query,
+                                     Histograms* snapshot) {
+  if (lock_ == NULL)
+    return;
+  base::AutoLock auto_lock(*lock_);
+  if (histograms_ == NULL)
+    return;
 
-// static
-StatisticsRecorder::Histograms StatisticsRecorder::GetHistograms() {
-  // This must be called *before* the lock is acquired below because it will
-  // call back into this object to register histograms. Those called methods
-  // will acquire the lock at that time.
-  ImportGlobalPersistentHistograms();
-
-  Histograms out;
-
-  const AutoLock auto_lock(lock_.Get());
-  EnsureGlobalRecorderWhileLocked();
-
-  out.reserve(top_->histograms_.size());
-  for (const auto& entry : top_->histograms_)
-    out.push_back(entry.second);
-
-  return out;
-}
-
-// static
-StatisticsRecorder::Histograms StatisticsRecorder::Sort(Histograms histograms) {
-  std::sort(histograms.begin(), histograms.end(), &HistogramNameLesser);
-  return histograms;
-}
-
-// static
-StatisticsRecorder::Histograms StatisticsRecorder::WithName(
-    Histograms histograms,
-    const std::string& query) {
-  // Need a C-string query for comparisons against C-string histogram name.
-  const char* const query_string = query.c_str();
-  histograms.erase(std::remove_if(histograms.begin(), histograms.end(),
-                                  [query_string](const HistogramBase* const h) {
-                                    return !strstr(h->histogram_name(),
-                                                   query_string);
-                                  }),
-                   histograms.end());
-  return histograms;
-}
-
-// static
-StatisticsRecorder::Histograms StatisticsRecorder::NonPersistent(
-    Histograms histograms) {
-  histograms.erase(
-      std::remove_if(histograms.begin(), histograms.end(),
-                     [](const HistogramBase* const h) {
-                       return (h->flags() & HistogramBase::kIsPersistent) != 0;
-                     }),
-      histograms.end());
-  return histograms;
-}
-
-// static
-void StatisticsRecorder::ImportGlobalPersistentHistograms() {
-  // Import histograms from known persistent storage. Histograms could have been
-  // added by other processes and they must be fetched and recognized locally.
-  // If the persistent memory segment is not shared between processes, this call
-  // does nothing.
-  if (GlobalHistogramAllocator* allocator = GlobalHistogramAllocator::Get())
-    allocator->ImportHistogramsToStatisticsRecorder();
+  for (HistogramMap::iterator it = histograms_->begin();
+       histograms_->end() != it;
+       ++it) {
+    if (it->first.find(query) != std::string::npos)
+      snapshot->push_back(it->second);
+  }
 }
 
 // This singleton instance should be started during the single threaded portion
-// of main(), and hence it is not thread safe. It initializes globals to provide
-// support for all future calls.
+// of main(), and hence it is not thread safe.  It initializes globals to
+// provide support for all future calls.
 StatisticsRecorder::StatisticsRecorder() {
-  lock_.Get().AssertAcquired();
-  previous_ = top_;
-  top_ = this;
-  InitLogOnShutdownWhileLocked();
+  DCHECK(!histograms_);
+  if (lock_ == NULL) {
+    // This will leak on purpose. It's the only way to make sure we won't race
+    // against the static uninitialization of the module while one of our
+    // static methods relying on the lock get called at an inappropriate time
+    // during the termination phase. Since it's a static data member, we will
+    // leak one per process, which would be similar to the instance allocated
+    // during static initialization and released only on  process termination.
+    lock_ = new base::Lock;
+  }
+  base::AutoLock auto_lock(*lock_);
+  histograms_ = new HistogramMap;
+  ranges_ = new RangesMap;
+
+  if (VLOG_IS_ON(1))
+    AtExitManager::RegisterCallback(&DumpHistogramsToVlog, this);
 }
 
 // static
-void StatisticsRecorder::InitLogOnShutdownWhileLocked() {
-  lock_.Get().AssertAcquired();
-  if (!is_vlog_initialized_ && VLOG_IS_ON(1)) {
-    is_vlog_initialized_ = true;
-    const auto dump_to_vlog = [](void*) {
-      std::string output;
-      WriteGraph("", &output);
-      VLOG(1) << output;
-    };
-    AtExitManager::RegisterCallback(dump_to_vlog, nullptr);
-  }
+void StatisticsRecorder::DumpHistogramsToVlog(void* instance) {
+  DCHECK(VLOG_IS_ON(1));
+
+  StatisticsRecorder* me = reinterpret_cast<StatisticsRecorder*>(instance);
+  string output;
+  me->WriteGraph(std::string(), &output);
+  VLOG(1) << output;
 }
+
+StatisticsRecorder::~StatisticsRecorder() {
+  DCHECK(histograms_ && ranges_ && lock_);
+
+  // Clean up.
+  scoped_ptr<HistogramMap> histograms_deleter;
+  scoped_ptr<RangesMap> ranges_deleter;
+  // We don't delete lock_ on purpose to avoid having to properly protect
+  // against it going away after we checked for NULL in the static methods.
+  {
+    base::AutoLock auto_lock(*lock_);
+    histograms_deleter.reset(histograms_);
+    ranges_deleter.reset(ranges_);
+    histograms_ = NULL;
+    ranges_ = NULL;
+  }
+  // We are going to leak the histograms and the ranges.
+}
+
+
+// static
+StatisticsRecorder::HistogramMap* StatisticsRecorder::histograms_ = NULL;
+// static
+StatisticsRecorder::RangesMap* StatisticsRecorder::ranges_ = NULL;
+// static
+base::Lock* StatisticsRecorder::lock_ = NULL;
 
 }  // namespace base

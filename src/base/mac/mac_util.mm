@@ -6,8 +6,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import <IOKit/IOKitLib.h>
+
 #include <errno.h>
-#include <stddef.h>
 #include <string.h>
 #include <sys/utsname.h>
 #include <sys/xattr.h>
@@ -20,13 +20,22 @@
 #include "base/mac/scoped_cftyperef.h"
 #include "base/mac/scoped_ioobject.h"
 #include "base/mac/scoped_nsobject.h"
-#include "base/mac/sdk_forward_declarations.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/sys_string_conversions.h"
 
 namespace base {
 namespace mac {
+
+// Replicate specific 10.7 SDK declarations for building with prior SDKs.
+#if !defined(MAC_OS_X_VERSION_10_7) || \
+    MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_7
+
+enum {
+  NSApplicationPresentationFullScreen = 1 << 10
+};
+
+#endif  // MAC_OS_X_VERSION_10_7
 
 namespace {
 
@@ -96,18 +105,11 @@ LSSharedFileListItemRef GetLoginItemForApp() {
   NSURL* url = [NSURL fileURLWithPath:[base::mac::MainBundle() bundlePath]];
 
   for(NSUInteger i = 0; i < [login_items_array count]; ++i) {
-    LSSharedFileListItemRef item =
-        reinterpret_cast<LSSharedFileListItemRef>(login_items_array[i]);
-    base::ScopedCFTypeRef<CFErrorRef> error;
-    CFURLRef item_url_ref =
-        LSSharedFileListItemCopyResolvedURL(item, 0, error.InitializeInto());
+    LSSharedFileListItemRef item = reinterpret_cast<LSSharedFileListItemRef>(
+        [login_items_array objectAtIndex:i]);
+    CFURLRef item_url_ref = NULL;
 
-    // This function previously used LSSharedFileListItemResolve(), which could
-    // return a NULL URL even when returning no error. This caused
-    // <https://crbug.com/760989>. It's not clear one way or the other whether
-    // LSSharedFileListItemCopyResolvedURL() shares this behavior, so this check
-    // remains in place.
-    if (!error && item_url_ref) {
+    if (LSSharedFileListItemResolve(item, 0, &item_url_ref, NULL) == noErr) {
       ScopedCFTypeRef<CFURLRef> item_url(item_url_ref);
       if (CFEqual(item_url, url)) {
         CFRetain(item);
@@ -128,6 +130,19 @@ bool IsHiddenLoginItem(LSSharedFileListItemRef item) {
 }
 
 }  // namespace
+
+std::string PathFromFSRef(const FSRef& ref) {
+  ScopedCFTypeRef<CFURLRef> url(
+      CFURLCreateFromFSRef(kCFAllocatorDefault, &ref));
+  NSString *path_string = [(NSURL *)url.get() path];
+  return [path_string fileSystemRepresentation];
+}
+
+bool FSRefFromPath(const std::string& path, FSRef* ref) {
+  OSStatus status = FSPathMakeRef((const UInt8*)path.c_str(),
+                                  ref, nil);
+  return status == noErr;
+}
 
 CGColorSpaceRef GetGenericRGBColorSpace() {
   // Leaked. That's OK, it's scoped to the lifetime of the application.
@@ -212,20 +227,69 @@ void SwitchFullScreenModes(FullScreenMode from_mode, FullScreenMode to_mode) {
   SetUIMode();
 }
 
-bool GetFileBackupExclusion(const FilePath& file_path) {
-  return CSBackupIsItemExcluded(FilePathToCFURL(file_path), nullptr);
+void SetCursorVisibility(bool visible) {
+  if (visible)
+    [NSCursor unhide];
+  else
+    [NSCursor hide];
+}
+
+bool ShouldWindowsMiniaturizeOnDoubleClick() {
+  // We use an undocumented method in Cocoa; if it doesn't exist, default to
+  // |true|. If it ever goes away, we can do (using an undocumented pref key):
+  //   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+  //   return ![defaults objectForKey:@"AppleMiniaturizeOnDoubleClick"] ||
+  //          [defaults boolForKey:@"AppleMiniaturizeOnDoubleClick"];
+  BOOL methodImplemented =
+      [NSWindow respondsToSelector:@selector(_shouldMiniaturizeOnDoubleClick)];
+  DCHECK(methodImplemented);
+  return !methodImplemented ||
+      [NSWindow performSelector:@selector(_shouldMiniaturizeOnDoubleClick)];
+}
+
+void ActivateProcess(pid_t pid) {
+  ProcessSerialNumber process;
+  OSStatus status = GetProcessForPID(pid, &process);
+  if (status == noErr) {
+    SetFrontProcess(&process);
+  } else {
+    OSSTATUS_DLOG(WARNING, status) << "Unable to get process for pid " << pid;
+  }
+}
+
+bool AmIForeground() {
+  ProcessSerialNumber foreground_psn = { 0 };
+  OSErr err = GetFrontProcess(&foreground_psn);
+  if (err != noErr) {
+    OSSTATUS_DLOG(WARNING, err) << "GetFrontProcess";
+    return false;
+  }
+
+  ProcessSerialNumber my_psn = { 0, kCurrentProcess };
+
+  Boolean result = FALSE;
+  err = SameProcess(&foreground_psn, &my_psn, &result);
+  if (err != noErr) {
+    OSSTATUS_DLOG(WARNING, err) << "SameProcess";
+    return false;
+  }
+
+  return result;
 }
 
 bool SetFileBackupExclusion(const FilePath& file_path) {
+  NSString* file_path_ns =
+      [NSString stringWithUTF8String:file_path.value().c_str()];
+  NSURL* file_url = [NSURL fileURLWithPath:file_path_ns];
+
   // When excludeByPath is true the application must be running with root
   // privileges (admin for 10.6 and earlier) but the URL does not have to
   // already exist. When excludeByPath is false the URL must already exist but
   // can be used in non-root (or admin as above) mode. We use false so that
   // non-root (or admin) users don't get their TimeMachine drive filled up with
   // unnecessary backups.
-  OSStatus os_err = CSBackupSetItemExcluded(FilePathToCFURL(file_path),
-                                            /*exclude=*/TRUE,
-                                            /*excludeByPath=*/FALSE);
+  OSStatus os_err =
+      CSBackupSetItemExcluded(base::mac::NSToCFCast(file_url), TRUE, FALSE);
   if (os_err != noErr) {
     OSSTATUS_DLOG(WARNING, os_err)
         << "Failed to set backup exclusion for file '"
@@ -268,7 +332,9 @@ void AddToLoginItems(bool hide_on_startup) {
 
   BOOL hide = hide_on_startup ? YES : NO;
   NSDictionary* properties =
-      @{(NSString*)kLSSharedFileListLoginItemHidden : @(hide) };
+      [NSDictionary
+        dictionaryWithObject:[NSNumber numberWithBool:hide]
+                      forKey:(NSString*)kLSSharedFileListLoginItemHidden];
 
   ScopedCFTypeRef<LSSharedFileListItemRef> new_item;
   new_item.reset(LSSharedFileListInsertItemURL(
@@ -299,50 +365,24 @@ void RemoveFromLoginItems() {
 
 bool WasLaunchedAsLoginOrResumeItem() {
   ProcessSerialNumber psn = { 0, kCurrentProcess };
-  ProcessInfoRec info = {};
-  info.processInfoLength = sizeof(info);
 
-// GetProcessInformation has been deprecated since macOS 10.9, but there is no
-// replacement that provides the information we need. See
-// https://crbug.com/650854.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  if (GetProcessInformation(&psn, &info) == noErr) {
-#pragma clang diagnostic pop
-    ProcessInfoRec parent_info = {};
-    parent_info.processInfoLength = sizeof(parent_info);
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    if (GetProcessInformation(&info.processLauncher, &parent_info) == noErr) {
-#pragma clang diagnostic pop
-      return parent_info.processSignature == 'lgnw';
-    }
-  }
-  return false;
-}
+  base::scoped_nsobject<NSDictionary> process_info(
+      CFToNSCast(ProcessInformationCopyDictionary(
+          &psn, kProcessDictionaryIncludeAllInformationMask)));
 
-bool WasLaunchedAsLoginItemRestoreState() {
-  // "Reopen windows..." option was added for Lion.  Prior OS versions should
-  // not have this behavior.
-  if (!WasLaunchedAsLoginOrResumeItem())
-    return false;
+  long long temp = [[process_info objectForKey:@"ParentPSN"] longLongValue];
+  ProcessSerialNumber parent_psn =
+      { (temp >> 32) & 0x00000000FFFFFFFFLL, temp & 0x00000000FFFFFFFFLL };
 
-  CFStringRef app = CFSTR("com.apple.loginwindow");
-  CFStringRef save_state = CFSTR("TALLogoutSavesState");
-  ScopedCFTypeRef<CFPropertyListRef> plist(
-      CFPreferencesCopyAppValue(save_state, app));
-  // According to documentation, com.apple.loginwindow.plist does not exist on a
-  // fresh installation until the user changes a login window setting.  The
-  // "reopen windows" option is checked by default, so the plist would exist had
-  // the user unchecked it.
-  // https://developer.apple.com/library/mac/documentation/macosx/conceptual/bpsystemstartup/chapters/CustomLogin.html
-  if (!plist)
-    return true;
+  base::scoped_nsobject<NSDictionary> parent_info(
+      CFToNSCast(ProcessInformationCopyDictionary(
+          &parent_psn, kProcessDictionaryIncludeAllInformationMask)));
 
-  if (CFBooleanRef restore_state = base::mac::CFCast<CFBooleanRef>(plist))
-    return CFBooleanGetValue(restore_state);
+  // Check that creator process code is that of loginwindow.
+  BOOL result =
+      [[parent_info objectForKey:@"FileCreator"] isEqualToString:@"lgnw"];
 
-  return false;
+  return result == YES;
 }
 
 bool WasLaunchedAsHiddenLoginItem() {
@@ -351,7 +391,12 @@ bool WasLaunchedAsHiddenLoginItem() {
 
   ScopedCFTypeRef<LSSharedFileListItemRef> item(GetLoginItemForApp());
   if (!item.get()) {
-    // OS X can launch items for the resume feature.
+    // Lion can launch items for the resume feature.  So log an error only for
+    // Snow Leopard or earlier.
+    if (IsOSSnowLeopard())
+      DLOG(ERROR) <<
+          "Process launched at Login but can't access Login Item List.";
+
     return false;
   }
   return IsHiddenLoginItem(item);
@@ -420,24 +465,80 @@ int MacOSXMinorVersionInternal() {
   // version for Darwin versions beginning with 6, corresponding to Mac OS X
   // 10.2. Since this correspondence may change in the future, warn when
   // encountering a version higher than anything seen before. Older Darwin
-  // versions, or versions that can't be determined, result in immediate death.
+  // versions, or versions that can't be determined, result in
+  // immediate death.
   CHECK(darwin_major_version >= 6);
   int mac_os_x_minor_version = darwin_major_version - 4;
-  DLOG_IF(WARNING, darwin_major_version > 19)
-      << "Assuming Darwin " << base::NumberToString(darwin_major_version)
-      << " is macOS 10." << base::NumberToString(mac_os_x_minor_version);
+  DLOG_IF(WARNING, darwin_major_version > 13) << "Assuming Darwin "
+      << base::IntToString(darwin_major_version) << " is Mac OS X 10."
+      << base::IntToString(mac_os_x_minor_version);
 
   return mac_os_x_minor_version;
 }
 
-}  // namespace
-
-namespace internal {
+// Returns the running system's Mac OS X minor version. This is the |y| value
+// in 10.y or 10.y.z.
 int MacOSXMinorVersion() {
   static int mac_os_x_minor_version = MacOSXMinorVersionInternal();
   return mac_os_x_minor_version;
 }
-}  // namespace internal
+
+enum {
+  SNOW_LEOPARD_MINOR_VERSION = 6,
+  LION_MINOR_VERSION = 7,
+  MOUNTAIN_LION_MINOR_VERSION = 8,
+  MAVERICKS_MINOR_VERSION = 9,
+};
+
+}  // namespace
+
+#if !defined(BASE_MAC_MAC_UTIL_H_INLINED_GE_10_7)
+bool IsOSSnowLeopard() {
+  return MacOSXMinorVersion() == SNOW_LEOPARD_MINOR_VERSION;
+}
+#endif
+
+#if !defined(BASE_MAC_MAC_UTIL_H_INLINED_GT_10_7)
+bool IsOSLion() {
+  return MacOSXMinorVersion() == LION_MINOR_VERSION;
+}
+#endif
+
+#if !defined(BASE_MAC_MAC_UTIL_H_INLINED_GE_10_7)
+bool IsOSLionOrLater() {
+  return MacOSXMinorVersion() >= LION_MINOR_VERSION;
+}
+#endif
+
+#if !defined(BASE_MAC_MAC_UTIL_H_INLINED_GT_10_8)
+bool IsOSMountainLion() {
+  return MacOSXMinorVersion() == MOUNTAIN_LION_MINOR_VERSION;
+}
+#endif
+
+#if !defined(BASE_MAC_MAC_UTIL_H_INLINED_GE_10_8)
+bool IsOSMountainLionOrLater() {
+  return MacOSXMinorVersion() >= MOUNTAIN_LION_MINOR_VERSION;
+}
+#endif
+
+#if !defined(BASE_MAC_MAC_UTIL_H_INLINED_GT_10_9)
+bool IsOSMavericks() {
+  return MacOSXMinorVersion() == MAVERICKS_MINOR_VERSION;
+}
+#endif
+
+#if !defined(BASE_MAC_MAC_UTIL_H_INLINED_GE_10_9)
+bool IsOSMavericksOrLater() {
+  return MacOSXMinorVersion() >= MAVERICKS_MINOR_VERSION;
+}
+#endif
+
+#if !defined(BASE_MAC_MAC_UTIL_H_INLINED_GT_10_9)
+bool IsOSLaterThanMavericks_DontCallThis() {
+  return MacOSXMinorVersion() > MAVERICKS_MINOR_VERSION;
+}
+#endif
 
 std::string GetModelIdentifier() {
   std::string return_string;
@@ -461,15 +562,15 @@ std::string GetModelIdentifier() {
 
 bool ParseModelIdentifier(const std::string& ident,
                           std::string* type,
-                          int32_t* major,
-                          int32_t* minor) {
+                          int32* major,
+                          int32* minor) {
   size_t number_loc = ident.find_first_of("0123456789");
   if (number_loc == std::string::npos)
     return false;
   size_t comma_loc = ident.find(',', number_loc);
   if (comma_loc == std::string::npos)
     return false;
-  int32_t major_tmp, minor_tmp;
+  int32 major_tmp, minor_tmp;
   std::string::const_iterator begin = ident.begin();
   if (!StringToInt(
           StringPiece(begin + number_loc, begin + comma_loc), &major_tmp) ||
@@ -480,17 +581,6 @@ bool ParseModelIdentifier(const std::string& ident,
   *major = major_tmp;
   *minor = minor_tmp;
   return true;
-}
-
-std::string GetOSDisplayName() {
-  std::string os_name;
-  if (IsAtMostOS10_11())
-    os_name = "OS X";
-  else
-    os_name = "macOS";
-  std::string version_string = base::SysNSStringToUTF8(
-      [[NSProcessInfo processInfo] operatingSystemVersionString]);
-  return os_name + " " + version_string;
 }
 
 }  // namespace mac

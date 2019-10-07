@@ -6,7 +6,7 @@ then
 fi
 
 if [ -z $IOS_SDK_VERSION ]; then
-	IOS_SDK_VERSION="13.0"
+	IOS_SDK_VERSION="12.2"
 fi
 
 if [ -z "$OUTPUT_DIR" ]
@@ -28,7 +28,7 @@ then
     exit -1
 fi
 
-. ../bin/build-ios.sh Luakit
+. ../bin/build-ios.sh luakit
 checkError
 
 

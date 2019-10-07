@@ -4,41 +4,40 @@
 
 #include "base/path_service.h"
 
-#include <unordered_map>
-
 #if defined(OS_WIN)
 #include <windows.h>
 #include <shellapi.h>
 #include <shlobj.h>
 #endif
 
+#include "base/containers/hash_tables.h"
+#include "base/file_util.h"
 #include "base/files/file_path.h"
-#include "base/files/file_util.h"
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/synchronization/lock.h"
-#include "build/build_config.h"
+
+using base::FilePath;
+using base::MakeAbsoluteFilePath;
 
 namespace base {
-
-bool PathProvider(int key, FilePath* result);
-
+  bool PathProvider(int key, FilePath* result);
 #if defined(OS_WIN)
-bool PathProviderWin(int key, FilePath* result);
+  bool PathProviderWin(int key, FilePath* result);
 #elif defined(OS_MACOSX)
-bool PathProviderMac(int key, FilePath* result);
+  bool PathProviderMac(int key, FilePath* result);
 #elif defined(OS_ANDROID)
-bool PathProviderAndroid(int key, FilePath* result);
-#elif defined(OS_FUCHSIA)
-bool PathProviderFuchsia(int key, FilePath* result);
+  bool PathProviderAndroid(int key, FilePath* result);
 #elif defined(OS_POSIX)
-// PathProviderPosix is the default path provider on POSIX OSes other than
-// Mac and Android.
-bool PathProviderPosix(int key, FilePath* result);
+  // PathProviderPosix is the default path provider on POSIX OSes other than
+  // Mac and Android.
+  bool PathProviderPosix(int key, FilePath* result);
 #endif
+}
 
 namespace {
 
-typedef std::unordered_map<int, FilePath> PathMap;
+typedef base::hash_map<int, FilePath> PathMap;
 
 // We keep a linked list of providers.  In a debug build we ensure that no two
 // providers claim overlapping keys.
@@ -52,19 +51,23 @@ struct Provider {
   bool is_static;
 };
 
-Provider base_provider = {PathProvider, nullptr,
+Provider base_provider = {
+  base::PathProvider,
+  NULL,
 #ifndef NDEBUG
-                          PATH_START, PATH_END,
+  base::PATH_START,
+  base::PATH_END,
 #endif
-                          true};
+  true
+};
 
 #if defined(OS_WIN)
 Provider base_provider_win = {
-  PathProviderWin,
+  base::PathProviderWin,
   &base_provider,
 #ifndef NDEBUG
-  PATH_WIN_START,
-  PATH_WIN_END,
+  base::PATH_WIN_START,
+  base::PATH_WIN_END,
 #endif
   true
 };
@@ -72,11 +75,11 @@ Provider base_provider_win = {
 
 #if defined(OS_MACOSX)
 Provider base_provider_mac = {
-  PathProviderMac,
+  base::PathProviderMac,
   &base_provider,
 #ifndef NDEBUG
-  PATH_MAC_START,
-  PATH_MAC_END,
+  base::PATH_MAC_START,
+  base::PATH_MAC_END,
 #endif
   true
 };
@@ -84,32 +87,23 @@ Provider base_provider_mac = {
 
 #if defined(OS_ANDROID)
 Provider base_provider_android = {
-  PathProviderAndroid,
+  base::PathProviderAndroid,
   &base_provider,
 #ifndef NDEBUG
-  PATH_ANDROID_START,
-  PATH_ANDROID_END,
+  base::PATH_ANDROID_START,
+  base::PATH_ANDROID_END,
 #endif
   true
 };
 #endif
 
-#if defined(OS_FUCHSIA)
-Provider base_provider_fuchsia = {PathProviderFuchsia, &base_provider,
-#ifndef NDEBUG
-                                  0, 0,
-#endif
-                                  true};
-#endif
-
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
-    !defined(OS_FUCHSIA)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
 Provider base_provider_posix = {
-  PathProviderPosix,
+  base::PathProviderPosix,
   &base_provider,
 #ifndef NDEBUG
-  PATH_POSIX_START,
-  PATH_POSIX_END,
+  base::PATH_POSIX_START,
+  base::PATH_POSIX_END,
 #endif
   true
 };
@@ -117,7 +111,7 @@ Provider base_provider_posix = {
 
 
 struct PathData {
-  Lock lock;
+  base::Lock lock;
   PathMap cache;        // Cache mappings from path key to path value.
   PathMap overrides;    // Track path overrides.
   Provider* providers;  // Linked list of path service providers.
@@ -130,17 +124,26 @@ struct PathData {
     providers = &base_provider_mac;
 #elif defined(OS_ANDROID)
     providers = &base_provider_android;
-#elif defined(OS_FUCHSIA)
-    providers = &base_provider_fuchsia;
 #elif defined(OS_POSIX)
     providers = &base_provider_posix;
 #endif
   }
+
+  ~PathData() {
+    Provider* p = providers;
+    while (p) {
+      Provider* next = p->next;
+      if (!p->is_static)
+        delete p;
+      p = next;
+    }
+  }
 };
 
+static base::LazyInstance<PathData> g_path_data = LAZY_INSTANCE_INITIALIZER;
+
 static PathData* GetPathData() {
-  static auto* path_data = new PathData();
-  return path_data;
+  return g_path_data.Pointer();
 }
 
 // Tries to find |key| in the cache. |path_data| should be locked by the caller!
@@ -148,7 +151,7 @@ bool LockedGetFromCache(int key, const PathData* path_data, FilePath* result) {
   if (path_data->cache_disabled)
     return false;
   // check for a cached version
-  auto it = path_data->cache.find(key);
+  PathMap::const_iterator it = path_data->cache.find(key);
   if (it != path_data->cache.end()) {
     *result = it->second;
     return true;
@@ -180,15 +183,15 @@ bool PathService::Get(int key, FilePath* result) {
   PathData* path_data = GetPathData();
   DCHECK(path_data);
   DCHECK(result);
-  DCHECK_GE(key, DIR_CURRENT);
+  DCHECK_GE(key, base::DIR_CURRENT);
 
   // special case the current directory because it can never be cached
-  if (key == DIR_CURRENT)
-    return GetCurrentDirectory(result);
+  if (key == base::DIR_CURRENT)
+    return file_util::GetCurrentDirectory(result);
 
-  Provider* provider = nullptr;
+  Provider* provider = NULL;
   {
-    AutoLock scoped_lock(path_data->lock);
+    base::AutoLock scoped_lock(path_data->lock);
     if (LockedGetFromCache(key, path_data, result))
       return true;
 
@@ -221,7 +224,7 @@ bool PathService::Get(int key, FilePath* result) {
   }
   *result = path;
 
-  AutoLock scoped_lock(path_data->lock);
+  base::AutoLock scoped_lock(path_data->lock);
   if (!path_data->cache_disabled)
     path_data->cache[key] = path;
 
@@ -230,19 +233,17 @@ bool PathService::Get(int key, FilePath* result) {
 
 // static
 bool PathService::Override(int key, const FilePath& path) {
-  // Just call the full function with true for the value of |create|, and
-  // assume that |path| may not be absolute yet.
-  return OverrideAndCreateIfNeeded(key, path, false, true);
+  // Just call the full function with true for the value of |create|.
+  return OverrideAndCreateIfNeeded(key, path, true);
 }
 
 // static
 bool PathService::OverrideAndCreateIfNeeded(int key,
                                             const FilePath& path,
-                                            bool is_absolute,
                                             bool create) {
   PathData* path_data = GetPathData();
   DCHECK(path_data);
-  DCHECK_GT(key, DIR_CURRENT) << "invalid path key";
+  DCHECK_GT(key, base::DIR_CURRENT) << "invalid path key";
 
   FilePath file_path = path;
 
@@ -252,19 +253,17 @@ bool PathService::OverrideAndCreateIfNeeded(int key,
     // Make sure the directory exists. We need to do this before we translate
     // this to the absolute path because on POSIX, MakeAbsoluteFilePath fails
     // if called on a non-existent path.
-    if (!PathExists(file_path) && !CreateDirectory(file_path))
+    if (!base::PathExists(file_path) &&
+        !base::CreateDirectory(file_path))
       return false;
   }
 
   // We need to have an absolute path.
-  if (!is_absolute) {
-    file_path = MakeAbsoluteFilePath(file_path);
-    if (file_path.empty())
-      return false;
-  }
-  DCHECK(file_path.IsAbsolute());
+  file_path = MakeAbsoluteFilePath(file_path);
+  if (file_path.empty())
+    return false;
 
-  AutoLock scoped_lock(path_data->lock);
+  base::AutoLock scoped_lock(path_data->lock);
 
   // Clear the cache now. Some of its entries could have depended
   // on the value we are overriding, and are now out of sync with reality.
@@ -280,7 +279,7 @@ bool PathService::RemoveOverride(int key) {
   PathData* path_data = GetPathData();
   DCHECK(path_data);
 
-  AutoLock scoped_lock(path_data->lock);
+  base::AutoLock scoped_lock(path_data->lock);
 
   if (path_data->overrides.find(key) == path_data->overrides.end())
     return false;
@@ -311,7 +310,7 @@ void PathService::RegisterProvider(ProviderFunc func, int key_start,
   p->key_end = key_end;
 #endif
 
-  AutoLock scoped_lock(path_data->lock);
+  base::AutoLock scoped_lock(path_data->lock);
 
 #ifndef NDEBUG
   Provider *iter = path_data->providers;
@@ -331,9 +330,7 @@ void PathService::DisableCache() {
   PathData* path_data = GetPathData();
   DCHECK(path_data);
 
-  AutoLock scoped_lock(path_data->lock);
+  base::AutoLock scoped_lock(path_data->lock);
   path_data->cache.clear();
   path_data->cache_disabled = true;
 }
-
-}  // namespace base

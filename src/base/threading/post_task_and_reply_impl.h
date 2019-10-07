@@ -2,42 +2,38 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// This file contains the implementation for TaskRunner::PostTaskAndReply.
+// This file contains the implementation shared by
+// MessageLoopProxy::PostTaskAndReply and WorkerPool::PostTaskAndReply.
 
 #ifndef BASE_THREADING_POST_TASK_AND_REPLY_IMPL_H_
 #define BASE_THREADING_POST_TASK_AND_REPLY_IMPL_H_
 
-#include "base/base_export.h"
-#include "base/callback.h"
+#include "base/callback_forward.h"
 #include "base/location.h"
 
 namespace base {
 namespace internal {
 
-// Inherit from this in a class that implements PostTask to send a task to a
-// custom execution context.
+// Inherit from this in a class that implements PostTask appropriately
+// for sending to a destination thread.
 //
-// If you're looking for a concrete implementation of PostTaskAndReply, you
-// probably want base::TaskRunner or base/task/post_task.h
-class BASE_EXPORT PostTaskAndReplyImpl {
+// Note that 'reply' will always get posted back to your current
+// MessageLoop.
+//
+// If you're looking for a concrete implementation of
+// PostTaskAndReply, you probably want base::MessageLoopProxy, or you
+// may want base::WorkerPool.
+class PostTaskAndReplyImpl {
  public:
-  virtual ~PostTaskAndReplyImpl() = default;
-
-  // Posts |task| by calling PostTask(). On completion, posts |reply| to the
-  // origin sequence. Can only be called when
-  // SequencedTaskRunnerHandle::IsSet(). Each callback is deleted synchronously
-  // after running, or scheduled for asynchronous deletion on the origin
-  // sequence if it can't run (e.g. if a TaskRunner skips it on shutdown). See
-  // SequencedTaskRunner::DeleteSoon() for when objects scheduled for
-  // asynchronous deletion can be leaked. Note: All //base task posting APIs
-  // require callbacks to support deletion on the posting sequence if they can't
-  // be scheduled.
-  bool PostTaskAndReply(const Location& from_here,
-                        OnceClosure task,
-                        OnceClosure reply);
+  // Implementation for MessageLoopProxy::PostTaskAndReply and
+  // WorkerPool::PostTaskAndReply.
+  bool PostTaskAndReply(const tracked_objects::Location& from_here,
+                        const Closure& task,
+                        const Closure& reply);
 
  private:
-  virtual bool PostTask(const Location& from_here, OnceClosure task) = 0;
+  virtual bool PostTask(const tracked_objects::Location& from_here,
+                        const Closure& task) = 0;
 };
 
 }  // namespace internal

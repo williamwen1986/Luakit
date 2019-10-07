@@ -5,7 +5,6 @@
 #include "base/strings/sys_string_conversions.h"
 
 #include <windows.h>
-#include <stdint.h>
 
 #include "base/strings/string_piece.h"
 
@@ -17,7 +16,7 @@ std::string SysWideToUTF8(const std::wstring& wide) {
 }
 
 // Do not assert in this function since it is used by the asssertion code!
-std::wstring SysUTF8ToWide(StringPiece utf8) {
+std::wstring SysUTF8ToWide(const StringPiece& utf8) {
   return SysMultiByteToWide(utf8, CP_UTF8);
 }
 
@@ -25,12 +24,12 @@ std::string SysWideToNativeMB(const std::wstring& wide) {
   return SysWideToMultiByte(wide, CP_ACP);
 }
 
-std::wstring SysNativeMBToWide(StringPiece native_mb) {
+std::wstring SysNativeMBToWide(const StringPiece& native_mb) {
   return SysMultiByteToWide(native_mb, CP_ACP);
 }
 
 // Do not assert in this function since it is used by the asssertion code!
-std::wstring SysMultiByteToWide(StringPiece mb, uint32_t code_page) {
+std::wstring SysMultiByteToWide(const StringPiece& mb, uint32 code_page) {
   if (mb.empty())
     return std::wstring();
 
@@ -49,7 +48,7 @@ std::wstring SysMultiByteToWide(StringPiece mb, uint32_t code_page) {
 }
 
 // Do not assert in this function since it is used by the asssertion code!
-std::string SysWideToMultiByte(const std::wstring& wide, uint32_t code_page) {
+std::string SysWideToMultiByte(const std::wstring& wide, uint32 code_page) {
   int wide_length = static_cast<int>(wide.length());
   if (wide_length == 0)
     return std::string();

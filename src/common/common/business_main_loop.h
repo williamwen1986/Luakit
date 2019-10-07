@@ -5,7 +5,7 @@
 #pragma once
 
 #include "base/basictypes.h"
-#include "common/scoped_ptr.h"
+#include "base/memory/scoped_ptr.h"
 #include "common/business_client_process_sub_thread.h"
 
 class CommandLine;

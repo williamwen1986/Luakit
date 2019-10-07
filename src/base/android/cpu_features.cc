@@ -5,17 +5,21 @@
 #include <cpu-features.h>
 
 #include "base/android/jni_android.h"
-#include "base/base_jni_headers/CpuFeatures_jni.h"
+#include "jni/CpuFeatures_jni.h"
 
 namespace base {
 namespace android {
 
-jint JNI_CpuFeatures_GetCoreCount(JNIEnv*) {
+jint GetCoreCount(JNIEnv*, jclass) {
   return android_getCpuCount();
 }
 
-jlong JNI_CpuFeatures_GetCpuFeatures(JNIEnv*) {
+jlong GetCpuFeatures(JNIEnv*, jclass) {
   return android_getCpuFeatures();
+}
+
+bool RegisterCpuFeatures(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 }  // namespace android

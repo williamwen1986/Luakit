@@ -4,7 +4,7 @@
 
 #include "base/strings/string16.h"
 
-#if defined(WCHAR_T_IS_UTF16) && !defined(_AIX)
+#if defined(WCHAR_T_IS_UTF16)
 
 #error This file should not be used on 2-byte wchar_t systems
 // If this winds up being needed on 2-byte wchar_t systems, either the
@@ -15,7 +15,7 @@
 
 #include <ostream>
 
-#include "base/strings/string_piece.h"
+#include "base/strings/utf_string_conversions.h"
 
 namespace base {
 
@@ -47,7 +47,7 @@ const char16* c16memchr(const char16* s, char16 c, size_t n) {
     }
     ++s;
   }
-  return nullptr;
+  return 0;
 }
 
 char16* c16memmove(char16* s1, const char16* s2, size_t n) {
@@ -67,21 +67,16 @@ char16* c16memset(char16* s, char16 c, size_t n) {
   return s_orig;
 }
 
-namespace string16_internals {
-
 std::ostream& operator<<(std::ostream& out, const string16& str) {
-  return out << base::StringPiece16(str);
+  return out << UTF16ToUTF8(str);
 }
 
 void PrintTo(const string16& str, std::ostream* out) {
   *out << str;
 }
 
-}  // namespace string16_internals
-
 }  // namespace base
 
-template class std::
-    basic_string<base::char16, base::string16_internals::string16_char_traits>;
+template class std::basic_string<base::char16, base::string16_char_traits>;
 
 #endif  // WCHAR_T_IS_UTF32

@@ -7,11 +7,10 @@
 //
 
 #import "ViewController.h"
-// #include "base/memory/scoped_ptr.h" // Patch [LARPOUX]
-// #import "NotificationProxyObserver.h" // Patch [LARPOUX]
-@interface ViewController()<UITableViewDataSource ,UITableViewDelegate/* ,NotificationProxyObserverDelegate // Patch [LARPOUX] */>
-{
-    // scoped_ptr<NotificationProxyObserver> _notification_observer; // Patch [LARPOUX]
+#include "base/memory/scoped_ptr.h"
+#import "NotificationProxyObserver.h"
+@interface ViewController()<UITableViewDataSource ,UITableViewDelegate,NotificationProxyObserverDelegate>{
+    scoped_ptr<NotificationProxyObserver> _notification_observer;
 }
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -21,8 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // _notification_observer.reset(new NotificationProxyObserver(self)); // Patch [LARPOUX]
-    // _notification_observer->AddObserver(3); // Patch [LARPOUX]
+    _notification_observer.reset(new NotificationProxyObserver(self));
+    _notification_observer->AddObserver(3);
     // Do any additional setup after loading the view, typically from a nib.
     self.tableView =  [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.dataSource = self;
@@ -55,7 +54,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // post_notification(3, @{@"row":@(indexPath.row)}); // Patch [LARPOUX]
+    post_notification(3, @{@"row":@(indexPath.row)});
 }
 
 - (void)onNotification:(int)type data:(id)data

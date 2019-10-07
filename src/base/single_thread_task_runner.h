@@ -16,19 +16,20 @@ namespace base {
 // there is a specific need to run tasks on only a single thread.
 //
 // SingleThreadTaskRunner implementations might:
-//   - Post tasks to an existing thread's MessageLoop (see
-//     MessageLoop::task_runner()).
+//   - Post tasks to an existing thread's MessageLoop (see MessageLoopProxy).
 //   - Create their own worker thread and MessageLoop to post tasks to.
 //   - Add tasks to a FIFO and signal to a non-MessageLoop thread for them to
 //     be processed. This allows TaskRunner-oriented code run on threads
 //     running other kinds of message loop, e.g. Jingle threads.
 class BASE_EXPORT SingleThreadTaskRunner : public SequencedTaskRunner {
  public:
-  // A more explicit alias to RunsTasksInCurrentSequence().
-  bool BelongsToCurrentThread() const { return RunsTasksInCurrentSequence(); }
+  // A more explicit alias to RunsTasksOnCurrentThread().
+  bool BelongsToCurrentThread() const {
+    return RunsTasksOnCurrentThread();
+  }
 
  protected:
-  ~SingleThreadTaskRunner() override = default;
+  virtual ~SingleThreadTaskRunner() {}
 };
 
 }  // namespace base

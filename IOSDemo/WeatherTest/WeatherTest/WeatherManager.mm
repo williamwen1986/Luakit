@@ -8,7 +8,7 @@
 
 #import "WeatherManager.h"
 #include "common/business_runtime.h"
-#include "tools/lua_helpers.h"
+#include "lua-tools/lua_helpers.h"
 #import "oc_helpers.h"
 #import "lauxlib.h"
 

@@ -11,13 +11,13 @@
 #include <vector>
 
 #include "base/callback.h"
-#include "base/macros.h"
 #include "base/test/launcher/test_result.h"
 #include "base/threading/thread_checker.h"
 
+class CommandLine;
+
 namespace base {
 
-class CommandLine;
 class FilePath;
 
 // A helper class to output results.
@@ -48,24 +48,8 @@ class TestResultsTracker {
   // Adds |test_name| to the set of disabled tests.
   void AddDisabledTest(const std::string& test_name);
 
-  // Adds location for the |test_name|. Locations are required for all tests run
-  // in a given shard, by both the TestLauncher and its delegate.
-  void AddTestLocation(const std::string& test_name,
-                       const std::string& file,
-                       int line);
-
-  // Adds placeholder for the |test_name|. Placeholders are required for all
-  // tests that are expected to produce results in a given shard.
-  void AddTestPlaceholder(const std::string& test_name);
-
   // Adds |result| to the stored test results.
   void AddTestResult(const TestResult& result);
-
-  // Even when no iterations have occurred, we still want to generate output
-  // data with "NOTRUN" status for each test. This method generates a
-  // placeholder iteration. The first iteration will overwrite the data in the
-  // placeholder iteration.
-  void GeneratePlaceholderIteration();
 
   // Prints a summary of current test iteration to stdout.
   void PrintSummaryOfCurrentIteration() const;
@@ -77,34 +61,13 @@ class TestResultsTracker {
   // conditions that affect the entire test run, as opposed to individual tests.
   void AddGlobalTag(const std::string& tag);
 
-  // Saves a JSON summary of all test iterations results to |path|. Adds
-  // |additional_tags| to the summary (just for this invocation). Returns
+  // Saves a JSON summary of all test iterations results to |path|. Returns
   // true on success.
-  bool SaveSummaryAsJSON(
-      const FilePath& path,
-      const std::vector<std::string>& additional_tags) const WARN_UNUSED_RESULT;
-
-  // Map where keys are test result statuses, and values are sets of tests
-  // which finished with that status.
-  typedef std::map<TestResult::Status, std::set<std::string> > TestStatusMap;
-
-  // Returns a test status map (see above) for current test iteration.
-  TestStatusMap GetTestStatusMapForCurrentIteration() const;
-
-  // Returns a test status map (see above) for all test iterations.
-  TestStatusMap GetTestStatusMapForAllIterations() const;
+  bool SaveSummaryAsJSON(const FilePath& path) const WARN_UNUSED_RESULT;
 
  private:
-  void GetTestStatusForIteration(int iteration, TestStatusMap* map) const;
-
-  template<typename InputIterator>
-  void PrintTests(InputIterator first,
-                  InputIterator last,
-                  const std::string& description) const;
-
   struct AggregateTestResult {
     AggregateTestResult();
-    AggregateTestResult(const AggregateTestResult& other);
     ~AggregateTestResult();
 
     std::vector<TestResult> test_results;
@@ -112,20 +75,11 @@ class TestResultsTracker {
 
   struct PerIterationData {
     PerIterationData();
-    PerIterationData(const PerIterationData& other);
     ~PerIterationData();
 
     // Aggregate test results grouped by full test name.
     typedef std::map<std::string, AggregateTestResult> ResultsMap;
     ResultsMap results;
-  };
-
-  struct CodeLocation {
-    CodeLocation(const std::string& f, int l) : file(f), line(l) {
-    }
-
-    std::string file;
-    int line;
   };
 
   ThreadChecker thread_checker_;
@@ -136,12 +90,6 @@ class TestResultsTracker {
 
   // Set of all test names discovered in the current executable.
   std::set<std::string> all_tests_;
-
-  // CodeLocation for all tests that will be run as a part of this shard.
-  std::map<std::string, CodeLocation> test_locations_;
-
-  // Name of tests that will run and produce results.
-  std::set<std::string> test_placeholders_;
 
   // Set of all disabled tests in the current executable.
   std::set<std::string> disabled_tests_;

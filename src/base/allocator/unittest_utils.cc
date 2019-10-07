@@ -6,7 +6,6 @@
 // of other libraries
 
 #include <config.h>
-#include <stddef.h>
 
 inline int snprintf(char* buffer, size_t count, const char* format, ...) {
     int result;

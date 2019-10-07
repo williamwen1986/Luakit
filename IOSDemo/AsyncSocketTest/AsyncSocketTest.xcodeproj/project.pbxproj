@@ -13,26 +13,26 @@
 		2898C93A20C683EC00249775 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2898C93920C683EC00249775 /* Assets.xcassets */; };
 		2898C93D20C683EC00249775 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2898C93B20C683EC00249775 /* LaunchScreen.storyboard */; };
 		2898C94020C683EC00249775 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2898C93F20C683EC00249775 /* main.mm */; };
-		C517F6A82332A78900D9FA78 /* libLuakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C517F6A52332A72600D9FA78 /* libLuakit.a */; };
 		C517F6AA2332A79B00D9FA78 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C517F6A92332A79B00D9FA78 /* libssl.a */; };
 		C517F6AC2332A7C100D9FA78 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C517F6AB2332A7C100D9FA78 /* lua */; };
+		C54E8B65234BBE8200F04AD4 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8B62234BBE6800F04AD4 /* libluakit.a */; };
 		C591BC88232BFC39003DF5E1 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C591BC87232BFC39003DF5E1 /* NetworkExtension.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C517F6A42332A72600D9FA78 /* PBXContainerItemProxy */ = {
+		C54E8B61234BBE6800F04AD4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */;
+			containerPortal = C54E8B4F234BBE6700F04AD4 /* luakit.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 2883AC9120B43DFB005E1F54;
-			remoteInfo = Luakit;
+			remoteGlobalIDString = C545B526233DF2DE00B44FF2;
+			remoteInfo = luakit;
 		};
-		C517F6A62332A76E00D9FA78 /* PBXContainerItemProxy */ = {
+		C54E8B63234BBE7000F04AD4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */;
+			containerPortal = C54E8B4F234BBE6700F04AD4 /* luakit.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 2883AC9020B43DFB005E1F54;
-			remoteInfo = Luakit;
+			remoteGlobalIDString = C545B525233DF2DE00B44FF2;
+			remoteInfo = luakit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -47,10 +47,9 @@
 		2898C93C20C683EC00249775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2898C93E20C683EC00249775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2898C93F20C683EC00249775 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
-		C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit.xcodeproj; path = ../../IOSFrameWork/Luakit.xcodeproj; sourceTree = "<group>"; };
 		C517F6A92332A79B00D9FA78 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/ios12.4-Debug/libssl.a"; sourceTree = "<group>"; };
 		C517F6AB2332A7C100D9FA78 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = AsyncSocketTest/lua; sourceTree = "<group>"; };
-		C591BC7E232BE97B003DF5E1 /* async_socket_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = async_socket_test.lua; path = Assets.xcassets/async_socket_test.lua; sourceTree = "<group>"; };
+		C54E8B4F234BBE6700F04AD4 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../IOSFrameWork/luakit.xcodeproj; sourceTree = "<group>"; };
 		C591BC86232BFBFF003DF5E1 /* AsyncSocketTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AsyncSocketTest.entitlements; sourceTree = "<group>"; };
 		C591BC87232BFC39003DF5E1 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -60,8 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C54E8B65234BBE8200F04AD4 /* libluakit.a in Frameworks */,
 				C517F6AA2332A79B00D9FA78 /* libssl.a in Frameworks */,
-				C517F6A82332A78900D9FA78 /* libLuakit.a in Frameworks */,
 				C591BC88232BFC39003DF5E1 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,8 +71,8 @@
 		2898C92420C683EB00249775 = {
 			isa = PBXGroup;
 			children = (
+				C54E8B4F234BBE6700F04AD4 /* luakit.xcodeproj */,
 				C517F6AB2332A7C100D9FA78 /* lua */,
-				C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */,
 				2898C92F20C683EB00249775 /* AsyncSocketTest */,
 				2898C92E20C683EB00249775 /* Products */,
 				2898C96D20C6848B00249775 /* Frameworks */,
@@ -92,7 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				C591BC86232BFBFF003DF5E1 /* AsyncSocketTest.entitlements */,
-				C591BC7E232BE97B003DF5E1 /* async_socket_test.lua */,
 				2898C93020C683EB00249775 /* AppDelegate.h */,
 				2898C93120C683EB00249775 /* AppDelegate.m */,
 				2898C93320C683EB00249775 /* ViewController.h */,
@@ -115,10 +113,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C517F6A12332A72600D9FA78 /* Products */ = {
+		C54E8B50234BBE6700F04AD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C517F6A52332A72600D9FA78 /* libLuakit.a */,
+				C54E8B62234BBE6800F04AD4 /* libluakit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,7 +135,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				C517F6A72332A76E00D9FA78 /* PBXTargetDependency */,
+				C54E8B64234BBE7000F04AD4 /* PBXTargetDependency */,
 			);
 			name = AsyncSocketTest;
 			productName = AsyncSocketTest;
@@ -176,8 +174,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C517F6A12332A72600D9FA78 /* Products */;
-					ProjectRef = C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */;
+					ProductGroup = C54E8B50234BBE6700F04AD4 /* Products */;
+					ProjectRef = C54E8B4F234BBE6700F04AD4 /* luakit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -188,11 +186,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C517F6A52332A72600D9FA78 /* libLuakit.a */ = {
+		C54E8B62234BBE6800F04AD4 /* libluakit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libLuakit.a;
-			remoteRef = C517F6A42332A72600D9FA78 /* PBXContainerItemProxy */;
+			path = libluakit.a;
+			remoteRef = C54E8B61234BBE6800F04AD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -225,10 +223,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C517F6A72332A76E00D9FA78 /* PBXTargetDependency */ = {
+		C54E8B64234BBE7000F04AD4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Luakit;
-			targetProxy = C517F6A62332A76E00D9FA78 /* PBXContainerItemProxy */;
+			name = luakit;
+			targetProxy = C54E8B63234BBE7000F04AD4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -374,9 +372,9 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../src",
-					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
+					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
 					"$(SRCROOT)/../../src/common",
-					"$(SRCROOT)/../../src/lua-5.1.5/lua",
+					"$(SRCROOT)/../../third-party/lua-5.3.5",
 				);
 				INFOPLIST_FILE = AsyncSocketTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -401,9 +399,9 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../src",
-					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
+					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
 					"$(SRCROOT)/../../src/common",
-					"$(SRCROOT)/../../src/lua-5.1.5/lua",
+					"$(SRCROOT)/../../third-party/lua-5.3.5",
 				);
 				INFOPLIST_FILE = AsyncSocketTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

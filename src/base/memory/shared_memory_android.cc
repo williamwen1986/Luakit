@@ -4,12 +4,9 @@
 
 #include "base/memory/shared_memory.h"
 
-#include <stddef.h>
 #include <sys/mman.h>
 
-#include "base/bits.h"
 #include "base/logging.h"
-#include "base/process/process_metrics.h"
 #include "third_party/ashmem/ashmem.h"
 
 namespace base {
@@ -20,26 +17,32 @@ namespace base {
 // are closed, the memory buffer will go away.
 
 bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
-  DCHECK(!shm_.IsValid());
+  DCHECK_EQ(-1, mapped_file_ );
 
-  // Align size as required by ashmem_create_region() API documentation.
-  size_t rounded_size = bits::Align(options.size, GetPageSize());
-
-  if (rounded_size > static_cast<size_t>(std::numeric_limits<int>::max()))
+  if (options.size > static_cast<size_t>(std::numeric_limits<int>::max()))
     return false;
 
   // "name" is just a label in ashmem. It is visible in /proc/pid/maps.
-  int fd = ashmem_create_region("", rounded_size);
-  shm_ = SharedMemoryHandle::ImportHandle(fd, options.size);
-  if (!shm_.IsValid()) {
+  mapped_file_ = ashmem_create_region(
+      options.name == NULL ? "" : options.name->c_str(),
+      options.size);
+  if (-1 == mapped_file_) {
     DLOG(ERROR) << "Shared memory creation failed";
     return false;
   }
 
-  int flags = PROT_READ | PROT_WRITE | (options.executable ? PROT_EXEC : 0);
-  int err = ashmem_set_prot_region(shm_.GetHandle(), flags);
+  int err = ashmem_set_prot_region(mapped_file_,
+                                   PROT_READ | PROT_WRITE | PROT_EXEC);
   if (err < 0) {
     DLOG(ERROR) << "Error " << err << " when setting protection of ashmem";
+    return false;
+  }
+
+  // Android doesn't appear to have a way to drop write access on an ashmem
+  // segment for a single descriptor.  http://crbug.com/320865
+  readonly_mapped_file_ = dup(mapped_file_);
+  if (-1 == readonly_mapped_file_) {
+    DPLOG(ERROR) << "dup() failed";
     return false;
   }
 
@@ -48,19 +51,16 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
   return true;
 }
 
-void SharedMemory::Close() {
-  if (shm_.IsValid()) {
-    shm_.Close();
-    shm_ = SharedMemoryHandle();
-  }
+bool SharedMemory::Delete(const std::string& name) {
+  // Like on Windows, this is intentionally returning true as ashmem will
+  // automatically releases the resource when all FDs on it are closed.
+  return true;
 }
 
-SharedMemoryHandle SharedMemory::GetReadOnlyHandle() const {
-  // There are no read-only Ashmem descriptors on Android.
-  // Instead, the protection mask is a property of the region itself.
-  SharedMemoryHandle handle = shm_.Duplicate();
-  handle.SetReadOnly();
-  return handle;
+bool SharedMemory::Open(const std::string& name, bool read_only) {
+  // ashmem doesn't support name mapping
+  NOTIMPLEMENTED();
+  return false;
 }
 
 }  // namespace base

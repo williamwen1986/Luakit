@@ -6,35 +6,39 @@
 
 namespace base {
 
-void NativeLibraryTraits::Free(NativeLibrary library) {
-  UnloadNativeLibrary(library);
+ScopedNativeLibrary::ScopedNativeLibrary() : library_(NULL) {
 }
-
-using BaseClass = ScopedGeneric<NativeLibrary, NativeLibraryTraits>;
-
-ScopedNativeLibrary::ScopedNativeLibrary() : BaseClass(), error_() {}
-
-ScopedNativeLibrary::~ScopedNativeLibrary() = default;
 
 ScopedNativeLibrary::ScopedNativeLibrary(NativeLibrary library)
-    : BaseClass(library), error_() {}
-
-ScopedNativeLibrary::ScopedNativeLibrary(const FilePath& library_path)
-    : ScopedNativeLibrary() {
-  reset(LoadNativeLibrary(library_path, &error_));
+    : library_(library) {
 }
 
-ScopedNativeLibrary::ScopedNativeLibrary(ScopedNativeLibrary&& scoped_library)
-    : BaseClass(scoped_library.release()), error_() {}
-
-void* ScopedNativeLibrary::GetFunctionPointer(const char* function_name) const {
-  if (!is_valid())
-    return nullptr;
-  return GetFunctionPointerFromNativeLibrary(get(), function_name);
+ScopedNativeLibrary::ScopedNativeLibrary(const FilePath& library_path) {
+  library_ = base::LoadNativeLibrary(library_path, NULL);
 }
 
-const NativeLibraryLoadError* ScopedNativeLibrary::GetError() const {
-  return &error_;
+ScopedNativeLibrary::~ScopedNativeLibrary() {
+  if (library_)
+    base::UnloadNativeLibrary(library_);
+}
+
+void* ScopedNativeLibrary::GetFunctionPointer(
+    const char* function_name) const {
+  if (!library_)
+    return NULL;
+  return base::GetFunctionPointerFromNativeLibrary(library_, function_name);
+}
+
+void ScopedNativeLibrary::Reset(NativeLibrary library) {
+  if (library_)
+    base::UnloadNativeLibrary(library_);
+  library_ = library;
+}
+
+NativeLibrary ScopedNativeLibrary::Release() {
+  NativeLibrary result = library_;
+  library_ = NULL;
+  return result;
 }
 
 }  // namespace base

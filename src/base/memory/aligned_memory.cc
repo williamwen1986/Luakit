@@ -5,7 +5,6 @@
 #include "base/memory/aligned_memory.h"
 
 #include "base/logging.h"
-#include "build/build_config.h"
 
 #if defined(OS_ANDROID)
 #include <malloc.h>
@@ -17,7 +16,7 @@ void* AlignedAlloc(size_t size, size_t alignment) {
   DCHECK_GT(size, 0U);
   DCHECK_EQ(alignment & (alignment - 1), 0U);
   DCHECK_EQ(alignment % sizeof(void*), 0U);
-  void* ptr = nullptr;
+  void* ptr = NULL;
 #if defined(COMPILER_MSVC)
   ptr = _aligned_malloc(size, alignment);
 // Android technically supports posix_memalign(), but does not expose it in
@@ -28,10 +27,8 @@ void* AlignedAlloc(size_t size, size_t alignment) {
 #elif defined(OS_ANDROID)
   ptr = memalign(alignment, size);
 #else
-  if (int ret = posix_memalign(&ptr, alignment, size)) {
-    DLOG(ERROR) << "posix_memalign() returned with error " << ret;
-    ptr = nullptr;
-  }
+  if (posix_memalign(&ptr, alignment, size))
+    ptr = NULL;
 #endif
   // Since aligned allocations may fail for non-memory related reasons, force a
   // crash if we encounter a failed allocation; maintaining consistent behavior

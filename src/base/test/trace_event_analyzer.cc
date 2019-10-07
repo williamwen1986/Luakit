@@ -4,32 +4,13 @@
 
 #include "base/test/trace_event_analyzer.h"
 
-#include <math.h>
-
 #include <algorithm>
+#include <math.h>
 #include <set>
 
-#include "base/bind.h"
 #include "base/json/json_reader.h"
-#include "base/memory/ptr_util.h"
-#include "base/memory/ref_counted_memory.h"
-#include "base/run_loop.h"
-#include "base/strings/pattern.h"
-#include "base/trace_event/trace_buffer.h"
-#include "base/trace_event/trace_config.h"
-#include "base/trace_event/trace_log.h"
+#include "base/memory/scoped_ptr.h"
 #include "base/values.h"
-
-namespace {
-void OnTraceDataCollected(base::OnceClosure quit_closure,
-                          base::trace_event::TraceResultBuffer* buffer,
-                          const scoped_refptr<base::RefCountedString>& json,
-                          bool has_more_events) {
-  buffer->AddFragment(json->data());
-  if (!has_more_events)
-    std::move(quit_closure).Run();
-}
-}  // namespace
 
 namespace trace_analyzer {
 
@@ -40,24 +21,22 @@ TraceEvent::TraceEvent()
       timestamp(0),
       duration(0),
       phase(TRACE_EVENT_PHASE_BEGIN),
-      other_event(nullptr) {}
+      other_event(NULL) {
+}
 
-TraceEvent::TraceEvent(TraceEvent&& other) = default;
-
-TraceEvent::~TraceEvent() = default;
-
-TraceEvent& TraceEvent::operator=(TraceEvent&& rhs) = default;
+TraceEvent::~TraceEvent() {
+}
 
 bool TraceEvent::SetFromJSON(const base::Value* event_value) {
-  if (event_value->type() != base::Value::Type::DICTIONARY) {
-    LOG(ERROR) << "Value must be Type::DICTIONARY";
+  if (event_value->GetType() != base::Value::TYPE_DICTIONARY) {
+    LOG(ERROR) << "Value must be TYPE_DICTIONARY";
     return false;
   }
   const base::DictionaryValue* dictionary =
       static_cast<const base::DictionaryValue*>(event_value);
 
   std::string phase_str;
-  const base::DictionaryValue* args = nullptr;
+  const base::DictionaryValue* args = NULL;
 
   if (!dictionary->GetString("ph", &phase_str)) {
     LOG(ERROR) << "ph is missing from TraceEvent JSON";
@@ -71,12 +50,6 @@ bool TraceEvent::SetFromJSON(const base::Value* event_value) {
   bool require_id = (phase == TRACE_EVENT_PHASE_ASYNC_BEGIN ||
                      phase == TRACE_EVENT_PHASE_ASYNC_STEP_INTO ||
                      phase == TRACE_EVENT_PHASE_ASYNC_STEP_PAST ||
-                     phase == TRACE_EVENT_PHASE_MEMORY_DUMP ||
-                     phase == TRACE_EVENT_PHASE_ENTER_CONTEXT ||
-                     phase == TRACE_EVENT_PHASE_LEAVE_CONTEXT ||
-                     phase == TRACE_EVENT_PHASE_CREATE_OBJECT ||
-                     phase == TRACE_EVENT_PHASE_DELETE_OBJECT ||
-                     phase == TRACE_EVENT_PHASE_SNAPSHOT_OBJECT ||
                      phase == TRACE_EVENT_PHASE_ASYNC_END);
 
   if (require_origin && !dictionary->GetInteger("pid", &thread.process_id)) {
@@ -103,52 +76,33 @@ bool TraceEvent::SetFromJSON(const base::Value* event_value) {
     return false;
   }
   if (!dictionary->GetDictionary("args", &args)) {
-    std::string stripped_args;
-    // If argument filter is enabled, the arguments field contains a string
-    // value.
-    if (!dictionary->GetString("args", &stripped_args) ||
-        stripped_args != "__stripped__") {
-      LOG(ERROR) << "args is missing from TraceEvent JSON";
-      return false;
-    }
+    LOG(ERROR) << "args is missing from TraceEvent JSON";
+    return false;
   }
   if (require_id && !dictionary->GetString("id", &id)) {
     LOG(ERROR) << "id is missing from ASYNC_BEGIN/ASYNC_END TraceEvent JSON";
     return false;
   }
 
-  dictionary->GetDouble("tdur", &thread_duration);
-  dictionary->GetDouble("tts", &thread_timestamp);
-  dictionary->GetString("scope", &scope);
-  dictionary->GetString("bind_id", &bind_id);
-  dictionary->GetBoolean("flow_out", &flow_out);
-  dictionary->GetBoolean("flow_in", &flow_in);
-
-  const base::DictionaryValue* id2;
-  if (dictionary->GetDictionary("id2", &id2)) {
-    id2->GetString("global", &global_id2);
-    id2->GetString("local", &local_id2);
-  }
-
   // For each argument, copy the type and create a trace_analyzer::TraceValue.
-  if (args) {
-    for (base::DictionaryValue::Iterator it(*args); !it.IsAtEnd();
-         it.Advance()) {
-      std::string str;
-      bool boolean = false;
-      int int_num = 0;
-      double double_num = 0.0;
-      if (it.value().GetAsString(&str)) {
-        arg_strings[it.key()] = str;
-      } else if (it.value().GetAsInteger(&int_num)) {
-        arg_numbers[it.key()] = static_cast<double>(int_num);
-      } else if (it.value().GetAsBoolean(&boolean)) {
-        arg_numbers[it.key()] = static_cast<double>(boolean ? 1 : 0);
-      } else if (it.value().GetAsDouble(&double_num)) {
-        arg_numbers[it.key()] = double_num;
-      }
-      // Record all arguments as values.
-      arg_values[it.key()] = it.value().CreateDeepCopy();
+  for (base::DictionaryValue::Iterator it(*args); !it.IsAtEnd();
+       it.Advance()) {
+    std::string str;
+    bool boolean = false;
+    int int_num = 0;
+    double double_num = 0.0;
+    if (it.value().GetAsString(&str))
+      arg_strings[it.key()] = str;
+    else if (it.value().GetAsInteger(&int_num))
+      arg_numbers[it.key()] = static_cast<double>(int_num);
+    else if (it.value().GetAsBoolean(&boolean))
+      arg_numbers[it.key()] = static_cast<double>(boolean ? 1 : 0);
+    else if (it.value().GetAsDouble(&double_num))
+      arg_numbers[it.key()] = double_num;
+    else {
+      LOG(WARNING) << "Value type of argument is not supported: " <<
+          static_cast<int>(it.value().GetType());
+      continue;  // Skip non-supported arguments.
     }
   }
 
@@ -161,9 +115,9 @@ double TraceEvent::GetAbsTimeToOtherEvent() const {
 
 bool TraceEvent::GetArgAsString(const std::string& name,
                                 std::string* arg) const {
-  const auto it = arg_strings.find(name);
-  if (it != arg_strings.end()) {
-    *arg = it->second;
+  std::map<std::string, std::string>::const_iterator i = arg_strings.find(name);
+  if (i != arg_strings.end()) {
+    *arg = i->second;
     return true;
   }
   return false;
@@ -171,19 +125,9 @@ bool TraceEvent::GetArgAsString(const std::string& name,
 
 bool TraceEvent::GetArgAsNumber(const std::string& name,
                                 double* arg) const {
-  const auto it = arg_numbers.find(name);
-  if (it != arg_numbers.end()) {
-    *arg = it->second;
-    return true;
-  }
-  return false;
-}
-
-bool TraceEvent::GetArgAsValue(const std::string& name,
-                               std::unique_ptr<base::Value>* arg) const {
-  const auto it = arg_values.find(name);
-  if (it != arg_values.end()) {
-    *arg = it->second->CreateDeepCopy();
+  std::map<std::string, double>::const_iterator i = arg_numbers.find(name);
+  if (i != arg_numbers.end()) {
+    *arg = i->second;
     return true;
   }
   return false;
@@ -197,44 +141,36 @@ bool TraceEvent::HasNumberArg(const std::string& name) const {
   return (arg_numbers.find(name) != arg_numbers.end());
 }
 
-bool TraceEvent::HasArg(const std::string& name) const {
-  return (arg_values.find(name) != arg_values.end());
-}
-
 std::string TraceEvent::GetKnownArgAsString(const std::string& name) const {
   std::string arg_string;
-  bool result = GetArgAsString(name, &arg_string);
-  DCHECK(result);
-  return arg_string;
+  if (GetArgAsString(name, &arg_string))
+    return arg_string;
+  NOTREACHED();
+  return std::string();
 }
 
 double TraceEvent::GetKnownArgAsDouble(const std::string& name) const {
-  double arg_double = 0;
-  bool result = GetArgAsNumber(name, &arg_double);
-  DCHECK(result);
-  return arg_double;
+  double arg_double;
+  if (GetArgAsNumber(name, &arg_double))
+    return arg_double;
+  NOTREACHED();
+  return 0;
 }
 
 int TraceEvent::GetKnownArgAsInt(const std::string& name) const {
-  double arg_double = 0;
-  bool result = GetArgAsNumber(name, &arg_double);
-  DCHECK(result);
-  return static_cast<int>(arg_double);
+  double arg_double;
+  if (GetArgAsNumber(name, &arg_double))
+    return static_cast<int>(arg_double);
+  NOTREACHED();
+  return 0;
 }
 
 bool TraceEvent::GetKnownArgAsBool(const std::string& name) const {
-  double arg_double = 0;
-  bool result = GetArgAsNumber(name, &arg_double);
-  DCHECK(result);
-  return (arg_double != 0.0);
-}
-
-std::unique_ptr<base::Value> TraceEvent::GetKnownArgAsValue(
-    const std::string& name) const {
-  std::unique_ptr<base::Value> arg_value;
-  bool result = GetArgAsValue(name, &arg_value);
-  DCHECK(result);
-  return arg_value;
+  double arg_double;
+  if (GetArgAsNumber(name, &arg_double))
+    return (arg_double != 0.0);
+  NOTREACHED();
+  return false;
 }
 
 // QueryNode
@@ -242,7 +178,8 @@ std::unique_ptr<base::Value> TraceEvent::GetKnownArgAsValue(
 QueryNode::QueryNode(const Query& query) : query_(query) {
 }
 
-QueryNode::~QueryNode() = default;
+QueryNode::~QueryNode() {
+}
 
 // Query
 
@@ -263,9 +200,19 @@ Query::Query(TraceEventMember member, const std::string& arg_name)
       is_pattern_(false) {
 }
 
-Query::Query(const Query& query) = default;
+Query::Query(const Query& query)
+    : type_(query.type_),
+      operator_(query.operator_),
+      left_(query.left_),
+      right_(query.right_),
+      member_(query.member_),
+      number_(query.number_),
+      string_(query.string_),
+      is_pattern_(query.is_pattern_) {
+}
 
-Query::~Query() = default;
+Query::~Query() {
+}
 
 Query Query::String(const std::string& str) {
   return Query(str);
@@ -275,11 +222,11 @@ Query Query::Double(double num) {
   return Query(num);
 }
 
-Query Query::Int(int32_t num) {
+Query Query::Int(int32 num) {
   return Query(static_cast<double>(num));
 }
 
-Query Query::Uint(uint32_t num) {
+Query Query::Uint(uint32 num) {
   return Query(static_cast<double>(num));
 }
 
@@ -312,10 +259,9 @@ bool Query::Evaluate(const TraceEvent& event) const {
   if (is_str)
     return !str_value.empty();
 
-  DCHECK_EQ(QUERY_BOOLEAN_OPERATOR, type_)
+  DCHECK(type_ == QUERY_BOOLEAN_OPERATOR)
       << "Invalid query: missing boolean expression";
-  DCHECK(left_.get());
-  DCHECK(right_.get() || is_unary_operator());
+  DCHECK(left_.get() && (right_.get() || is_unary_operator()));
 
   if (is_comparison_operator()) {
     DCHECK(left().is_value() && right().is_value())
@@ -324,7 +270,7 @@ bool Query::Evaluate(const TraceEvent& event) const {
     bool compare_result = false;
     if (CompareAsDouble(event, &compare_result))
       return compare_result;
-    if (CompareAsString(event, &compare_result))
+    else if (CompareAsString(event, &compare_result))
       return compare_result;
     return false;
   }
@@ -338,8 +284,10 @@ bool Query::Evaluate(const TraceEvent& event) const {
       return !left().Evaluate(event);
     default:
       NOTREACHED();
-      return false;
   }
+
+  NOTREACHED();
+  return false;
 }
 
 bool Query::CompareAsDouble(const TraceEvent& event, bool* result) const {
@@ -369,6 +317,7 @@ bool Query::CompareAsDouble(const TraceEvent& event, bool* result) const {
       NOTREACHED();
       return false;
   }
+  return true;
 }
 
 bool Query::CompareAsString(const TraceEvent& event, bool* result) const {
@@ -378,17 +327,17 @@ bool Query::CompareAsString(const TraceEvent& event, bool* result) const {
   switch (operator_) {
     case OP_EQ:
       if (right().is_pattern_)
-        *result = base::MatchPattern(lhs, rhs);
+        *result = MatchPattern(lhs, rhs);
       else if (left().is_pattern_)
-        *result = base::MatchPattern(rhs, lhs);
+        *result = MatchPattern(rhs, lhs);
       else
         *result = (lhs == rhs);
       return true;
     case OP_NE:
       if (right().is_pattern_)
-        *result = !base::MatchPattern(lhs, rhs);
+        *result = !MatchPattern(lhs, rhs);
       else if (left().is_pattern_)
-        *result = !base::MatchPattern(rhs, lhs);
+        *result = !MatchPattern(rhs, lhs);
       else
         *result = (lhs != rhs);
       return true;
@@ -408,13 +357,13 @@ bool Query::CompareAsString(const TraceEvent& event, bool* result) const {
       NOTREACHED();
       return false;
   }
+  return true;
 }
 
 bool Query::EvaluateArithmeticOperator(const TraceEvent& event,
                                        double* num) const {
-  DCHECK_EQ(QUERY_ARITHMETIC_OPERATOR, type_);
-  DCHECK(left_.get());
-  DCHECK(right_.get() || is_unary_operator());
+  DCHECK(type_ == QUERY_ARITHMETIC_OPERATOR);
+  DCHECK(left_.get() && (right_.get() || is_unary_operator()));
 
   double lhs = 0, rhs = 0;
   if (!left().GetAsDouble(event, &lhs))
@@ -436,8 +385,8 @@ bool Query::EvaluateArithmeticOperator(const TraceEvent& event,
       *num = lhs / rhs;
       return true;
     case OP_MOD:
-      *num = static_cast<double>(static_cast<int64_t>(lhs) %
-                                 static_cast<int64_t>(rhs));
+      *num = static_cast<double>(static_cast<int64>(lhs) %
+                                 static_cast<int64>(rhs));
       return true;
     case OP_NEGATE:
       *num = -lhs;
@@ -474,22 +423,14 @@ bool Query::GetAsString(const TraceEvent& event, std::string* str) const {
   }
 }
 
-const TraceEvent* Query::SelectTargetEvent(const TraceEvent* event,
-                                           TraceEventMember member) {
-  if (member >= OTHER_FIRST_MEMBER && member <= OTHER_LAST_MEMBER)
-    return event->other_event;
-  if (member >= PREV_FIRST_MEMBER && member <= PREV_LAST_MEMBER)
-    return event->prev_event;
-  return event;
-}
-
 bool Query::GetMemberValueAsDouble(const TraceEvent& event,
                                    double* num) const {
-  DCHECK_EQ(QUERY_EVENT_MEMBER, type_);
+  DCHECK(type_ == QUERY_EVENT_MEMBER);
 
   // This could be a request for a member of |event| or a member of |event|'s
-  // associated previous or next event. Store the target event in the_event:
-  const TraceEvent* the_event = SelectTargetEvent(&event, member_);
+  // associated event. Store the target event in the_event:
+  const TraceEvent* the_event = (member_ < OTHER_PID) ?
+      &event : event.other_event;
 
   // Request for member of associated event, but there is no associated event.
   if (!the_event)
@@ -498,49 +439,45 @@ bool Query::GetMemberValueAsDouble(const TraceEvent& event,
   switch (member_) {
     case EVENT_PID:
     case OTHER_PID:
-    case PREV_PID:
       *num = static_cast<double>(the_event->thread.process_id);
       return true;
     case EVENT_TID:
     case OTHER_TID:
-    case PREV_TID:
       *num = static_cast<double>(the_event->thread.thread_id);
       return true;
     case EVENT_TIME:
     case OTHER_TIME:
-    case PREV_TIME:
       *num = the_event->timestamp;
       return true;
     case EVENT_DURATION:
-      if (!the_event->has_other_event())
-        return false;
-      *num = the_event->GetAbsTimeToOtherEvent();
-      return true;
+      if (the_event->has_other_event()) {
+        *num = the_event->GetAbsTimeToOtherEvent();
+        return true;
+      }
+      return false;
     case EVENT_COMPLETE_DURATION:
-      if (the_event->phase != TRACE_EVENT_PHASE_COMPLETE)
-        return false;
-      *num = the_event->duration;
-      return true;
+      if (the_event->phase == TRACE_EVENT_PHASE_COMPLETE) {
+        *num = the_event->duration;
+        return true;
+      }
+      return false;
     case EVENT_PHASE:
     case OTHER_PHASE:
-    case PREV_PHASE:
       *num = static_cast<double>(the_event->phase);
       return true;
     case EVENT_HAS_STRING_ARG:
     case OTHER_HAS_STRING_ARG:
-    case PREV_HAS_STRING_ARG:
       *num = (the_event->HasStringArg(string_) ? 1.0 : 0.0);
       return true;
     case EVENT_HAS_NUMBER_ARG:
     case OTHER_HAS_NUMBER_ARG:
-    case PREV_HAS_NUMBER_ARG:
       *num = (the_event->HasNumberArg(string_) ? 1.0 : 0.0);
       return true;
     case EVENT_ARG:
-    case OTHER_ARG:
-    case PREV_ARG: {
+    case OTHER_ARG: {
       // Search for the argument name and return its value if found.
-      auto num_i = the_event->arg_numbers.find(string_);
+      std::map<std::string, double>::const_iterator num_i =
+          the_event->arg_numbers.find(string_);
       if (num_i == the_event->arg_numbers.end())
         return false;
       *num = num_i->second;
@@ -550,9 +487,6 @@ bool Query::GetMemberValueAsDouble(const TraceEvent& event,
       // return 1.0 (true) if the other event exists
       *num = event.other_event ? 1.0 : 0.0;
       return true;
-    case EVENT_HAS_PREV:
-      *num = event.prev_event ? 1.0 : 0.0;
-      return true;
     default:
       return false;
   }
@@ -560,11 +494,12 @@ bool Query::GetMemberValueAsDouble(const TraceEvent& event,
 
 bool Query::GetMemberValueAsString(const TraceEvent& event,
                                    std::string* str) const {
-  DCHECK_EQ(QUERY_EVENT_MEMBER, type_);
+  DCHECK(type_ == QUERY_EVENT_MEMBER);
 
   // This could be a request for a member of |event| or a member of |event|'s
-  // associated previous or next event. Store the target event in the_event:
-  const TraceEvent* the_event = SelectTargetEvent(&event, member_);
+  // associated event. Store the target event in the_event:
+  const TraceEvent* the_event = (member_ < OTHER_PID) ?
+      &event : event.other_event;
 
   // Request for member of associated event, but there is no associated event.
   if (!the_event)
@@ -573,24 +508,21 @@ bool Query::GetMemberValueAsString(const TraceEvent& event,
   switch (member_) {
     case EVENT_CATEGORY:
     case OTHER_CATEGORY:
-    case PREV_CATEGORY:
       *str = the_event->category;
       return true;
     case EVENT_NAME:
     case OTHER_NAME:
-    case PREV_NAME:
       *str = the_event->name;
       return true;
     case EVENT_ID:
     case OTHER_ID:
-    case PREV_ID:
       *str = the_event->id;
       return true;
     case EVENT_ARG:
-    case OTHER_ARG:
-    case PREV_ARG: {
+    case OTHER_ARG: {
       // Search for the argument name and return its value if found.
-      auto str_i = the_event->arg_strings.find(string_);
+      std::map<std::string, std::string>::const_iterator str_i =
+          the_event->arg_strings.find(string_);
       if (str_i == the_event->arg_strings.end())
         return false;
       *str = str_i->second;
@@ -710,29 +642,32 @@ namespace {
 // Search |events| for |query| and add matches to |output|.
 size_t FindMatchingEvents(const std::vector<TraceEvent>& events,
                           const Query& query,
-                          TraceEventVector* output,
-                          bool ignore_metadata_events) {
-  for (const auto& i : events) {
-    if (ignore_metadata_events && i.phase == TRACE_EVENT_PHASE_METADATA)
-      continue;
-    if (query.Evaluate(i))
-      output->push_back(&i);
+                          TraceEventVector* output) {
+  for (size_t i = 0; i < events.size(); ++i) {
+    if (query.Evaluate(events[i]))
+      output->push_back(&events[i]);
   }
   return output->size();
 }
 
 bool ParseEventsFromJson(const std::string& json,
                          std::vector<TraceEvent>* output) {
-  base::Optional<base::Value> root = base::JSONReader::Read(json);
+  scoped_ptr<base::Value> root;
+  root.reset(base::JSONReader::Read(json));
 
-  if (!root || !root->is_list())
+  base::ListValue* root_list = NULL;
+  if (!root.get() || !root->GetAsList(&root_list))
     return false;
 
-  for (const auto& item : root->GetList()) {
-    TraceEvent event;
-    if (!event.SetFromJSON(&item))
-      return false;
-    output->push_back(std::move(event));
+  for (size_t i = 0; i < root_list->GetSize(); ++i) {
+    base::Value* item = NULL;
+    if (root_list->Get(i, &item)) {
+      TraceEvent event;
+      if (event.SetFromJSON(item))
+        output->push_back(event);
+      else
+        return false;
+    }
   }
 
   return true;
@@ -742,17 +677,18 @@ bool ParseEventsFromJson(const std::string& json,
 
 // TraceAnalyzer
 
-TraceAnalyzer::TraceAnalyzer()
-    : ignore_metadata_events_(false), allow_association_changes_(true) {}
+TraceAnalyzer::TraceAnalyzer() : allow_assocation_changes_(true) {
+}
 
-TraceAnalyzer::~TraceAnalyzer() = default;
+TraceAnalyzer::~TraceAnalyzer() {
+}
 
 // static
 TraceAnalyzer* TraceAnalyzer::Create(const std::string& json_events) {
-  std::unique_ptr<TraceAnalyzer> analyzer(new TraceAnalyzer());
+  scoped_ptr<TraceAnalyzer> analyzer(new TraceAnalyzer());
   if (analyzer->SetEvents(json_events))
     return analyzer.release();
-  return nullptr;
+  return NULL;
 }
 
 bool TraceAnalyzer::SetEvents(const std::string& json_events) {
@@ -777,7 +713,7 @@ void TraceAnalyzer::AssociateBeginEndEvents() {
   AssociateEvents(begin, end, match);
 }
 
-void TraceAnalyzer::AssociateAsyncBeginEndEvents(bool match_pid) {
+void TraceAnalyzer::AssociateAsyncBeginEndEvents() {
   using trace_analyzer::Query;
 
   Query begin(
@@ -787,12 +723,9 @@ void TraceAnalyzer::AssociateAsyncBeginEndEvents(bool match_pid) {
   Query end(Query::EventPhaseIs(TRACE_EVENT_PHASE_ASYNC_END) ||
             Query::EventPhaseIs(TRACE_EVENT_PHASE_ASYNC_STEP_INTO) ||
             Query::EventPhaseIs(TRACE_EVENT_PHASE_ASYNC_STEP_PAST));
-  Query match(Query::EventCategory() == Query::OtherCategory() &&
+  Query match(Query::EventName() == Query::OtherName() &&
+              Query::EventCategory() == Query::OtherCategory() &&
               Query::EventId() == Query::OtherId());
-
-  if (match_pid) {
-    match = match && Query::EventPid() == Query::OtherPid();
-  }
 
   AssociateEvents(begin, end, match);
 }
@@ -800,13 +733,17 @@ void TraceAnalyzer::AssociateAsyncBeginEndEvents(bool match_pid) {
 void TraceAnalyzer::AssociateEvents(const Query& first,
                                     const Query& second,
                                     const Query& match) {
-  DCHECK(allow_association_changes_)
-      << "AssociateEvents not allowed after FindEvents";
+  DCHECK(allow_assocation_changes_) << "AssociateEvents not allowed after "
+                                      "FindEvents";
 
   // Search for matching begin/end event pairs. When a matching end is found,
   // it is associated with the begin event.
   std::vector<TraceEvent*> begin_stack;
-  for (auto& this_event : raw_events_) {
+  for (size_t event_index = 0; event_index < raw_events_.size();
+       ++event_index) {
+
+    TraceEvent& this_event = raw_events_[event_index];
+
     if (second.Evaluate(this_event)) {
       // Search stack for matching begin, starting from end.
       for (int stack_index = static_cast<int>(begin_stack.size()) - 1;
@@ -818,8 +755,6 @@ void TraceAnalyzer::AssociateEvents(const Query& first,
         begin_event.other_event = &this_event;
         if (match.Evaluate(begin_event)) {
           // Found a matching begin/end pair.
-          // Set the associated previous event
-          this_event.prev_event = &begin_event;
           // Erase the matching begin event index from the stack.
           begin_stack.erase(begin_stack.begin() + stack_index);
           break;
@@ -839,42 +774,43 @@ void TraceAnalyzer::AssociateEvents(const Query& first,
 }
 
 void TraceAnalyzer::MergeAssociatedEventArgs() {
-  for (auto& i : raw_events_) {
+  for (size_t i = 0; i < raw_events_.size(); ++i) {
     // Merge all associated events with the first event.
-    const TraceEvent* other = i.other_event;
+    const TraceEvent* other = raw_events_[i].other_event;
     // Avoid looping by keeping set of encountered TraceEvents.
     std::set<const TraceEvent*> encounters;
-    encounters.insert(&i);
+    encounters.insert(&raw_events_[i]);
     while (other && encounters.find(other) == encounters.end()) {
       encounters.insert(other);
-      i.arg_numbers.insert(other->arg_numbers.begin(),
-                           other->arg_numbers.end());
-      i.arg_strings.insert(other->arg_strings.begin(),
-                           other->arg_strings.end());
+      raw_events_[i].arg_numbers.insert(
+          other->arg_numbers.begin(),
+          other->arg_numbers.end());
+      raw_events_[i].arg_strings.insert(
+          other->arg_strings.begin(),
+          other->arg_strings.end());
       other = other->other_event;
     }
   }
 }
 
 size_t TraceAnalyzer::FindEvents(const Query& query, TraceEventVector* output) {
-  allow_association_changes_ = false;
+  allow_assocation_changes_ = false;
   output->clear();
-  return FindMatchingEvents(
-      raw_events_, query, output, ignore_metadata_events_);
+  return FindMatchingEvents(raw_events_, query, output);
 }
 
 const TraceEvent* TraceAnalyzer::FindFirstOf(const Query& query) {
   TraceEventVector output;
   if (FindEvents(query, &output) > 0)
     return output.front();
-  return nullptr;
+  return NULL;
 }
 
 const TraceEvent* TraceAnalyzer::FindLastOf(const Query& query) {
   TraceEventVector output;
   if (FindEvents(query, &output) > 0)
     return output.back();
-  return nullptr;
+  return NULL;
 }
 
 const std::string& TraceAnalyzer::GetThreadName(
@@ -884,7 +820,8 @@ const std::string& TraceAnalyzer::GetThreadName(
 }
 
 void TraceAnalyzer::ParseMetadata() {
-  for (const auto& this_event : raw_events_) {
+  for (size_t i = 0; i < raw_events_.size(); ++i) {
+    TraceEvent& this_event = raw_events_[i];
     // Check for thread name metadata.
     if (this_event.phase != TRACE_EVENT_PHASE_METADATA ||
         this_event.name != "thread_name")
@@ -896,40 +833,12 @@ void TraceAnalyzer::ParseMetadata() {
   }
 }
 
-// Utility functions for collecting process-local traces and creating a
-// |TraceAnalyzer| from the result.
-
-void Start(const std::string& category_filter_string) {
-  DCHECK(!base::trace_event::TraceLog::GetInstance()->IsEnabled());
-  base::trace_event::TraceLog::GetInstance()->SetEnabled(
-      base::trace_event::TraceConfig(category_filter_string, ""),
-      base::trace_event::TraceLog::RECORDING_MODE);
-}
-
-std::unique_ptr<TraceAnalyzer> Stop() {
-  DCHECK(base::trace_event::TraceLog::GetInstance()->IsEnabled());
-  base::trace_event::TraceLog::GetInstance()->SetDisabled();
-
-  base::trace_event::TraceResultBuffer buffer;
-  base::trace_event::TraceResultBuffer::SimpleOutput trace_output;
-  buffer.SetOutputCallback(trace_output.GetCallback());
-  base::RunLoop run_loop;
-  buffer.Start();
-  base::trace_event::TraceLog::GetInstance()->Flush(
-      base::BindRepeating(&OnTraceDataCollected, run_loop.QuitClosure(),
-                          base::Unretained(&buffer)));
-  run_loop.Run();
-  buffer.Finish();
-
-  return base::WrapUnique(TraceAnalyzer::Create(trace_output.json_output));
-}
-
 // TraceEventVector utility functions.
 
 bool GetRateStats(const TraceEventVector& events,
                   RateStats* stats,
                   const RateStatsOptions* options) {
-  DCHECK(stats);
+  CHECK(stats);
   // Need at least 3 events to calculate rate stats.
   const size_t kMinEvents = 3;
   if (events.size() < kMinEvents) {
@@ -983,9 +892,9 @@ bool FindFirstOf(const TraceEventVector& events,
                  const Query& query,
                  size_t position,
                  size_t* return_index) {
-  DCHECK(return_index);
+  CHECK(return_index);
   for (size_t i = position; i < events.size(); ++i) {
-    if (query.Evaluate(*events[i])) {
+    if (query.Evaluate(*events.at(i))) {
       *return_index = i;
       return true;
     }
@@ -997,12 +906,18 @@ bool FindLastOf(const TraceEventVector& events,
                 const Query& query,
                 size_t position,
                 size_t* return_index) {
-  DCHECK(return_index);
-  for (size_t i = std::min(position + 1, events.size()); i != 0; --i) {
-    if (query.Evaluate(*events[i - 1])) {
-      *return_index = i - 1;
+  CHECK(return_index);
+  if (events.empty())
+    return false;
+  position = (position < events.size()) ? position : events.size() - 1;
+  for (;;) {
+    if (query.Evaluate(*events.at(position))) {
+      *return_index = position;
       return true;
     }
+    if (position == 0)
+      return false;
+    --position;
   }
   return false;
 }
@@ -1012,7 +927,7 @@ bool FindClosest(const TraceEventVector& events,
                  size_t position,
                  size_t* return_closest,
                  size_t* return_second_closest) {
-  DCHECK(return_closest);
+  CHECK(return_closest);
   if (events.empty() || position >= events.size())
     return false;
   size_t closest = events.size();

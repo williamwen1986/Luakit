@@ -4,25 +4,38 @@
 
 #include "base/pending_task.h"
 
+#include "base/tracked_objects.h"
 
 namespace base {
 
-PendingTask::PendingTask() = default;
+#if _MSC_VER >= 1700
+// This a temporary fix for compiling on VS2012. http://crbug.com/154744
+PendingTask::PendingTask() : sequence_num(-1), nestable(false) {
+}
+#endif
 
-PendingTask::PendingTask(const Location& posted_from,
-                         OnceClosure task,
-                         TimeTicks delayed_run_time,
-                         Nestable nestable)
-    : task(std::move(task)),
+PendingTask::PendingTask(const tracked_objects::Location& posted_from,
+                         const base::Closure& task)
+    : base::TrackingInfo(posted_from, TimeTicks()),
+      task(task),
       posted_from(posted_from),
-      delayed_run_time(delayed_run_time),
-      nestable(nestable) {}
+      sequence_num(0),
+      nestable(true) {
+}
 
-PendingTask::PendingTask(PendingTask&& other) = default;
+PendingTask::PendingTask(const tracked_objects::Location& posted_from,
+                         const base::Closure& task,
+                         TimeTicks delayed_run_time,
+                         bool nestable)
+    : base::TrackingInfo(posted_from, delayed_run_time),
+      task(task),
+      posted_from(posted_from),
+      sequence_num(0),
+      nestable(nestable) {
+}
 
-PendingTask::~PendingTask() = default;
-
-PendingTask& PendingTask::operator=(PendingTask&& other) = default;
+PendingTask::~PendingTask() {
+}
 
 bool PendingTask::operator<(const PendingTask& other) const {
   // Since the top of a priority queue is defined as the "greatest" element, we
@@ -38,6 +51,10 @@ bool PendingTask::operator<(const PendingTask& other) const {
   // If the times happen to match, then we use the sequence number to decide.
   // Compare the difference to support integer roll-over.
   return (sequence_num - other.sequence_num) > 0;
+}
+
+void TaskQueue::Swap(TaskQueue* queue) {
+  c.swap(queue->c);  // Calls std::deque::swap.
 }
 
 }  // namespace base

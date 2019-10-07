@@ -5,23 +5,24 @@
 #ifndef BASE_STRINGS_SAFE_SPRINTF_H_
 #define BASE_STRINGS_SAFE_SPRINTF_H_
 
-#include "build/build_config.h"
+#include "config/build_config.h"
 
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 
-#if defined(OS_POSIX) || defined(OS_FUCHSIA)
+#if defined(OS_POSIX)
 // For ssize_t
 #include <unistd.h>
 #endif
 
 #include "base/base_export.h"
+#include "base/basictypes.h"
 
 namespace base {
 namespace strings {
 
-#if defined(COMPILER_MSVC)
+#if defined(_MSC_VER)
 // Define ssize_t inside of our namespace.
 #if defined(_WIN64)
 typedef __int64 ssize_t;
@@ -138,46 +139,16 @@ struct Arg {
   enum Type { INT, UINT, STRING, POINTER };
 
   // Any integer-like value.
-  Arg(signed char c) : type(INT) {
-    integer.i = c;
-    integer.width = sizeof(char);
-  }
-  Arg(unsigned char c) : type(UINT) {
-    integer.i = c;
-    integer.width = sizeof(char);
-  }
-  Arg(signed short j) : type(INT) {
-    integer.i = j;
-    integer.width = sizeof(short);
-  }
-  Arg(unsigned short j) : type(UINT) {
-    integer.i = j;
-    integer.width = sizeof(short);
-  }
-  Arg(signed int j) : type(INT) {
-    integer.i = j;
-    integer.width = sizeof(int);
-  }
-  Arg(unsigned int j) : type(UINT) {
-    integer.i = j;
-    integer.width = sizeof(int);
-  }
-  Arg(signed long j) : type(INT) {
-    integer.i = j;
-    integer.width = sizeof(long);
-  }
-  Arg(unsigned long j) : type(UINT) {
-    integer.i = j;
-    integer.width = sizeof(long);
-  }
-  Arg(signed long long j) : type(INT) {
-    integer.i = j;
-    integer.width = sizeof(long long);
-  }
-  Arg(unsigned long long j) : type(UINT) {
-    integer.i = j;
-    integer.width = sizeof(long long);
-  }
+  Arg(signed char c)        : i(c), width(sizeof(char)),      type(INT)  { }
+  Arg(unsigned char c)      : i(c), width(sizeof(char)),      type(UINT) { }
+  Arg(signed short j)       : i(j), width(sizeof(short)),     type(INT)  { }
+  Arg(unsigned short j)     : i(j), width(sizeof(short)),     type(UINT) { }
+  Arg(signed int j)         : i(j), width(sizeof(int)),       type(INT)  { }
+  Arg(unsigned int j)       : i(j), width(sizeof(int)),       type(UINT) { }
+  Arg(signed long j)        : i(j), width(sizeof(long)),      type(INT)  { }
+  Arg(unsigned long j)      : i(j), width(sizeof(long)),      type(UINT) { }
+  Arg(signed long long j)   : i(j), width(sizeof(long long)), type(INT)  { }
+  Arg(unsigned long long j) : i(j), width(sizeof(long long)), type(UINT) { }
 
   // A C-style text string.
   Arg(const char* s) : str(s), type(STRING) { }
@@ -191,7 +162,7 @@ struct Arg {
     struct {
       int64_t       i;
       unsigned char width;
-    } integer;
+    };
 
     // A C-style text string.
     const char* str;
@@ -217,20 +188,220 @@ BASE_EXPORT size_t GetSafeSPrintfSSizeMaxForTest();
 
 }  // namespace internal
 
-template<typename... Args>
-ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt, Args... args) {
+// TODO(markus): C++11 has a much more concise and readable solution for
+//   expressing what we are doing here.
+
+template<class T0, class T1, class T2, class T3, class T4,
+         class T5, class T6, class T7, class T8, class T9>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt,
+                     T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4,
+                     T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9) {
   // Use Arg() object to record type information and then copy arguments to an
   // array to make it easier to iterate over them.
-  const internal::Arg arg_array[] = { args... };
-  return internal::SafeSNPrintf(buf, N, fmt, arg_array, sizeof...(args));
+  const internal::Arg arg_array[] = {
+    arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9
+  };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
 }
 
-template<size_t N, typename... Args>
-ssize_t SafeSPrintf(char (&buf)[N], const char* fmt, Args... args) {
+template<size_t N,
+         class T0, class T1, class T2, class T3, class T4,
+         class T5, class T6, class T7, class T8, class T9>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt,
+                    T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4,
+                    T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9) {
   // Use Arg() object to record type information and then copy arguments to an
   // array to make it easier to iterate over them.
-  const internal::Arg arg_array[] = { args... };
-  return internal::SafeSNPrintf(buf, N, fmt, arg_array, sizeof...(args));
+  const internal::Arg arg_array[] = {
+    arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9
+  };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<class T0, class T1, class T2, class T3, class T4,
+         class T5, class T6, class T7, class T8>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt,
+                     T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4,
+                     T5 arg5, T6 arg6, T7 arg7, T8 arg8) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = {
+    arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8
+  };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<size_t N,
+         class T0, class T1, class T2, class T3, class T4, class T5,
+         class T6, class T7, class T8>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt,
+                    T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4,
+                    T5 arg5, T6 arg6, T7 arg7, T8 arg8) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = {
+    arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8
+  };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<class T0, class T1, class T2, class T3, class T4, class T5,
+         class T6, class T7>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt,
+                     T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4,
+                     T5 arg5, T6 arg6, T7 arg7) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = {
+    arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7
+  };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<size_t N,
+         class T0, class T1, class T2, class T3, class T4, class T5,
+         class T6, class T7>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt,
+                    T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4,
+                    T5 arg5, T6 arg6, T7 arg7) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = {
+    arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7
+  };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<class T0, class T1, class T2, class T3, class T4, class T5,
+         class T6>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt,
+                     T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4,
+                     T5 arg5, T6 arg6) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = {
+    arg0, arg1, arg2, arg3, arg4, arg5, arg6
+  };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<size_t N,
+         class T0, class T1, class T2, class T3, class T4, class T5,
+         class T6>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt,
+                    T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5,
+                    T6 arg6) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = {
+    arg0, arg1, arg2, arg3, arg4, arg5, arg6
+  };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<class T0, class T1, class T2, class T3, class T4, class T5>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt,
+                     T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1, arg2, arg3, arg4, arg5 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<size_t N,
+         class T0, class T1, class T2, class T3, class T4, class T5>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt,
+                    T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1, arg2, arg3, arg4, arg5 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<class T0, class T1, class T2, class T3, class T4>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt,
+                     T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1, arg2, arg3, arg4 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<size_t N, class T0, class T1, class T2, class T3, class T4>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt, T0 arg0, T1 arg1,
+                    T2 arg2, T3 arg3, T4 arg4) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1, arg2, arg3, arg4 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<class T0, class T1, class T2, class T3>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt,
+                     T0 arg0, T1 arg1, T2 arg2, T3 arg3) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1, arg2, arg3 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<size_t N, class T0, class T1, class T2, class T3>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt,
+                    T0 arg0, T1 arg1, T2 arg2, T3 arg3) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1, arg2, arg3 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<class T0, class T1, class T2>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt,
+                     T0 arg0, T1 arg1, T2 arg2) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1, arg2 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<size_t N, class T0, class T1, class T2>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt, T0 arg0, T1 arg1,
+                    T2 arg2) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1, arg2 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<class T0, class T1>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt, T0 arg0, T1 arg1) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<size_t N, class T0, class T1>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt, T0 arg0, T1 arg1) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0, arg1 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<class T0>
+ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt, T0 arg0) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
+}
+
+template<size_t N, class T0>
+ssize_t SafeSPrintf(char (&buf)[N], const char* fmt, T0 arg0) {
+  // Use Arg() object to record type information and then copy arguments to an
+  // array to make it easier to iterate over them.
+  const internal::Arg arg_array[] = { arg0 };
+  return internal::SafeSNPrintf(buf, N, fmt, arg_array, arraysize(arg_array));
 }
 
 // Fast-path when we don't actually need to substitute any arguments.

@@ -4,10 +4,9 @@
 
 #include "base/memory/ref_counted_memory.h"
 
-#include <utility>
+#include <stdlib.h>
 
 #include "base/logging.h"
-#include "base/memory/read_only_shared_memory_region.h"
 
 namespace base {
 
@@ -18,9 +17,9 @@ bool RefCountedMemory::Equals(
          (memcmp(front(), other->front(), size()) == 0);
 }
 
-RefCountedMemory::RefCountedMemory() = default;
+RefCountedMemory::RefCountedMemory() {}
 
-RefCountedMemory::~RefCountedMemory() = default;
+RefCountedMemory::~RefCountedMemory() {}
 
 const unsigned char* RefCountedStaticMemory::front() const {
   return data_;
@@ -30,22 +29,17 @@ size_t RefCountedStaticMemory::size() const {
   return length_;
 }
 
-RefCountedStaticMemory::~RefCountedStaticMemory() = default;
+RefCountedStaticMemory::~RefCountedStaticMemory() {}
 
-RefCountedBytes::RefCountedBytes() = default;
+RefCountedBytes::RefCountedBytes() {}
 
 RefCountedBytes::RefCountedBytes(const std::vector<unsigned char>& initializer)
     : data_(initializer) {
 }
 
-RefCountedBytes::RefCountedBytes(const unsigned char* p, size_t size)
-    : data_(p, p + size) {}
-
-RefCountedBytes::RefCountedBytes(size_t size) : data_(size, 0) {}
-
-scoped_refptr<RefCountedBytes> RefCountedBytes::TakeVector(
+RefCountedBytes* RefCountedBytes::TakeVector(
     std::vector<unsigned char>* to_destroy) {
-  auto bytes = MakeRefCounted<RefCountedBytes>();
+  RefCountedBytes* bytes = new RefCountedBytes;
   bytes->data_.swap(*to_destroy);
   return bytes;
 }
@@ -53,60 +47,51 @@ scoped_refptr<RefCountedBytes> RefCountedBytes::TakeVector(
 const unsigned char* RefCountedBytes::front() const {
   // STL will assert if we do front() on an empty vector, but calling code
   // expects a NULL.
-  return size() ? &data_.front() : nullptr;
+  return size() ? &data_.front() : NULL;
 }
 
 size_t RefCountedBytes::size() const {
   return data_.size();
 }
 
-RefCountedBytes::~RefCountedBytes() = default;
+RefCountedBytes::~RefCountedBytes() {}
 
-RefCountedString::RefCountedString() = default;
+RefCountedString::RefCountedString() {}
 
-RefCountedString::~RefCountedString() = default;
+RefCountedString::~RefCountedString() {}
 
 // static
-scoped_refptr<RefCountedString> RefCountedString::TakeString(
-    std::string* to_destroy) {
-  auto self = MakeRefCounted<RefCountedString>();
+RefCountedString* RefCountedString::TakeString(std::string* to_destroy) {
+  RefCountedString* self = new RefCountedString;
   to_destroy->swap(self->data_);
   return self;
 }
 
 const unsigned char* RefCountedString::front() const {
-  return data_.empty() ? nullptr
-                       : reinterpret_cast<const unsigned char*>(data_.data());
+  return data_.empty() ? NULL :
+         reinterpret_cast<const unsigned char*>(data_.data());
 }
 
 size_t RefCountedString::size() const {
   return data_.size();
 }
 
-RefCountedSharedMemoryMapping::RefCountedSharedMemoryMapping(
-    ReadOnlySharedMemoryMapping mapping)
-    : mapping_(std::move(mapping)), size_(mapping_.size()) {
-  DCHECK_GT(size_, 0U);
+RefCountedMallocedMemory::RefCountedMallocedMemory(
+    void* data, size_t length)
+    : data_(reinterpret_cast<unsigned char*>(data)), length_(length) {
+  DCHECK(data || length == 0);
 }
 
-RefCountedSharedMemoryMapping::~RefCountedSharedMemoryMapping() = default;
-
-const unsigned char* RefCountedSharedMemoryMapping::front() const {
-  return static_cast<const unsigned char*>(mapping_.memory());
+const unsigned char* RefCountedMallocedMemory::front() const {
+  return length_ ? data_ : NULL;
 }
 
-size_t RefCountedSharedMemoryMapping::size() const {
-  return size_;
+size_t RefCountedMallocedMemory::size() const {
+  return length_;
 }
 
-// static
-scoped_refptr<RefCountedSharedMemoryMapping>
-RefCountedSharedMemoryMapping::CreateFromWholeRegion(
-    const ReadOnlySharedMemoryRegion& region) {
-  ReadOnlySharedMemoryMapping mapping = region.Map();
-  if (!mapping.IsValid())
-    return nullptr;
-  return MakeRefCounted<RefCountedSharedMemoryMapping>(std::move(mapping));
+RefCountedMallocedMemory::~RefCountedMallocedMemory() {
+  free(data_);
 }
 
 }  //  namespace base

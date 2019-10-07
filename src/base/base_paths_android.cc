@@ -5,14 +5,13 @@
 // Defines base::PathProviderAndroid which replaces base::PathProviderPosix for
 // Android in base/path_service.cc.
 
-#include <limits.h>
 #include <unistd.h>
 
 #include "base/android/jni_android.h"
 #include "base/android/path_utils.h"
 #include "base/base_paths.h"
+#include "base/file_util.h"
 #include "base/files/file_path.h"
-#include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/process/process_metrics.h"
 
@@ -21,12 +20,14 @@ namespace base {
 bool PathProviderAndroid(int key, FilePath* result) {
   switch (key) {
     case base::FILE_EXE: {
-      FilePath bin_dir;
-      if (!ReadSymbolicLink(FilePath(kProcSelfExe), &bin_dir)) {
+      char bin_dir[PATH_MAX + 1];
+      int bin_dir_size = readlink(kProcSelfExe, bin_dir, PATH_MAX);
+      if (bin_dir_size < 0 || bin_dir_size > PATH_MAX) {
         NOTREACHED() << "Unable to resolve " << kProcSelfExe << ".";
         return false;
       }
-      *result = bin_dir;
+      bin_dir[bin_dir_size] = 0;
+      *result = FilePath(bin_dir);
       return true;
     }
     case base::FILE_MODULE:
@@ -36,23 +37,19 @@ bool PathProviderAndroid(int key, FilePath* result) {
     case base::DIR_MODULE:
       return base::android::GetNativeLibraryDirectory(result);
     case base::DIR_SOURCE_ROOT:
-      // Used only by tests.
-      // In that context, hooked up via base/test/test_support_android.cc.
-      NOTIMPLEMENTED();
-      return false;
+      // This const is only used for tests.
+      return base::android::GetExternalStorageDirectory(result);
     case base::DIR_USER_DESKTOP:
       // Android doesn't support GetUserDesktop.
       NOTIMPLEMENTED();
       return false;
     case base::DIR_CACHE:
       return base::android::GetCacheDirectory(result);
-    case base::DIR_ASSETS:
-      // On Android assets are normally loaded from the APK using
-      // base::android::OpenApkAsset(). In tests, since the assets are no
-      // packaged, DIR_ASSETS is overridden to point to the build directory.
-      return false;
     case base::DIR_ANDROID_APP_DATA:
       return base::android::GetDataDirectory(result);
+    case base::DIR_HOME:
+      *result = GetHomeDir();
+      return true;
     case base::DIR_ANDROID_EXTERNAL_STORAGE:
       return base::android::GetExternalStorageDirectory(result);
     default:

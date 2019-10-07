@@ -4,51 +4,15 @@
 
 #include "base/process/process_metrics.h"
 
-#include <libproc.h>
 #include <mach/mach.h>
-#include <mach/mach_time.h>
 #include <mach/mach_vm.h>
 #include <mach/shared_region.h>
-#include <stddef.h>
-#include <stdint.h>
 #include <sys/sysctl.h>
 
+#include "base/containers/hash_tables.h"
 #include "base/logging.h"
-#include "base/mac/mac_util.h"
-#include "base/mac/mach_logging.h"
 #include "base/mac/scoped_mach_port.h"
-#include "base/memory/ptr_util.h"
-#include "base/numerics/safe_conversions.h"
-#include "base/numerics/safe_math.h"
-#include "base/process/process_metrics_iocounters.h"
-#include "base/time/time.h"
-
-namespace {
-
-// This is a standin for the private pm_task_energy_data_t struct.
-struct OpaquePMTaskEnergyData {
-  // Empirical size of the private struct.
-  uint8_t data[384];
-};
-
-// Sample everything but network usage, since fetching network
-// usage can hang.
-static constexpr uint8_t kPMSampleFlags = 0xff & ~0x8;
-
-}  // namespace
-
-extern "C" {
-
-// From libpmsample.dylib
-int pm_sample_task(mach_port_t task,
-                   OpaquePMTaskEnergyData* pm_energy,
-                   uint64_t mach_time,
-                   uint8_t flags);
-
-// From libpmenergy.dylib
-double pm_energy_impact(OpaquePMTaskEnergyData* pm_energy);
-
-}  // extern "C"
+#include "base/sys_info.h"
 
 namespace base {
 
@@ -66,34 +30,31 @@ bool GetTaskInfo(mach_port_t task, task_basic_info_64* task_info_data) {
   return kr == KERN_SUCCESS;
 }
 
-MachVMRegionResult ParseOutputFromMachVMRegion(kern_return_t kr) {
-  if (kr == KERN_INVALID_ADDRESS) {
-    // We're at the end of the address space.
-    return MachVMRegionResult::Finished;
-  } else if (kr != KERN_SUCCESS) {
-    return MachVMRegionResult::Error;
-  }
-  return MachVMRegionResult::Success;
-}
-
-bool GetPowerInfo(mach_port_t task, task_power_info* power_info_data) {
-  if (task == MACH_PORT_NULL)
+bool GetCPUTypeForProcess(pid_t pid, cpu_type_t* cpu_type) {
+  size_t len = sizeof(*cpu_type);
+  int result = sysctlbyname("sysctl.proc_cputype",
+                            cpu_type,
+                            &len,
+                            NULL,
+                            0);
+  if (result != 0) {
+    DPLOG(ERROR) << "sysctlbyname(""sysctl.proc_cputype"")";
     return false;
+  }
 
-  mach_msg_type_number_t power_info_count = TASK_POWER_INFO_COUNT;
-  kern_return_t kr = task_info(task, TASK_POWER_INFO,
-                               reinterpret_cast<task_info_t>(power_info_data),
-                               &power_info_count);
-  // Most likely cause for failure: |task| is a zombie.
-  return kr == KERN_SUCCESS;
+  return true;
 }
 
-double GetEnergyImpactInternal(mach_port_t task, uint64_t mach_time) {
-  OpaquePMTaskEnergyData energy_info{};
-
-  if (pm_sample_task(task, &energy_info, mach_time, kPMSampleFlags) != 0)
-    return 0.0;
-  return pm_energy_impact(&energy_info);
+bool IsAddressInSharedRegion(mach_vm_address_t addr, cpu_type_t type) {
+  if (type == CPU_TYPE_I386) {
+    return addr >= SHARED_REGION_BASE_I386 &&
+           addr < (SHARED_REGION_BASE_I386 + SHARED_REGION_SIZE_I386);
+  } else if (type == CPU_TYPE_X86_64) {
+    return addr >= SHARED_REGION_BASE_X86_64 &&
+           addr < (SHARED_REGION_BASE_X86_64 + SHARED_REGION_SIZE_X86_64);
+  } else {
+    return false;
+  }
 }
 
 }  // namespace
@@ -105,10 +66,146 @@ double GetEnergyImpactInternal(mach_port_t task, uint64_t mach_time) {
 // otherwise return 0.
 
 // static
-std::unique_ptr<ProcessMetrics> ProcessMetrics::CreateProcessMetrics(
+ProcessMetrics* ProcessMetrics::CreateProcessMetrics(
     ProcessHandle process,
-    PortProvider* port_provider) {
-  return WrapUnique(new ProcessMetrics(process, port_provider));
+    ProcessMetrics::PortProvider* port_provider) {
+  return new ProcessMetrics(process, port_provider);
+}
+
+size_t ProcessMetrics::GetPagefileUsage() const {
+  task_basic_info_64 task_info_data;
+  if (!GetTaskInfo(TaskForPid(process_), &task_info_data))
+    return 0;
+  return task_info_data.virtual_size;
+}
+
+size_t ProcessMetrics::GetPeakPagefileUsage() const {
+  return 0;
+}
+
+size_t ProcessMetrics::GetWorkingSetSize() const {
+  task_basic_info_64 task_info_data;
+  if (!GetTaskInfo(TaskForPid(process_), &task_info_data))
+    return 0;
+  return task_info_data.resident_size;
+}
+
+size_t ProcessMetrics::GetPeakWorkingSetSize() const {
+  return 0;
+}
+
+// This is a rough approximation of the algorithm that libtop uses.
+// private_bytes is the size of private resident memory.
+// shared_bytes is the size of shared resident memory.
+bool ProcessMetrics::GetMemoryBytes(size_t* private_bytes,
+                                    size_t* shared_bytes) {
+  kern_return_t kr;
+  size_t private_pages_count = 0;
+  size_t shared_pages_count = 0;
+
+  if (!private_bytes && !shared_bytes)
+    return true;
+
+  mach_port_t task = TaskForPid(process_);
+  if (task == MACH_PORT_NULL) {
+    DLOG(ERROR) << "Invalid process";
+    return false;
+  }
+
+  cpu_type_t cpu_type;
+  if (!GetCPUTypeForProcess(process_, &cpu_type))
+    return false;
+
+  // The same region can be referenced multiple times. To avoid double counting
+  // we need to keep track of which regions we've already counted.
+  base::hash_set<int> seen_objects;
+
+  // We iterate through each VM region in the task's address map. For shared
+  // memory we add up all the pages that are marked as shared. Like libtop we
+  // try to avoid counting pages that are also referenced by other tasks. Since
+  // we don't have access to the VM regions of other tasks the only hint we have
+  // is if the address is in the shared region area.
+  //
+  // Private memory is much simpler. We simply count the pages that are marked
+  // as private or copy on write (COW).
+  //
+  // See libtop_update_vm_regions in
+  // http://www.opensource.apple.com/source/top/top-67/libtop.c
+  mach_vm_size_t size = 0;
+  for (mach_vm_address_t address = MACH_VM_MIN_ADDRESS;; address += size) {
+    vm_region_top_info_data_t info;
+    mach_msg_type_number_t info_count = VM_REGION_TOP_INFO_COUNT;
+    mach_port_t object_name;
+    kr = mach_vm_region(task,
+                        &address,
+                        &size,
+                        VM_REGION_TOP_INFO,
+                        (vm_region_info_t)&info,
+                        &info_count,
+                        &object_name);
+    if (kr == KERN_INVALID_ADDRESS) {
+      // We're at the end of the address space.
+      break;
+    } else if (kr != KERN_SUCCESS) {
+      DLOG(ERROR) << "Calling mach_vm_region failed with error: "
+                 << mach_error_string(kr);
+      return false;
+    }
+
+    if (IsAddressInSharedRegion(address, cpu_type) &&
+        info.share_mode != SM_PRIVATE)
+      continue;
+
+    if (info.share_mode == SM_COW && info.ref_count == 1)
+      info.share_mode = SM_PRIVATE;
+
+    switch (info.share_mode) {
+      case SM_PRIVATE:
+        private_pages_count += info.private_pages_resident;
+        private_pages_count += info.shared_pages_resident;
+        break;
+      case SM_COW:
+        private_pages_count += info.private_pages_resident;
+        // Fall through
+      case SM_SHARED:
+        if (seen_objects.count(info.obj_id) == 0) {
+          // Only count the first reference to this region.
+          seen_objects.insert(info.obj_id);
+          shared_pages_count += info.shared_pages_resident;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  vm_size_t page_size;
+  kr = host_page_size(task, &page_size);
+  if (kr != KERN_SUCCESS) {
+    DLOG(ERROR) << "Failed to fetch host page size, error: "
+               << mach_error_string(kr);
+    return false;
+  }
+
+  if (private_bytes)
+    *private_bytes = private_pages_count * page_size;
+  if (shared_bytes)
+    *shared_bytes = shared_pages_count * page_size;
+
+  return true;
+}
+
+void ProcessMetrics::GetCommittedKBytes(CommittedKBytes* usage) const {
+}
+
+bool ProcessMetrics::GetWorkingSetKBytes(WorkingSetKBytes* ws_usage) const {
+  size_t priv = GetWorkingSetSize();
+  if (!priv)
+    return false;
+  ws_usage->priv = priv / 1024;
+  ws_usage->shareable = 0;
+  ws_usage->shared = 0;
+  return true;
 }
 
 #define TIME_VALUE_TO_TIMEVAL(a, r) do {  \
@@ -116,27 +213,29 @@ std::unique_ptr<ProcessMetrics> ProcessMetrics::CreateProcessMetrics(
   (r)->tv_usec = (a)->microseconds;       \
 } while (0)
 
-TimeDelta ProcessMetrics::GetCumulativeCPUUsage() {
+double ProcessMetrics::GetCPUUsage() {
   mach_port_t task = TaskForPid(process_);
   if (task == MACH_PORT_NULL)
-    return TimeDelta();
+    return 0;
+
+  kern_return_t kr;
 
   // Libtop explicitly loops over the threads (libtop_pinfo_update_cpu_usage()
   // in libtop.c), but this is more concise and gives the same results:
   task_thread_times_info thread_info_data;
   mach_msg_type_number_t thread_info_count = TASK_THREAD_TIMES_INFO_COUNT;
-  kern_return_t kr = task_info(task,
-                               TASK_THREAD_TIMES_INFO,
-                               reinterpret_cast<task_info_t>(&thread_info_data),
-                               &thread_info_count);
+  kr = task_info(task,
+                 TASK_THREAD_TIMES_INFO,
+                 reinterpret_cast<task_info_t>(&thread_info_data),
+                 &thread_info_count);
   if (kr != KERN_SUCCESS) {
     // Most likely cause: |task| is a zombie.
-    return TimeDelta();
+    return 0;
   }
 
   task_basic_info_64 task_info_data;
   if (!GetTaskInfo(task, &task_info_data))
-    return TimeDelta();
+    return 0;
 
   /* Set total_time. */
   // thread info contains live time...
@@ -151,89 +250,31 @@ TimeDelta ProcessMetrics::GetCumulativeCPUUsage() {
   timeradd(&user_timeval, &task_timeval, &task_timeval);
   timeradd(&system_timeval, &task_timeval, &task_timeval);
 
-  return TimeDelta::FromMicroseconds(TimeValToMicroseconds(task_timeval));
-}
+  struct timeval now;
+  int retval = gettimeofday(&now, NULL);
+  if (retval)
+    return 0;
 
-int ProcessMetrics::GetPackageIdleWakeupsPerSecond() {
-  mach_port_t task = TaskForPid(process_);
-  task_power_info power_info_data;
+  int64 time = TimeValToMicroseconds(now);
+  int64 task_time = TimeValToMicroseconds(task_timeval);
 
-  GetPowerInfo(task, &power_info_data);
-
-  // The task_power_info struct contains two wakeup counters:
-  // task_interrupt_wakeups and task_platform_idle_wakeups.
-  // task_interrupt_wakeups is the total number of wakeups generated by the
-  // process, and is the number that Activity Monitor reports.
-  // task_platform_idle_wakeups is a subset of task_interrupt_wakeups that
-  // tallies the number of times the processor was taken out of its low-power
-  // idle state to handle a wakeup. task_platform_idle_wakeups therefore result
-  // in a greater power increase than the other interrupts which occur while the
-  // CPU is already working, and reducing them has a greater overall impact on
-  // power usage. See the powermetrics man page for more info.
-  return CalculatePackageIdleWakeupsPerSecond(
-      power_info_data.task_platform_idle_wakeups);
-}
-
-int ProcessMetrics::GetIdleWakeupsPerSecond() {
-  mach_port_t task = TaskForPid(process_);
-  task_power_info power_info_data;
-
-  GetPowerInfo(task, &power_info_data);
-
-  return CalculateIdleWakeupsPerSecond(power_info_data.task_interrupt_wakeups);
-}
-
-int ProcessMetrics::GetEnergyImpact() {
-  uint64_t now = mach_absolute_time();
-  if (last_energy_impact_ == 0) {
-    last_energy_impact_ = GetEnergyImpactInternal(TaskForPid(process_), now);
-    last_energy_impact_time_ = now;
+  if ((last_system_time_ == 0) || (last_time_ == 0)) {
+    // First call, just set the last values.
+    last_system_time_ = task_time;
+    last_time_ = time;
     return 0;
   }
 
-  double total_energy_impact =
-      GetEnergyImpactInternal(TaskForPid(process_), now);
-  uint64_t delta = now - last_energy_impact_time_;
-  if (delta == 0)
+  int64 system_time_delta = task_time - last_system_time_;
+  int64 time_delta = time - last_time_;
+  DCHECK_NE(0U, time_delta);
+  if (time_delta == 0)
     return 0;
 
-  // Scale by 100 since the histogram is integral.
-  double seconds_since_last_measurement =
-      base::TimeTicks::FromMachAbsoluteTime(delta).since_origin().InSecondsF();
-  int energy_impact = 100 * (total_energy_impact - last_energy_impact_) /
-                      seconds_since_last_measurement;
-  last_energy_impact_ = total_energy_impact;
-  last_energy_impact_time_ = now;
+  last_system_time_ = task_time;
+  last_time_ = time;
 
-  return energy_impact;
-}
-
-int ProcessMetrics::GetOpenFdCount() const {
-  // In order to get a true count of the open number of FDs, PROC_PIDLISTFDS
-  // is used. This is done twice: first to get the appropriate size of a
-  // buffer, and then secondly to fill the buffer with the actual FD info.
-  //
-  // The buffer size returned in the first call is an estimate, based on the
-  // number of allocated fileproc structures in the kernel. This number can be
-  // greater than the actual number of open files, since the structures are
-  // allocated in slabs. The value returned in proc_bsdinfo::pbi_nfiles is
-  // also the number of allocated fileprocs, not the number in use.
-  //
-  // However, the buffer size returned in the second call is an accurate count
-  // of the open number of descriptors. The contents of the buffer are unused.
-  int rv = proc_pidinfo(process_, PROC_PIDLISTFDS, 0, nullptr, 0);
-  if (rv < 0)
-    return -1;
-
-  std::unique_ptr<char[]> buffer(new char[rv]);
-  rv = proc_pidinfo(process_, PROC_PIDLISTFDS, 0, buffer.get(), rv);
-  if (rv < 0)
-    return -1;
-  return rv / PROC_PIDLISTFD_SIZE;
-}
-
-int ProcessMetrics::GetOpenFdSoftLimit() const {
-  return GetMaxFds();
+  return static_cast<double>(system_time_delta * 100.0) / time_delta;
 }
 
 bool ProcessMetrics::GetIOCounters(IoCounters* io_counters) const {
@@ -241,12 +282,13 @@ bool ProcessMetrics::GetIOCounters(IoCounters* io_counters) const {
 }
 
 ProcessMetrics::ProcessMetrics(ProcessHandle process,
-                               PortProvider* port_provider)
+                               ProcessMetrics::PortProvider* port_provider)
     : process_(process),
-      last_absolute_idle_wakeups_(0),
-      last_absolute_package_idle_wakeups_(0),
-      last_energy_impact_(0),
-      port_provider_(port_provider) {}
+      last_time_(0),
+      last_system_time_(0),
+      port_provider_(port_provider) {
+  processor_count_ = SysInfo::NumberOfProcessors();
+}
 
 mach_port_t ProcessMetrics::TaskForPid(ProcessHandle process) const {
   mach_port_t task = MACH_PORT_NULL;
@@ -259,87 +301,25 @@ mach_port_t ProcessMetrics::TaskForPid(ProcessHandle process) const {
 
 // Bytes committed by the system.
 size_t GetSystemCommitCharge() {
-  base::mac::ScopedMachSendRight host(mach_host_self());
+  base::mac::ScopedMachPort host(mach_host_self());
   mach_msg_type_number_t count = HOST_VM_INFO_COUNT;
   vm_statistics_data_t data;
-  kern_return_t kr = host_statistics(host.get(), HOST_VM_INFO,
+  kern_return_t kr = host_statistics(host, HOST_VM_INFO,
                                      reinterpret_cast<host_info_t>(&data),
                                      &count);
-  if (kr != KERN_SUCCESS) {
-    MACH_DLOG(WARNING, kr) << "host_statistics";
+  if (kr) {
+    DLOG(WARNING) << "Failed to fetch host statistics.";
     return 0;
   }
 
-  return (data.active_count * PAGE_SIZE) / 1024;
-}
-
-bool GetSystemMemoryInfo(SystemMemoryInfoKB* meminfo) {
-  struct host_basic_info hostinfo;
-  mach_msg_type_number_t count = HOST_BASIC_INFO_COUNT;
-  base::mac::ScopedMachSendRight host(mach_host_self());
-  int result = host_info(host.get(), HOST_BASIC_INFO,
-                         reinterpret_cast<host_info_t>(&hostinfo), &count);
-  if (result != KERN_SUCCESS)
-    return false;
-
-  DCHECK_EQ(HOST_BASIC_INFO_COUNT, count);
-  meminfo->total = static_cast<int>(hostinfo.max_mem / 1024);
-
-  vm_statistics64_data_t vm_info;
-  count = HOST_VM_INFO64_COUNT;
-
-  if (host_statistics64(host.get(), HOST_VM_INFO64,
-                        reinterpret_cast<host_info64_t>(&vm_info),
-                        &count) != KERN_SUCCESS) {
-    return false;
+  vm_size_t page_size;
+  kr = host_page_size(host, &page_size);
+  if (kr) {
+    DLOG(ERROR) << "Failed to fetch host page size.";
+    return 0;
   }
-  DCHECK_EQ(HOST_VM_INFO64_COUNT, count);
 
-  static_assert(PAGE_SIZE % 1024 == 0, "Invalid page size");
-  meminfo->free = saturated_cast<int>(
-      PAGE_SIZE / 1024 * (vm_info.free_count - vm_info.speculative_count));
-  meminfo->speculative =
-      saturated_cast<int>(PAGE_SIZE / 1024 * vm_info.speculative_count);
-  meminfo->file_backed =
-      saturated_cast<int>(PAGE_SIZE / 1024 * vm_info.external_page_count);
-  meminfo->purgeable =
-      saturated_cast<int>(PAGE_SIZE / 1024 * vm_info.purgeable_count);
-
-  return true;
-}
-
-// Both |size| and |address| are in-out parameters.
-// |info| is an output parameter, only valid on Success.
-MachVMRegionResult GetTopInfo(mach_port_t task,
-                              mach_vm_size_t* size,
-                              mach_vm_address_t* address,
-                              vm_region_top_info_data_t* info) {
-  mach_msg_type_number_t info_count = VM_REGION_TOP_INFO_COUNT;
-  mach_port_t object_name;
-  kern_return_t kr = mach_vm_region(task, address, size, VM_REGION_TOP_INFO,
-                                    reinterpret_cast<vm_region_info_t>(info),
-                                    &info_count, &object_name);
-  // The kernel always returns a null object for VM_REGION_TOP_INFO, but
-  // balance it with a deallocate in case this ever changes. See 10.9.2
-  // xnu-2422.90.20/osfmk/vm/vm_map.c vm_map_region.
-  mach_port_deallocate(task, object_name);
-  return ParseOutputFromMachVMRegion(kr);
-}
-
-MachVMRegionResult GetBasicInfo(mach_port_t task,
-                                mach_vm_size_t* size,
-                                mach_vm_address_t* address,
-                                vm_region_basic_info_64* info) {
-  mach_msg_type_number_t info_count = VM_REGION_BASIC_INFO_COUNT_64;
-  mach_port_t object_name;
-  kern_return_t kr = mach_vm_region(
-      task, address, size, VM_REGION_BASIC_INFO_64,
-      reinterpret_cast<vm_region_info_t>(info), &info_count, &object_name);
-  // The kernel always returns a null object for VM_REGION_BASIC_INFO_64, but
-  // balance it with a deallocate in case this ever changes. See 10.9.2
-  // xnu-2422.90.20/osfmk/vm/vm_map.c vm_map_region.
-  mach_port_deallocate(task, object_name);
-  return ParseOutputFromMachVMRegion(kr);
+  return (data.active_count * page_size) / 1024;
 }
 
 }  // namespace base

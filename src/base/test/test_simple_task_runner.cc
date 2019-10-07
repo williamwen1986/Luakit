@@ -4,100 +4,79 @@
 
 #include "base/test/test_simple_task_runner.h"
 
-#include <utility>
-
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
-#include "base/threading/thread_task_runner_handle.h"
 
 namespace base {
 
-TestSimpleTaskRunner::TestSimpleTaskRunner() = default;
+TestSimpleTaskRunner::TestSimpleTaskRunner() {}
 
-TestSimpleTaskRunner::~TestSimpleTaskRunner() = default;
+TestSimpleTaskRunner::~TestSimpleTaskRunner() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+}
 
-bool TestSimpleTaskRunner::PostDelayedTask(const Location& from_here,
-                                           OnceClosure task,
-                                           TimeDelta delay) {
-  AutoLock auto_lock(lock_);
-  pending_tasks_.push_back(TestPendingTask(from_here, std::move(task),
-                                           TimeTicks(), delay,
-                                           TestPendingTask::NESTABLE));
+bool TestSimpleTaskRunner::PostDelayedTask(
+    const tracked_objects::Location& from_here,
+    const Closure& task,
+    TimeDelta delay) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  pending_tasks_.push_back(
+      TestPendingTask(from_here, task, TimeTicks(), delay,
+                      TestPendingTask::NESTABLE));
   return true;
 }
 
-bool TestSimpleTaskRunner::PostNonNestableDelayedTask(const Location& from_here,
-                                                      OnceClosure task,
-                                                      TimeDelta delay) {
-  AutoLock auto_lock(lock_);
-  pending_tasks_.push_back(TestPendingTask(from_here, std::move(task),
-                                           TimeTicks(), delay,
-                                           TestPendingTask::NON_NESTABLE));
+bool TestSimpleTaskRunner::PostNonNestableDelayedTask(
+    const tracked_objects::Location& from_here,
+    const Closure& task,
+    TimeDelta delay) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  pending_tasks_.push_back(
+      TestPendingTask(from_here, task, TimeTicks(), delay,
+                      TestPendingTask::NON_NESTABLE));
   return true;
 }
 
-// TODO(gab): Use SequenceToken here to differentiate between tasks running in
-// the scope of this TestSimpleTaskRunner and other task runners sharing this
-// thread. http://crbug.com/631186
-bool TestSimpleTaskRunner::RunsTasksInCurrentSequence() const {
-  return thread_ref_ == PlatformThread::CurrentRef();
+bool TestSimpleTaskRunner::RunsTasksOnCurrentThread() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return true;
 }
 
-base::circular_deque<TestPendingTask> TestSimpleTaskRunner::TakePendingTasks() {
-  AutoLock auto_lock(lock_);
-  return std::move(pending_tasks_);
-}
-
-size_t TestSimpleTaskRunner::NumPendingTasks() const {
-  AutoLock auto_lock(lock_);
-  return pending_tasks_.size();
+const std::deque<TestPendingTask>&
+TestSimpleTaskRunner::GetPendingTasks() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return pending_tasks_;
 }
 
 bool TestSimpleTaskRunner::HasPendingTask() const {
-  AutoLock auto_lock(lock_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   return !pending_tasks_.empty();
 }
 
 base::TimeDelta TestSimpleTaskRunner::NextPendingTaskDelay() const {
-  AutoLock auto_lock(lock_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   return pending_tasks_.front().GetTimeToRun() - base::TimeTicks();
 }
 
-base::TimeDelta TestSimpleTaskRunner::FinalPendingTaskDelay() const {
-  AutoLock auto_lock(lock_);
-  return pending_tasks_.back().GetTimeToRun() - base::TimeTicks();
-}
-
 void TestSimpleTaskRunner::ClearPendingTasks() {
-  AutoLock auto_lock(lock_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   pending_tasks_.clear();
 }
 
 void TestSimpleTaskRunner::RunPendingTasks() {
-  DCHECK(RunsTasksInCurrentSequence());
-
+  DCHECK(thread_checker_.CalledOnValidThread());
   // Swap with a local variable to avoid re-entrancy problems.
-  base::circular_deque<TestPendingTask> tasks_to_run;
-  {
-    AutoLock auto_lock(lock_);
-    tasks_to_run.swap(pending_tasks_);
+  std::deque<TestPendingTask> tasks_to_run;
+  tasks_to_run.swap(pending_tasks_);
+  for (std::deque<TestPendingTask>::iterator it = tasks_to_run.begin();
+       it != tasks_to_run.end(); ++it) {
+    it->task.Run();
   }
-
-  // Multiple test task runners can share the same thread for determinism in
-  // unit tests. Make sure this TestSimpleTaskRunner's tasks run in its scope.
-  ScopedClosureRunner undo_override;
-  if (!ThreadTaskRunnerHandle::IsSet() ||
-      ThreadTaskRunnerHandle::Get() != this) {
-    undo_override = ThreadTaskRunnerHandle::OverrideForTesting(this);
-  }
-
-  for (auto& task : tasks_to_run)
-    std::move(task.task).Run();
 }
 
 void TestSimpleTaskRunner::RunUntilIdle() {
-  while (HasPendingTask())
+  while (!pending_tasks_.empty()) {
     RunPendingTasks();
+  }
 }
 
 }  // namespace base

@@ -2,16 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <stddef.h>
-
 #include <string>
 
-#include "base/macros.h"
+#include "base/basictypes.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_locale.h"
-#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #ifdef WCHAR_T_IS_UTF32
@@ -78,9 +75,7 @@ TEST(SysStrings, SysUTF8ToWide) {
 #if defined(OS_LINUX)  // Tests depend on setting a specific Linux locale.
 
 TEST(SysStrings, SysWideToNativeMB) {
-#if !defined(SYSTEM_NATIVE_UTF8)
-  ScopedLocale locale("en_US.UTF-8");
-#endif
+  ScopedLocale locale("en_US.utf-8");
   EXPECT_EQ("Hello, world", SysWideToNativeMB(L"Hello, world"));
   EXPECT_EQ("\xe4\xbd\xa0\xe5\xa5\xbd", SysWideToNativeMB(L"\x4f60\x597d"));
 
@@ -110,9 +105,7 @@ TEST(SysStrings, SysWideToNativeMB) {
 
 // We assume the test is running in a UTF8 locale.
 TEST(SysStrings, SysNativeMBToWide) {
-#if !defined(SYSTEM_NATIVE_UTF8)
-  ScopedLocale locale("en_US.UTF-8");
-#endif
+  ScopedLocale locale("en_US.utf-8");
   EXPECT_EQ(L"Hello, world", SysNativeMBToWide("Hello, world"));
   EXPECT_EQ(L"\x4f60\x597d", SysNativeMBToWide("\xe4\xbd\xa0\xe5\xa5\xbd"));
   // >16 bits
@@ -166,26 +159,24 @@ static const wchar_t* const kConvertRoundtripCases[] = {
 
 
 TEST(SysStrings, SysNativeMBAndWide) {
-#if !defined(SYSTEM_NATIVE_UTF8)
-  ScopedLocale locale("en_US.UTF-8");
-#endif
-  for (auto* i : kConvertRoundtripCases) {
-    std::wstring wide = i;
+  ScopedLocale locale("en_US.utf-8");
+  for (size_t i = 0; i < arraysize(kConvertRoundtripCases); ++i) {
+    std::wstring wide = kConvertRoundtripCases[i];
     std::wstring trip = SysNativeMBToWide(SysWideToNativeMB(wide));
     EXPECT_EQ(wide.size(), trip.size());
     EXPECT_EQ(wide, trip);
   }
 
   // We assume our test is running in UTF-8, so double check through ICU.
-  for (auto* i : kConvertRoundtripCases) {
-    std::wstring wide = i;
+  for (size_t i = 0; i < arraysize(kConvertRoundtripCases); ++i) {
+    std::wstring wide = kConvertRoundtripCases[i];
     std::wstring trip = SysNativeMBToWide(WideToUTF8(wide));
     EXPECT_EQ(wide.size(), trip.size());
     EXPECT_EQ(wide, trip);
   }
 
-  for (auto* i : kConvertRoundtripCases) {
-    std::wstring wide = i;
+  for (size_t i = 0; i < arraysize(kConvertRoundtripCases); ++i) {
+    std::wstring wide = kConvertRoundtripCases[i];
     std::wstring trip = UTF8ToWide(SysWideToNativeMB(wide));
     EXPECT_EQ(wide.size(), trip.size());
     EXPECT_EQ(wide, trip);

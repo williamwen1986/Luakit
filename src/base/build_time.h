@@ -2,29 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BASE_BUILD_TIME_H_
-#define BASE_BUILD_TIME_H_
+#ifndef BASE_BUILD_TIME_
+#define BASE_BUILD_TIME_
 
 #include "base/base_export.h"
 #include "base/time/time.h"
 
 namespace base {
 
-// GetBuildTime returns the time at which the current binary was built,
-// rounded down to 5:00:00am at the start of the day in UTC.
+// GetBuildTime returns the time at which the current binary was built.
 //
-// This uses a generated file, which doesn't trigger a rebuild when the time
-// changes. It will, however, be updated whenever //build/util/LASTCHANGE
-// changes.
+// This uses the __DATE__ and __TIME__ macros, which don't trigger a rebuild
+// when they change. However, official builds will always be rebuilt from
+// scratch.
 //
-// This value should only be considered accurate to within a day.
-// It will always be in the past.
-//
-// Note: If the build is not official (i.e. is_official_build = false)
-// this time will be set to 5:00:00am on the most recent first Sunday
-// of a month.
+// Also, since __TIME__ doesn't include a timezone, this value should only be
+// considered accurate to a day.
 Time BASE_EXPORT GetBuildTime();
 
 }  // namespace base
 
-#endif  // BASE_BUILD_TIME_H_
+#endif  // BASE_BUILD_TIME_

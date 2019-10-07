@@ -5,69 +5,56 @@
 #ifndef BASE_FILE_VERSION_INFO_WIN_H_
 #define BASE_FILE_VERSION_INFO_WIN_H_
 
-#include <windows.h>
-
-#include <stdint.h>
-
-#include <memory>
 #include <string>
-#include <vector>
 
 #include "base/base_export.h"
+#include "base/basictypes.h"
 #include "base/file_version_info.h"
-#include "base/macros.h"
+#include "base/memory/scoped_ptr.h"
 
 struct tagVS_FIXEDFILEINFO;
 typedef tagVS_FIXEDFILEINFO VS_FIXEDFILEINFO;
 
-class BASE_EXPORT FileVersionInfoWin : public FileVersionInfo {
+class FileVersionInfoWin : public FileVersionInfo {
  public:
-  ~FileVersionInfoWin() override;
+  BASE_EXPORT FileVersionInfoWin(void* data, int language, int code_page);
+  BASE_EXPORT ~FileVersionInfoWin();
 
   // Accessors to the different version properties.
   // Returns an empty string if the property is not found.
-  base::string16 company_name() override;
-  base::string16 company_short_name() override;
-  base::string16 product_name() override;
-  base::string16 product_short_name() override;
-  base::string16 internal_name() override;
-  base::string16 product_version() override;
-  base::string16 special_build() override;
-  base::string16 original_filename() override;
-  base::string16 file_description() override;
-  base::string16 file_version() override;
+  virtual base::string16 company_name() OVERRIDE;
+  virtual base::string16 company_short_name() OVERRIDE;
+  virtual base::string16 product_name() OVERRIDE;
+  virtual base::string16 product_short_name() OVERRIDE;
+  virtual base::string16 internal_name() OVERRIDE;
+  virtual base::string16 product_version() OVERRIDE;
+  virtual base::string16 private_build() OVERRIDE;
+  virtual base::string16 special_build() OVERRIDE;
+  virtual base::string16 comments() OVERRIDE;
+  virtual base::string16 original_filename() OVERRIDE;
+  virtual base::string16 file_description() OVERRIDE;
+  virtual base::string16 file_version() OVERRIDE;
+  virtual base::string16 legal_copyright() OVERRIDE;
+  virtual base::string16 legal_trademarks() OVERRIDE;
+  virtual base::string16 last_change() OVERRIDE;
+  virtual bool is_official_build() OVERRIDE;
 
   // Lets you access other properties not covered above.
-  bool GetValue(const base::char16* name, base::string16* value);
+  BASE_EXPORT bool GetValue(const wchar_t* name, std::wstring* value);
 
-  // Similar to GetValue but returns a string16 (empty string if the property
+  // Similar to GetValue but returns a wstring (empty string if the property
   // does not exist).
-  base::string16 GetStringValue(const base::char16* name);
+  BASE_EXPORT std::wstring GetStringValue(const wchar_t* name);
 
   // Get the fixed file info if it exists. Otherwise NULL
-  const VS_FIXEDFILEINFO* fixed_file_info() const { return fixed_file_info_; }
-
-  // Behaves like CreateFileVersionInfo, but returns a FileVersionInfoWin.
-  static std::unique_ptr<FileVersionInfoWin> CreateFileVersionInfoWin(
-      const base::FilePath& file_path);
+  VS_FIXEDFILEINFO* fixed_file_info() { return fixed_file_info_; }
 
  private:
-  friend FileVersionInfo;
-
-  // |data| is a VS_VERSION_INFO resource. |language| and |code_page| are
-  // extracted from the \VarFileInfo\Translation value of |data|.
-  FileVersionInfoWin(std::vector<uint8_t>&& data,
-                     WORD language,
-                     WORD code_page);
-  FileVersionInfoWin(void* data, WORD language, WORD code_page);
-
-  const std::vector<uint8_t> owned_data_;
-  const void* const data_;
-  const WORD language_;
-  const WORD code_page_;
-
-  // This is a pointer into |data_| if it exists. Otherwise nullptr.
-  const VS_FIXEDFILEINFO* const fixed_file_info_;
+  scoped_ptr_malloc<char> data_;
+  int language_;
+  int code_page_;
+  // This is a pointer into the data_ if it exists. Otherwise NULL.
+  VS_FIXEDFILEINFO* fixed_file_info_;
 
   DISALLOW_COPY_AND_ASSIGN(FileVersionInfoWin);
 };

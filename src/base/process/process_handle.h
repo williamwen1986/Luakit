@@ -5,19 +5,14 @@
 #ifndef BASE_PROCESS_PROCESS_HANDLE_H_
 #define BASE_PROCESS_PROCESS_HANDLE_H_
 
-#include <stdint.h>
-#include <sys/types.h>
-
 #include "base/base_export.h"
+#include "base/basictypes.h"
 #include "base/files/file_path.h"
-#include "build/build_config.h"
+#include "build_config.h"
 
+#include <sys/types.h>
 #if defined(OS_WIN)
-#include "base/win/windows_types.h"
-#endif
-
-#if defined(OS_FUCHSIA)
-#include <zircon/types.h>
+#include <windows.h>
 #endif
 
 namespace base {
@@ -31,11 +26,6 @@ typedef DWORD ProcessId;
 typedef HANDLE UserTokenHandle;
 const ProcessHandle kNullProcessHandle = NULL;
 const ProcessId kNullProcessId = 0;
-#elif defined(OS_FUCHSIA)
-typedef zx_handle_t ProcessHandle;
-typedef zx_koid_t ProcessId;
-const ProcessHandle kNullProcessHandle = ZX_HANDLE_INVALID;
-const ProcessId kNullProcessId = ZX_KOID_INVALID;
 #elif defined(OS_POSIX)
 // On POSIX, our ProcessHandle will just be the PID.
 typedef pid_t ProcessHandle;
@@ -44,97 +34,61 @@ const ProcessHandle kNullProcessHandle = 0;
 const ProcessId kNullProcessId = 0;
 #endif  // defined(OS_WIN)
 
-// To print ProcessIds portably use CrPRIdPid (based on PRIuS and friends from
-// C99 and format_macros.h) like this:
-// base::StringPrintf("PID is %" CrPRIdPid ".\n", pid);
-#if defined(OS_WIN) || defined(OS_FUCHSIA)
-#define CrPRIdPid "ld"
-#else
-#define CrPRIdPid "d"
-#endif
-
-class UniqueProcId {
- public:
-  explicit UniqueProcId(ProcessId value) : value_(value) {}
-  UniqueProcId(const UniqueProcId& other) = default;
-  UniqueProcId& operator=(const UniqueProcId& other) = default;
-
-  // Returns the process PID. WARNING: On some platforms, the pid may not be
-  // valid within the current process sandbox.
-  ProcessId GetUnsafeValue() const { return value_; }
-
-  bool operator==(const UniqueProcId& other) const {
-    return value_ == other.value_;
-  }
-
-  bool operator!=(const UniqueProcId& other) const {
-    return value_ != other.value_;
-  }
-
-  bool operator<(const UniqueProcId& other) const {
-    return value_ < other.value_;
-  }
-
-  bool operator<=(const UniqueProcId& other) const {
-    return value_ <= other.value_;
-  }
-
-  bool operator>(const UniqueProcId& other) const {
-    return value_ > other.value_;
-  }
-
-  bool operator>=(const UniqueProcId& other) const {
-    return value_ >= other.value_;
-  }
-
- private:
-  ProcessId value_;
-};
-
-std::ostream& operator<<(std::ostream& os, const UniqueProcId& obj);
-
 // Returns the id of the current process.
-// Note that on some platforms, this is not guaranteed to be unique across
-// processes (use GetUniqueIdForProcess if uniqueness is required).
 BASE_EXPORT ProcessId GetCurrentProcId();
-
-// Returns a unique ID for the current process. The ID will be unique across all
-// currently running processes within the chrome session, but IDs of terminated
-// processes may be reused.
-BASE_EXPORT UniqueProcId GetUniqueIdForProcess();
-
-#if defined(OS_LINUX)
-// When a process is started in a different PID namespace from the browser
-// process, this function must be called with the process's PID in the browser's
-// PID namespace in order to initialize its unique ID. Not thread safe.
-// WARNING: To avoid inconsistent results from GetUniqueIdForProcess, this
-// should only be called very early after process startup - ideally as soon
-// after process creation as possible.
-BASE_EXPORT void InitUniqueIdForProcessInPidNamespace(
-    ProcessId pid_outside_of_namespace);
-#endif
 
 // Returns the ProcessHandle of the current process.
 BASE_EXPORT ProcessHandle GetCurrentProcessHandle();
 
-// Returns the process ID for the specified process. This is functionally the
-// same as Windows' GetProcessId(), but works on versions of Windows before Win
-// XP SP1 as well.
-// DEPRECATED. New code should be using Process::Pid() instead.
-// Note that on some platforms, this is not guaranteed to be unique across
-// processes.
+// Converts a PID to a process handle. This handle must be closed by
+// CloseProcessHandle when you are done with it. Returns true on success.
+BASE_EXPORT bool OpenProcessHandle(ProcessId pid, ProcessHandle* handle);
+
+// Converts a PID to a process handle. On Windows the handle is opened
+// with more access rights and must only be used by trusted code.
+// You have to close returned handle using CloseProcessHandle. Returns true
+// on success.
+// TODO(sanjeevr): Replace all calls to OpenPrivilegedProcessHandle with the
+// more specific OpenProcessHandleWithAccess method and delete this.
+BASE_EXPORT bool OpenPrivilegedProcessHandle(ProcessId pid,
+                                             ProcessHandle* handle);
+
+// Converts a PID to a process handle using the desired access flags. Use a
+// combination of the kProcessAccess* flags defined above for |access_flags|.
+BASE_EXPORT bool OpenProcessHandleWithAccess(ProcessId pid,
+                                             uint32 access_flags,
+                                             ProcessHandle* handle);
+
+// Closes the process handle opened by OpenProcessHandle.
+BASE_EXPORT void CloseProcessHandle(ProcessHandle process);
+
+// Returns the unique ID for the specified process. This is functionally the
+// same as Windows' GetProcessId(), but works on versions of Windows before
+// Win XP SP1 as well.
 BASE_EXPORT ProcessId GetProcId(ProcessHandle process);
 
-#if !defined(OS_FUCHSIA)
-// Returns the ID for the parent of the given process. Not available on Fuchsia.
-// Returning a negative value indicates an error, such as if the |process| does
-// not exist. Returns 0 when |process| has no parent process.
-BASE_EXPORT ProcessId GetParentProcessId(ProcessHandle process);
-#endif  // !defined(OS_FUCHSIA)
+#if defined(OS_WIN)
+enum IntegrityLevel {
+  INTEGRITY_UNKNOWN,
+  LOW_INTEGRITY,
+  MEDIUM_INTEGRITY,
+  HIGH_INTEGRITY,
+};
+// Determine the integrity level of the specified process. Returns false
+// if the system does not support integrity levels (pre-Vista) or in the case
+// of an underlying system failure.
+BASE_EXPORT bool GetProcessIntegrityLevel(ProcessHandle process,
+                                          IntegrityLevel* level);
+#endif
 
-#if defined(OS_POSIX)
+#if defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_BSD)
 // Returns the path to the executable of the given process.
 BASE_EXPORT FilePath GetProcessExecutablePath(ProcessHandle process);
+#endif
+
+#if defined(OS_POSIX)
+// Returns the ID for the parent of the given process.
+BASE_EXPORT ProcessId GetParentProcessId(ProcessHandle process);
 #endif
 
 }  // namespace base

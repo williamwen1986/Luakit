@@ -44,18 +44,20 @@ class InjectionTracer : public InjectionDelegate {
       : next_duplicate_(kDuplicateBase) {
   }
 
-  bool Duplicate(int* result, int fd) override {
+  virtual bool Duplicate(int* result, int fd) OVERRIDE {
     *result = next_duplicate_++;
     actions_.push_back(Action(Action::DUPLICATE, *result, fd));
     return true;
   }
 
-  bool Move(int src, int dest) override {
+  virtual bool Move(int src, int dest) OVERRIDE {
     actions_.push_back(Action(Action::MOVE, src, dest));
     return true;
   }
 
-  void Close(int fd) override { actions_.push_back(Action(Action::CLOSE, fd)); }
+  virtual void Close(int fd) OVERRIDE {
+    actions_.push_back(Action(Action::CLOSE, fd));
+  }
 
   const std::vector<Action>& actions() const { return actions_; }
 
@@ -248,11 +250,15 @@ TEST(FileDescriptorShuffleTest, FanoutAndClose3) {
 
 class FailingDelegate : public InjectionDelegate {
  public:
-  bool Duplicate(int* result, int fd) override { return false; }
+  virtual bool Duplicate(int* result, int fd) OVERRIDE {
+    return false;
+  }
 
-  bool Move(int src, int dest) override { return false; }
+  virtual bool Move(int src, int dest) OVERRIDE {
+    return false;
+  }
 
-  void Close(int fd) override {}
+  virtual void Close(int fd) OVERRIDE {}
 };
 
 TEST(FileDescriptorShuffleTest, EmptyWithFailure) {

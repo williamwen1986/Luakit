@@ -6,11 +6,11 @@
 
 namespace base {
 
-SimpleTestClock::SimpleTestClock() = default;
+SimpleTestClock::SimpleTestClock() {}
 
-SimpleTestClock::~SimpleTestClock() = default;
+SimpleTestClock::~SimpleTestClock() {}
 
-Time SimpleTestClock::Now() const {
+Time SimpleTestClock::Now() {
   AutoLock lock(lock_);
   return now_;
 }

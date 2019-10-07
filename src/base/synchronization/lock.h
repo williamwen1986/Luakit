@@ -6,28 +6,19 @@
 #define BASE_SYNCHRONIZATION_LOCK_H_
 
 #include "base/base_export.h"
-#include "base/logging.h"
-#include "base/macros.h"
 #include "base/synchronization/lock_impl.h"
-#include "base/thread_annotations.h"
 #include "base/threading/platform_thread.h"
-#include "build/build_config.h"
 
 namespace base {
 
 // A convenient wrapper for an OS specific critical section.  The only real
 // intelligence in this class is in debug mode for the support for the
 // AssertAcquired() method.
-class LOCKABLE BASE_EXPORT Lock {
+class BASE_EXPORT Lock {
  public:
-#if !DCHECK_IS_ON()
-  // Optimized wrapper implementation
+#if defined(NDEBUG)             // Optimized wrapper implementation
   Lock() : lock_() {}
   ~Lock() {}
-
-  // TODO(lukasza): https://crbug.com/831825: Add EXCLUSIVE_LOCK_FUNCTION
-  // annotation to Acquire method and similar annotations to Release, Try and
-  // AssertAcquired methods (here and in the #else branch).
   void Acquire() { lock_.Lock(); }
   void Release() { lock_.Unlock(); }
 
@@ -38,14 +29,14 @@ class LOCKABLE BASE_EXPORT Lock {
   bool Try() { return lock_.Try(); }
 
   // Null implementation if not debug.
-  void AssertAcquired() const {}
+  void AssertAcquired() const{}
 #else
   Lock();
   ~Lock();
 
-  // NOTE: We do not permit recursive locks and will commonly fire a DCHECK() if
-  // a thread attempts to acquire the lock a second time (while already holding
-  // it).
+  // NOTE: Although windows critical sections support recursive locks, we do not
+  // allow this, and we will commonly fire a DCHECK() if a thread attempts to
+  // acquire the lock a second time (while already holding it).
   void Acquire() {
     lock_.Lock();
     CheckUnheldAndMark();
@@ -64,32 +55,21 @@ class LOCKABLE BASE_EXPORT Lock {
   }
 
   void AssertAcquired() const;
-#endif  // DCHECK_IS_ON()
+#endif                          // NDEBUG
 
-  // Whether Lock mitigates priority inversion when used from different thread
-  // priorities.
-  static bool HandlesMultipleThreadPriorities() {
-#if defined(OS_WIN)
-    // Windows mitigates priority inversion by randomly boosting the priority of
-    // ready threads.
-    // https://msdn.microsoft.com/library/windows/desktop/ms684831.aspx
-    return true;
-#elif defined(OS_POSIX) || defined(OS_FUCHSIA)
-    // POSIX mitigates priority inversion by setting the priority of a thread
-    // holding a Lock to the maximum priority of any other thread waiting on it.
-    return internal::LockImpl::PriorityInheritanceAvailable();
-#else
-#error Unsupported platform
-#endif
-  }
-
-  // Both Windows and POSIX implementations of ConditionVariable need to be
-  // able to see our lock and tweak our debugging counters, as they release and
-  // acquire locks inside of their condition variable APIs.
+#if defined(OS_POSIX)
+  // The posix implementation of ConditionVariable needs to be able
+  // to see our lock and tweak our debugging counters, as it releases
+  // and acquires locks inside of pthread_cond_{timed,}wait.
   friend class ConditionVariable;
+#elif defined(OS_WIN)
+  // The Windows Vista implementation of ConditionVariable needs the
+  // native handle of the critical section.
+  friend class WinVistaCondVar;
+#endif
 
  private:
-#if DCHECK_IS_ON()
+#if !defined(NDEBUG)
   // Members and routines taking care of locks assertions.
   // Note that this checks for recursive locks and allows them
   // if the variable is set.  This is allowed by the underlying implementation
@@ -100,8 +80,12 @@ class LOCKABLE BASE_EXPORT Lock {
 
   // All private data is implicitly protected by lock_.
   // Be VERY careful to only access members under that lock.
-  base::PlatformThreadRef owning_thread_ref_;
-#endif  // DCHECK_IS_ON()
+
+  // Determines validity of owning_thread_id_.  Needed as we don't have
+  // a null owning_thread_id_ value.
+  bool owned_by_thread_;
+  base::PlatformThreadId owning_thread_id_;
+#endif  // NDEBUG
 
   // Platform specific underlying lock implementation.
   internal::LockImpl lock_;
@@ -110,23 +94,46 @@ class LOCKABLE BASE_EXPORT Lock {
 };
 
 // A helper class that acquires the given Lock while the AutoLock is in scope.
-using AutoLock = internal::BasicAutoLock<Lock>;
+class AutoLock {
+ public:
+  struct AlreadyAcquired {};
+
+  explicit AutoLock(Lock& lock) : lock_(lock) {
+    lock_.Acquire();
+  }
+
+  AutoLock(Lock& lock, const AlreadyAcquired&) : lock_(lock) {
+    lock_.AssertAcquired();
+  }
+
+  ~AutoLock() {
+    lock_.AssertAcquired();
+    lock_.Release();
+  }
+
+ private:
+  Lock& lock_;
+  DISALLOW_COPY_AND_ASSIGN(AutoLock);
+};
 
 // AutoUnlock is a helper that will Release() the |lock| argument in the
 // constructor, and re-Acquire() it in the destructor.
-using AutoUnlock = internal::BasicAutoUnlock<Lock>;
+class AutoUnlock {
+ public:
+  explicit AutoUnlock(Lock& lock) : lock_(lock) {
+    // We require our caller to have the lock.
+    lock_.AssertAcquired();
+    lock_.Release();
+  }
 
-// Like AutoLock but is a no-op when the provided Lock* is null. Inspired from
-// absl::MutexLockMaybe. Use this instead of base::Optional<base::AutoLock> to
-// get around -Wthread-safety-analysis warnings for conditional locking.
-using AutoLockMaybe = internal::BasicAutoLockMaybe<Lock>;
+  ~AutoUnlock() {
+    lock_.Acquire();
+  }
 
-// Like AutoLock but permits Release() of its mutex before destruction.
-// Release() may be called at most once. Inspired from
-// absl::ReleasableMutexLock. Use this instead of base::Optional<base::AutoLock>
-// to get around -Wthread-safety-analysis warnings for AutoLocks that are
-// explicitly released early (prefer proper scoping to this).
-using ReleasableAutoLock = internal::BasicReleasableAutoLock<Lock>;
+ private:
+  Lock& lock_;
+  DISALLOW_COPY_AND_ASSIGN(AutoUnlock);
+};
 
 }  // namespace base
 

@@ -6,19 +6,23 @@
 
 namespace base {
 
-MessagePumpIOSForIO::FdWatchController::FdWatchController(
-    const Location& from_here)
-    : FdWatchControllerInterface(from_here) {}
+MessagePumpIOSForIO::FileDescriptorWatcher::FileDescriptorWatcher()
+    : is_persistent_(false),
+      fdref_(NULL),
+      callback_types_(0),
+      fd_source_(NULL),
+      watcher_(NULL) {
+}
 
-MessagePumpIOSForIO::FdWatchController::~FdWatchController() {
+MessagePumpIOSForIO::FileDescriptorWatcher::~FileDescriptorWatcher() {
   StopWatchingFileDescriptor();
 }
 
-bool MessagePumpIOSForIO::FdWatchController::StopWatchingFileDescriptor() {
+bool MessagePumpIOSForIO::FileDescriptorWatcher::StopWatchingFileDescriptor() {
   if (fdref_ == NULL)
     return true;
 
-  CFFileDescriptorDisableCallBacks(fdref_.get(), callback_types_);
+  CFFileDescriptorDisableCallBacks(fdref_, callback_types_);
   if (pump_)
     pump_->RemoveRunLoopSource(fd_source_);
   fd_source_.reset();
@@ -29,12 +33,13 @@ bool MessagePumpIOSForIO::FdWatchController::StopWatchingFileDescriptor() {
   return true;
 }
 
-void MessagePumpIOSForIO::FdWatchController::Init(CFFileDescriptorRef fdref,
-                                                  CFOptionFlags callback_types,
-                                                  CFRunLoopSourceRef fd_source,
-                                                  bool is_persistent) {
+void MessagePumpIOSForIO::FileDescriptorWatcher::Init(
+    CFFileDescriptorRef fdref,
+    CFOptionFlags callback_types,
+    CFRunLoopSourceRef fd_source,
+    bool is_persistent) {
   DCHECK(fdref);
-  DCHECK(!fdref_.is_valid());
+  DCHECK(!fdref_);
 
   is_persistent_ = is_persistent;
   fdref_.reset(fdref);
@@ -42,18 +47,22 @@ void MessagePumpIOSForIO::FdWatchController::Init(CFFileDescriptorRef fdref,
   fd_source_.reset(fd_source);
 }
 
-void MessagePumpIOSForIO::FdWatchController::OnFileCanReadWithoutBlocking(
+void MessagePumpIOSForIO::FileDescriptorWatcher::OnFileCanReadWithoutBlocking(
     int fd,
     MessagePumpIOSForIO* pump) {
   DCHECK(callback_types_ & kCFFileDescriptorReadCallBack);
+  pump->WillProcessIOEvent();
   watcher_->OnFileCanReadWithoutBlocking(fd);
+  pump->DidProcessIOEvent();
 }
 
-void MessagePumpIOSForIO::FdWatchController::OnFileCanWriteWithoutBlocking(
+void MessagePumpIOSForIO::FileDescriptorWatcher::OnFileCanWriteWithoutBlocking(
     int fd,
     MessagePumpIOSForIO* pump) {
   DCHECK(callback_types_ & kCFFileDescriptorWriteCallBack);
+  pump->WillProcessIOEvent();
   watcher_->OnFileCanWriteWithoutBlocking(fd);
+  pump->DidProcessIOEvent();
 }
 
 MessagePumpIOSForIO::MessagePumpIOSForIO() : weak_factory_(this) {
@@ -62,11 +71,12 @@ MessagePumpIOSForIO::MessagePumpIOSForIO() : weak_factory_(this) {
 MessagePumpIOSForIO::~MessagePumpIOSForIO() {
 }
 
-bool MessagePumpIOSForIO::WatchFileDescriptor(int fd,
-                                              bool persistent,
-                                              int mode,
-                                              FdWatchController* controller,
-                                              FdWatcher* delegate) {
+bool MessagePumpIOSForIO::WatchFileDescriptor(
+    int fd,
+    bool persistent,
+    int mode,
+    FileDescriptorWatcher *controller,
+    Watcher *delegate) {
   DCHECK_GE(fd, 0);
   DCHECK(controller);
   DCHECK(delegate);
@@ -87,7 +97,7 @@ bool MessagePumpIOSForIO::WatchFileDescriptor(int fd,
     callback_types |= kCFFileDescriptorWriteCallBack;
   }
 
-  CFFileDescriptorRef fdref = controller->fdref_.get();
+  CFFileDescriptorRef fdref = controller->fdref_;
   if (fdref == NULL) {
     base::ScopedCFTypeRef<CFFileDescriptorRef> scoped_fdref(
         CFFileDescriptorCreate(
@@ -142,12 +152,29 @@ void MessagePumpIOSForIO::RemoveRunLoopSource(CFRunLoopSourceRef source) {
   CFRunLoopRemoveSource(run_loop(), source, kCFRunLoopCommonModes);
 }
 
+void MessagePumpIOSForIO::AddIOObserver(IOObserver *obs) {
+  io_observers_.AddObserver(obs);
+}
+
+void MessagePumpIOSForIO::RemoveIOObserver(IOObserver *obs) {
+  io_observers_.RemoveObserver(obs);
+}
+
+void MessagePumpIOSForIO::WillProcessIOEvent() {
+  FOR_EACH_OBSERVER(IOObserver, io_observers_, WillProcessIOEvent());
+}
+
+void MessagePumpIOSForIO::DidProcessIOEvent() {
+  FOR_EACH_OBSERVER(IOObserver, io_observers_, DidProcessIOEvent());
+}
+
 // static
 void MessagePumpIOSForIO::HandleFdIOEvent(CFFileDescriptorRef fdref,
                                           CFOptionFlags callback_types,
                                           void* context) {
-  FdWatchController* controller = static_cast<FdWatchController*>(context);
-  DCHECK_EQ(fdref, controller->fdref_.get());
+  FileDescriptorWatcher* controller =
+      static_cast<FileDescriptorWatcher*>(context);
+  DCHECK_EQ(fdref, controller->fdref_);
 
   // Ensure that |fdref| will remain live for the duration of this function
   // call even if |controller| is deleted or |StopWatchingFileDescriptor()| is
@@ -162,19 +189,19 @@ void MessagePumpIOSForIO::HandleFdIOEvent(CFFileDescriptorRef fdref,
     controller->OnFileCanWriteWithoutBlocking(fd, pump);
 
   // Perform the read callback only if the file descriptor has not been
-  // invalidated in the write callback. As |FdWatchController| invalidates
+  // invalidated in the write callback. As |FileDescriptorWatcher| invalidates
   // its file descriptor on destruction, the file descriptor being valid also
   // guarantees that |controller| has not been deleted.
   if (callback_types & kCFFileDescriptorReadCallBack &&
       CFFileDescriptorIsValid(fdref)) {
-    DCHECK_EQ(fdref, controller->fdref_.get());
+    DCHECK_EQ(fdref, controller->fdref_);
     controller->OnFileCanReadWithoutBlocking(fd, pump);
   }
 
   // Re-enable callbacks after the read/write if the file descriptor is still
   // valid and the controller is persistent.
   if (CFFileDescriptorIsValid(fdref) && controller->is_persistent_) {
-    DCHECK_EQ(fdref, controller->fdref_.get());
+    DCHECK_EQ(fdref, controller->fdref_);
     CFFileDescriptorEnableCallBacks(fdref, callback_types);
   }
 }

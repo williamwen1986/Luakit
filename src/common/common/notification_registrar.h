@@ -6,12 +6,12 @@
 #define CONTENT_PUBLIC_BROWSER_NOTIFICATION_REGISTRAR_H_
 #pragma once
 
-#include <vector> 
+#include <vector>
 
 #include "base/basictypes.h"
-// #include "base/threading/non_thread_safe.h" // Patch [LARPOUX]
+#include "base/threading/non_thread_safe.h"
 #include "common/content_export.h"
-#include "base/compiler_specific.h" // Patch [LARPOUX]
+
 namespace content {
 
 class NotificationObserver;
@@ -24,8 +24,8 @@ class NotificationSource;
 // class and use it to register your notifications instead of going through the
 // notification service directly. It will automatically unregister them for
 // you.
-class CONTENT_EXPORT NotificationRegistrar /*: // Patch [LARPOUX]
-    NON_EXPORTED_BASE(public base::NonThreadSafe)*/ {
+class CONTENT_EXPORT NotificationRegistrar :
+    NON_EXPORTED_BASE(public base::NonThreadSafe) {
  public:
   // This class must not be derived from (we don't have a virtual destructor so
   // it won't work). Instead, use it as a member in your class.

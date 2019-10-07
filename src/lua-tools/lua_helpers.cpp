@@ -19,6 +19,7 @@ extern "C" {
 #include "luaconf.h" // Patch [LARPOUX]
 #include "base/path_service.h"
 #include "base/files/file_path.h"
+#include "base/logging.h" // Patch [LARPOUX]
 // #include "lua_file.h" // Patch [LARPOUX]
 // #include "lua_notify.h" // Patch [LARPOUX]
 // #include "lua_language.h" // Patch [LARPOUX]

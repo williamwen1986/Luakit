@@ -5,21 +5,22 @@
 #ifndef BASE_TASK_RUNNER_H_
 #define BASE_TASK_RUNNER_H_
 
-#include <stddef.h>
-
 #include "base/base_export.h"
-#include "base/callback.h"
-#include "base/location.h"
+#include "base/basictypes.h"
+#include "base/callback_forward.h"
 #include "base/memory/ref_counted.h"
-#include "base/task/promise/abstract_promise.h"
 #include "base/time/time.h"
+
+namespace tracked_objects {
+class Location;
+} // namespace tracked_objects
 
 namespace base {
 
 struct TaskRunnerTraits;
 
 // A TaskRunner is an object that runs posted tasks (in the form of
-// OnceClosure objects).  The TaskRunner interface provides a way of
+// Closure objects).  The TaskRunner interface provides a way of
 // decoupling task posting from the mechanics of how each task will be
 // run.  TaskRunner provides very weak guarantees as to how posted
 // tasks are run (or if they're run at all).  In particular, it only
@@ -62,40 +63,33 @@ class BASE_EXPORT TaskRunner
   // will not be run.
   //
   // Equivalent to PostDelayedTask(from_here, task, 0).
-  bool PostTask(const Location& from_here, OnceClosure task);
+  bool PostTask(const tracked_objects::Location& from_here,
+                const Closure& task);
 
-  // Like PostTask, but tries to run the posted task only after |delay_ms|
-  // has passed. Implementations should use a tick clock, rather than wall-
-  // clock time, to implement |delay|.
-  virtual bool PostDelayedTask(const Location& from_here,
-                               OnceClosure task,
+  // Like PostTask, but tries to run the posted task only after
+  // |delay_ms| has passed.
+  //
+  // It is valid for an implementation to ignore |delay_ms|; that is,
+  // to have PostDelayedTask behave the same as PostTask.
+  virtual bool PostDelayedTask(const tracked_objects::Location& from_here,
+                               const Closure& task,
                                base::TimeDelta delay) = 0;
 
-  // Returns true iff tasks posted to this TaskRunner are sequenced
-  // with this call.
+  // Returns true if the current thread is a thread on which a task
+  // may be run, and false if no task will be run on the current
+  // thread.
   //
-  // In particular:
-  // - Returns true if this is a SequencedTaskRunner to which the
-  //   current task was posted.
-  // - Returns true if this is a SequencedTaskRunner bound to the
-  //   same sequence as the SequencedTaskRunner to which the current
-  //   task was posted.
-  // - Returns true if this is a SingleThreadTaskRunner bound to
-  //   the current thread.
-  // TODO(http://crbug.com/665062):
-  //   This API doesn't make sense for parallel TaskRunners.
-  //   Introduce alternate static APIs for documentation purposes of "this runs
-  //   in pool X", have RunsTasksInCurrentSequence() return false for parallel
-  //   TaskRunners, and ultimately move this method down to SequencedTaskRunner.
-  virtual bool RunsTasksInCurrentSequence() const = 0;
+  // It is valid for an implementation to always return true, or in
+  // general to use 'true' as a default value.
+  virtual bool RunsTasksOnCurrentThread() const = 0;
 
   // Posts |task| on the current TaskRunner.  On completion, |reply|
   // is posted to the thread that called PostTaskAndReply().  Both
   // |task| and |reply| are guaranteed to be deleted on the thread
   // from which PostTaskAndReply() is invoked.  This allows objects
   // that must be deleted on the originating thread to be bound into
-  // the |task| and |reply| OnceClosures.  In particular, it can be useful
-  // to use WeakPtr<> in the |reply| OnceClosure so that the reply
+  // the |task| and |reply| Closures.  In particular, it can be useful
+  // to use WeakPtr<> in the |reply| Closure so that the reply
   // operation can be canceled. See the following pseudo-code:
   //
   // class DataBuffer : public RefCountedThreadSafe<DataBuffer> {
@@ -110,10 +104,10 @@ class BASE_EXPORT TaskRunner
   //  public:
   //    void GetData() {
   //      scoped_refptr<DataBuffer> buffer = new DataBuffer();
-  //      target_thread_.task_runner()->PostTaskAndReply(
+  //      target_thread_.message_loop_proxy()->PostTaskAndReply(
   //          FROM_HERE,
-  //          base::BindOnce(&DataBuffer::AddData, buffer),
-  //          base::BindOnce(&DataLoader::OnDataReceived, AsWeakPtr(), buffer));
+  //          base::Bind(&DataBuffer::AddData, buffer),
+  //          base::Bind(&DataLoader::OnDataReceived, AsWeakPtr(), buffer));
   //    }
   //
   //  private:
@@ -130,16 +124,16 @@ class BASE_EXPORT TaskRunner
   //   * The DataLoader object can be deleted while |task| is still running,
   //     and the reply will cancel itself safely because it is bound to a
   //     WeakPtr<>.
-  bool PostTaskAndReply(const Location& from_here,
-                        OnceClosure task,
-                        OnceClosure reply);
-
-  // TODO(alexclarke): This should become pure virtual and replace
-  // PostDelayedTask. NB passing by reference to reduce binary size.
-  bool PostPromiseInternal(WrappedPromise promise, base::TimeDelta delay);
+  bool PostTaskAndReply(const tracked_objects::Location& from_here,
+                        const Closure& task,
+                        const Closure& reply);
 
  protected:
   friend struct TaskRunnerTraits;
+
+  // Only the Windows debug build seems to need this: see
+  // http://crbug.com/112250.
+  friend class RefCountedThreadSafe<TaskRunner, TaskRunnerTraits>;
 
   TaskRunner();
   virtual ~TaskRunner();

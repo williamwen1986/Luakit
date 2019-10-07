@@ -13,8 +13,8 @@ class PerfTestSuite : public TestSuite {
  public:
   PerfTestSuite(int argc, char** argv);
 
-  void Initialize() override;
-  void Shutdown() override;
+  virtual void Initialize() OVERRIDE;
+  virtual void Shutdown() OVERRIDE;
 };
 
 }  // namespace base

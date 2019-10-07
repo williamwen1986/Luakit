@@ -5,13 +5,24 @@
 #ifndef BASE_PROCESS_MEMORY_H_
 #define BASE_PROCESS_MEMORY_H_
 
-#include <stddef.h>
-
 #include "base/base_export.h"
+#include "base/basictypes.h"
 #include "base/process/process_handle.h"
-#include "build/build_config.h"
+#include "config/build_config.h"
+
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
 
 namespace base {
+
+// Enables low fragmentation heap (LFH) for every heaps of this process. This
+// won't have any effect on heaps created after this function call. It will not
+// modify data allocated in the heaps before calling this function. So it is
+// better to call this function early in initialization and again before
+// entering the main loop.
+// Note: Returns true on Windows 2000 without doing anything.
+BASE_EXPORT bool EnableLowFragmentationHeap();
 
 // Enables 'terminate on heap corruption' flag. Helps protect against heap
 // overflow. Has no effect if the OS doesn't provide the necessary facility.
@@ -20,11 +31,13 @@ BASE_EXPORT void EnableTerminationOnHeapCorruption();
 // Turns on process termination if memory runs out.
 BASE_EXPORT void EnableTerminationOnOutOfMemory();
 
-// Terminates process. Should be called only for out of memory errors.
-// Crash reporting classifies such crashes as OOM.
-BASE_EXPORT void TerminateBecauseOutOfMemory(size_t size);
+#if defined(OS_WIN)
+// Returns the module handle to which an address belongs. The reference count
+// of the module is not incremented.
+BASE_EXPORT HMODULE GetModuleFromAddress(void* address);
+#endif
 
-#if defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_AIX)
+#if defined(OS_LINUX) || defined(OS_ANDROID)
 BASE_EXPORT extern size_t g_oom_size;
 
 // The maximum allowed value for the OOM score.
@@ -40,35 +53,17 @@ const int kMaxOomScore = 1000;
 BASE_EXPORT bool AdjustOOMScore(ProcessId process, int score);
 #endif
 
-#if defined(OS_WIN)
-namespace win {
-
-// Custom Windows exception code chosen to indicate an out of memory error.
-// See https://msdn.microsoft.com/en-us/library/het71c37.aspx.
-// "To make sure that you do not define a code that conflicts with an existing
-// exception code" ... "The resulting error code should therefore have the
-// highest four bits set to hexadecimal E."
-// 0xe0000008 was chosen arbitrarily, as 0x00000008 is ERROR_NOT_ENOUGH_MEMORY.
-const DWORD kOomExceptionCode = 0xe0000008;
-
-}  // namespace win
-#endif
-
-// Special allocator functions for callers that want to check for OOM.
-// These will not abort if the allocation fails even if
-// EnableTerminationOnOutOfMemory has been called.
-// This can be useful for huge and/or unpredictable size memory allocations.
-// Please only use this if you really handle the case when the allocation
-// fails. Doing otherwise would risk security.
-// These functions may still crash on OOM when running under memory tools,
-// specifically ASan and other sanitizers.
-// Return value tells whether the allocation succeeded. If it fails |result| is
-// set to NULL, otherwise it holds the memory address.
-BASE_EXPORT WARN_UNUSED_RESULT bool UncheckedMalloc(size_t size,
-                                                    void** result);
-BASE_EXPORT WARN_UNUSED_RESULT bool UncheckedCalloc(size_t num_items,
-                                                    size_t size,
-                                                    void** result);
+#if defined(OS_MACOSX)
+// Very large images or svg canvases can cause huge mallocs.  Skia
+// does tricks on tcmalloc-based systems to allow malloc to fail with
+// a NULL rather than hit the oom crasher.  This replicates that for
+// OSX.
+//
+// IF YOU USE THIS WITHOUT CONSULTING YOUR FRIENDLY OSX DEVELOPER,
+// YOUR CODE IS LIKELY TO BE REVERTED.  THANK YOU.
+BASE_EXPORT void* UncheckedMalloc(size_t size);
+BASE_EXPORT void* UncheckedCalloc(size_t num_items, size_t size);
+#endif  // defined(OS_MACOSX)
 
 }  // namespace base
 

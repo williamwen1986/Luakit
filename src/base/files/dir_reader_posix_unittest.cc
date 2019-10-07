@@ -5,15 +5,12 @@
 #include "base/files/dir_reader_posix.h"
 
 #include <fcntl.h>
-#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-#include "base/files/scoped_temp_dir.h"
 #include "base/logging.h"
-#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_ANDROID)
@@ -28,13 +25,12 @@ TEST(DirReaderPosixUnittest, Read) {
   if (DirReaderPosix::IsFallback())
     return;
 
-  base::ScopedTempDir temp_dir;
-  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  const char* dir = temp_dir.GetPath().value().c_str();
+  char kDirTemplate[] = "/tmp/org.chromium.dir-reader-posix-XXXXXX";
+  const char* dir = mkdtemp(kDirTemplate);
   ASSERT_TRUE(dir);
 
-  char wdbuf[PATH_MAX];
-  PCHECK(getcwd(wdbuf, PATH_MAX));
+  const int prev_wd = open(".", O_RDONLY | O_DIRECTORY);
+  DCHECK_GE(prev_wd, 0);
 
   PCHECK(chdir(dir) == 0);
 
@@ -85,7 +81,8 @@ TEST(DirReaderPosixUnittest, Read) {
 
   PCHECK(rmdir(dir) == 0);
 
-  PCHECK(chdir(wdbuf) == 0);
+  PCHECK(fchdir(prev_wd) == 0);
+  PCHECK(close(prev_wd) == 0);
 
   EXPECT_TRUE(seen_dot);
   EXPECT_TRUE(seen_dotdot);
