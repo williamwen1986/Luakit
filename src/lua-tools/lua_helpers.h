@@ -8,8 +8,7 @@ extern "C" {
 #include <string>
 
 typedef void (*LuaErrorFun)(const char *);
-typedef int (*err_CFunction) (const char *str); // Add [LARPOUX]
-#define LUA_CALLBACK_METATABLE_NAME "lua_callback" // Add [LARPOUX]
+
 
 #define BEGIN_STACK_MODIFY(L)    int __startStackIndex = lua_gettop((L));
 #define END_STACK_MODIFY(L, i) while(lua_gettop((L)) > (__startStackIndex + (i))) lua_remove((L), __startStackIndex + 1);
@@ -25,6 +24,9 @@ extern void luaError (lua_State *L, const char *error);
 extern void doString(lua_State* L,const char * s);
 extern void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
 extern int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
+extern void  (lua_getfenv) (lua_State *L, int idx); // Patch [LARPOUX]
+extern int   (lua_setfenv) (lua_State *L, int idx); // Patch [LARPOUX]
+
 
 extern void luaSetPackagePath(std::string);
 extern std::string luaGetPackagePath();

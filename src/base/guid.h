@@ -9,7 +9,7 @@
 
 #include "base/base_export.h"
 #include "base/basictypes.h"
-#include "config/build_config.h"
+#include "build_config.h"
 
 namespace base {
 

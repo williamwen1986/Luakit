@@ -4,7 +4,7 @@ extern "C" {
 #include "lauxlib.h"
 }
 #include "lua_notification_utility.h"
-#include "tools/lua_helpers.h"
+#include "lua-tools/lua_helpers.h"
 #include "oc_helpers.h"
 #include "common/base_lambda_support.h"
 

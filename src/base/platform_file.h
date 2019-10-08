@@ -5,7 +5,7 @@
 #ifndef BASE_PLATFORM_FILE_H_
 #define BASE_PLATFORM_FILE_H_
 
-#include "config/build_config.h"
+#include "build_config.h"
 #if defined(OS_WIN)
 #include <windows.h>
 #endif

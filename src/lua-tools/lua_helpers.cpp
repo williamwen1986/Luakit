@@ -1,28 +1,24 @@
-#define LUA_COMPAT_5_1 // Patch [LARPOUX]
 #ifdef __cplusplus
 extern "C" {
 #endif
 #include "lauxlib.h"
 #include "lualib.h"
 #include "lsqlite3.h"
-// #include "lua_cjson.h" // Patch [LARPOUX]
-//#include "mobdebug.h" // Patch [LARPOUX]
+#include "lua_cjson.h"
+#include "mobdebug.h"
 #ifdef __cplusplus
 }
 #endif
 #include "lua_helpers.h"
-#include "lapi.h" // Patch [LARPOUX]
-// #include "lua_http.h" // Patch [LARPOUX]
-// #include "lua_async_socket.h" // Patch [LARPOUX]
-// #include "lua_timer.h" // Patch [LARPOUX]
-// #include "lua_thread.h" // Patch [LARPOUX]
-#include "luaconf.h" // Patch [LARPOUX]
+#include "lua_http.h"
+#include "lua_async_socket.h"
+#include "lua_timer.h"
+#include "lua_thread.h"
 #include "base/path_service.h"
 #include "base/files/file_path.h"
-#include "base/logging.h" // Patch [LARPOUX]
-// #include "lua_file.h" // Patch [LARPOUX]
-// #include "lua_notify.h" // Patch [LARPOUX]
-// #include "lua_language.h" // Patch [LARPOUX]
+#include "lua_file.h"
+#include "lua_notify.h"
+#include "lua_language.h"
 #include "LuakitLoader.h"
 #include "xxtea.h"
 
@@ -34,13 +30,11 @@ static int   _xxteaSignLen = 0;
 
 typedef void (*LuaErrorFun)(const char *);
 
-/* Patch [LARPOUX]
 #if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
 static const int PATH_SERVICE_KEY = base::DIR_DOCUMENTS;
 #elif defined(OS_ANDROID)
 static const int PATH_SERVICE_KEY = base::DIR_ANDROID_APP_DATA;
 #endif
-*/
 
 static std::string packagePath = "";
 static std::string dataDirectoryPath = "";
@@ -51,6 +45,28 @@ static std::string nativeLibraryDirectoryPath = "";
 static std::string externalStorageDirectoryPath = "";
 
 static LuaErrorFun luaErrorFun = NULL;
+
+
+/* Exporting getfenv/setfenv in Lua 5.2
+    Note: this is basically the same code that is included if LUA_COMPAT_FENV
+    is enabled (default is off)
+    See lbaselib.c, search for LUA_COMPAT_FENV.
+   Steve Donovan, 2010, MIT/X11
+*/
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
+
+extern void  (lua_getfenv) (lua_State *L, int idx) // Patch [LARPOUX]
+{
+    lua_getuservalue(L,idx);
+}
+extern int   (lua_setfenv) (lua_State *L, int idx) // Patch [LARPOUX]
+{
+    lua_setuservalue(L,idx);
+    return 0;
+}
+
 
 extern void pushWeakUserdataTable(lua_State *L)
 {
@@ -285,9 +301,8 @@ static void addLuaLoader(lua_State* L, lua_CFunction func)
 extern int luaInit(lua_State* L)
 {
     lua_atpanic(L, &lua_panic);
+    // lua_aterr(L, &lua_err); // Patch [LARPOUX]
     luaL_openlibs(L);
-    /* Patch [LARPOUX]
-    lua_aterr(L, &lua_err);
     luaopen_file(L);
     luaopen_mobdebug_scripts(L);
     luaopen_lsqlite3(L);
@@ -300,12 +315,11 @@ extern int luaInit(lua_State* L)
     luaopen_cjson_safe(L);
     luaopen_async_socket(L);
     luaopen_notification(L);
-    */
     addLuaLoader(L,luakit_loader);
     std::string path = "";
     #if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]
         base::FilePath documentDir;
-        // PathService::Get(PATH_SERVICE_KEY, &documentDir); // TODO [LARPOUX]
+        PathService::Get(PATH_SERVICE_KEY, &documentDir);
         path = documentDir.value();
     #elif defined(OS_ANDROID)
         path = dataDirectoryPath;
@@ -345,4 +359,5 @@ extern void pushUserdataInWeakTable(lua_State *L, void * object){
     lua_remove(L, -2);
     END_STACK_MODIFY(L, 1)
 }
+
 

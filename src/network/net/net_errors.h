@@ -8,19 +8,22 @@
 #include <string>
 #include <vector>
 
+#include "base/basictypes.h"
 #include "base/files/file.h"
 #include "base/logging.h"
-#include "net/net_export.h" // Patch [LARPOUX]
 
 namespace net {
 
+// Error domain of the net module's error codes.
+extern const char kErrorDomain[];
+
 // Error values are negative.
 enum Error {
-  // No error. Change NetError.template after changing value.
+  // No error.
   OK = 0,
 
 #define NET_ERROR(label, value) ERR_ ## label = value,
-#include "net/net_error_list.h" // Patch [LARPOUX]
+#include "net_error_list.h"
 #undef NET_ERROR
 
   // The value of the first certificate error code.
@@ -28,32 +31,24 @@ enum Error {
 };
 
 // Returns a textual representation of the error code for logging purposes.
-NET_EXPORT std::string ErrorToString(int error);
+std::string ErrorToString(int error);
 
 // Same as above, but leaves off the leading "net::".
-NET_EXPORT std::string ErrorToShortString(int error);
-
-// Returns a textual representation of the error code and the extended eror
-// code.
-NET_EXPORT std::string ExtendedErrorToString(int error,
-                                             int extended_error_code);
+std::string ErrorToShortString(int error);
 
 // Returns true if |error| is a certificate error code.
-NET_EXPORT bool IsCertificateError(int error);
+bool IsCertificateError(int error);
 
 // Returns true if |error| is a client certificate authentication error. This
 // does not include ERR_SSL_PROTOCOL_ERROR which may also signal a bad client
 // certificate.
-NET_EXPORT bool IsClientCertificateError(int error);
-
-// Returns true if |error| is a DNS error.
-NET_EXPORT bool IsDnsError(int error);
+bool IsClientCertificateError(int error);
 
 // Map system error code to Error.
-NET_EXPORT Error MapSystemError(logging::SystemErrorCode os_error);
+Error MapSystemError(logging::SystemErrorCode os_error);
 
 // A convenient function to translate file error to net error code.
-NET_EXPORT Error FileErrorToNetError(base::File::Error file_error);
+Error FileErrorToNetError(base::File::Error file_error);
 
 }  // namespace net
 

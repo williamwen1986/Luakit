@@ -2,27 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/net_errors.h" // Patch [LARPOUX]
-
-#include "net/quic_error_codes.h" // Patch [LARPOUX]
+#include "net_errors.h"
 
 namespace net {
+
+const char kErrorDomain[] = "net";
 
 std::string ErrorToString(int error) {
   return "net::" + ErrorToShortString(error);
 }
 
-std::string ExtendedErrorToString(int error, int extended_error_code) {
-  if (error == ERR_QUIC_PROTOCOL_ERROR && extended_error_code != 0) {
-    return std::string("net::ERR_QUIC_PROTOCOL_ERROR.") +
-           QuicErrorCodeToString(
-               static_cast<quic::QuicErrorCode>(extended_error_code));
-  }
-  return ErrorToString(error);
-}
-
 std::string ErrorToShortString(int error) {
-  if (error == OK)
+  if (error == 0)
     return "OK";
 
   const char* error_string;
@@ -31,7 +22,7 @@ std::string ErrorToShortString(int error) {
   case ERR_ ## label: \
     error_string = # label; \
     break;
-#include "net/net_error_list.h" // Patch [LARPOUX]
+#include "net_error_list.h"
 #undef NET_ERROR
   default:
     NOTREACHED();
@@ -55,56 +46,25 @@ bool IsClientCertificateError(int error) {
     case ERR_SSL_CLIENT_AUTH_PRIVATE_KEY_ACCESS_DENIED:
     case ERR_SSL_CLIENT_AUTH_CERT_NO_PRIVATE_KEY:
     case ERR_SSL_CLIENT_AUTH_SIGNATURE_FAILED:
-    case ERR_SSL_CLIENT_AUTH_NO_COMMON_ALGORITHMS:
       return true;
     default:
       return false;
   }
 }
 
-bool IsDnsError(int error) {
-  return (error == ERR_NAME_NOT_RESOLVED ||
-          error == ERR_NAME_RESOLUTION_FAILED);
-}
-
 Error FileErrorToNetError(base::File::Error file_error) {
   switch (file_error) {
     case base::File::FILE_OK:
       return OK;
-    case base::File::FILE_ERROR_EXISTS:
-      return ERR_FILE_EXISTS;
-    case base::File::FILE_ERROR_NOT_FOUND:
-      return ERR_FILE_NOT_FOUND;
     case base::File::FILE_ERROR_ACCESS_DENIED:
       return ERR_ACCESS_DENIED;
-    case base::File::FILE_ERROR_NO_MEMORY:
-      return ERR_OUT_OF_MEMORY;
-    case base::File::FILE_ERROR_NO_SPACE:
-      return ERR_FILE_NO_SPACE;
-    case base::File::FILE_ERROR_INVALID_OPERATION:
-      return ERR_INVALID_ARGUMENT;
-    case base::File::FILE_ERROR_ABORT:
-      return ERR_ABORTED;
     case base::File::FILE_ERROR_INVALID_URL:
       return ERR_INVALID_URL;
-    case base::File::FILE_ERROR_TOO_MANY_OPENED:
-      return ERR_INSUFFICIENT_RESOURCES;
-    case base::File::FILE_ERROR_SECURITY:
-      return ERR_ACCESS_DENIED;
-    case base::File::FILE_ERROR_MAX:
-      NOTREACHED();
-      FALLTHROUGH;
-    case base::File::FILE_ERROR_NOT_A_DIRECTORY:
-    case base::File::FILE_ERROR_NOT_A_FILE:
-    case base::File::FILE_ERROR_NOT_EMPTY:
-    case base::File::FILE_ERROR_IO:
-    case base::File::FILE_ERROR_IN_USE:
-    // No good mappings for these, so just fallthrough to generic fail.
-    case base::File::FILE_ERROR_FAILED:
+    case base::File::FILE_ERROR_NOT_FOUND:
+      return ERR_FILE_NOT_FOUND;
+    default:
       return ERR_FAILED;
   }
-  NOTREACHED();
-  return ERR_FAILED;
 }
 
 }  // namespace net

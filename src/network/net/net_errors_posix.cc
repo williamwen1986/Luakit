@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/net_errors.h" // Patch [LARPOUX]
+#include "net_errors.h"
 
 #include <errno.h>
 #include <stdlib.h>
@@ -10,8 +10,7 @@
 #include <unistd.h>
 
 #include "base/logging.h"
-#include "base/posix/safe_strerror.h"
-#include "build/build_config.h"
+#include "base/strings/stringprintf.h"
 
 namespace net {
 
@@ -83,7 +82,7 @@ Error MapSystemError(logging::SystemErrorCode os_error) {
     case ENFILE:  // Too many open files in system.
       return ERR_INSUFFICIENT_RESOURCES;
     case ENOBUFS:  // No buffer space available.
-      return ERR_NO_BUFFER_SPACE;
+      return ERR_OUT_OF_MEMORY;
     case ENODEV:  // No such device.
       return ERR_INVALID_ARGUMENT;
     case ENOENT:  // No such file or directory.
@@ -110,21 +109,12 @@ Error MapSystemError(logging::SystemErrorCode os_error) {
       return ERR_INSUFFICIENT_RESOURCES;
     case EMFILE:  // Too many open files.
       return ERR_INSUFFICIENT_RESOURCES;
-    case ENOPROTOOPT:  // Protocol option not supported.
-      return ERR_NOT_IMPLEMENTED;
-#if defined(OS_FUCHSIA)
-    case EIO:
-      // FDIO maps all unrecognized errors to EIO. If you see this message then
-      // consider adding custom error in FDIO for the corresponding error.
-      DLOG(FATAL) << "EIO was returned by FDIO.";
-      return ERR_FAILED;
-#endif  // OS_FUCHSIA
 
     case 0:
       return OK;
     default:
-      LOG(WARNING) << "Unknown error " << base::safe_strerror(os_error) << " ("
-                   << os_error << ") mapped to net::ERR_FAILED";
+      LOG(WARNING) << "Unknown error " << os_error
+                   << " mapped to net::ERR_FAILED";
       return ERR_FAILED;
   }
 }

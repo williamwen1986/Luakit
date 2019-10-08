@@ -16,7 +16,6 @@
 * Standard include files
 \*=========================================================================*/
 #include "lua.h"
-#define LUA_COMPAT_APIINTCASTS // Patch [LARPOUX]
 #include "lauxlib.h"
 
 

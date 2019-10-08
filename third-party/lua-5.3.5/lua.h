@@ -98,6 +98,7 @@ typedef LUA_UNSIGNED lua_Unsigned;
 /* type for continuation-function contexts */
 typedef LUA_KCONTEXT lua_KContext;
 
+typedef int (*err_CFunction) (const char *str);// Patch [LARPOUX]
 
 /*
 ** Type for C functions registered with Lua
@@ -148,7 +149,6 @@ LUA_API lua_State *(lua_newthread) (lua_State *L);
 
 LUA_API lua_CFunction (lua_atpanic) (lua_State *L, lua_CFunction panicf);
 
-
 LUA_API const lua_Number *(lua_version) (lua_State *L);
 
 
@@ -164,8 +164,6 @@ LUA_API void  (lua_copy) (lua_State *L, int fromidx, int toidx);
 LUA_API int   (lua_checkstack) (lua_State *L, int n);
 
 LUA_API void  (lua_xmove) (lua_State *from, lua_State *to, int n);
-
-
 /*
 ** access functions (stack -> C)
 */
@@ -251,7 +249,6 @@ LUA_API void *(lua_newuserdata) (lua_State *L, size_t sz);
 LUA_API int   (lua_getmetatable) (lua_State *L, int objindex);
 LUA_API int  (lua_getuservalue) (lua_State *L, int idx);
 
-
 /*
 ** set functions (stack -> Lua)
 */
@@ -264,7 +261,6 @@ LUA_API void  (lua_rawseti) (lua_State *L, int idx, lua_Integer n);
 LUA_API void  (lua_rawsetp) (lua_State *L, int idx, const void *p);
 LUA_API int   (lua_setmetatable) (lua_State *L, int objindex);
 LUA_API void  (lua_setuservalue) (lua_State *L, int idx);
-
 
 /*
 ** 'load' and 'call' functions (load and run Lua code)

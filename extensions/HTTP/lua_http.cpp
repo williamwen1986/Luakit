@@ -2,7 +2,7 @@ extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
 }
-#include "tools/lua_helpers.h"
+#include "lua-tools/lua_helpers.h"
 #include "lua_http.h"
 #include "network/async_cgi_task_dispatcher.h"
 #include "common/base_lambda_support.h"

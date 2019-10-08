@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/io_buffer.h" // Patch [LARPOUX]
+#include "io_buffer.h"
 
 #include "base/logging.h"
 #include "base/numerics/safe_math.h"
@@ -26,7 +26,9 @@ void AssertValidBufferSize(int size) {
 
 }  // namespace
 
-IOBuffer::IOBuffer() : data_(nullptr) {}
+IOBuffer::IOBuffer()
+    : data_(NULL) {
+}
 
 IOBuffer::IOBuffer(int buffer_size) {
   AssertValidBufferSize(buffer_size);
@@ -44,7 +46,7 @@ IOBuffer::IOBuffer(char* data)
 
 IOBuffer::~IOBuffer() {
   delete[] data_;
-  data_ = nullptr;
+  data_ = NULL;
 }
 
 IOBufferWithSize::IOBufferWithSize(int size)
@@ -68,16 +70,18 @@ IOBufferWithSize::IOBufferWithSize(char* data, size_t size)
   AssertValidBufferSize(size);
 }
 
-IOBufferWithSize::~IOBufferWithSize() = default;
+IOBufferWithSize::~IOBufferWithSize() {
+}
 
 StringIOBuffer::StringIOBuffer(const std::string& s)
-    : IOBuffer(static_cast<char*>(nullptr)), string_data_(s) {
+    : IOBuffer(static_cast<char*>(NULL)),
+      string_data_(s) {
   AssertValidBufferSize(s.size());
   data_ = const_cast<char*>(string_data_.data());
 }
 
-StringIOBuffer::StringIOBuffer(std::unique_ptr<std::string> s)
-    : IOBuffer(static_cast<char*>(nullptr)) {
+StringIOBuffer::StringIOBuffer(scoped_ptr<std::string> s)
+    : IOBuffer(static_cast<char*>(NULL)) {
   AssertValidBufferSize(s->size());
   string_data_.swap(*s.get());
   data_ = const_cast<char*>(string_data_.data());
@@ -86,16 +90,19 @@ StringIOBuffer::StringIOBuffer(std::unique_ptr<std::string> s)
 StringIOBuffer::~StringIOBuffer() {
   // We haven't allocated the buffer, so remove it before the base class
   // destructor tries to delete[] it.
-  data_ = nullptr;
+  data_ = NULL;
 }
 
-DrainableIOBuffer::DrainableIOBuffer(scoped_refptr<IOBuffer> base, int size)
-    : IOBuffer(base->data()), base_(std::move(base)), size_(size), used_(0) {
+DrainableIOBuffer::DrainableIOBuffer(IOBuffer* base, int size)
+    : IOBuffer(base->data()),
+      base_(base),
+      size_(size),
+      used_(0) {
   AssertValidBufferSize(size);
 }
 
-DrainableIOBuffer::DrainableIOBuffer(scoped_refptr<IOBuffer> base, size_t size)
-    : IOBuffer(base->data()), base_(std::move(base)), size_(size), used_(0) {
+DrainableIOBuffer::DrainableIOBuffer(IOBuffer* base, size_t size)
+    : IOBuffer(base->data()), base_(base), size_(size), used_(0) {
   AssertValidBufferSize(size);
 }
 
@@ -121,7 +128,7 @@ void DrainableIOBuffer::SetOffset(int bytes) {
 
 DrainableIOBuffer::~DrainableIOBuffer() {
   // The buffer is owned by the |base_| instance.
-  data_ = nullptr;
+  data_ = NULL;
 }
 
 GrowableIOBuffer::GrowableIOBuffer()
@@ -157,7 +164,7 @@ char* GrowableIOBuffer::StartOfBuffer() {
 }
 
 GrowableIOBuffer::~GrowableIOBuffer() {
-  data_ = nullptr;
+  data_ = NULL;
 }
 
 PickledIOBuffer::PickledIOBuffer() : IOBuffer() {
@@ -168,7 +175,7 @@ void PickledIOBuffer::Done() {
 }
 
 PickledIOBuffer::~PickledIOBuffer() {
-  data_ = nullptr;
+  data_ = NULL;
 }
 
 WrappedIOBuffer::WrappedIOBuffer(const char* data)
@@ -176,7 +183,7 @@ WrappedIOBuffer::WrappedIOBuffer(const char* data)
 }
 
 WrappedIOBuffer::~WrappedIOBuffer() {
-  data_ = nullptr;
+  data_ = NULL;
 }
 
 }  // namespace net

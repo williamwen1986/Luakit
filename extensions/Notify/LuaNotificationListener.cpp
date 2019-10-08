@@ -6,7 +6,7 @@ extern "C" {
 #include "LuaNotificationListener.h"
 #include "lua_notify.h"
 #include "serialize.h"
-#include "tools/lua_helpers.h"
+#include "lua-tools/lua_helpers.h"
 #include "common/base_lambda_support.h"
 #include "lua_notification_utility.h"
 

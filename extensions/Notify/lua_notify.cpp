@@ -2,7 +2,7 @@ extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
 }
-// #include "tools/lua_helpers.h" // Patch [LARPOUX]
+#include "lua-tools/lua_helpers.h"
 #include "lua_notify.h"
 #include "common/notification_service.h"
 #include "common/base_lambda_support.h"

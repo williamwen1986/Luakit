@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "lua.h"
-#define LUA_COMPAT_APIINTCASTS // Patch [LARPOUX]
 #include "lauxlib.h"
 
 #if !defined(LUA_VERSION_NUM) || (LUA_VERSION_NUM < 501)

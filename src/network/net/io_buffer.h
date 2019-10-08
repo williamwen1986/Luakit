@@ -5,15 +5,11 @@
 #ifndef NET_BASE_IO_BUFFER_H_
 #define NET_BASE_IO_BUFFER_H_
 
-#include <stddef.h>
-
-#include <memory>
 #include <string>
 
-#include "base/memory/free_deleter.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/scoped_ptr.h"
 #include "base/pickle.h"
-#include "net/net_export.h" // Patch [LARPOUX]
 
 namespace net {
 
@@ -73,7 +69,7 @@ namespace net {
 // and hence the buffer it was reading into must remain alive. Using
 // reference counting we can add a reference to the IOBuffer and make sure
 // it is not destroyed until after the synchronous operation has completed.
-class NET_EXPORT IOBuffer : public base::RefCountedThreadSafe<IOBuffer> {
+class IOBuffer : public base::RefCountedThreadSafe<IOBuffer> {
  public:
   IOBuffer();
 
@@ -81,7 +77,7 @@ class NET_EXPORT IOBuffer : public base::RefCountedThreadSafe<IOBuffer> {
   explicit IOBuffer(int buffer_size);
   explicit IOBuffer(size_t buffer_size);
 
-  char* data() const { return data_; }
+  char* data() { return data_; }
 
  protected:
   friend class base::RefCountedThreadSafe<IOBuffer>;
@@ -99,7 +95,7 @@ class NET_EXPORT IOBuffer : public base::RefCountedThreadSafe<IOBuffer> {
 // doesn't have to keep track of that value.
 // NOTE: This doesn't mean that we want to stop sending the size as an explicit
 // argument to IO functions. Please keep using IOBuffer* for API declarations.
-class NET_EXPORT IOBufferWithSize : public IOBuffer {
+class IOBufferWithSize : public IOBuffer {
  public:
   // TODO(eroman): Deprecated. Use the size_t flavor instead. crbug.com/488553
   explicit IOBufferWithSize(int size);
@@ -122,10 +118,10 @@ class NET_EXPORT IOBufferWithSize : public IOBuffer {
 
 // This is a read only IOBuffer.  The data is stored in a string and
 // the IOBuffer interface does not provide a proper way to modify it.
-class NET_EXPORT StringIOBuffer : public IOBuffer {
+class StringIOBuffer : public IOBuffer {
  public:
   explicit StringIOBuffer(const std::string& s);
-  explicit StringIOBuffer(std::unique_ptr<std::string> s);
+  explicit StringIOBuffer(scoped_ptr<std::string> s);
 
   int size() const { return static_cast<int>(string_data_.size()); }
 
@@ -143,7 +139,7 @@ class NET_EXPORT StringIOBuffer : public IOBuffer {
 // than char*. DrainableIOBuffer can be used as follows:
 //
 // // payload is the IOBuffer containing the data to be written.
-// buf = base::MakeRefCounted<DrainableIOBuffer>(payload, payload_size);
+// buf = new DrainableIOBuffer(payload, payload_size);
 //
 // while (buf->BytesRemaining() > 0) {
 //   // Write() takes an IOBuffer. If it takes char*, we could
@@ -152,11 +148,11 @@ class NET_EXPORT StringIOBuffer : public IOBuffer {
 //   buf->DidConsume(bytes_written);
 // }
 //
-class NET_EXPORT DrainableIOBuffer : public IOBuffer {
+class DrainableIOBuffer : public IOBuffer {
  public:
   // TODO(eroman): Deprecated. Use the size_t flavor instead. crbug.com/488553
-  DrainableIOBuffer(scoped_refptr<IOBuffer> base, int size);
-  DrainableIOBuffer(scoped_refptr<IOBuffer> base, size_t size);
+  DrainableIOBuffer(IOBuffer* base, int size);
+  DrainableIOBuffer(IOBuffer* base, size_t size);
 
   // DidConsume() changes the |data_| pointer so that |data_| always points
   // to the first unconsumed byte.
@@ -188,7 +184,7 @@ class NET_EXPORT DrainableIOBuffer : public IOBuffer {
 // knowing the total size in advance. GrowableIOBuffer can be used as
 // follows:
 //
-// buf = base::MakeRefCounted<GrowableIOBuffer>();
+// buf = new GrowableIOBuffer;
 // buf->SetCapacity(1024);  // Initial capacity.
 //
 // while (!some_stream->IsEOF()) {
@@ -199,7 +195,7 @@ class NET_EXPORT DrainableIOBuffer : public IOBuffer {
 //   buf->set_offset(buf->offset() + bytes_read);
 // }
 //
-class NET_EXPORT GrowableIOBuffer : public IOBuffer {
+class GrowableIOBuffer : public IOBuffer {
  public:
   GrowableIOBuffer();
 
@@ -217,18 +213,18 @@ class NET_EXPORT GrowableIOBuffer : public IOBuffer {
  private:
   ~GrowableIOBuffer() override;
 
-  std::unique_ptr<char, base::FreeDeleter> real_data_;
+  scoped_ptr<char, base::FreeDeleter> real_data_;
   int capacity_;
   int offset_;
 };
 
 // This versions allows a pickle to be used as the storage for a write-style
 // operation, avoiding an extra data copy.
-class NET_EXPORT PickledIOBuffer : public IOBuffer {
+class PickledIOBuffer : public IOBuffer {
  public:
   PickledIOBuffer();
 
-  base::Pickle* pickle() { return &pickle_; }
+  Pickle* pickle() { return &pickle_; }
 
   // Signals that we are done writing to the pickle and we can use it for a
   // write-style IO operation.
@@ -237,7 +233,7 @@ class NET_EXPORT PickledIOBuffer : public IOBuffer {
  private:
   ~PickledIOBuffer() override;
 
-  base::Pickle pickle_;
+  Pickle pickle_;
 };
 
 // This class allows the creation of a temporary IOBuffer that doesn't really
@@ -245,7 +241,7 @@ class NET_EXPORT PickledIOBuffer : public IOBuffer {
 // A good example is the buffer for a synchronous operation, where we can be
 // sure that nobody is keeping an extra reference to this object so the lifetime
 // of the buffer can be completely managed by its intended owner.
-class NET_EXPORT WrappedIOBuffer : public IOBuffer {
+class WrappedIOBuffer : public IOBuffer {
  public:
   explicit WrappedIOBuffer(const char* data);
 
