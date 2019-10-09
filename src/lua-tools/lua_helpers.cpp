@@ -46,28 +46,74 @@ static std::string externalStorageDirectoryPath = "";
 
 static LuaErrorFun luaErrorFun = NULL;
 
-
-/* Exporting getfenv/setfenv in Lua 5.2
-    Note: this is basically the same code that is included if LUA_COMPAT_FENV
-    is enabled (default is off)
-    See lbaselib.c, search for LUA_COMPAT_FENV.
-   Steve Donovan, 2010, MIT/X11
-*/
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
-
-extern void  (lua_getfenv) (lua_State *L, int idx) // Patch [LARPOUX]
+/*
+extern void  (lua_getfenv) (lua_State *L, int funcindex) // Patch [LARPOUX]
 {
-    lua_getuservalue(L,idx);
+/ *local function getfenv(fn)
+  local i = 1
+  while true do
+    local name, val = debug.getupvalue(fn, i)
+    if name == "_ENV" then
+      return val
+    elseif not name then
+      break
+    end
+    i = i + 1
+  end
+end
+* /
+    for(int i = 1;; ++i)
+    {
+        const char* name = lua_getupvalue (L, funcindex, i);
+        if (name == NULL)
+            break;
+        if (strcmp(name, "_ENV" ) == 0)
+            break;
+        lua_pop (L, 1);
+    }
 }
-extern int   (lua_setfenv) (lua_State *L, int idx) // Patch [LARPOUX]
+
+extern int   (lua_setfenv) (lua_State *L, int funcindex) // Patch [LARPOUX]
 {
-    lua_setuservalue(L,idx);
+/ *
+local function setfenv(fn, env)
+  local i = 1
+  while true do
+    local name = debug.getupvalue(fn, i)
+    if name == "_ENV" then
+      debug.upvaluejoin(fn, i, (function()
+        return env
+      end), 1)
+      break
+    elseif not name then
+      break
+    end
+
+    i = i + 1
+  end
+
+  return fn
+end
+* /
+    for(int i = 1;; ++i)
+    {
+        const char* name = lua_getupvalue (L, funcindex, i);
+        if (name == NULL)
+            break;
+        if (strcmp(name, "_ENV" ) == 0)
+        {
+             lua_upvaluejoin(L, funcindex, i, 0, 0);
+             return 0;
+        }
+        lua_pop (L, 1);
+    }
     return 0;
 }
 
-
+*/
 extern void pushWeakUserdataTable(lua_State *L)
 {
     BEGIN_STACK_MODIFY(L)

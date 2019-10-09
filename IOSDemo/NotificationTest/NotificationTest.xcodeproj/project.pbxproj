@@ -357,13 +357,14 @@
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/config",
 					"$(LUAKIT_ROOT)/src",
 					"$(LUAKIT_ROOT)/third-party/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
-					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/config",
 					"$(LUAKIT_ROOT)",
+					"$(LUAKIT_ROOT)/third-party",
 				);
 				INFOPLIST_FILE = NotificationTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -387,13 +388,14 @@
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/config",
 					"$(LUAKIT_ROOT)/src",
 					"$(LUAKIT_ROOT)/third-party/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
-					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/config",
 					"$(LUAKIT_ROOT)",
+					"$(LUAKIT_ROOT)/third-party",
 				);
 				INFOPLIST_FILE = NotificationTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -401,7 +403,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(LUAKIT_ROOT)/libs/ios$SDK_VERSION-$CONFIGURATION";
 				LUAKIT_ROOT = "$(SRCROOT)/../../";
 				PRODUCT_BUNDLE_IDENTIFIER = com.luakit.NotificationTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";

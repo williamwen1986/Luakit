@@ -535,6 +535,7 @@
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/third-party",
 					"$(TOP_SRC_DIR)/config",
+					"$(TOP_SRC_DIR)/third-party/lua-5.1.5/src",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
@@ -557,6 +558,7 @@
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/third-party",
 					"$(TOP_SRC_DIR)/config",
+					"$(TOP_SRC_DIR)/third-party/lua-5.1.5/src",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";

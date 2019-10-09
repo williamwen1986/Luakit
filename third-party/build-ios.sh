@@ -6,7 +6,7 @@ then
 fi
 
 if [ -z $IOS_SDK_VERSION ]; then
-	IOS_SDK_VERSION="13.0"
+	IOS_SDK_VERSION="12.2"
 fi
 
 if [ -z "$OUTPUT_DIR" ]
@@ -28,7 +28,26 @@ then
     exit -1
 fi
 
-. ../bin/build-ios.sh third-party
-checkError
+mkdir -p "$OUTPUT_DIR" 2>/dev/null
+pushd "$OUTPUT_DIR" > /dev/null
+dir=$(pwd)
+export OUTPUT_DIR=$dir
+popd > /dev/null
 
+checkError() {
+    if [ $? -ne 0 ]
+    then
+        echo "Exiting due to errors (above)"
+        exit -1
+    fi
+}
+
+cd openssl-1.1.1c
+./build-ios.sh
+checkError
+cd ..
+
+../bin/build-ios.sh third-party
+checkError
+echo "your outputs are in $OUTPUT_DIR"
 

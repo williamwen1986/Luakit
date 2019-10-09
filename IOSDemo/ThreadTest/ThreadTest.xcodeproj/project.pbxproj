@@ -362,6 +362,7 @@
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/third-party/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				INFOPLIST_FILE = ThreadTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -388,6 +389,7 @@
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/third-party/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				INFOPLIST_FILE = ThreadTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

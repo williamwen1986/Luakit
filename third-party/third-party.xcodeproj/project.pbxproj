@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C501C0D2234CCF520093ACBA /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5830C6C234CCE0100E2576E /* liblua.a */; };
+		C500A1FD234DE943001998F1 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C500A1FA234DE92E001998F1 /* liblua.a */; };
 		C501C0EA234CD27F0093ACBA /* libsqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C48234CA51D00F04AD4 /* libsqlite.a */; };
 		C5830B80234CA6E000E2576E /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C15234CA49D00F04AD4 /* libcurl.a */; };
 		C5830B81234CA6E000E2576E /* libdmg_fp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C1D234CA4A700F04AD4 /* libdmg_fp.a */; };
@@ -17,14 +17,22 @@
 		C5830B86234CA6E000E2576E /* libmodp_b64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C41234CA51000F04AD4 /* libmodp_b64.a */; };
 		C5830B88234CA6E000E2576E /* libtoluapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C50234CA52700F04AD4 /* libtoluapp.a */; };
 		C5830B89234CA6E000E2576E /* libxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C35234CA4F100F04AD4 /* libxml.a */; };
+		C5868459234E311500CD0BC7 /* dummy.c in Sources */ = {isa = PBXBuildFile; fileRef = C5868457234E311500CD0BC7 /* dummy.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C501C0CD234CCF470093ACBA /* PBXContainerItemProxy */ = {
+		C500A1F9234DE92E001998F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C5830C67234CCE0100E2576E /* lua.xcodeproj */;
+			containerPortal = C500A1F4234DE92E001998F1 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5830BE4234CC51C00E2576E;
+			remoteInfo = lua;
+		};
+		C500A1FB234DE93A001998F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C500A1F4234DE92E001998F1 /* lua.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C59F6E83233CFDF80044E10E;
+			remoteGlobalIDString = C5830BE3234CC51C00E2576E;
 			remoteInfo = lua;
 		};
 		C54E8C14234CA49D00F04AD4 /* PBXContainerItemProxy */ = {
@@ -90,13 +98,6 @@
 			remoteGlobalIDString = C58B03C32336A67E00A125C2;
 			remoteInfo = sqlite;
 		};
-		C54E8C49234CA51D00F04AD4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C54E8C42234CA51D00F04AD4 /* sqlite.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5F53C8B2337658C008F114F;
-			remoteInfo = "sqlite-macos";
-		};
 		C54E8C4F234CA52700F04AD4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C54E8C4B234CA52700F04AD4 /* toluapp.xcodeproj */;
@@ -115,7 +116,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = C54E8C42234CA51D00F04AD4 /* sqlite.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = C58B03C22336A67E00A125C2;
+			remoteGlobalIDString = C501C123234CD8A30093ACBA;
 			remoteInfo = sqlite;
 		};
 		C5830B63234CA6BF00E2576E /* PBXContainerItemProxy */ = {
@@ -167,13 +168,6 @@
 			remoteGlobalIDString = C521881D23313510001AA895;
 			remoteInfo = curl;
 		};
-		C5830C6B234CCE0100E2576E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C5830C67234CCE0100E2576E /* lua.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C59F6E84233CFDF80044E10E;
-			remoteInfo = lua;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -189,6 +183,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C500A1F4234DE92E001998F1 /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = "lua-5.1.5/lua.xcodeproj"; sourceTree = "<group>"; };
 		C54E8C03234CA45600F04AD4 /* libthird-party.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libthird-party.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54E8C0F234CA49D00F04AD4 /* curl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = curl.xcodeproj; path = curl/curl.xcodeproj; sourceTree = "<group>"; };
 		C54E8C18234CA4A700F04AD4 /* dmg_fp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = dmg_fp.xcodeproj; path = dmg_fp/dmg_fp.xcodeproj; sourceTree = "<group>"; };
@@ -199,7 +194,7 @@
 		C54E8C3C234CA51000F04AD4 /* modp_b64.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = modp_b64.xcodeproj; path = modp_b64/modp_b64.xcodeproj; sourceTree = "<group>"; };
 		C54E8C42234CA51D00F04AD4 /* sqlite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlite.xcodeproj; path = "sqlite-amalgamation-3290000/sqlite.xcodeproj"; sourceTree = "<group>"; };
 		C54E8C4B234CA52700F04AD4 /* toluapp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = toluapp.xcodeproj; path = toluapp/toluapp.xcodeproj; sourceTree = "<group>"; };
-		C5830C67234CCE0100E2576E /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = "lua-5.3.5/lua.xcodeproj"; sourceTree = "<group>"; };
+		C5868457234E311500CD0BC7 /* dummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dummy.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,8 +202,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C500A1FD234DE943001998F1 /* liblua.a in Frameworks */,
 				C501C0EA234CD27F0093ACBA /* libsqlite.a in Frameworks */,
-				C501C0D2234CCF520093ACBA /* liblua.a in Frameworks */,
 				C5830B80234CA6E000E2576E /* libcurl.a in Frameworks */,
 				C5830B81234CA6E000E2576E /* libdmg_fp.a in Frameworks */,
 				C5830B82234CA6E000E2576E /* libdynamic_annotations.a in Frameworks */,
@@ -223,10 +218,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C500A1F5234DE92E001998F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C500A1FA234DE92E001998F1 /* liblua.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C54E8BFA234CA45600F04AD4 = {
 			isa = PBXGroup;
 			children = (
-				C5830C67234CCE0100E2576E /* lua.xcodeproj */,
+				C5868457234E311500CD0BC7 /* dummy.c */,
+				C500A1F4234DE92E001998F1 /* lua.xcodeproj */,
 				C54E8C4B234CA52700F04AD4 /* toluapp.xcodeproj */,
 				C54E8C42234CA51D00F04AD4 /* sqlite.xcodeproj */,
 				C54E8C3C234CA51000F04AD4 /* modp_b64.xcodeproj */,
@@ -310,7 +314,6 @@
 			isa = PBXGroup;
 			children = (
 				C54E8C48234CA51D00F04AD4 /* libsqlite.a */,
-				C54E8C4A234CA51D00F04AD4 /* libsqlite-macos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -330,14 +333,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C5830C68234CCE0100E2576E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C5830C6C234CCE0100E2576E /* liblua.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -352,7 +347,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				C501C0CE234CCF470093ACBA /* PBXTargetDependency */,
+				C500A1FC234DE93A001998F1 /* PBXTargetDependency */,
 				C5830B60234CA6BF00E2576E /* PBXTargetDependency */,
 				C5830B62234CA6BF00E2576E /* PBXTargetDependency */,
 				C5830B64234CA6BF00E2576E /* PBXTargetDependency */,
@@ -414,8 +409,8 @@
 					ProjectRef = C54E8C24234CA4D300F04AD4 /* icu.xcodeproj */;
 				},
 				{
-					ProductGroup = C5830C68234CCE0100E2576E /* Products */;
-					ProjectRef = C5830C67234CCE0100E2576E /* lua.xcodeproj */;
+					ProductGroup = C500A1F5234DE92E001998F1 /* Products */;
+					ProjectRef = C500A1F4234DE92E001998F1 /* lua.xcodeproj */;
 				},
 				{
 					ProductGroup = C54E8C3D234CA51000F04AD4 /* Products */;
@@ -442,6 +437,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		C500A1FA234DE92E001998F1 /* liblua.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblua.a;
+			remoteRef = C500A1F9234DE92E001998F1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C54E8C15234CA49D00F04AD4 /* libcurl.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -505,25 +507,11 @@
 			remoteRef = C54E8C47234CA51D00F04AD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C54E8C4A234CA51D00F04AD4 /* libsqlite-macos.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libsqlite-macos.a";
-			remoteRef = C54E8C49234CA51D00F04AD4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		C54E8C50234CA52700F04AD4 /* libtoluapp.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libtoluapp.a;
 			remoteRef = C54E8C4F234CA52700F04AD4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C5830C6C234CCE0100E2576E /* liblua.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblua.a;
-			remoteRef = C5830C6B234CCE0100E2576E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -533,16 +521,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5868459234E311500CD0BC7 /* dummy.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C501C0CE234CCF470093ACBA /* PBXTargetDependency */ = {
+		C500A1FC234DE93A001998F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = lua;
-			targetProxy = C501C0CD234CCF470093ACBA /* PBXContainerItemProxy */;
+			targetProxy = C500A1FB234DE93A001998F1 /* PBXContainerItemProxy */;
 		};
 		C5830B60234CA6BF00E2576E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

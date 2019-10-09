@@ -51,55 +51,6 @@ cd third-party/openssl-1.1.1c
 checkError
 cd ../..
 
-cd third-party/dynamic_annotations
-./build-ios.sh
-checkError
-cd ../..
-
-cd third-party/dmg_fp
-./build-ios.sh
-checkError
-cd ../..
-
-cd third-party/toluapp
-./build-ios.sh
-checkError
-cd ../..
-
-cd third-party/modp_b64
-./build-ios.sh
-checkError
-cd ../..
-
-cd third-party/lua-5.3.5
-./build-ios.sh
-checkError
-cd ../..
-
-cd third-party/curl
-./build-ios.sh
-checkError
-cd ../..
-
-cd third-party/libxml
-./build-ios.sh
-checkError
-cd ../..
-
-cd third-party/libevent
-./build-ios.sh
-checkError
-cd ../..
-
-cd src/common
-./build-ios.sh
-checkError
-cd ../..
-
-cd src/base
-./build-ios.sh
-checkError
-cd ../..
 
 cd IOSFrameWork
 ./build-ios.sh

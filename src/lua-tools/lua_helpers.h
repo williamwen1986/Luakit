@@ -24,8 +24,8 @@ extern void luaError (lua_State *L, const char *error);
 extern void doString(lua_State* L,const char * s);
 extern void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
 extern int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
-extern void  (lua_getfenv) (lua_State *L, int idx); // Patch [LARPOUX]
-extern int   (lua_setfenv) (lua_State *L, int idx); // Patch [LARPOUX]
+// extern void  (lua_getfenv) (lua_State *L, int idx); // Patch [LARPOUX]
+// extern int   (lua_setfenv) (lua_State *L, int idx); // Patch [LARPOUX]
 
 
 extern void luaSetPackagePath(std::string);

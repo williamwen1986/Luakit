@@ -302,7 +302,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../libs/ios$SDK_VERSION-$CONFIGURATION";
+				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -355,7 +355,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../libs/ios$SDK_VERSION-$CONFIGURATION";
+				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -375,6 +375,7 @@
 					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
 					"$(SRCROOT)/../../src/common",
 					"$(SRCROOT)/../../third-party/lua-5.3.5",
+					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
 				);
 				INFOPLIST_FILE = AsyncSocketTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -402,6 +403,7 @@
 					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
 					"$(SRCROOT)/../../src/common",
 					"$(SRCROOT)/../../third-party/lua-5.3.5",
+					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
 				);
 				INFOPLIST_FILE = AsyncSocketTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

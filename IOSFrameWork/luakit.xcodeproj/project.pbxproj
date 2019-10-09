@@ -7,17 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C501C0D7234CD1F00093ACBA /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C0D6234CD1F00093ACBA /* libcurl.a */; };
-		C501C0D9234CD1F00093ACBA /* libdmg_fp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C0D8234CD1F00093ACBA /* libdmg_fp.a */; };
-		C501C0DB234CD1F00093ACBA /* libdynamic_annotations.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C0DA234CD1F00093ACBA /* libdynamic_annotations.a */; };
-		C501C0DD234CD1F00093ACBA /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C0DC234CD1F00093ACBA /* libevent.a */; };
-		C501C0DF234CD1F00093ACBA /* libicu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C0DE234CD1F00093ACBA /* libicu.a */; };
-		C501C0E1234CD1F00093ACBA /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C0E0234CD1F00093ACBA /* liblua.a */; };
-		C501C0E3234CD1F00093ACBA /* libmodp_b64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C0E2234CD1F00093ACBA /* libmodp_b64.a */; };
-		C501C0E7234CD1F00093ACBA /* libtoluapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C0E6234CD1F00093ACBA /* libtoluapp.a */; };
-		C501C0E9234CD1F00093ACBA /* libxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C0E8234CD1F00093ACBA /* libxml.a */; };
 		C501C10E234CD4890093ACBA /* libnetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C109234CD4630093ACBA /* libnetwork.a */; };
-		C501C118234CD7940093ACBA /* libsqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C501C117234CD7940093ACBA /* libsqlite.a */; };
 		C545B5F2233DF59500B44FF2 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B5AF233DF53500B44FF2 /* libbase.a */; };
 		C545B5F3233DF59500B44FF2 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B59B233DF52200B44FF2 /* libcommon.a */; };
 		C545B613233DFE3D00B44FF2 /* oc_callback.mm in Sources */ = {isa = PBXBuildFile; fileRef = C545B535233DF38D00B44FF2 /* oc_callback.mm */; };
@@ -26,9 +16,24 @@
 		C545B625233E012600B44FF2 /* lua_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C545B620233E010300B44FF2 /* lua_helpers.cpp */; };
 		C545B626233E012600B44FF2 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C545B622233E010300B44FF2 /* xxtea.cpp */; };
 		C5830BBB234CAA0800E2576E /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8BF7234C8E4D00F04AD4 /* libextensions.a */; };
+		C5E42F05234E359E0015AECA /* libthird-party.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C500A1AF234DE2F7001998F1 /* libthird-party.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C500A1AE234DE2F7001998F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C500A1A1234DE2F7001998F1 /* third-party.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C54E8C03234CA45600F04AD4;
+			remoteInfo = "third-party";
+		};
+		C500A1B0234DE325001998F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C500A1A1234DE2F7001998F1 /* third-party.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C54E8C02234CA45600F04AD4;
+			remoteInfo = "third-party";
+		};
 		C501C108234CD4630093ACBA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C501C100234CD4630093ACBA /* network.xcodeproj */;
@@ -99,26 +104,12 @@
 			remoteGlobalIDString = C5F53BB523376173008F114F;
 			remoteInfo = "extensions-macos";
 		};
-		C5830BB5234CA9DA00E2576E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C5830BA7234CA9DA00E2576E /* third-party.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C54E8C03234CA45600F04AD4;
-			remoteInfo = "third-party";
-		};
 		C5830BB7234CA9F600E2576E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C54E8BF1234C8E4D00F04AD4 /* extensions.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = C58B055C2336B0E200A125C2;
 			remoteInfo = extensions;
-		};
-		C5830BB9234CA9FD00E2576E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C5830BA7234CA9DA00E2576E /* third-party.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C54E8C02234CA45600F04AD4;
-			remoteInfo = "third-party";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -135,6 +126,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C500A1A1234DE2F7001998F1 /* third-party.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "third-party.xcodeproj"; path = "../third-party/third-party.xcodeproj"; sourceTree = "<group>"; };
 		C501C0D6234CD1F00093ACBA /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C501C0D8234CD1F00093ACBA /* libdmg_fp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libdmg_fp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C501C0DA234CD1F00093ACBA /* libdynamic_annotations.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libdynamic_annotations.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,7 +155,6 @@
 		C545B622233E010300B44FF2 /* xxtea.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
 		C545B623233E010300B44FF2 /* xxtea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		C54E8BF1234C8E4D00F04AD4 /* extensions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extensions.xcodeproj; path = ../extensions/extensions.xcodeproj; sourceTree = "<group>"; };
-		C5830BA7234CA9DA00E2576E /* third-party.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "third-party.xcodeproj"; path = "../third-party/third-party.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,16 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C501C118234CD7940093ACBA /* libsqlite.a in Frameworks */,
-				C501C0D7234CD1F00093ACBA /* libcurl.a in Frameworks */,
-				C501C0D9234CD1F00093ACBA /* libdmg_fp.a in Frameworks */,
-				C501C0DB234CD1F00093ACBA /* libdynamic_annotations.a in Frameworks */,
-				C501C0DD234CD1F00093ACBA /* libevent.a in Frameworks */,
-				C501C0DF234CD1F00093ACBA /* libicu.a in Frameworks */,
-				C501C0E1234CD1F00093ACBA /* liblua.a in Frameworks */,
-				C501C0E3234CD1F00093ACBA /* libmodp_b64.a in Frameworks */,
-				C501C0E7234CD1F00093ACBA /* libtoluapp.a in Frameworks */,
-				C501C0E9234CD1F00093ACBA /* libxml.a in Frameworks */,
+				C5E42F05234E359E0015AECA /* libthird-party.a in Frameworks */,
 				C501C10E234CD4890093ACBA /* libnetwork.a in Frameworks */,
 				C5830BBB234CAA0800E2576E /* libextensions.a in Frameworks */,
 				C545B5F2233DF59500B44FF2 /* libbase.a in Frameworks */,
@@ -191,6 +173,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C500A1A2234DE2F7001998F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C500A1AF234DE2F7001998F1 /* libthird-party.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C501C101234CD4630093ACBA /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,8 +192,8 @@
 		C545B51D233DF2DE00B44FF2 = {
 			isa = PBXGroup;
 			children = (
+				C500A1A1234DE2F7001998F1 /* third-party.xcodeproj */,
 				C501C100234CD4630093ACBA /* network.xcodeproj */,
-				C5830BA7234CA9DA00E2576E /* third-party.xcodeproj */,
 				C54E8BF1234C8E4D00F04AD4 /* extensions.xcodeproj */,
 				C545B61D233E010300B44FF2 /* lua-tools */,
 				C545B5A9233DF53400B44FF2 /* base.xcodeproj */,
@@ -294,14 +284,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C5830BA8234CA9DA00E2576E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C5830BB6234CA9DA00E2576E /* libthird-party.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -316,8 +298,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				C500A1B1234DE325001998F1 /* PBXTargetDependency */,
 				C501C10D234CD4750093ACBA /* PBXTargetDependency */,
-				C5830BBA234CA9FD00E2576E /* PBXTargetDependency */,
 				C5830BB8234CA9F600E2576E /* PBXTargetDependency */,
 				C545B5D9233DF57B00B44FF2 /* PBXTargetDependency */,
 				C545B5DD233DF57B00B44FF2 /* PBXTargetDependency */,
@@ -369,8 +351,8 @@
 					ProjectRef = C501C100234CD4630093ACBA /* network.xcodeproj */;
 				},
 				{
-					ProductGroup = C5830BA8234CA9DA00E2576E /* Products */;
-					ProjectRef = C5830BA7234CA9DA00E2576E /* third-party.xcodeproj */;
+					ProductGroup = C500A1A2234DE2F7001998F1 /* Products */;
+					ProjectRef = C500A1A1234DE2F7001998F1 /* third-party.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -381,6 +363,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		C500A1AF234DE2F7001998F1 /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = C500A1AE234DE2F7001998F1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C501C109234CD4630093ACBA /* libnetwork.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -430,13 +419,6 @@
 			remoteRef = C54E8BF8234C8E4D00F04AD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C5830BB6234CA9DA00E2576E /* libthird-party.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libthird-party.a";
-			remoteRef = C5830BB5234CA9DA00E2576E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -455,6 +437,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C500A1B1234DE325001998F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "third-party";
+			targetProxy = C500A1B0234DE325001998F1 /* PBXContainerItemProxy */;
+		};
 		C501C10D234CD4750093ACBA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = network;
@@ -474,11 +461,6 @@
 			isa = PBXTargetDependency;
 			name = extensions;
 			targetProxy = C5830BB7234CA9F600E2576E /* PBXContainerItemProxy */;
-		};
-		C5830BBA234CA9FD00E2576E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "third-party";
-			targetProxy = C5830BB9234CA9FD00E2576E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -624,6 +606,7 @@
 					"$(LUAKIT_ROOT)/extensions/File",
 					"$(LUAKIT_ROOT)/extensions/Notify",
 					"$(LUAKIT_ROOT)/extensions/language",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				LUAKIT_ROOT = "$(SRCROOT)/..";
 				OTHER_LDFLAGS = "-ObjC";
@@ -660,6 +643,7 @@
 					"$(LUAKIT_ROOT)/extensions/File",
 					"$(LUAKIT_ROOT)/extensions/Notify",
 					"$(LUAKIT_ROOT)/extensions/language",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				LUAKIT_ROOT = "$(SRCROOT)/..";
 				OTHER_LDFLAGS = "-ObjC";

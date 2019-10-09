@@ -28,6 +28,21 @@ then
     exit -1
 fi
 
+mkdir -p "$OUTPUT_DIR" 2>/dev/null
+pushd "$OUTPUT_DIR" > /dev/null
+dir=$(pwd)
+export OUTPUT_DIR=$dir
+popd > /dev/null
+
+checkError() {
+    if [ $? -ne 0 ]
+    then
+        echo "Exiting due to errors (above)"
+        exit -1
+    fi
+}
+
+
 . ../bin/build-ios.sh luakit
 checkError
 

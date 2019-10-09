@@ -764,6 +764,7 @@
 					"$(LUAKIT_ROOT)/src/lua-tools",
 					"$(LUAKIT_ROOT)/config",
 					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				LUAKIT_ROOT = "$(SRCROOT)/..";
 				OTHER_LDFLAGS = "-ObjC";
@@ -786,6 +787,7 @@
 					"$(LUAKIT_ROOT)/src/lua-tools",
 					"$(LUAKIT_ROOT)/config",
 					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				LUAKIT_ROOT = "$(SRCROOT)/..";
 				OTHER_LDFLAGS = "-ObjC";

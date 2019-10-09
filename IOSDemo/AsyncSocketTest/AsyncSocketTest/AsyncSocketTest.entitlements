@@ -6,6 +6,8 @@
 	<array>
 		<string>app-proxy-provider</string>
 		<string>content-filter-provider</string>
+		<string>dns-proxy</string>
+		<string>packet-tunnel-provider</string>
 	</array>
 </dict>
 </plist>

@@ -369,6 +369,7 @@
 					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
 					"$(LUAKIT_ROOT)/config",
 					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				INFOPLIST_FILE = WeatherTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -398,6 +399,7 @@
 					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
 					"$(LUAKIT_ROOT)/config",
 					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				INFOPLIST_FILE = WeatherTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
