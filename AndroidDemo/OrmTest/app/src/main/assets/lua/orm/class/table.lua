@@ -316,8 +316,12 @@ function Table.getAllByParamsOnLogicThread(params,callback)
     local data = params.args
     local t = Table(tableName)
     local selectItem = Table.prepareQuery(t,data)
-    local d = selectItem:all():getPureData()
-    callback(d)
+    local result = selectItem:all()
+    if result then
+        callback(result:getPureData())
+    else
+        callback(nil)
+    end
 end
 
 function Table.getFirstByParams(params,callback)
@@ -333,7 +337,12 @@ function Table.getFirstOnLogicThread(params,callback)
     local data = params.args
     local t = Table(tableName)
     local selectItem = Table.prepareQuery(t,data)
-    callback(selectItem:first():getPureData())
+    local result = selectItem:first()
+    if result then
+        callback(result:getPureData())
+    else
+        callback(nil)
+    end
 end
 
 function Table.deleteByParams(params,callback)
