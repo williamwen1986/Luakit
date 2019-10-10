@@ -1,13 +1,15 @@
 local test = {}
 
 test.test = function ()
+    print("Test...")
     lua_thread.postToThread(BusinessThreadIO,"async_socket_test","testOnIOThread")
 end
 
 local socket
 local timer
 test.testOnIOThread = function ()
-    socket = lua_asyncSocket.create("www.google.com",443)
+    print("testOnIOThread")
+    socket = lua_asyncSocket.create("88.190.98.37",80)
 
     socket.connectCallback = function (rv)
         if rv >= 0 then
@@ -25,6 +27,7 @@ test.testOnIOThread = function ()
         timer:start (
                 2000,
                 function ()
+                        print("Timer")
                         socket:read()
                 end
 
@@ -35,8 +38,8 @@ test.testOnIOThread = function ()
     socket.writeCallback = function (rv)
         print("write: " .. rv)
     end
+
     socket:connect()
-    print ('socket:connect()')
 
 end
 

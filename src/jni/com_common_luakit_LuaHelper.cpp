@@ -9,7 +9,7 @@
 #include "JniEnvWrapper.h"
 #include "base/thread_task_runner_handle.h"
 #include "common/base_lambda_support.h"
-#include "tools/lua_helpers.h"
+#include "lua-tools/lua_helpers.h"
 #include "JniLuaConvertor.h"
 #ifdef __cplusplus
 extern "C" {

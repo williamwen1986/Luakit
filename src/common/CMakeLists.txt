@@ -66,21 +66,22 @@ add_library(
 include_directories(
                     ${PROJECT_SOURCE_DIR}/../
                     ${PROJECT_SOURCE_DIR}
-                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua
-                    ${PROJECT_SOURCE_DIR}/../openssl/include/
-                    ${PROJECT_SOURCE_DIR}/../curl/include
-                    ${PROJECT_SOURCE_DIR}/../qlite-amalgamation-3290000
-                    ${PROJECT_SOURCE_DIR}/../extensions/HTTP
-                    ${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master
-                    ${PROJECT_SOURCE_DIR}/../extensions/thread
-                    ${PROJECT_SOURCE_DIR}/../extensions/timer
-                    ${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket
-                    ${PROJECT_SOURCE_DIR}/../extensions/File
-                    ${PROJECT_SOURCE_DIR}/../extensions/debug
-                    ${PROJECT_SOURCE_DIR}/../extensions/luasocket
-                    ${PROJECT_SOURCE_DIR}/../extensions/Notify
-                    ${PROJECT_SOURCE_DIR}/../extensions/language
+                    ${PROJECT_SOURCE_DIR}/../../third-party
+                    ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src
+                    ${PROJECT_SOURCE_DIR}/../../third-party/openssl/include/
+                    ${PROJECT_SOURCE_DIR}/../../third-party/curl/include
+                    ${PROJECT_SOURCE_DIR}/../../third-party/sqlite-amalgamation-3290000
+                    ${PROJECT_SOURCE_DIR}/../../extensions/HTTP
+                    ${PROJECT_SOURCE_DIR}/../../extensions/lua-cjson-master
+                    ${PROJECT_SOURCE_DIR}/../../extensions/thread
+                    ${PROJECT_SOURCE_DIR}/../../extensions/timer
+                    ${PROJECT_SOURCE_DIR}/../../extensions/AsyncSocket
+                    ${PROJECT_SOURCE_DIR}/../../extensions/File
+                    ${PROJECT_SOURCE_DIR}/../../extensions/debug
+                    ${PROJECT_SOURCE_DIR}/../../extensions/luasocket
+                    ${PROJECT_SOURCE_DIR}/../../extensions/Notify
+                    ${PROJECT_SOURCE_DIR}/../../extensions/language
                     ${PROJECT_SOURCE_DIR}/../jni
-                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/tools
-                    ${PROJECT_SOURCE_DIR}/../sqlite-amalgamation-3290000
+                    ${PROJECT_SOURCE_DIR}/../lua-tools
+                    ${PROJECT_SOURCE_DIR}/../../config
 )

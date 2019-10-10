@@ -32,10 +32,6 @@ add_library(
 	src/xmlunicode.c src/xmlwriter.c src/xpath.c src/xpointer.c src/buf.c)
 
 
-#set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../libiconv-1.14/outputs/${ANDROID_ABI})
-#file(MAKE_DIRECTORY ${lib_build_DIR})
-#add_subdirectory( "${PROJECT_SOURCE_DIR}/../libiconv-1.14" ${lib_build_DIR} )
-#set_target_properties( iconv PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libiconv.a)
 
 target_link_libraries(xml iconv)
 

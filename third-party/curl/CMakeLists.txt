@@ -31,7 +31,7 @@ add_library(
 )
 
 
-link_directories(${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs)
+#link_directories(${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/libs)
 
 
 # Specifies a path to native header files.
@@ -39,6 +39,6 @@ include_directories(
 	${PROJECT_SOURCE_DIR}/include
 	${PROJECT_SOURCE_DIR}/lib
 	#${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/include
-    $ENV{OUTPUT_DIR}/include/
+        $ENV{OUTPUT_DIR}/include/
 	/usr/local/Cellar/node/11.5.0/include/node
 )

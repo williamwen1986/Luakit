@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 if [ -z "$CONFIG" ]
 then
     export CONFIG=Debug
@@ -27,6 +28,10 @@ checkError() {
         exit -1
     fi
 }
+
+cd openssl-1.1.1c
+. build-android.sh
+cd ..
 
 . ../bin/build-android.sh
 checkError

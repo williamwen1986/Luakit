@@ -74,7 +74,6 @@ add_library(
 # Specifies a path to native header files.
 include_directories(
                     ${PROJECT_SOURCE_DIR}/..
-                    ${PROJECT_SOURCE_DIR}/../common/
                     ${PROJECT_SOURCE_DIR}/lua-cjson-master
                     ${PROJECT_SOURCE_DIR}/debug
                     ${PROJECT_SOURCE_DIR}/HTTP
@@ -84,10 +83,14 @@ include_directories(
                     ${PROJECT_SOURCE_DIR}/luasocket
                     ${PROJECT_SOURCE_DIR}/File
                     ${PROJECT_SOURCE_DIR}/Notify
-                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua
-                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/tools
-                    ${PROJECT_SOURCE_DIR}/../curl/include
-		    ${PROJECT_SOURCE_DIR}/../jni
-		    ${PROJECT_SOURCE_DIR}/../network
-		    ${PROJECT_SOURCE_DIR}/../network/net
+		    ${PROJECT_SOURCE_DIR}/../third-party
+                    ${PROJECT_SOURCE_DIR}/../third-party/lua-5.1.5/src
+                    ${PROJECT_SOURCE_DIR}/../third-party/curl/include
+		    ${PROJECT_SOURCE_DIR}/../src
+		    ${PROJECT_SOURCE_DIR}/../src/jni
+		    ${PROJECT_SOURCE_DIR}/../src/lua-tools
+		    ${PROJECT_SOURCE_DIR}/../src/network
+		    ${PROJECT_SOURCE_DIR}/../src/network/net
+		    ${PROJECT_SOURCE_DIR}/../src/common
+		    ${PROJECT_SOURCE_DIR}/../config
 )

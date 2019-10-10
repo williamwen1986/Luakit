@@ -4,7 +4,7 @@ extern "C" {
 }
 #include "lua_notification_utility.h"
 #include "common/base_lambda_support.h"
-#include "tools/lua_helpers.h"
+#include "lua-tools/lua_helpers.h"
 #include "JniLuaConvertor.h"
 #include "JniEnvWrapper.h"
 #include "JavaRefCountedWrapper.h"

@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -fexceptions -frtti -fPIC -
 
 #set (OS_SPECIFIC "")
 
-if (${OS_ANDROID})
+if (${ANDROID})
     set (OS_SPECIFIC
                    "${ANDROID_NDK}/sources/android/cpufeatures/cpu-features.c"
                    "android/activity_status.cc"
@@ -182,10 +182,6 @@ add_library(
                    sys_info_linux.cc
                    sys_info_posix.cc
                    task_runner.cc
-                   third_party/dmg_fp/dtoa.cc
-                   third_party/dmg_fp/dtoa_wrapper.cc
-                   third_party/dmg_fp/g_fmt.cc
-                   third_party/icu/icu_utf.cc
                    thread_task_runner_handle.cc
                    threading/non_thread_safe_impl.cc
                    threading/platform_thread_linux.cc
@@ -222,10 +218,13 @@ add_library(
 # Specifies a path to native header files.
 include_directories(
                     ${LOCAL_PATH}/../
+ 		            ${PROJECT_SOURCE_DIR}/
                     ${PROJECT_SOURCE_DIR}/../
+                    ${PROJECT_SOURCE_DIR}/../../
                     ${PROJECT_SOURCE_DIR}/../base/android/
-                    ${PROJECT_SOURCE_DIR}/../extensions/timer/
-                    ${PROJECT_SOURCE_DIR}/../lua-5.1.5/lua/
-		    ${PROJECT_SOURCE_DIR}/
+                    ${PROJECT_SOURCE_DIR}/../../extensions/timer/
+                    ${PROJECT_SOURCE_DIR}/../../third-party/
+                    ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src/
+                    ${PROJECT_SOURCE_DIR}/../../config
 
 )

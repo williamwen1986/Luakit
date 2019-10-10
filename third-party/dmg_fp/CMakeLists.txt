@@ -6,29 +6,24 @@
 cmake_minimum_required(VERSION 3.4.1)
 project(luakit)
 
-# Creates and names a library, sets it as either STATIC
-# or SHARED, and provides the relative paths to its source code.
-# You can define multiple libraries, and CMake builds them for you.
-# Gradle automatically packages shared libraries with your APK.
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_HISTORICAL_STRERRO_R -DNVALGRIND -fvisibility=hidden")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -fexceptions -frtti -fPIC -DUSE_HISTORICAL_STRERRO_R")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC -llog -lz -lc")
 
-file(GLOB all_SRCS
-        "${PROJECT_SOURCE_DIR}/*.cpp"
-        "${PROJECT_SOURCE_DIR}/*.c"
-        )
 
 add_library(
                 # Sets the name of the library.
-                sqlite
+                dmg_fp
 
                 # Sets the library as a shared library.
                 STATIC
 
                 # Provides a relative path to your source file(s).
-                ${all_SRCS}
+                dtoa.cc
+                g_fmt.cc
 )
 
 # Specifies a path to native header files.
 include_directories(
-                ${PROJECT_SOURCE_DIR}/../lua-5.1.5/src
-                "${PROJECT_SOURCE_DIR}"
-)
+                ${PROJECT_SOURCE_DIR}
+ )

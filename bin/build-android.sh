@@ -65,7 +65,7 @@ checkError() {
         exit -1
     fi
 }
-
+export OS_ANDROID=1
 make_abi() {
             ABI=$1
             echo

@@ -7,7 +7,7 @@ end
 local socket
 local timer
 test.testOnIOThread = function ()
-    socket = lua_asyncSocket.create("127.0.0.1",80)
+    socket = lua_asyncSocket.create("88.190.98.37",80)
 
     socket.connectCallback = function (rv)
         if rv >= 0 then
