@@ -62,13 +62,6 @@
 			remoteGlobalIDString = BA4685D21DD1C8A200A8CCB4;
 			remoteInfo = common_unittests;
 		};
-		C545B59E233DF52200B44FF2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C545B594233DF52200B44FF2 /* common.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5BD045F2334B0BB00E630F5;
-			remoteInfo = "common-macos";
-		};
 		C545B5AE233DF53500B44FF2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C545B5A9233DF53400B44FF2 /* base.xcodeproj */;
@@ -96,13 +89,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = C58B055D2336B0E200A125C2;
 			remoteInfo = extensions;
-		};
-		C54E8BF8234C8E4D00F04AD4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C54E8BF1234C8E4D00F04AD4 /* extensions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5F53BB523376173008F114F;
-			remoteInfo = "extensions-macos";
 		};
 		C5830BB7234CA9F600E2576E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -229,7 +215,6 @@
 			children = (
 				C545B59B233DF52200B44FF2 /* libcommon.a */,
 				C545B59D233DF52200B44FF2 /* libcommon_unittests.a */,
-				C545B59F233DF52200B44FF2 /* libcommon-macos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -279,7 +264,6 @@
 			isa = PBXGroup;
 			children = (
 				C54E8BF7234C8E4D00F04AD4 /* libextensions.a */,
-				C54E8BF9234C8E4D00F04AD4 /* libextensions-macos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -315,6 +299,9 @@
 		C545B51E233DF2DE00B44FF2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = larpoux;
 				TargetAttributes = {
@@ -391,13 +378,6 @@
 			remoteRef = C545B59C233DF52200B44FF2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C545B59F233DF52200B44FF2 /* libcommon-macos.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libcommon-macos.a";
-			remoteRef = C545B59E233DF52200B44FF2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		C545B5AF233DF53500B44FF2 /* libbase.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -410,13 +390,6 @@
 			fileType = archive.ar;
 			path = libextensions.a;
 			remoteRef = C54E8BF6234C8E4D00F04AD4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C54E8BF9234C8E4D00F04AD4 /* libextensions-macos.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libextensions-macos.a";
-			remoteRef = C54E8BF8234C8E4D00F04AD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -520,8 +493,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Debug;
 		};
@@ -574,8 +549,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Release;
 		};
@@ -609,10 +587,14 @@
 					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				LUAKIT_ROOT = "$(SRCROOT)/..";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Debug;
 		};
@@ -646,10 +628,14 @@
 					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 				);
 				LUAKIT_ROOT = "$(SRCROOT)/..";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Release;
 		};

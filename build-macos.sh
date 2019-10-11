@@ -38,50 +38,14 @@ checkError() {
 
 
 ./clean.sh
-rm -r "$OUTPUT_DIR"/*
-
-cd src/openssl-1.1.1c
-./build-macos.sh
-checkError
-cd ../..
+rm -r "$OUTPUT_DIR"/* 2>/dev/null
 
 
-cd src/modp_b64
-./build-macos.sh
-checkError
-cd ../..
-
-
-cd src/libevent
-./build-macos.sh
-checkError
-cd ../..
-
-cd src/libxml
-./build-macos.sh
-checkError
-cd ../..
-
-
-cd src/curl
-./build-macos.sh
-checkError
-cd ../..
-
-
-cd src/common
-./build-macos.sh
-checkError
-cd ../..
-
-cd src/base
-./build-macos.sh
-checkError
-cd ../..
-
-
-cd MacosFramework
+cd IOSFrameWork
 ./build-macos.sh
 checkError
 cd ..
 
+echo
+echo "Your outputs are in $OUTPUT_DIR"
+echo

@@ -14,7 +14,6 @@
 		C501C1A9234CDB920093ACBA /* base_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C501C19B234CDB910093ACBA /* base_connection.cpp */; };
 		C501C1AA234CDB920093ACBA /* socket_watcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C501C19D234CDB910093ACBA /* socket_watcher.cpp */; };
 		C501C1AB234CDB920093ACBA /* curl_http_form.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C501C1A3234CDB920093ACBA /* curl_http_form.cpp */; };
-		C501C1AC234CDB920093ACBA /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = C501C1A4234CDB920093ACBA /* Makefile */; };
 		C501C1B5234CDBAC0093ACBA /* net_errors.cc in Sources */ = {isa = PBXBuildFile; fileRef = C501C1AF234CDBAC0093ACBA /* net_errors.cc */; };
 		C501C1B7234CDBAC0093ACBA /* io_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = C501C1B1234CDBAC0093ACBA /* io_buffer.cc */; };
 		C501C1B8234CDBAC0093ACBA /* net_errors_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = C501C1B2234CDBAC0093ACBA /* net_errors_posix.cc */; };
@@ -55,7 +54,6 @@
 		C501C1A1234CDB920093ACBA /* build-linux.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-linux.sh"; sourceTree = "<group>"; };
 		C501C1A2234CDB920093ACBA /* build-macos.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-macos.sh"; sourceTree = "<group>"; };
 		C501C1A3234CDB920093ACBA /* curl_http_form.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = curl_http_form.cpp; sourceTree = "<group>"; };
-		C501C1A4234CDB920093ACBA /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		C501C1AE234CDBAC0093ACBA /* net_error_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = net_error_list.h; path = net/net_error_list.h; sourceTree = "<group>"; };
 		C501C1AF234CDBAC0093ACBA /* net_errors.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = net_errors.cc; path = net/net_errors.cc; sourceTree = "<group>"; };
 		C501C1B1234CDBAC0093ACBA /* io_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = io_buffer.cc; path = net/io_buffer.cc; sourceTree = "<group>"; };
@@ -97,7 +95,6 @@
 				C501C19A234CDB910093ACBA /* curl_connection.h */,
 				C501C1A3234CDB920093ACBA /* curl_http_form.cpp */,
 				C501C19C234CDB910093ACBA /* curl_http_form.h */,
-				C501C1A4234CDB920093ACBA /* Makefile */,
 				C501C19F234CDB920093ACBA /* network_define.h */,
 				C501C19D234CDB910093ACBA /* socket_watcher.cpp */,
 				C501C190234CDB910093ACBA /* socket_watcher.h */,
@@ -197,7 +194,6 @@
 				C501C1AB234CDB920093ACBA /* curl_http_form.cpp in Sources */,
 				C501C1A9234CDB920093ACBA /* base_connection.cpp in Sources */,
 				C501C1A5234CDB920093ACBA /* async_task_dispatcher.cpp in Sources */,
-				C501C1AC234CDB920093ACBA /* Makefile in Sources */,
 				C501C1B7234CDBAC0093ACBA /* io_buffer.cc in Sources */,
 				C501C1B5234CDBAC0093ACBA /* net_errors.cc in Sources */,
 				C501C1AA234CDB920093ACBA /* socket_watcher.cpp in Sources */,
@@ -261,8 +257,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Debug;
 		};
@@ -314,8 +312,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Release;
 		};
@@ -333,10 +334,13 @@
 					"$(SRCROOT)/../../third-party/lua-5.3.5",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Debug;
 		};
@@ -354,10 +358,13 @@
 					"$(SRCROOT)/../../third-party/lua-5.3.5",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Release;
 		};

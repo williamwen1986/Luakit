@@ -1,5 +1,5 @@
 #!/bin/bash
 
-. ../../bin/build-macos.sh lua
+. ../../bin/build-macos.sh icu
 checkError
 

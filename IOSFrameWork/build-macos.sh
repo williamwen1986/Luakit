@@ -32,9 +32,10 @@ checkError() {
 #
 # Canonicalize relative paths to absolute paths
 #
+CURRENTDIR=$(pwd)
 pushd "$path" > /dev/null
 dir=$(pwd)
-path=$dir
+path="$dir"
 popd > /dev/null
 
 
@@ -62,7 +63,13 @@ popd > /dev/null
 
 rm -rf DerivedData
 
-../bin/build-macos.sh extensions
+cd ../third-party/openssl-1.1.1c
+. ./build-macos.sh
+checkError
+echo "cd $CURRENTDIR"
+cd "$CURRENTDIR"
+
+. ../bin/build-macos.sh luakit
 checkError
 
 echo

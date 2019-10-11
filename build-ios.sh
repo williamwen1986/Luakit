@@ -6,7 +6,7 @@ then
 fi
 
 if [ -z $IOS_SDK_VERSION ]; then
-	export IOS_SDK_VERSION="12.2"
+	export IOS_SDK_VERSION="13.0"
 fi
 
 if [ -z "$OUTPUT_DIR" ]
@@ -43,7 +43,7 @@ checkError() {
 }
 
 ./clean.sh
-rm -r "$OUTPUT_DIR"/*
+rm -r "$OUTPUT_DIR"/* 2>/dev/null
 
 
 cd third-party/openssl-1.1.1c
@@ -57,3 +57,6 @@ cd IOSFrameWork
 checkError
 cd ..
 
+echo
+echo "Your outputs are in $OUTPUT_DIR"
+echo

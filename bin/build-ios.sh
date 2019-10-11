@@ -7,7 +7,7 @@ then
 fi
 
 if [ -z $IOS_SDK_VERSION ]; then
-	export IOS_SDK_VERSION="12.2"
+	export IOS_SDK_VERSION="13.0"
 fi
 
 PROJECT=$1

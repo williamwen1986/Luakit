@@ -15,6 +15,12 @@ if [ -z $TARGET ]; then
     TARGET=$PROJECT
 fi
 
+if [ -z $TARGET ]
+then
+    echo "Correct syntax is $0 <project-name>"
+    exit -1
+fi
+
 DEFAULT_OUTPUT=../../libs/macos$MACOS_SDK_VERSION-$CONFIG
 #-------------------------------------------------------------------
 
@@ -61,11 +67,10 @@ export OUTPUT_DIR="$dir"
 popd > /dev/null
 
 rm -rf DerivedData
-
+echo "-----------------TARGET $TARGET"
 
 xcodebuild -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch x86_64  -sdk macosx$MACOS_SDK_VERSION -destination "platform=macOS,arch=x86_64" clean
 checkError
-echo "-----------------TARGET $TARGET"
 xcodebuild -configuration $CONFIG -project $PROJECT.xcodeproj -target $TARGET -arch x86_64  -sdk macosx$MACOS_SDK_VERSION -destination "platform=macOS,arch=x86_64" build
 checkError
 

@@ -2587,14 +2587,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-DTARGET_OS_IPHONE",
 					"-Wno-deprecated-register",
 				);
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../../";
-				VALID_ARCHS = "x86_64 arm64 armv7 i386";
+				VALID_ARCHS = "x86_64 arm64 armv7";
 			};
 			name = Release;
 		};
@@ -2640,8 +2641,9 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = base;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../../";
-				VALID_ARCHS = "arm64 x86_64 armv7 i386";
+				VALID_ARCHS = "arm64 x86_64 armv7";
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wendif-labels",
@@ -2699,8 +2701,9 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = base;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../../";
-				VALID_ARCHS = "arm64 x86_64 armv7 i386";
+				VALID_ARCHS = "arm64 x86_64 armv7";
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wendif-labels",
@@ -2748,14 +2751,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-DTARGET_OS_IPHONE",
 					"-Wno-deprecated-register",
 				);
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../../";
-				VALID_ARCHS = "x86_64 arm64 armv7 i386";
+				VALID_ARCHS = "x86_64 arm64 armv7";
 			};
 			name = Debug;
 		};

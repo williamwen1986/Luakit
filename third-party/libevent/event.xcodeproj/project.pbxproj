@@ -138,7 +138,6 @@
 			buildPhases = (
 				A1E8076C291DA11417D8AAC2 /* Sources */,
 				62C666431113C3955BBC963F /* Frameworks */,
-				C526DF632330F6E70069143A /* Copy to $OUTPUT_DIR */,
 			);
 			buildRules = (
 			);
@@ -174,28 +173,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		C526DF632330F6E70069143A /* Copy to $OUTPUT_DIR */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy to $OUTPUT_DIR";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/ios$SDK_VERSION-$CONFIGURATION\nfi\n\n#mkdir -p \"$OUTPUT_DIR/\"\n#cp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A1E8076C291DA11417D8AAC2 /* Sources */ = {
@@ -254,6 +231,8 @@
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				ONLY_ACTIVE_ARCH = YES;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
+				VALID_ARCHS = "i386 x86_64 arm64 arm64e armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -284,7 +263,9 @@
 				);
 				PRODUCT_NAME = event;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				USE_HEADERMAP = NO;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 				WARNING_CFLAGS = (
 					"-Wendif-labels",
 					"-Wno-unused-parameter",
@@ -324,7 +305,9 @@
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRODUCT_NAME = event;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				USE_HEADERMAP = NO;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 				WARNING_CFLAGS = (
 					"-Wendif-labels",
 					"-Wno-unused-parameter",
@@ -373,6 +356,8 @@
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				ONLY_ACTIVE_ARCH = YES;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
+				VALID_ARCHS = "i386 x86_64 arm64 arm64e armv7 armv7s";
 			};
 			name = Debug;
 		};

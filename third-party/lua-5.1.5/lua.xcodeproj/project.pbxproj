@@ -30,7 +30,6 @@
 		C5830C3C234CC57700E2576E /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = C5830C12234CC57500E2576E /* liolib.c */; };
 		C5830C3D234CC57700E2576E /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = C5830C14234CC57500E2576E /* print.c */; };
 		C5830C3E234CC57700E2576E /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = C5830C15234CC57500E2576E /* lbaselib.c */; };
-		C5830C3F234CC57700E2576E /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = C5830C16234CC57500E2576E /* Makefile */; };
 		C5830C40234CC57700E2576E /* lstring.c in Sources */ = {isa = PBXBuildFile; fileRef = C5830C18234CC57600E2576E /* lstring.c */; };
 		C5830C41234CC57700E2576E /* lstrlib.c in Sources */ = {isa = PBXBuildFile; fileRef = C5830C19234CC57600E2576E /* lstrlib.c */; };
 		C5830C42234CC57700E2576E /* ldump.c in Sources */ = {isa = PBXBuildFile; fileRef = C5830C1E234CC57600E2576E /* ldump.c */; };
@@ -94,7 +93,6 @@
 		C5830C13234CC57500E2576E /* lcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcode.h; path = src/lcode.h; sourceTree = SOURCE_ROOT; };
 		C5830C14234CC57500E2576E /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = print.c; path = src/print.c; sourceTree = SOURCE_ROOT; };
 		C5830C15234CC57500E2576E /* lbaselib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lbaselib.c; path = src/lbaselib.c; sourceTree = SOURCE_ROOT; };
-		C5830C16234CC57500E2576E /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = src/Makefile; sourceTree = SOURCE_ROOT; };
 		C5830C17234CC57500E2576E /* lmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lmem.h; path = src/lmem.h; sourceTree = SOURCE_ROOT; };
 		C5830C18234CC57600E2576E /* lstring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lstring.c; path = src/lstring.c; sourceTree = SOURCE_ROOT; };
 		C5830C19234CC57600E2576E /* lstrlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lstrlib.c; path = src/lstrlib.c; sourceTree = SOURCE_ROOT; };
@@ -198,7 +196,6 @@
 				C5830C0E234CC57400E2576E /* lvm.h */,
 				C5830C07234CC57400E2576E /* lzio.c */,
 				C5830BFC234CC57300E2576E /* lzio.h */,
-				C5830C16234CC57500E2576E /* Makefile */,
 				C5830C14234CC57500E2576E /* print.c */,
 			);
 			path = lua;
@@ -268,7 +265,6 @@
 				C5830C34234CC57700E2576E /* lobject.c in Sources */,
 				C5830C36234CC57700E2576E /* linit.c in Sources */,
 				C5830C45234CC57700E2576E /* loadlib.c in Sources */,
-				C5830C3F234CC57700E2576E /* Makefile in Sources */,
 				C5830C35234CC57700E2576E /* lzio.c in Sources */,
 				C5830C3D234CC57700E2576E /* print.c in Sources */,
 				C5830C2E234CC57700E2576E /* lua.c in Sources */,
@@ -303,6 +299,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -353,8 +350,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Debug;
 		};
@@ -362,6 +361,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -406,32 +406,45 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Release;
 		};
 		C5830BEE234CC51C00E2576E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Debug;
 		};
 		C5830BEF234CC51C00E2576E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Release;
 		};

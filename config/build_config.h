@@ -16,11 +16,14 @@
 
 // A set of macros to use for platform detection.
 #if defined(__APPLE__)
-#include "TargetConditionals.h"
-#define OS_MACOSX 1
-#if defined(TARGET_OS_IPHONE) && (TARGET_OS_IPHONE != 0) // Patch [LARPOUX]
-#define OS_IOS 1
-#endif
+    #if TARGET_OS_OSX
+        #define OS_MACINTOSH 1 // Real Macintosh and not IOS
+    #endif
+    #include "TargetConditionals.h"
+    #define OS_MACOSX 1 // In fact MACOS or IOS !!!
+    #if defined(TARGET_OS_IPHONE) && (TARGET_OS_IPHONE != 0) // Patch [LARPOUX]
+        #define OS_IOS 1 // A real IOS device and not Macos
+    #endif
 #elif defined(ANDROID)
 #define OS_ANDROID 1
 #elif defined(__native_client__)
