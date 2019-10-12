@@ -106,7 +106,7 @@ dir=$(pwd)
 export OUTPUT_DIR="$dir"
 popd > /dev/null
 
-cd src/openssl-1.1.1c
+cd third-party/openssl-1.1.1c
 ./build-android.sh
 checkError
 cd ../..

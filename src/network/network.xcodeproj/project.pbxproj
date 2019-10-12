@@ -331,7 +331,6 @@
 					"$(SRCROOT)/../../third-party",
 					"$(SRCROOT)/../../third-party/curl/include",
 					"$(SRCROOT)/../common",
-					"$(SRCROOT)/../../third-party/lua-5.3.5",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -355,7 +354,6 @@
 					"$(SRCROOT)/../../third-party",
 					"$(SRCROOT)/../../third-party/curl/include",
 					"$(SRCROOT)/../common",
-					"$(SRCROOT)/../../third-party/lua-5.3.5",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
 				);
 				ONLY_ACTIVE_ARCH = NO;

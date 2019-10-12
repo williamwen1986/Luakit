@@ -40,7 +40,7 @@ void startLuakit(int argc, char * argv[])
     if (!hasStartLuakit) {
         CommandLine::Init(argc, argv);
         std::string  bundlePath = [[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding];
-        bundlePath += "/lua"; // Patch [LARPOUX]
+        //bundlePath += "/lua"; // Patch [LARPOUX]
         if (luaGetPackagePath().size() == 0) {
             luaSetPackagePath(bundlePath);
         }

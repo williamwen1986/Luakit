@@ -42,10 +42,6 @@ checkError() {
     fi
 }
 
-cd openssl-1.1.1c
-./build-ios.sh
-checkError
-cd ..
 
 ../bin/build-ios.sh third-party
 checkError

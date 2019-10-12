@@ -427,7 +427,6 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)",
-					"$(TOP_SRC_DIR)/third-party/lua-5.3.5",
 					"$(TOP_SRC_DIR)/src/common",
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/third-party",
@@ -453,7 +452,6 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)",
-					"$(TOP_SRC_DIR)/third-party/lua-5.3.5",
 					"$(TOP_SRC_DIR)/src/common",
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/third-party",

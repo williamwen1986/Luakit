@@ -357,7 +357,6 @@
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/third-party/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src",
 					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
 					"$(LUAKIT_ROOT)/src/common",
@@ -385,7 +384,6 @@
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/third-party/lua-5.3.5",
 					"$(LUAKIT_ROOT)/src",
 					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
 					"$(LUAKIT_ROOT)/src/common",

@@ -29,9 +29,5 @@ checkError() {
     fi
 }
 
-cd openssl-1.1.1c
-. build-android.sh
-cd ..
-
 . ../bin/build-android.sh
 checkError

@@ -109,6 +109,7 @@ JNIEXPORT jobject JNICALL Java_com_common_luakit_LuaHelper_callLuaFunction__Ljav
     BEGIN_STACK_MODIFY(L)
     pushLuaModule(module);
     lua_pushstring(L, method);
+    //LOG(INFO) << "Call lua function " << module << ":" << method;
     lua_rawget(L, -2);
     jobject ret = NULL;
     if (lua_isfunction(L, -1)) {

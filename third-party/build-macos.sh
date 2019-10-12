@@ -62,11 +62,6 @@ popd > /dev/null
 
 rm -rf DerivedData
 
-cd openssl-1.1.1c
-./build-macos.sh
-checkError
-cd ..
-
 ../bin/build-macos.sh third-party
 checkError
 

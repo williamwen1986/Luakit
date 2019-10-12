@@ -374,7 +374,6 @@
 					"$(SRCROOT)/../../src",
 					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
 					"$(SRCROOT)/../../src/common",
-					"$(SRCROOT)/../../third-party/lua-5.3.5",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
 				);
 				INFOPLIST_FILE = AsyncSocketTest/Info.plist;
@@ -402,7 +401,6 @@
 					"$(SRCROOT)/../../src",
 					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
 					"$(SRCROOT)/../../src/common",
-					"$(SRCROOT)/../../third-party/lua-5.3.5",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
 				);
 				INFOPLIST_FILE = AsyncSocketTest/Info.plist;

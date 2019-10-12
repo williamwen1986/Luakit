@@ -52,7 +52,7 @@ fi
 if [ ! ${ANDROID_NDK_HOME} ]; then
      echo "ANDROID_NDK_HOME environment variable not set, set and rerun"
      exit 1
- fi
+fi
 
 
 ANDROID_LIB_ROOT=./generation

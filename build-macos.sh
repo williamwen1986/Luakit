@@ -41,6 +41,13 @@ checkError() {
 rm -r "$OUTPUT_DIR"/* 2>/dev/null
 
 
+cd third-party/openssl-1.1.1c
+./build-macos.sh
+checkError
+cd ../..
+
+
+
 cd IOSFrameWork
 ./build-macos.sh
 checkError

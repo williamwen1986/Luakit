@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AppDelegate.h"
 #import "oc_helpers.h"
-#include "tools/lua_helpers.h"
+#include "lua-tools/lua_helpers.h"
 
 
 int main(int argc, const char * argv[])

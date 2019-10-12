@@ -1189,8 +1189,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/lib",
 					"$(LUAKIT_ROOT)/libs/ios$SDK_VERSION-$CONFIGURATION/include-$arch",
+					"$(SRCROOT)/lib",
 					"$(SRCROOT)/include",
 					"$(LUAKIT_ROOT)/libs/macos$SDK_VERSION-$CONFIGURATION/include-$arch",
 				);
@@ -1218,8 +1218,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/lib",
 					"$(LUAKIT_ROOT)/libs/ios$SDK_VERSION-$CONFIGURATION/include-$arch",
+					"$(SRCROOT)/lib",
 					"$(SRCROOT)/include",
 					"$(LUAKIT_ROOT)/libs/macos$SDK_VERSION-$CONFIGURATION/include-$arch",
 				);
