@@ -1,0 +1,51 @@
+$#include "tclass.h"
+
+$renaming ^Tst_ @
+
+class Tst_Dummy;
+
+class Tst_A
+{
+  static Tst_A* last;
+  Tst_A ();
+  virtual const char* a ();
+  class Tst_AA
+  {
+    Tst_AA () {}
+    ~Tst_AA () {}
+    const char* aa () { return "AA"; }
+  };
+  class Tst_BB : public Tst_AA
+  {
+    Tst_BB () {}
+    ~Tst_BB () {}
+    Tst_AA* Base () { return this; }
+    const char* classname () const {
+      return "Tst_BB";
+    }
+  };
+};
+
+class Tst_B : public Tst_A
+{
+  static Tst_B* last;
+  Tst_B ();
+  virtual const char* b ();
+};
+
+class Tst_C@luaC : public Tst_B
+{
+  static Tst_C* last;
+  Tst_C (int n);
+  ~Tst_C ();
+  virtual const char* c ();
+};
+
+class D // private destructor
+{
+  TOLUA_PROTECTED_DESTRUCTOR
+  D () {}
+};
+
+Tst_A::Tst_AA* Tst_create_aa ();
+bool Tst_is_aa (Tst_A::Tst_AA* obj);

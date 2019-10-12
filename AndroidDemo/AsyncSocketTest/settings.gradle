@@ -1,0 +1,3 @@
+include ':app', ':lib_chromium', ':luakit'
+project(':luakit').projectDir = new File(settingsDir, '../../AndroidFrameWork/luakit')
+project(':lib_chromium').projectDir = new File(settingsDir, '../../AndroidFrameWork/lib_chromium')

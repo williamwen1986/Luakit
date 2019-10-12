@@ -1,0 +1,463 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C501CF6A232A836E00BE63BB /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C501CF69232A836E00BE63BB /* ViewController.mm */; };
+		C517AB2C232969040039AF93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C517AB2B232969040039AF93 /* AppDelegate.m */; };
+		C517AB31232969050039AF93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C517AB30232969050039AF93 /* Assets.xcassets */; };
+		C517AB34232969050039AF93 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C517AB32232969050039AF93 /* Main.storyboard */; };
+		C517AB3F232A0A8C0039AF93 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C517AB3E232A0A8C0039AF93 /* main.mm */; };
+		C5BD06E623351B5D00E630F5 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C5BD06E523351B5D00E630F5 /* lua */; };
+		C5BD06F02335204300E630F5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BD06E323351ABF00E630F5 /* libssl.a */; };
+		C5BF739E2350BB4A00BEDDD4 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BF739D2350BB4A00BEDDD4 /* libcommon.a */; };
+		C5FA3AF02350BAB80092B297 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C565D76A23507F66008F6126 /* libluakit.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C565D76923507F66008F6126 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C565D75023507F66008F6126 /* luakit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C545B526233DF2DE00B44FF2;
+			remoteInfo = luakit;
+		};
+		C5BD06DC23351A4800E630F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5BD06D123351A4800E630F5 /* Luakit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2883AC9120B43DFB005E1F54;
+			remoteInfo = Luakit;
+		};
+		C5FA3AEE2350BAA80092B297 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C565D75023507F66008F6126 /* luakit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C545B525233DF2DE00B44FF2;
+			remoteInfo = luakit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C501CF69232A836E00BE63BB /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		C517AB27232969040039AF93 /* NotificationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotificationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C517AB2A232969040039AF93 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C517AB2B232969040039AF93 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C517AB2D232969040039AF93 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C517AB30232969050039AF93 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C517AB33232969050039AF93 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C517AB35232969050039AF93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C517AB38232969050039AF93 /* NotificationTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationTest.entitlements; sourceTree = "<group>"; };
+		C517AB3E232A0A8C0039AF93 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		C565D75023507F66008F6126 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../IOSFrameWork/luakit.xcodeproj; sourceTree = "<group>"; };
+		C5BD06D123351A4800E630F5 /* Luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit.xcodeproj; path = ../../MacosFramework/Luakit.xcodeproj; sourceTree = "<group>"; };
+		C5BD06E323351ABF00E630F5 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/macos10.14-Debug/libssl.a"; sourceTree = "<group>"; };
+		C5BD06E523351B5D00E630F5 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = NotificationTest/lua; sourceTree = "<group>"; };
+		C5BD06EC23351FC200E630F5 /* libssl.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.1.dylib; path = "../../libs/macos10.14-Debug/libssl.1.1.dylib"; sourceTree = "<group>"; };
+		C5BF739D2350BB4A00BEDDD4 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C517AB24232969040039AF93 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5BF739E2350BB4A00BEDDD4 /* libcommon.a in Frameworks */,
+				C5FA3AF02350BAB80092B297 /* libluakit.a in Frameworks */,
+				C5BD06F02335204300E630F5 /* libssl.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C517AB1E232969040039AF93 = {
+			isa = PBXGroup;
+			children = (
+				C565D75023507F66008F6126 /* luakit.xcodeproj */,
+				C5BD06E523351B5D00E630F5 /* lua */,
+				C5BD06D123351A4800E630F5 /* Luakit.xcodeproj */,
+				C517AB29232969040039AF93 /* NotificationTest */,
+				C517AB28232969040039AF93 /* Products */,
+				C517AB73232A0E0D0039AF93 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C517AB28232969040039AF93 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C517AB27232969040039AF93 /* NotificationTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C517AB29232969040039AF93 /* NotificationTest */ = {
+			isa = PBXGroup;
+			children = (
+				C501CF69232A836E00BE63BB /* ViewController.mm */,
+				C517AB3E232A0A8C0039AF93 /* main.mm */,
+				C517AB2A232969040039AF93 /* AppDelegate.h */,
+				C517AB2B232969040039AF93 /* AppDelegate.m */,
+				C517AB2D232969040039AF93 /* ViewController.h */,
+				C517AB30232969050039AF93 /* Assets.xcassets */,
+				C517AB32232969050039AF93 /* Main.storyboard */,
+				C517AB35232969050039AF93 /* Info.plist */,
+				C517AB38232969050039AF93 /* NotificationTest.entitlements */,
+			);
+			path = NotificationTest;
+			sourceTree = "<group>";
+		};
+		C517AB73232A0E0D0039AF93 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C5BF739D2350BB4A00BEDDD4 /* libcommon.a */,
+				C5BD06EC23351FC200E630F5 /* libssl.1.1.dylib */,
+				C5BD06E323351ABF00E630F5 /* libssl.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C565D75123507F66008F6126 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C565D76A23507F66008F6126 /* libluakit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C5BD06D223351A4800E630F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C5BD06DD23351A4800E630F5 /* libLuakit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C517AB26232969040039AF93 /* NotificationTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C517AB3B232969050039AF93 /* Build configuration list for PBXNativeTarget "NotificationTest" */;
+			buildPhases = (
+				C517AB23232969040039AF93 /* Sources */,
+				C517AB24232969040039AF93 /* Frameworks */,
+				C517AB25232969040039AF93 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C5FA3AEF2350BAA80092B297 /* PBXTargetDependency */,
+			);
+			name = NotificationTest;
+			productName = NotificationTest;
+			productReference = C517AB27232969040039AF93 /* NotificationTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C517AB1F232969040039AF93 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = larpoux;
+				TargetAttributes = {
+					C517AB26232969040039AF93 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+				};
+			};
+			buildConfigurationList = C517AB22232969040039AF93 /* Build configuration list for PBXProject "NotificationTest" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C517AB1E232969040039AF93;
+			productRefGroup = C517AB28232969040039AF93 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C5BD06D223351A4800E630F5 /* Products */;
+					ProjectRef = C5BD06D123351A4800E630F5 /* Luakit.xcodeproj */;
+				},
+				{
+					ProductGroup = C565D75123507F66008F6126 /* Products */;
+					ProjectRef = C565D75023507F66008F6126 /* luakit.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C517AB26232969040039AF93 /* NotificationTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C565D76A23507F66008F6126 /* libluakit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libluakit.a;
+			remoteRef = C565D76923507F66008F6126 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C5BD06DD23351A4800E630F5 /* libLuakit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libLuakit.a;
+			remoteRef = C5BD06DC23351A4800E630F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C517AB25232969040039AF93 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5BD06E623351B5D00E630F5 /* lua in Resources */,
+				C517AB31232969050039AF93 /* Assets.xcassets in Resources */,
+				C517AB34232969050039AF93 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C517AB23232969040039AF93 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C517AB3F232A0A8C0039AF93 /* main.mm in Sources */,
+				C517AB2C232969040039AF93 /* AppDelegate.m in Sources */,
+				C501CF6A232A836E00BE63BB /* ViewController.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C5FA3AEF2350BAA80092B297 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = luakit;
+			targetProxy = C5FA3AEE2350BAA80092B297 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C517AB32232969050039AF93 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C517AB33232969050039AF93 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C517AB39232969050039AF93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(LUAKIT_ROOT)/libs/macos$SDK_VERSION-$CONFIGURATION";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C517AB3A232969050039AF93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(LUAKIT_ROOT)/libs/macos$SDK_VERSION-$CONFIGURATION";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C517AB3C232969050039AF93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_ENTITLEMENTS = NotificationTest/NotificationTest.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/config",
+					"$(LUAKIT_ROOT)",
+					"$(LUAKIT_ROOT)/third-party",
+				);
+				INFOPLIST_FILE = NotificationTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
+				PRODUCT_BUNDLE_IDENTIFIER = Canardoux.NotificationTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C517AB3D232969050039AF93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_ENTITLEMENTS = NotificationTest/NotificationTest.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/config",
+					"$(LUAKIT_ROOT)",
+					"$(LUAKIT_ROOT)/third-party",
+				);
+				INFOPLIST_FILE = NotificationTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
+				PRODUCT_BUNDLE_IDENTIFIER = Canardoux.NotificationTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C517AB22232969040039AF93 /* Build configuration list for PBXProject "NotificationTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C517AB39232969050039AF93 /* Debug */,
+				C517AB3A232969050039AF93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C517AB3B232969050039AF93 /* Build configuration list for PBXNativeTarget "NotificationTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C517AB3C232969050039AF93 /* Debug */,
+				C517AB3D232969050039AF93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C517AB1F232969040039AF93 /* Project object */;
+}
