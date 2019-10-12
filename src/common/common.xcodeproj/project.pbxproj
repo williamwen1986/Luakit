@@ -22,21 +22,6 @@
 		C526DF9D2330FA5C0069143A /* network_monitor_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8E2330FA5C0069143A /* network_monitor_ios.mm */; };
 		C526DF9E2330FA5C0069143A /* notification_service_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8F2330FA5C0069143A /* notification_service_impl.cc */; };
 		C526DF9F2330FA5C0069143A /* business_main_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF902330FA5C0069143A /* business_main_delegate.cpp */; };
-<<<<<<< HEAD
-=======
-		C5BD044B2334B0BB00E630F5 /* business_client_process_sub_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF892330FA5C0069143A /* business_client_process_sub_thread.cc */; };
-		C5BD044C2334B0BB00E630F5 /* network_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF702330FA5B0069143A /* network_util.cpp */; };
-		C5BD044D2334B0BB00E630F5 /* network_monitor_android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF712330FA5B0069143A /* network_monitor_android.cpp */; };
-		C5BD044E2334B0BB00E630F5 /* notification_service_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8F2330FA5C0069143A /* notification_service_impl.cc */; };
-		C5BD044F2334B0BB00E630F5 /* business_client_thread_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8D2330FA5C0069143A /* business_client_thread_impl.cc */; };
-		C5BD04502334B0BB00E630F5 /* business_main_loop.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF802330FA5C0069143A /* business_main_loop.cc */; };
-		C5BD04512334B0BB00E630F5 /* business_client_main_parts.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF852330FA5C0069143A /* business_client_main_parts.cc */; };
-		C5BD04522334B0BB00E630F5 /* business_main_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF902330FA5C0069143A /* business_main_delegate.cpp */; };
-		C5BD04552334B0BB00E630F5 /* notification_registrar.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF6A2330FA5B0069143A /* notification_registrar.cc */; };
-		C5BD04562334B0BB00E630F5 /* business_switches.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF722330FA5B0069143A /* business_switches.cpp */; };
-		C5BD04572334B0BB00E630F5 /* business_runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF732330FA5B0069143A /* business_runtime.cpp */; };
-		C5BD04582334B0BB00E630F5 /* network_monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF6D2330FA5B0069143A /* network_monitor.cpp */; };
->>>>>>> Merge "build-macos" branch with William
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,18 +53,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-<<<<<<< HEAD
-=======
-		C5BD045A2334B0BB00E630F5 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -124,10 +97,6 @@
 		C526DF8E2330FA5C0069143A /* network_monitor_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = network_monitor_ios.mm; path = common/network_monitor_ios.mm; sourceTree = "<group>"; };
 		C526DF8F2330FA5C0069143A /* notification_service_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = notification_service_impl.cc; path = common/notification_service_impl.cc; sourceTree = "<group>"; };
 		C526DF902330FA5C0069143A /* business_main_delegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_main_delegate.cpp; path = common/business_main_delegate.cpp; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		C5BD045F2334B0BB00E630F5 /* libcommon-macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcommon-macos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
->>>>>>> Merge "build-macos" branch with William
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,16 +114,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-<<<<<<< HEAD
-=======
-		C5BD04592334B0BB00E630F5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -171,10 +130,6 @@
 			children = (
 				04A4FA121D7464E500E42FE3 /* libcommon.a */,
 				BA4685D21DD1C8A200A8CCB4 /* libcommon_unittests.a */,
-<<<<<<< HEAD
-=======
-				C5BD045F2334B0BB00E630F5 /* libcommon-macos.a */,
->>>>>>> Merge "build-macos" branch with William
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -235,10 +190,6 @@
 				04A4FA0E1D7464E500E42FE3 /* Sources */,
 				04A4FA0F1D7464E500E42FE3 /* Frameworks */,
 				04A4FA101D7464E500E42FE3 /* CopyFiles */,
-<<<<<<< HEAD
-=======
-				C526DF692330FA070069143A /* Copy to $OUTPUT_DIR */,
->>>>>>> Merge "build-macos" branch with William
 			);
 			buildRules = (
 			);
@@ -267,27 +218,6 @@
 			productReference = BA4685D21DD1C8A200A8CCB4 /* libcommon_unittests.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-<<<<<<< HEAD
-=======
-		C5BD04482334B0BB00E630F5 /* common-macos */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C5BD045C2334B0BB00E630F5 /* Build configuration list for PBXNativeTarget "common-macos" */;
-			buildPhases = (
-				C5BD04492334B0BB00E630F5 /* Sources */,
-				C5BD04592334B0BB00E630F5 /* Frameworks */,
-				C5BD045A2334B0BB00E630F5 /* CopyFiles */,
-				C5BD045B2334B0BB00E630F5 /* Copy to $OUTPUT_DIR */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "common-macos";
-			productName = common;
-			productReference = C5BD045F2334B0BB00E630F5 /* libcommon-macos.a */;
-			productType = "com.apple.product-type.library.static";
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -321,56 +251,10 @@
 			targets = (
 				04A4FA111D7464E500E42FE3 /* common */,
 				BA4685D11DD1C8A200A8CCB4 /* common_unittests */,
-<<<<<<< HEAD
-=======
-				C5BD04482334B0BB00E630F5 /* common-macos */,
->>>>>>> Merge "build-macos" branch with William
 			);
 		};
 /* End PBXProject section */
 
-<<<<<<< HEAD
-=======
-/* Begin PBXShellScriptBuildPhase section */
-		C526DF692330FA070069143A /* Copy to $OUTPUT_DIR */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy to $OUTPUT_DIR";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/ios$SDK_VERSION-$CONFIGURATION\nfi\n\n#mkdir -p \"$OUTPUT_DIR/\"\n#cp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
-		};
-		C5BD045B2334B0BB00E630F5 /* Copy to $OUTPUT_DIR */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy to $OUTPUT_DIR";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"-------\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"BUILT_PRODUCTS_DIR = $BUILD_PRODUCTS_DIR\"\necho \"CONFIGURATION = $CONFIGURATION\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"DERIVED_FILES_DIR = $DERIVED_FILES_DIR\"\necho \"FULL_PRODUCT_NAME = $FULL_PRODUCT_NAME\"\necho \"LOCROOT = $LOCROOT\"\necho \"LOCSYMROOT = $LOCSYMROOT\"\necho \"OBJECT_FILE_DIR = $OBJECT_FILE_DIR\"\necho \"PRODUCT_MODULE_NAME = $PRODUCT_MODULE_NAME\"\necho \"PRODUCT_NAME = $PRODUCT_NAME\"\necho \"PROJECT = $PROJECT\"\necho \"PROJECT_DERIVED_FILE_DIR = $PROJECT_DERIVED_FILE_DIR\"\necho \"PROJECT_DIR = $PROJECT_DIR\"\necho \"PROJECT_FILE_PATH = $PROJECT_FILE_PATH\"\necho \"PROJECT_NAME = $PROJECT_NAME\"\necho \"SHARED_DERIVED_FILE_DIR = $SHARED_DERIVED_FILE_DIR\"\necho \"SRCROOT = $SRCROOT\"\necho \"SYMROOT = $SYMROOT\"\necho \"TARGET_NAME = $TARGET_NAME\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \"---------\"\nif [ -z \"$OUTPUT_DIR\" ]\nthen\n        export OUTPUT_DIR=$PROJECT_DIR/../../libs/ios$SDK_VERSION-$CONFIGURATION\nfi\n\n#mkdir -p \"$OUTPUT_DIR/\"\n#cp -v \"$TARGET_BUILD_DIR/$FULL_PRODUCT_NAME\" \"$OUTPUT_DIR/\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
->>>>>>> Merge "build-macos" branch with William
 /* Begin PBXSourcesBuildPhase section */
 		04A4FA0E1D7464E500E42FE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -401,28 +285,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-<<<<<<< HEAD
-=======
-		C5BD04492334B0BB00E630F5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5BD044B2334B0BB00E630F5 /* business_client_process_sub_thread.cc in Sources */,
-				C5BD044C2334B0BB00E630F5 /* network_util.cpp in Sources */,
-				C5BD044D2334B0BB00E630F5 /* network_monitor_android.cpp in Sources */,
-				C5BD044E2334B0BB00E630F5 /* notification_service_impl.cc in Sources */,
-				C5BD044F2334B0BB00E630F5 /* business_client_thread_impl.cc in Sources */,
-				C5BD04502334B0BB00E630F5 /* business_main_loop.cc in Sources */,
-				C5BD04512334B0BB00E630F5 /* business_client_main_parts.cc in Sources */,
-				C5BD04522334B0BB00E630F5 /* business_main_delegate.cpp in Sources */,
-				C5BD04552334B0BB00E630F5 /* notification_registrar.cc in Sources */,
-				C5BD04562334B0BB00E630F5 /* business_switches.cpp in Sources */,
-				C5BD04572334B0BB00E630F5 /* business_runtime.cpp in Sources */,
-				C5BD04582334B0BB00E630F5 /* network_monitor.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -485,7 +347,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_FILE_PATH)",
-<<<<<<< HEAD
 					"$(TOP_SRC_DIR)/third-party/lua-5.3.5",
 					"$(TOP_SRC_DIR)/src/common",
 					"$(TOP_SRC_DIR)/src",
@@ -496,14 +357,6 @@
 				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
 				TOP_SRC_DIR = "$(SRCROOT)/../..";
 				VALID_ARCHS = "arm64 x86_64 arm64e armv7 armv7s";
-=======
-					"$(PROJECT_FILE_PATH)/../lua-5.1.5/lua",
-					"$(PROJECT_FILE_PATH)/common",
-				);
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				TOP_SRC_DIR = "$(PROJECT_FILE_PATH)/../";
->>>>>>> Merge "build-macos" branch with William
 			};
 			name = Debug;
 		};
@@ -553,7 +406,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_FILE_PATH)",
-<<<<<<< HEAD
 					"$(TOP_SRC_DIR)/third-party/lua-5.3.5",
 					"$(TOP_SRC_DIR)/src/common",
 					"$(TOP_SRC_DIR)/src",
@@ -565,14 +417,6 @@
 				TOP_SRC_DIR = "$(SRCROOT)/../..";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 x86_64 arm64e armv7 armv7s";
-=======
-					"$(PROJECT_FILE_PATH)/../lua-5.1.5/lua",
-					"$(PROJECT_FILE_PATH)/common",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				TOP_SRC_DIR = "$(PROJECT_FILE_PATH)/../";
-				VALIDATE_PRODUCT = YES;
->>>>>>> Merge "build-macos" branch with William
 			};
 			name = Release;
 		};
@@ -583,7 +427,6 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)",
-<<<<<<< HEAD
 					"$(TOP_SRC_DIR)/src/common",
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/third-party",
@@ -592,23 +435,13 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
-=======
-					"$(SRCROOT)/../lua-5.1.5/lua",
-					"$(SRCROOT)/common",
-					"$(SRCROOT)/..",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
->>>>>>> Merge "build-macos" branch with William
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-<<<<<<< HEAD
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../..";
 				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
-=======
->>>>>>> Merge "build-macos" branch with William
 			};
 			name = Debug;
 		};
@@ -619,7 +452,6 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)",
-<<<<<<< HEAD
 					"$(TOP_SRC_DIR)/src/common",
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/third-party",
@@ -628,23 +460,13 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
-=======
-					"$(SRCROOT)/../lua-5.1.5/lua",
-					"$(SRCROOT)/common",
-					"$(SRCROOT)/..",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
->>>>>>> Merge "build-macos" branch with William
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-<<<<<<< HEAD
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../..";
 				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
-=======
->>>>>>> Merge "build-macos" branch with William
 			};
 			name = Release;
 		};
@@ -672,47 +494,6 @@
 			};
 			name = Release;
 		};
-<<<<<<< HEAD
-=======
-		C5BD045D2334B0BB00E630F5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_BITCODE = NO;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)",
-					"$(SRCROOT)/../lua-5.1.5/lua",
-					"$(SRCROOT)/common",
-					"$(SRCROOT)/..",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		C5BD045E2334B0BB00E630F5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_BITCODE = NO;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)",
-					"$(SRCROOT)/../lua-5.1.5/lua",
-					"$(SRCROOT)/common",
-					"$(SRCROOT)/..",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -743,18 +524,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-<<<<<<< HEAD
-=======
-		C5BD045C2334B0BB00E630F5 /* Build configuration list for PBXNativeTarget "common-macos" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C5BD045D2334B0BB00E630F5 /* Debug */,
-				C5BD045E2334B0BB00E630F5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End XCConfigurationList section */
 	};
 	rootObject = 04A4FA0A1D7464E500E42FE3 /* Project object */;

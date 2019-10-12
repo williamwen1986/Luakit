@@ -23,7 +23,7 @@
 #include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/memory/aligned_memory.h"
-#include "base/third_party/dynamic_annotations/dynamic_annotations.h"
+#include "dynamic_annotations/dynamic_annotations.h" // patch [LARPOUX]
 #include "base/threading/thread_restrictions.h"
 
 namespace base {

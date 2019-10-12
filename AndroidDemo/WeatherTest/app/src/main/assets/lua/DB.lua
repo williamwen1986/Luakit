@@ -147,7 +147,7 @@ function DB.update(sql,params,needLastInsertId)
     local r = stmt:step();
     if r == sqlite3.DONE then
     else
-    error("update error errorcode:"..sql.."  code"..r);
+    error("update error errorcode:"..r);
 	end
 
 	local lastInsertId

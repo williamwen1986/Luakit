@@ -13,20 +13,13 @@
 		2898C93A20C683EC00249775 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2898C93920C683EC00249775 /* Assets.xcassets */; };
 		2898C93D20C683EC00249775 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2898C93B20C683EC00249775 /* LaunchScreen.storyboard */; };
 		2898C94020C683EC00249775 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2898C93F20C683EC00249775 /* main.mm */; };
-<<<<<<< HEAD
 		C517F6AA2332A79B00D9FA78 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C517F6A92332A79B00D9FA78 /* libssl.a */; };
 		C517F6AC2332A7C100D9FA78 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C517F6AB2332A7C100D9FA78 /* lua */; };
 		C565D7EE23508957008F6126 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C565D7EB235087AC008F6126 /* libluakit.a */; };
-=======
-		C517F6A82332A78900D9FA78 /* libLuakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C517F6A52332A72600D9FA78 /* libLuakit.a */; };
-		C517F6AA2332A79B00D9FA78 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C517F6A92332A79B00D9FA78 /* libssl.a */; };
-		C517F6AC2332A7C100D9FA78 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C517F6AB2332A7C100D9FA78 /* lua */; };
->>>>>>> Merge "build-macos" branch with William
 		C591BC88232BFC39003DF5E1 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C591BC87232BFC39003DF5E1 /* NetworkExtension.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-<<<<<<< HEAD
 		C565D7EA235087AC008F6126 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C565D7E6235087AC008F6126 /* luakit.xcodeproj */;
@@ -40,21 +33,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = C545B525233DF2DE00B44FF2;
 			remoteInfo = luakit;
-=======
-		C517F6A42332A72600D9FA78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2883AC9120B43DFB005E1F54;
-			remoteInfo = Luakit;
-		};
-		C517F6A62332A76E00D9FA78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 2883AC9020B43DFB005E1F54;
-			remoteInfo = Luakit;
->>>>>>> Merge "build-macos" branch with William
 		};
 /* End PBXContainerItemProxy section */
 
@@ -69,16 +47,9 @@
 		2898C93C20C683EC00249775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2898C93E20C683EC00249775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2898C93F20C683EC00249775 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		C517F6A92332A79B00D9FA78 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/ios12.4-Debug/libssl.a"; sourceTree = "<group>"; };
 		C517F6AB2332A7C100D9FA78 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = AsyncSocketTest/lua; sourceTree = "<group>"; };
 		C565D7E6235087AC008F6126 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = "/Volumes/Macos-Ext/Users/larpoux/projmac/luakit/third-party/lua-5.1.5/../../IOSFrameWork/luakit.xcodeproj"; sourceTree = "<absolute>"; };
-=======
-		C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit.xcodeproj; path = ../../IOSFrameWork/Luakit.xcodeproj; sourceTree = "<group>"; };
-		C517F6A92332A79B00D9FA78 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/ios12.4-Debug/libssl.a"; sourceTree = "<group>"; };
-		C517F6AB2332A7C100D9FA78 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = AsyncSocketTest/lua; sourceTree = "<group>"; };
-		C591BC7E232BE97B003DF5E1 /* async_socket_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = async_socket_test.lua; path = Assets.xcassets/async_socket_test.lua; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		C591BC86232BFBFF003DF5E1 /* AsyncSocketTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AsyncSocketTest.entitlements; sourceTree = "<group>"; };
 		C591BC87232BFC39003DF5E1 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -88,13 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
 				C565D7EE23508957008F6126 /* libluakit.a in Frameworks */,
 				C517F6AA2332A79B00D9FA78 /* libssl.a in Frameworks */,
-=======
-				C517F6AA2332A79B00D9FA78 /* libssl.a in Frameworks */,
-				C517F6A82332A78900D9FA78 /* libLuakit.a in Frameworks */,
->>>>>>> Merge "build-macos" branch with William
 				C591BC88232BFC39003DF5E1 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,13 +71,8 @@
 		2898C92420C683EB00249775 = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				C565D7E6235087AC008F6126 /* luakit.xcodeproj */,
 				C517F6AB2332A7C100D9FA78 /* lua */,
-=======
-				C517F6AB2332A7C100D9FA78 /* lua */,
-				C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */,
->>>>>>> Merge "build-macos" branch with William
 				2898C92F20C683EB00249775 /* AsyncSocketTest */,
 				2898C92E20C683EB00249775 /* Products */,
 				2898C96D20C6848B00249775 /* Frameworks */,
@@ -130,10 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				C591BC86232BFBFF003DF5E1 /* AsyncSocketTest.entitlements */,
-<<<<<<< HEAD
-=======
-				C591BC7E232BE97B003DF5E1 /* async_socket_test.lua */,
->>>>>>> Merge "build-macos" branch with William
 				2898C93020C683EB00249775 /* AppDelegate.h */,
 				2898C93120C683EB00249775 /* AppDelegate.m */,
 				2898C93320C683EB00249775 /* ViewController.h */,
@@ -156,17 +113,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
 		C565D7E7235087AC008F6126 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				C565D7EB235087AC008F6126 /* libluakit.a */,
-=======
-		C517F6A12332A72600D9FA78 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C517F6A52332A72600D9FA78 /* libLuakit.a */,
->>>>>>> Merge "build-macos" branch with William
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,11 +135,7 @@
 			buildRules = (
 			);
 			dependencies = (
-<<<<<<< HEAD
 				C565D7ED23508920008F6126 /* PBXTargetDependency */,
-=======
-				C517F6A72332A76E00D9FA78 /* PBXTargetDependency */,
->>>>>>> Merge "build-macos" branch with William
 			);
 			name = AsyncSocketTest;
 			productName = AsyncSocketTest;
@@ -228,13 +174,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-<<<<<<< HEAD
 					ProductGroup = C565D7E7235087AC008F6126 /* Products */;
 					ProjectRef = C565D7E6235087AC008F6126 /* luakit.xcodeproj */;
-=======
-					ProductGroup = C517F6A12332A72600D9FA78 /* Products */;
-					ProjectRef = C517F6842332A3AF00D9FA78 /* Luakit.xcodeproj */;
->>>>>>> Merge "build-macos" branch with William
 				},
 			);
 			projectRoot = "";
@@ -245,19 +186,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-<<<<<<< HEAD
 		C565D7EB235087AC008F6126 /* libluakit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libluakit.a;
 			remoteRef = C565D7EA235087AC008F6126 /* PBXContainerItemProxy */;
-=======
-		C517F6A52332A72600D9FA78 /* libLuakit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libLuakit.a;
-			remoteRef = C517F6A42332A72600D9FA78 /* PBXContainerItemProxy */;
->>>>>>> Merge "build-macos" branch with William
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -290,17 +223,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-<<<<<<< HEAD
 		C565D7ED23508920008F6126 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = luakit;
 			targetProxy = C565D7EC23508920008F6126 /* PBXContainerItemProxy */;
-=======
-		C517F6A72332A76E00D9FA78 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Luakit;
-			targetProxy = C517F6A62332A76E00D9FA78 /* PBXContainerItemProxy */;
->>>>>>> Merge "build-macos" branch with William
 		};
 /* End PBXTargetDependency section */
 
@@ -376,11 +302,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-<<<<<<< HEAD
 				LIBRARY_SEARCH_PATHS = "";
-=======
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../libs/ios$SDK_VERSION-$CONFIGURATION";
->>>>>>> Merge "build-macos" branch with William
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -433,11 +355,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-<<<<<<< HEAD
 				LIBRARY_SEARCH_PATHS = "";
-=======
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../libs/ios$SDK_VERSION-$CONFIGURATION";
->>>>>>> Merge "build-macos" branch with William
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -454,15 +372,9 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../src",
-<<<<<<< HEAD
 					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
 					"$(SRCROOT)/../../src/common",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
-=======
-					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
-					"$(SRCROOT)/../../src/common",
-					"$(SRCROOT)/../../src/lua-5.1.5/lua",
->>>>>>> Merge "build-macos" branch with William
 				);
 				INFOPLIST_FILE = AsyncSocketTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -487,15 +399,9 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../src",
-<<<<<<< HEAD
 					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
 					"$(SRCROOT)/../../src/common",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
-=======
-					"$(SRCROOT)/../../IOSFrameWork/Luakit/OCHelper",
-					"$(SRCROOT)/../../src/common",
-					"$(SRCROOT)/../../src/lua-5.1.5/lua",
->>>>>>> Merge "build-macos" branch with William
 				);
 				INFOPLIST_FILE = AsyncSocketTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

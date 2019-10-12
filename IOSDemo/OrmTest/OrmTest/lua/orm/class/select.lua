@@ -331,7 +331,6 @@ local Select = function(own_table)
                    local selectColumn = {}
                     selectColumn.tableName = own_table.__tablename__
                     selectColumn.columnName = column.name
-                    selectColumn.typeStr = column.typeStr
                     table.insert(self._rules.selectColumns,selectColumn)
                     table.insert(cacheNeedColumns,selectColumn)
                     colname, colname_as = own_table:column(column.name)
@@ -735,28 +734,12 @@ local Select = function(own_table)
                 local current_row = {}
                 for i,valueRow in pairs(val) do
                     if self._rules.selectColumns[i].tableName == tableName then
-                        if self._rules.selectColumns[i].typeStr == "BooleandField" then 
-                            if valueRow == "true" then
-                                current_row[self._rules.selectColumns[i].columnName] = true
-                            else 
-                                current_row[self._rules.selectColumns[i].columnName] = false
-                            end
-                        else
-                            current_row[self._rules.selectColumns[i].columnName] = valueRow
-                        end
+                        current_row[self._rules.selectColumns[i].columnName] = valueRow
                     else
                         if  not current_row[self._rules.selectColumns[i].tableName] then
                             current_row[self._rules.selectColumns[i].tableName] = {}
                         end
-                        if self._rules.selectColumns[i].typeStr == "BooleandField" then 
-                            if valueRow == "true" then
-                                current_row[self._rules.selectColumns[i].tableName][self._rules.selectColumns[i].columnName] = true
-                            else 
-                                current_row[self._rules.selectColumns[i].tableName][self._rules.selectColumns[i].columnName] = false
-                            end
-                        else
-                            current_row[self._rules.selectColumns[i].tableName][self._rules.selectColumns[i].columnName] = valueRow
-                        end
+                        current_row[self._rules.selectColumns[i].tableName][self._rules.selectColumns[i].columnName] = valueRow
                     end
                 end
                 table.insert(result, current_row)

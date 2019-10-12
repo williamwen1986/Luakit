@@ -5,6 +5,7 @@
 #include "base/ios/device_util.h"
 
 #include <CommonCrypto/CommonDigest.h>
+#ifdef OS_IOS // Patch [LARPOUX]
 #import <UIKit/UIKit.h>
 
 #include <ifaddrs.h>
@@ -163,3 +164,4 @@ std::string GetDeviceIdentifier(const char* salt) {
 
 }  // namespace device_util
 }  // namespace ios
+#endif // OS_IOS

@@ -6,11 +6,7 @@
 #define BASE_PORT_H_
 
 #include <stdarg.h>
-<<<<<<< HEAD
 #include "build_config.h"
-=======
-#include "config/build_config.h"
->>>>>>> Merge "build-macos" branch with William
 
 #ifdef COMPILER_MSVC
 #define GG_LONGLONG(x) x##I64

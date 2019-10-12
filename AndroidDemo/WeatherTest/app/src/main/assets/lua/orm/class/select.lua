@@ -12,8 +12,6 @@ local NOT_IN = "__notin"
 local IS_NULL = '__null'
 local LIKE = "__like"
 
-local cacheSql = {}
-
 -- Joining types
 local JOIN = {
     INNER = 'i',
@@ -159,6 +157,7 @@ local Select = function(own_table)
                 if Type.is.table(col) and col.__classtype__ == AGGREGATOR then
                     col.__table__ = self.own_table.__tablename__
                     table.insert(result, col)
+
                 else
                     parsed_column, _ = self.own_table:column(col)
                     table.insert(result, parsed_column)
@@ -175,8 +174,7 @@ local Select = function(own_table)
                     return primaryKeyStr
                 else
                     local sqlKey = "primary_"..own_table.__tablename__..#self._rules.primaryKey
-
-                    local cache = cacheSql[sqlKey]
+                    local cache = lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","getCacheSql", self.own_table.__tablename__ , sqlKey)
                     if cache then
                         return cache
                     else
@@ -185,7 +183,7 @@ local Select = function(own_table)
                            table.insert(keys,"?")
                         end
                         local primaryKeyStr = "\nWHERE ".. self.own_table.__primary_key.name.." IN("..table.join(keys)..") "
-                        cacheSql[sqlKey] = primaryKeyStr
+                        lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","setCacheSql", self.own_table.__tablename__ , sqlKey, primaryKeyStr)
                         return primaryKeyStr
                     end
                 end
@@ -304,8 +302,6 @@ local Select = function(own_table)
         --
         -- @return {string} comma separeted fields
         --------------------------------------------
-
-
         _build_including = function (self, own_table, needColumns)
             if not own_table then
                 own_table = self.own_table
@@ -314,7 +310,7 @@ local Select = function(own_table)
             if needColumns and table.getn(needColumns) > 0 then
                 sqlKey = sqlKey..table.concat(needColumns,"_")
             end
-            local cache = cacheSql[sqlKey]
+            local cache = lua_thread.postToThreadSync(own_table.cacheThreadId,"orm.cache","getCacheSql",own_table.__tablename__, sqlKey)
             if cache then
                 for _,v in ipairs(cache.needColumns) do
                    table.insert(self._rules.selectColumns,v)
@@ -331,7 +327,6 @@ local Select = function(own_table)
                    local selectColumn = {}
                     selectColumn.tableName = own_table.__tablename__
                     selectColumn.columnName = column.name
-                    selectColumn.typeStr = column.typeStr
                     table.insert(self._rules.selectColumns,selectColumn)
                     table.insert(cacheNeedColumns,selectColumn)
                     colname, colname_as = own_table:column(column.name)
@@ -347,20 +342,19 @@ local Select = function(own_table)
             end
 
             include = table.join(include)
-            cacheSql[sqlKey] = {
+
+            lua_thread.postToThreadSync(own_table.cacheThreadId,"orm.cache","setCacheSql", own_table.__tablename__, sqlKey, {
                 include = include,
                 needColumns = cacheNeedColumns,
-            }
+            })
             return include
         end,
 
         -- Method for build select with rules
         _select = function (self)
-
             self._rules.selectColumns = {}
             local needColumns = {}
             needColumns[self.own_table.__tablename__] = self._rules.needColumns or {}
-            --print("_select 0  ".. require("socket").gettime())
             local including = self:_build_including(self.own_table,self._rules.needColumns)
             local joining = ""
             local _select
@@ -399,7 +393,6 @@ local Select = function(own_table)
 
                 join = self:_build_join()
             end
-
             -- Check agregators in select
             if table.getn(self._rules.columns.include) > 0 then
                 local aggregators = {}
@@ -439,6 +432,7 @@ local Select = function(own_table)
                     _select = _select .. " " .. condition
                 end
             end
+
             -- Build GROUP BY
             if table.getn(self._rules.group) > 0 then
                 rule = table.join(self._rules.group)
@@ -458,6 +452,7 @@ local Select = function(own_table)
                     _select = _select .. " " .. condition
                 end
             end
+            
 
             -- Build ORDER BY
             if table.getn(self._rules.order) > 0 then
@@ -653,10 +648,9 @@ local Select = function(own_table)
         --------------------------------------------------------
 
         update = function (self, data)
-
             if Type.is.table(data) then
                 if self._rules.primaryKey and #self._rules.primaryKey>0 then
-                    lua_thread.postToThread(self.own_table.cacheThreadId,"orm.cache","updateWithPrimaryKey",self.own_table.__tablename__,self._rules.primaryKey,data)
+                    lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","updateWithPrimaryKey",self.own_table.__tablename__,self._rules.primaryKey,data)
                 else
                     -- -- Build WHERE
                     local _where = ""
@@ -672,7 +666,7 @@ local Select = function(own_table)
                             BACKTRACE(INFO, "No 'where' statement. All data update!")
                         end
                     end
-                    lua_thread.postToThread(self.own_table.cacheThreadId,"orm.cache","update",self.own_table.__tablename__,_where,self._rules._bindValuse,data)
+                    lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","update",self.own_table.__tablename__,_where,self._rules._bindValuse,data)
                 end
             else
                 BACKTRACE(WARNING, "No data for global update")
@@ -687,7 +681,6 @@ local Select = function(own_table)
             local _delete = ""
             -- Build WHERE
             local deleteWithPrimary = false
-            local deleteAll = false
             if self._rules.primaryKey and #self._rules.primaryKey>0 then
                 deleteWithPrimary = true
             elseif self._rules.whereStr and #self._rules.whereStr>0 then
@@ -699,16 +692,13 @@ local Select = function(own_table)
                 if next(self._rules.where) then
                     _delete = _delete .. self:_condition(self._rules.where, "\nWHERE")
                 else
-                    deleteAll = true
                     BACKTRACE(WARNING, "Try delete all values")
                 end
             end
             if deleteWithPrimary then
-                lua_thread.postToThread(self.own_table.cacheThreadId,"orm.cache","deleteWithPrimaryKey",self.own_table.__tablename__,self._rules.primaryKey)
-            elseif deleteAll == false then
-                lua_thread.postToThread(self.own_table.cacheThreadId,"orm.cache","delete",self.own_table.__tablename__,_delete,self._rules._bindValuse)
+                lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","deleteWithPrimaryKey",self.own_table.__tablename__,self._rules.primaryKey)
             else
-                lua_thread.postToThread(self.own_table.cacheThreadId,"orm.cache","deleteAll",self.own_table.__tablename__)
+                lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","delete",self.own_table.__tablename__,_delete,self._rules._bindValuse)
             end
         end,
 
@@ -735,28 +725,12 @@ local Select = function(own_table)
                 local current_row = {}
                 for i,valueRow in pairs(val) do
                     if self._rules.selectColumns[i].tableName == tableName then
-                        if self._rules.selectColumns[i].typeStr == "BooleandField" then 
-                            if valueRow == "true" then
-                                current_row[self._rules.selectColumns[i].columnName] = true
-                            else 
-                                current_row[self._rules.selectColumns[i].columnName] = false
-                            end
-                        else
-                            current_row[self._rules.selectColumns[i].columnName] = valueRow
-                        end
+                        current_row[self._rules.selectColumns[i].columnName] = valueRow
                     else
                         if  not current_row[self._rules.selectColumns[i].tableName] then
                             current_row[self._rules.selectColumns[i].tableName] = {}
                         end
-                        if self._rules.selectColumns[i].typeStr == "BooleandField" then 
-                            if valueRow == "true" then
-                                current_row[self._rules.selectColumns[i].tableName][self._rules.selectColumns[i].columnName] = true
-                            else 
-                                current_row[self._rules.selectColumns[i].tableName][self._rules.selectColumns[i].columnName] = false
-                            end
-                        else
-                            current_row[self._rules.selectColumns[i].tableName][self._rules.selectColumns[i].columnName] = valueRow
-                        end
+                        current_row[self._rules.selectColumns[i].tableName][self._rules.selectColumns[i].columnName] = valueRow
                     end
                 end
                 table.insert(result, current_row)

@@ -37,8 +37,7 @@ local Type = {
 
         str = function (value)
             return tostring(value)
-        end,
-
+        end
     }
 }
 

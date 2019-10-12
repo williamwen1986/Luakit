@@ -15,7 +15,7 @@
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "common/business_client_thread_delegate.h"
-#include "tools/lua_helpers.h"
+#include "lua-tools/lua_helpers.h"
 extern "C" {
     #include "lua.h"
     #include "lauxlib.h"

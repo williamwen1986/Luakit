@@ -16,11 +16,7 @@
 #ifndef BASE_POSIX_EINTR_WRAPPER_H_
 #define BASE_POSIX_EINTR_WRAPPER_H_
 
-<<<<<<< HEAD
 #include "build_config.h"
-=======
-#include "config/build_config.h"
->>>>>>> Merge "build-macos" branch with William
 
 #if defined(OS_POSIX)
 

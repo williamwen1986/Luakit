@@ -8,11 +8,7 @@
 #include "base/base_export.h"
 #include "base/basictypes.h"
 #include "base/files/file_path.h"
-<<<<<<< HEAD
 #include "build_config.h"
-=======
-#include "config/build_config.h"
->>>>>>> Merge "build-macos" branch with William
 
 #include <sys/types.h>
 #if defined(OS_WIN)

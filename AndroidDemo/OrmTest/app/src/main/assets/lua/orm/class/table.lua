@@ -316,12 +316,8 @@ function Table.getAllByParamsOnLogicThread(params,callback)
     local data = params.args
     local t = Table(tableName)
     local selectItem = Table.prepareQuery(t,data)
-    local result = selectItem:all()
-    if result then
-        callback(result:getPureData())
-    else
-        callback(nil)
-    end
+    local d = selectItem:all():getPureData()
+    callback(d)
 end
 
 function Table.getFirstByParams(params,callback)
@@ -337,12 +333,7 @@ function Table.getFirstOnLogicThread(params,callback)
     local data = params.args
     local t = Table(tableName)
     local selectItem = Table.prepareQuery(t,data)
-    local result = selectItem:first()
-    if result then
-        callback(result:getPureData())
-    else
-        callback(nil)
-    end
+    callback(selectItem:first():getPureData())
 end
 
 function Table.deleteByParams(params,callback)
@@ -526,11 +517,10 @@ function Table.new(self, tableName)
         if coltype[2].to then
             coltype[2].to = _G.All_Tables[coltype[2].to]
         end
-        local typeStr = coltype[1]
         coltype = fields[coltype[1]](coltype[2])
         coltype.name = colname
         coltype.__table__ = Table_instance
-        coltype.typeStr = typeStr
+
         table.insert(Table_instance.__colnames, coltype)
         if coltype.settings.foreign_key then
             table.insert(Table_instance.__foreign_keys, coltype)

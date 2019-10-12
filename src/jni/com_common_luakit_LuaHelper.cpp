@@ -9,11 +9,7 @@
 #include "JniEnvWrapper.h"
 #include "base/thread_task_runner_handle.h"
 #include "common/base_lambda_support.h"
-<<<<<<< HEAD
 #include "lua-tools/lua_helpers.h"
-=======
-#include "tools/lua_helpers.h"
->>>>>>> Merge "build-macos" branch with William
 #include "JniLuaConvertor.h"
 #ifdef __cplusplus
 extern "C" {
@@ -113,10 +109,7 @@ JNIEXPORT jobject JNICALL Java_com_common_luakit_LuaHelper_callLuaFunction__Ljav
     BEGIN_STACK_MODIFY(L)
     pushLuaModule(module);
     lua_pushstring(L, method);
-<<<<<<< HEAD
     //LOG(INFO) << "Call lua function " << module << ":" << method;
-=======
->>>>>>> Merge "build-macos" branch with William
     lua_rawget(L, -2);
     jobject ret = NULL;
     if (lua_isfunction(L, -1)) {

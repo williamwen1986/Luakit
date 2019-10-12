@@ -26,11 +26,7 @@ find . -name "CMakeCache.txt" -exec rm -rf {} \;  2> /dev/null
 find . -name ".cxx" -exec rm -rf {} \;  2> /dev/null
 find . -name ".externalNativeBuild" -exec rm -rf {} \;  2> /dev/null
 find . -name "build" -exec rm -rf {} \;  2> /dev/null
-<<<<<<< HEAD
 find . -name "generation" -exec rm -rf {} \;  2> /dev/null
-=======
-
->>>>>>> Merge "build-macos" branch with William
 # Macos
 # -----
 rm -rf src/modp_b64/build               src/modp_b64/DerivedData

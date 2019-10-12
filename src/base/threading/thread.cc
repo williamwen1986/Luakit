@@ -6,7 +6,7 @@
 
 #include "base/bind.h"
 #include "base/lazy_instance.h"
-#include "base/third_party/dynamic_annotations/dynamic_annotations.h"
+#include "dynamic_annotations/dynamic_annotations.h" // Patch [LARPOUX]
 #include "base/threading/thread_id_name_manager.h"
 #include "base/threading/thread_local.h"
 #include "base/threading/thread_restrictions.h"

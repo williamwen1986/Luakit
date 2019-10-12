@@ -6,11 +6,8 @@
 	<array>
 		<string>app-proxy-provider</string>
 		<string>content-filter-provider</string>
-<<<<<<< HEAD
 		<string>dns-proxy</string>
 		<string>packet-tunnel-provider</string>
-=======
->>>>>>> Merge "build-macos" branch with William
 	</array>
 </dict>
 </plist>

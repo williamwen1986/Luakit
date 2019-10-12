@@ -107,11 +107,9 @@ static void pushOneObject(lua_State *L, JNIEnv *env, jobject o)
             jobject entry = envw.CallObjectMethod(iterator, JNIModel::Iterator::classSig, JNIModel::Iterator::next.name, JNIModel::Iterator::next.sig);
             jobject key = env->CallObjectMethod(entry, jcm->GetMethod(env, jcm->GetClass(env, JNIModel::Entry::classSig), JNIModel::Entry::classSig, JNIModel::Entry::getKey.name, JNIModel::Entry::getKey.sig));
             jobject val = env->CallObjectMethod(entry, jcm->GetMethod(env, jcm->GetClass(env, JNIModel::Entry::classSig), JNIModel::Entry::classSig, JNIModel::Entry::getValue.name, JNIModel::Entry::getValue.sig));
-            if (!env->IsSameObject(val, NULL)) {
-                pushOneObject(L, env, key);
-                pushOneObject(L, env, val);
-                lua_rawset(L, -3);
-            }              
+            pushOneObject(L, env, key);
+            pushOneObject(L, env, val);
+            lua_rawset(L, -3);
             env->DeleteLocalRef(entry);
             env->DeleteLocalRef(key);
             env->DeleteLocalRef(val);
@@ -126,10 +124,8 @@ static void pushOneObject(lua_State *L, JNIEnv *env, jobject o)
         {
             lua_pushinteger(L,i+1);
             jobject val = envw.CallObjectMethod(o, JNIModel::ArrayList::classSig, JNIModel::ArrayList::get.name, JNIModel::ArrayList::get.sig,i);
-            if (!env->IsSameObject(val, NULL)) {
-                pushOneObject(L, env, val);
-                lua_rawset(L, -3);
-            } 
+            pushOneObject(L, env, val);
+            lua_rawset(L, -3);
             env->DeleteLocalRef(val);
         }
         env->PopLocalFrame(NULL);

@@ -7,7 +7,7 @@
 #include <sys/mman.h>
 
 #include "base/logging.h"
-#include "third_party/ashmem/ashmem.h"
+#include "third-party/ashmem/ashmem.h"
 
 namespace base {
 

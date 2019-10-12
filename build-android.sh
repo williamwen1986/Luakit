@@ -54,7 +54,6 @@ then
 	    exit -1
 fi
 
-<<<<<<< HEAD
 if [ ! -e "$ANDROID_NDK_HOME/platforms/android-$ANDROID_API" ]
 then
     echo "$ANDROID_NDK_HOME/platforms/android-$ANDROID_API" not found
@@ -62,8 +61,6 @@ then
     exit -1
 fi
 
-=======
->>>>>>> Merge "build-macos" branch with William
 
 # Checks exit value for error
 #
@@ -109,11 +106,7 @@ dir=$(pwd)
 export OUTPUT_DIR="$dir"
 popd > /dev/null
 
-<<<<<<< HEAD
 cd third-party/openssl-1.1.1c
-=======
-cd src/openssl-1.1.1c
->>>>>>> Merge "build-macos" branch with William
 ./build-android.sh
 checkError
 cd ../..

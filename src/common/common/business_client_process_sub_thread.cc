@@ -6,11 +6,7 @@
 
 //#include "base/debug/leak_tracker.h"
 #include "base/threading/thread_restrictions.h"
-<<<<<<< HEAD
 #include "build_config.h"
-=======
-#include "config/build_config.h"
->>>>>>> Merge "build-macos" branch with William
 #include "common/notification_service.h"
 #include "common/notification_service_impl.h"
 //#include "net/url_request/url_fetcher.h"

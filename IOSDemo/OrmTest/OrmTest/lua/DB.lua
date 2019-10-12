@@ -1,17 +1,9 @@
-<<<<<<< HEAD
 print ('DB.lua')
 require("sqlite3")
 print ('DB.lua : sqlite3 required')
 local _dbPath
 print(BASE_DOCUMENT_PATH)
 local _db
-=======
-
-require("sqlite3")
-local _dbPath 
-print(BASE_DOCUMENT_PATH)
-local _db 
->>>>>>> Merge "build-macos" branch with William
 
 local _shouldCacheStatements = true;
 local _cacheStmts = {};
@@ -25,11 +17,7 @@ end
 local function _getColumIndex(sql,stmt,name)
 	if (not name) or (not stmt)  then
 		return nil
-<<<<<<< HEAD
 	end
-=======
-	end 
->>>>>>> Merge "build-macos" branch with William
 	if _cacheIndexColumNameMap[sql] then
 		 return _cacheIndexColumNameMap[sql][name]
 	else
@@ -75,7 +63,6 @@ function DB.query(sql,params,columName)
     local bindCount = stmt:bind_parameter_count();
     local idx = 0;
     local obj;
-<<<<<<< HEAD
     while (idx < bindCount)
     do
     	if params and idx < #params then
@@ -83,15 +70,6 @@ function DB.query(sql,params,columName)
     	else
     		break;
     	end
-=======
-    while (idx < bindCount) 
-    do
-    	if params and idx < #params then
-    		obj = params[idx + 1];
-    	else 
-    		break;
-    	end 
->>>>>>> Merge "build-macos" branch with William
     	idx = idx+1;
     	local ret = stmt:bind(idx,obj);
     	assert(ret == sqlite3.OK);
@@ -100,11 +78,7 @@ function DB.query(sql,params,columName)
     if idx ~= bindCount then
     	stmt:finalize();
     	return nil;
-<<<<<<< HEAD
     end
-=======
-    end 
->>>>>>> Merge "build-macos" branch with William
     if _shouldCacheStatements and  sql then
     	_cacheStmts[sql] = stmt;
     end
@@ -127,11 +101,7 @@ function DB.query(sql,params,columName)
         r = stmt:step()
     end
     assert(r == sqlite3.DONE)
-<<<<<<< HEAD
     if not _shouldCacheStatements then
-=======
-    if not _shouldCacheStatements then 
->>>>>>> Merge "build-macos" branch with William
     	assert(stmt:finalize() == sqlite3.OK)
     end
     return result;
@@ -160,21 +130,13 @@ function DB.update(sql,params,needLastInsertId)
     local bindCount = stmt:bind_parameter_count();
     local idx = 0;
     local obj;
-<<<<<<< HEAD
     while (idx < bindCount)
-=======
-    while (idx < bindCount) 
->>>>>>> Merge "build-macos" branch with William
     do
     	if params and idx < #params then
     		obj = params[idx + 1];
     	else
     		break;
-<<<<<<< HEAD
     	end
-=======
-    	end 
->>>>>>> Merge "build-macos" branch with William
     	idx = idx+1;
     	local ret = stmt:bind(idx,obj);
     	assert(ret == sqlite3.OK);
@@ -182,11 +144,7 @@ function DB.update(sql,params,needLastInsertId)
     if idx ~= bindCount then
     	stmt:finalize();
     	return nil;
-<<<<<<< HEAD
     end
-=======
-    end 
->>>>>>> Merge "build-macos" branch with William
     local r = stmt:step();
     if r == sqlite3.DONE then
     else
@@ -204,11 +162,7 @@ function DB.update(sql,params,needLastInsertId)
 	if _shouldCacheStatements and r == sqlite3.DONE then
 		_cacheStmts[sql] = stmt;
 		closeCode = stmt:reset();
-<<<<<<< HEAD
 	else
-=======
-	else 
->>>>>>> Merge "build-macos" branch with William
 		closeCode = stmt:finalize();
 		_cacheStmts[sql] = nil;
 	end
@@ -222,19 +176,11 @@ end
 
 function DB.close()
 	if _cacheStmts then
-<<<<<<< HEAD
 		for k, v in pairs(_cacheStmts) do
 			if v then
 				v:finalize();
 			end
 		end
-=======
-		for k, v in pairs(_cacheStmts) do  
-			if v then
-				v:finalize();
-			end  
-		end 
->>>>>>> Merge "build-macos" branch with William
 	end
 	if _db then
 		_db:close();

@@ -29,11 +29,7 @@
 #define BASE_ATOMICOPS_H_
 
 #include "base/basictypes.h"
-<<<<<<< HEAD
 #include "build_config.h"
-=======
-#include "config/build_config.h"
->>>>>>> Merge "build-macos" branch with William
 
 #if defined(OS_WIN) && defined(ARCH_CPU_64_BITS)
 // windows.h #defines this (only on x64). This causes problems because the

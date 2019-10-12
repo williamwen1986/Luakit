@@ -14,10 +14,7 @@ generateDebugRFile
 fileChanges
 fileHashes
 local.properties
-<<<<<<< HEAD
 **/generation/
-=======
->>>>>>> Merge "build-macos" branch with William
 **/libs/
 **/build
 **/**/obj/
@@ -33,7 +30,6 @@ CMakeCache.txt
 *.a
 *.d
 *.iml
-<<<<<<< HEAD
 *.sav
 generation
 libs
@@ -42,8 +38,6 @@ obj
 DerivedData
 CMakeFiles
 outputs
-=======
->>>>>>> Merge "build-macos" branch with William
 *.dylib
 LuaKitProject/src/Projects/openssl-1.1.1c/test/
 *.tmp

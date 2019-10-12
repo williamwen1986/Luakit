@@ -13,18 +13,14 @@ namespace JNIModel
 			JniEnvWrapper envw(env);
 			if (source) {
                 jclass clazz = env->FindClass(classSig);
-                jfieldID fieldId = env->GetStaticFieldID(clazz,"TRUE","Ljava/lang/Boolean;");
-                jobject obj = (jobject)env->GetStaticObjectField(clazz,fieldId);
-                // jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
-                // jobject obj = env->NewObject(clazz, methodid, JNI_TRUE);
+                jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
+                jobject obj = env->NewObject(clazz, methodid, JNI_TRUE);
                 env->DeleteLocalRef(clazz);
                 return obj;
 			} else {
                 jclass clazz = env->FindClass(classSig);
-                jfieldID fieldId = env->GetStaticFieldID(clazz,"FALSE","Ljava/lang/Boolean;");
-                jobject obj = (jobject)env->GetStaticObjectField(clazz,fieldId);
-                // jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
-                // jobject obj = env->NewObject(clazz, methodid, JNI_FALSE);
+                jmethodID methodid = env->GetMethodID(clazz, init.name, init.sig);
+                jobject obj = env->NewObject(clazz, methodid, JNI_FALSE);
                 env->DeleteLocalRef(clazz);
                 return obj;
 			}

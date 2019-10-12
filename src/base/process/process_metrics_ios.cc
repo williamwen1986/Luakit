@@ -21,6 +21,8 @@ bool GetTaskInfo(task_basic_info_64* task_info_data) {
 
 }  // namespace
 
+#if !defined(OS_MACOSX) || defined(OS_IOS) // Patch [LARPOUX]
+
 ProcessMetrics::ProcessMetrics(ProcessHandle process) {}
 
 ProcessMetrics::~ProcessMetrics() {}
@@ -29,6 +31,7 @@ ProcessMetrics::~ProcessMetrics() {}
 ProcessMetrics* ProcessMetrics::CreateProcessMetrics(ProcessHandle process) {
   return new ProcessMetrics(process);
 }
+#endif
 
 size_t ProcessMetrics::GetPagefileUsage() const {
   task_basic_info_64 task_info_data;

@@ -67,17 +67,12 @@ function Query(own_table, data)
 
             if self._data[colname] and self._data[colname].new then
                 coltype = self.own_table:get_column(colname)
+
                 if coltype and coltype.field.validator(colvalue) then
-                    local orgValue = colvalue
                     colvalue = coltype.field.to_type(colvalue)
                     self._data[colname].old = self._data[colname].new
                     self._data[colname].new = colvalue
-                    if coltype.field.pureKeepOrgType then
-                        self._pureData[colname] = orgValue
-                    else
-                        self._pureData[colname] = colvalue
-                    end
-                    
+                    self._pureData[colname] = colvalue
                 else
                     BACKTRACE(WARNING, "Not valid column value for update")
                 end
@@ -97,13 +92,8 @@ function Query(own_table, data)
         -- Add new row to table
         _add = function (self)
             local kv,needPrimaryKey =  self:getSaveKv();
-            if needPrimaryKey then
-                local result,rowId = lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","insert",self.own_table.__tablename__,kv,needPrimaryKey)
-                self:setPrimaryKey(needPrimaryKey,rowId)
-            else
-                lua_thread.postToThread(self.own_table.cacheThreadId,"orm.cache","insert",self.own_table.__tablename__,kv,needPrimaryKey)
-            end
-
+            local result,rowId = lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","insert",self.own_table.__tablename__,kv,needPrimaryKey)
+            self:setPrimaryKey(needPrimaryKey,rowId)
         end,
 
         setPrimaryKey = function(self,needPrimaryKey,rowId)
@@ -158,7 +148,6 @@ function Query(own_table, data)
         getPureData = function (self)
             local ret = {}
             for i, v in pairs(self._pureData) do
-
                 ret[i] = v
             end
             for i, v in pairs(self._readonly) do
@@ -187,33 +176,25 @@ function Query(own_table, data)
     if data then
         local current_table
 
-         for colname, colvalue in pairs(data) do
-             if query.own_table:has_column(colname) then
-                 local orgValue = colvalue
-                 colvalue = query.own_table:get_column(colname)
-                                             .field.to_type(colvalue)
-                 query._data[colname] = {
-                     new = colvalue,
-                     old = colvalue
-                 }
-
-                 if query.own_table:get_column(colname)
-                                             .field.pureKeepOrgType then
-                     query._pureData[colname] = orgValue
-                 else
-                     query._pureData[colname] = colvalue
-                 end
-
-             else
-                 if _G.All_Tables[query.own_table.__dbname__ .."_"..colname] then
-                     current_table = _G.All_Tables[query.own_table.__dbname__.."_"..colname]
-                     colvalue = Query(current_table, colvalue)
-                     -- query._readonly[colname .. "_all"] = QueryList(current_table, {})
-                     -- query._readonly[colname .. "_all"]:add(colvalue)
-                 end
-                 query._readonly[colname] = colvalue
-             end
-         end
+        for colname, colvalue in pairs(data) do
+            if query.own_table:has_column(colname) then
+                colvalue = query.own_table:get_column(colname)
+                                            .field.to_type(colvalue)
+                query._data[colname] = {
+                    new = colvalue,
+                    old = colvalue
+                }
+                query._pureData[colname] = colvalue
+            else
+                if _G.All_Tables[query.own_table.__dbname__ .."_"..colname] then
+                    current_table = _G.All_Tables[query.own_table.__dbname__.."_"..colname]
+                    colvalue = Query(current_table, colvalue)
+                    -- query._readonly[colname .. "_all"] = QueryList(current_table, {})
+                    -- query._readonly[colname .. "_all"]:add(colvalue)
+                end
+                query._readonly[colname] = colvalue
+            end
+        end
     else
         BACKTRACE(INFO, "Create empty row instance for table '" ..
                         self.own_table.__tablename__ .. "'")

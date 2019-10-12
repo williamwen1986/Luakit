@@ -8,11 +8,7 @@
 #ifndef BASE_FILE_UTIL_H_
 #define BASE_FILE_UTIL_H_
 
-<<<<<<< HEAD
 #include "build_config.h"
-=======
-#include "config/build_config.h"
->>>>>>> Merge "build-macos" branch with William
 
 #if defined(OS_WIN)
 #include <windows.h>

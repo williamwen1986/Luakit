@@ -14,10 +14,6 @@
 		0BA3DB5CD2B2ED5850657064 /* histogram_samples.cc in Sources */ = {isa = PBXBuildFile; fileRef = B4CE317278DAB53447AD4E0C /* histogram_samples.cc */; };
 		108C28C2EDF34084FF5BA48C /* string_number_conversions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 22AF1C77FA2AE732E42EC001 /* string_number_conversions.cc */; };
 		10982BF7EFE656DD0457F72D /* process_metrics_ios.cc in Sources */ = {isa = PBXBuildFile; fileRef = 459E8DA41E7CC55AA8296E73 /* process_metrics_ios.cc */; };
-<<<<<<< HEAD
-=======
-		10C34ED01AC70B76312DB0F2 /* icu_utf.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3EF3F910C2E963AE6A5CCF0A /* icu_utf.cc */; };
->>>>>>> Merge "build-macos" branch with William
 		11AC94D879755108B70D5BA7 /* stringprintf.cc in Sources */ = {isa = PBXBuildFile; fileRef = CC4BBDA08E7F10417884410E /* stringprintf.cc */; };
 		12D86E194B907BE5DC90B0F0 /* tick_clock.cc in Sources */ = {isa = PBXBuildFile; fileRef = D8BC6B5453D280F32802343B /* tick_clock.cc */; };
 		14AD79494F8C44CD9B65D1B2 /* allocator_extension.cc in Sources */ = {isa = PBXBuildFile; fileRef = F5EE30616195621A0A31FE73 /* allocator_extension.cc */; };
@@ -64,10 +60,6 @@
 		57FE424846CD2A1D774AC2EB /* weak_ptr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27A21037E10CF01FE59B9678 /* weak_ptr.cc */; };
 		5C5712F569E2359B994F0DE6 /* discardable_memory_emulated.cc in Sources */ = {isa = PBXBuildFile; fileRef = 843D0EDEA1BC4D25C49403D5 /* discardable_memory_emulated.cc */; };
 		5E7A19A7116A46C7903DF6AC /* string_piece.cc in Sources */ = {isa = PBXBuildFile; fileRef = DC2EBBFF643F7172CA4620FF /* string_piece.cc */; };
-<<<<<<< HEAD
-=======
-		5FE9330C68BD1202BA8D3C44 /* platform_thread_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 80F38800BFB8288CF1EA197B /* platform_thread_posix.cc */; };
->>>>>>> Merge "build-macos" branch with William
 		606BBAD5700CE151BA981745 /* values.cc in Sources */ = {isa = PBXBuildFile; fileRef = FF2F43B5E31B8A673D3FC9AF /* values.cc */; };
 		6346D392B7CF983689A49B17 /* time_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = F3971963BE3D245936603563 /* time_posix.cc */; };
 		686C95E6706342679F0F495A /* file_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6172B049B4E3F45A13B409E2 /* file_posix.cc */; };
@@ -132,175 +124,8 @@
 		BA66CAE542B425089F842A73 /* device_util.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5742AF33CF813FD3B12295 /* device_util.mm */; };
 		BA98688E1BE9BD2300279B91 /* message_pump_libevent.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A671F54A705EB2EDE520912 /* message_pump_libevent.cc */; };
 		C041FFEC13569E5E30E9D5CE /* stats_counters.cc in Sources */ = {isa = PBXBuildFile; fileRef = 60A5161A3A551C360746E26A /* stats_counters.cc */; };
-<<<<<<< HEAD
 		C5E235EC233224FF00287637 /* inode64.cc in Sources */ = {isa = PBXBuildFile; fileRef = C5E235EB233224FF00287637 /* inode64.cc */; };
 		C5F53CBA233775B7008F114F /* platform_thread_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = C5F53CB9233775B6008F114F /* platform_thread_posix.cc */; };
-=======
-		C50D6E3C2332777B00E529E3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CF2C6823321DF400C8CFEE /* libevent.a */; };
-		C50D6E3D2332777B00E529E3 /* libmodp_b64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2883AD3020B511E7005E1F54 /* libmodp_b64.a */; };
-		C50D6E3E2332777B00E529E3 /* libxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CF2C6223321DE100C8CFEE /* libxml.a */; };
-		C59D9F4F23328BD600601568 /* dynamic_annotations.c in Sources */ = {isa = PBXBuildFile; fileRef = C59D9F4E23328BD600601568 /* dynamic_annotations.c */; };
-		C5BD046B2334B24F00E630F5 /* dynamic_annotations.c in Sources */ = {isa = PBXBuildFile; fileRef = C59D9F4E23328BD600601568 /* dynamic_annotations.c */; };
-		C5BD046C2334B24F00E630F5 /* guid_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3CF6F43721B7C07700B7A811 /* guid_posix.cc */; };
-		C5BD046D2334B24F00E630F5 /* message_pump_libevent.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A671F54A705EB2EDE520912 /* message_pump_libevent.cc */; };
-		C5BD046E2334B24F00E630F5 /* base_switches.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9883C529DBF12583295B66F7 /* base_switches.cc */; };
-		C5BD046F2334B24F00E630F5 /* event_recorder_stubs.cc in Sources */ = {isa = PBXBuildFile; fileRef = E62E68C25E6A671BD91D5768 /* event_recorder_stubs.cc */; };
-		C5BD04702334B24F00E630F5 /* message_pump_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36D1E98A97B48F27A276B29E /* message_pump_mac.mm */; };
-		C5BD04712334B24F00E630F5 /* file_descriptor_shuffle.cc in Sources */ = {isa = PBXBuildFile; fileRef = 15BB99B17B97E72285103D68 /* file_descriptor_shuffle.cc */; };
-		C5BD04722334B24F00E630F5 /* sync_socket_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2BE70500DCCD155D5B1BF4A2 /* sync_socket_posix.cc */; };
-		C5BD04732334B24F00E630F5 /* g_fmt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55C11FE22C73EA934C82F036 /* g_fmt.cc */; };
-		C5BD04742334B24F00E630F5 /* dtoa_wrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDF333172FE806572F29B917 /* dtoa_wrapper.cc */; };
-		C5BD04752334B24F00E630F5 /* icu_utf.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3EF3F910C2E963AE6A5CCF0A /* icu_utf.cc */; };
-		C5BD04762334B24F00E630F5 /* allocator_extension.cc in Sources */ = {isa = PBXBuildFile; fileRef = F5EE30616195621A0A31FE73 /* allocator_extension.cc */; };
-		C5BD04772334B24F00E630F5 /* type_profiler_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = 125053A6225DCF3F5A050B0E /* type_profiler_control.cc */; };
-		C5BD04782334B24F00E630F5 /* at_exit.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A68949E98E0BBCC341DA433 /* at_exit.cc */; };
-		C5BD04792334B24F00E630F5 /* barrier_closure.cc in Sources */ = {isa = PBXBuildFile; fileRef = FA217F75C22C4762EC82ACBA /* barrier_closure.cc */; };
-		C5BD047A2334B24F00E630F5 /* base_paths.cc in Sources */ = {isa = PBXBuildFile; fileRef = 33DA953B5BAD2D0BE2A599CE /* base_paths.cc */; };
-		C5BD047B2334B24F00E630F5 /* base_paths_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 54FC5F6BFB11CCEB59AB0458 /* base_paths_mac.mm */; };
-		C5BD047C2334B24F00E630F5 /* bind_helpers.cc in Sources */ = {isa = PBXBuildFile; fileRef = CB0790DF08262719860DD8F1 /* bind_helpers.cc */; };
-		C5BD047D2334B24F00E630F5 /* build_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 18D898389AF07F043A5F03E4 /* build_time.cc */; };
-		C5BD047E2334B24F00E630F5 /* callback_helpers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 262717F27CBAAF397AA19EA9 /* callback_helpers.cc */; };
-		C5BD047F2334B24F00E630F5 /* callback_internal.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5254BFFA07155A17021B9631 /* callback_internal.cc */; };
-		C5BD04802334B24F00E630F5 /* command_line.cc in Sources */ = {isa = PBXBuildFile; fileRef = 533CA506C302F0ABBBAC77A8 /* command_line.cc */; };
-		C5BD04812334B24F00E630F5 /* cpu.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4EDFEF6233507FEDFEB32CEF /* cpu.cc */; };
-		C5BD04832334B24F00E630F5 /* environment.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE2A99BD40BE419C08A322 /* environment.cc */; };
-		C5BD04842334B24F00E630F5 /* file_util.cc in Sources */ = {isa = PBXBuildFile; fileRef = 286990804838FE81CD16377E /* file_util.cc */; };
-		C5BD04852334B24F00E630F5 /* file_util_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FE23922DCE222BEB899866C /* file_util_mac.mm */; };
-		C5BD04862334B24F00E630F5 /* file_util_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 94986FF933FE42B230608CE4 /* file_util_posix.cc */; };
-		C5BD04872334B24F00E630F5 /* file_version_info_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C77359DCAD612441DA635 /* file_version_info_mac.mm */; };
-		C5BD04882334B24F00E630F5 /* file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0E7DE959259A5E327865DC69 /* file.cc */; };
-		C5BD04892334B24F00E630F5 /* file_enumerator.cc in Sources */ = {isa = PBXBuildFile; fileRef = EB2122CE7A2118BB2266E053 /* file_enumerator.cc */; };
-		C5BD048A2334B24F00E630F5 /* file_enumerator_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2E3683A8BEC8EE184414867B /* file_enumerator_posix.cc */; };
-		C5BD048B2334B24F00E630F5 /* inode64.cc in Sources */ = {isa = PBXBuildFile; fileRef = C5E235EB233224FF00287637 /* inode64.cc */; };
-		C5BD048C2334B24F00E630F5 /* file_path.cc in Sources */ = {isa = PBXBuildFile; fileRef = 85463BF07FE5855BB8506B3D /* file_path.cc */; };
-		C5BD048D2334B24F00E630F5 /* file_path_constants.cc in Sources */ = {isa = PBXBuildFile; fileRef = 67266388C1E0EA53DFDDDC1C /* file_path_constants.cc */; };
-		C5BD048E2334B24F00E630F5 /* file_path_watcher.cc in Sources */ = {isa = PBXBuildFile; fileRef = E783BD43878DDF806BACA11F /* file_path_watcher.cc */; };
-		C5BD048F2334B24F00E630F5 /* file_path_watcher_kqueue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 00966CD88B65F0FF2EE974B0 /* file_path_watcher_kqueue.cc */; };
-		C5BD04902334B24F00E630F5 /* file_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6172B049B4E3F45A13B409E2 /* file_posix.cc */; };
-		C5BD04912334B24F00E630F5 /* file_util_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 290B5082AA938C5836B6FC0A /* file_util_proxy.cc */; };
-		C5BD04922334B24F00E630F5 /* important_file_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2C7ACB8EA0EE25413AD3691B /* important_file_writer.cc */; };
-		C5BD04932334B24F00E630F5 /* memory_mapped_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = B3D251A8889C80AB27FAFF0A /* memory_mapped_file.cc */; };
-		C5BD04942334B24F00E630F5 /* memory_mapped_file_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 18B29C06E02EE94D053F20B5 /* memory_mapped_file_posix.cc */; };
-		C5BD04952334B24F00E630F5 /* scoped_platform_file_closer.cc in Sources */ = {isa = PBXBuildFile; fileRef = AE6E99545A06A98956D62A56 /* scoped_platform_file_closer.cc */; };
-		C5BD04962334B24F00E630F5 /* scoped_temp_dir.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70F6CAA8EDB30B7C4E659FA4 /* scoped_temp_dir.cc */; };
-		C5BD04972334B24F00E630F5 /* guid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8C19F57542CA6C49EB8F5 /* guid.cc */; };
-		C5BD04982334B24F00E630F5 /* hash.cc in Sources */ = {isa = PBXBuildFile; fileRef = F43F12FFBEECBD30C2F22E36 /* hash.cc */; };
-		C5BD04992334B24F00E630F5 /* ini_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7542BB7DD1FB44014EF9EFBA /* ini_parser.cc */; };
-		C5BD049D2334B24F00E630F5 /* lazy_instance.cc in Sources */ = {isa = PBXBuildFile; fileRef = BF8C4E46F2B9F9B47DA4C948 /* lazy_instance.cc */; };
-		C5BD049E2334B24F00E630F5 /* location.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB169204CFB784F28E1F70AC /* location.cc */; };
-		C5BD049F2334B24F00E630F5 /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = D2FD1E2A6E2C337ED1175F77 /* logging.cc */; };
-		C5BD04A02334B24F00E630F5 /* bundle_locations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C4B08C5A9975E60C7444D62 /* bundle_locations.mm */; };
-		C5BD04A12334B24F00E630F5 /* foundation_util.mm in Sources */ = {isa = PBXBuildFile; fileRef = 57CBE4B49565480BCD207FE2 /* foundation_util.mm */; };
-		C5BD04A22334B24F00E630F5 /* mac_logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 10515ED5DBF5BE4B8AFEB63A /* mac_logging.cc */; };
-		C5BD04A32334B24F00E630F5 /* objc_property_releaser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7FF9E851C19D9C0EACB5600A /* objc_property_releaser.mm */; };
-		C5BD04A42334B24F00E630F5 /* scoped_mach_port.cc in Sources */ = {isa = PBXBuildFile; fileRef = 061CEF993EB657D5DE331333 /* scoped_mach_port.cc */; };
-		C5BD04A52334B24F00E630F5 /* scoped_nsautorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 034D49F97BE91D68495943B9 /* scoped_nsautorelease_pool.mm */; };
-		C5BD04A62334B24F00E630F5 /* md5.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3B084FBF84EEBF581A456EF7 /* md5.cc */; };
-		C5BD04A72334B24F00E630F5 /* aligned_memory.cc in Sources */ = {isa = PBXBuildFile; fileRef = B292C75BDBA5EBE3CFEFD394 /* aligned_memory.cc */; };
-		C5BD04A82334B24F00E630F5 /* discardable_memory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 756E083DBC17D89A29503C97 /* discardable_memory.cc */; };
-		C5BD04A92334B24F00E630F5 /* discardable_memory_emulated.cc in Sources */ = {isa = PBXBuildFile; fileRef = 843D0EDEA1BC4D25C49403D5 /* discardable_memory_emulated.cc */; };
-		C5BD04AA2334B24F00E630F5 /* discardable_memory_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 818925A296F7D3CF2C81FDF0 /* discardable_memory_mac.cc */; };
-		C5BD04AB2334B24F00E630F5 /* discardable_memory_provider.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5D6CD72254CD08021CBCA802 /* discardable_memory_provider.cc */; };
-		C5BD04AC2334B24F00E630F5 /* memory_pressure_listener.cc in Sources */ = {isa = PBXBuildFile; fileRef = 498D473487F7D6E19250AF5E /* memory_pressure_listener.cc */; };
-		C5BD04AD2334B24F00E630F5 /* ref_counted.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2D579BDADE0BD53E97A0F4D2 /* ref_counted.cc */; };
-		C5BD04AE2334B24F00E630F5 /* ref_counted_memory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 91BE42E354209BC45739C04A /* ref_counted_memory.cc */; };
-		C5BD04AF2334B24F00E630F5 /* shared_memory_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 696B51752428BF91427B763E /* shared_memory_posix.cc */; };
-		C5BD04B02334B24F00E630F5 /* singleton.cc in Sources */ = {isa = PBXBuildFile; fileRef = F4808F44D0733CF3FD4CF44F /* singleton.cc */; };
-		C5BD04B12334B24F00E630F5 /* weak_ptr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27A21037E10CF01FE59B9678 /* weak_ptr.cc */; };
-		C5BD04B22334B24F00E630F5 /* incoming_task_queue.cc in Sources */ = {isa = PBXBuildFile; fileRef = C175DF778396E6378E916DC9 /* incoming_task_queue.cc */; };
-		C5BD04B32334B24F00E630F5 /* message_loop.cc in Sources */ = {isa = PBXBuildFile; fileRef = 451F08FDF062F074DFD15B93 /* message_loop.cc */; };
-		C5BD04B42334B24F00E630F5 /* message_loop_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5B67E15EB3D438DA67B4196E /* message_loop_proxy.cc */; };
-		C5BD04B52334B24F00E630F5 /* message_loop_proxy_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = EB9EA42DA2FD1B6CA85ED5CF /* message_loop_proxy_impl.cc */; };
-		C5BD04B62334B24F00E630F5 /* message_pump.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1319323E85B260FC7BF87FE2 /* message_pump.cc */; };
-		C5BD04B72334B24F00E630F5 /* message_pump_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9DDE0321E2C86ABC3F346EDC /* message_pump_default.cc */; };
-		C5BD04B82334B24F00E630F5 /* sample_map.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA4CBEBF0BF3B7A6D8D0F /* sample_map.cc */; };
-		C5BD04B92334B24F00E630F5 /* sample_vector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 522BB85A840D35B0A25DCE82 /* sample_vector.cc */; };
-		C5BD04BA2334B24F00E630F5 /* bucket_ranges.cc in Sources */ = {isa = PBXBuildFile; fileRef = 49FAC75E531D68C9362A677E /* bucket_ranges.cc */; };
-		C5BD04BB2334B24F00E630F5 /* histogram.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A1055B3EEB7C3DD1C147AC0 /* histogram.cc */; };
-		C5BD04BC2334B24F00E630F5 /* histogram_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = D868D475DF8CFCFE5300F763 /* histogram_base.cc */; };
-		C5BD04BD2334B24F00E630F5 /* histogram_samples.cc in Sources */ = {isa = PBXBuildFile; fileRef = B4CE317278DAB53447AD4E0C /* histogram_samples.cc */; };
-		C5BD04BE2334B24F00E630F5 /* histogram_snapshot_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9EBA68FB15D2AF5914B9B0BA /* histogram_snapshot_manager.cc */; };
-		C5BD04BF2334B24F00E630F5 /* sparse_histogram.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5FDBE46CA185C293C743E303 /* sparse_histogram.cc */; };
-		C5BD04C02334B24F00E630F5 /* statistics_recorder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3B8A20C99BD6990A82B339B7 /* statistics_recorder.cc */; };
-		C5BD04C12334B24F00E630F5 /* stats_counters.cc in Sources */ = {isa = PBXBuildFile; fileRef = 60A5161A3A551C360746E26A /* stats_counters.cc */; };
-		C5BD04C22334B24F00E630F5 /* stats_table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5F824FEC1AC0ED132FEBC943 /* stats_table.cc */; };
-		C5BD04C32334B24F00E630F5 /* path_service.cc in Sources */ = {isa = PBXBuildFile; fileRef = 01FAE90A0DF5BF73280A9EE9 /* path_service.cc */; };
-		C5BD04C42334B24F00E630F5 /* pending_task.cc in Sources */ = {isa = PBXBuildFile; fileRef = FD33D4A4C7D9326F0751B224 /* pending_task.cc */; };
-		C5BD04C52334B24F00E630F5 /* pickle.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5D7B6BD8EA28C7C8F08F4722 /* pickle.cc */; };
-		C5BD04C62334B24F00E630F5 /* platform_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = BD790509D3D3F9D93181CE41 /* platform_file.cc */; };
-		C5BD04C72334B24F00E630F5 /* platform_file_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8EE1D54B0319E76A97FC6B9A /* platform_file_posix.cc */; };
-		C5BD04C82334B24F00E630F5 /* global_descriptors.cc in Sources */ = {isa = PBXBuildFile; fileRef = 750CB033F6D73AB72D3777DC /* global_descriptors.cc */; };
-		C5BD04CA2334B24F00E630F5 /* process_handle_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3264B15AEC3598482C343985 /* process_handle_posix.cc */; };
-		C5BD04CC2334B24F00E630F5 /* scoped_profile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4460BB2228FBFC13A5E82167 /* scoped_profile.cc */; };
-		C5BD04CD2334B24F00E630F5 /* alternate_timer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62E85F9DF3F7BC43E3AA6FC1 /* alternate_timer.cc */; };
-		C5BD04CE2334B24F00E630F5 /* tracked_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7017E922D0EBDD98009F58C6 /* tracked_time.cc */; };
-		C5BD04CF2334B24F00E630F5 /* rand_util.cc in Sources */ = {isa = PBXBuildFile; fileRef = F327C3E85C93D36C66270363 /* rand_util.cc */; };
-		C5BD04D02334B24F00E630F5 /* rand_util_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 133334B57A4B940D8FDFF862 /* rand_util_posix.cc */; };
-		C5BD04D12334B24F00E630F5 /* run_loop.cc in Sources */ = {isa = PBXBuildFile; fileRef = 867395F43ED9865DC02F60D6 /* run_loop.cc */; };
-		C5BD04D22334B24F00E630F5 /* safe_strerror_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 767A6D149683D5D73619E91F /* safe_strerror_posix.cc */; };
-		C5BD04D32334B24F00E630F5 /* scoped_native_library.cc in Sources */ = {isa = PBXBuildFile; fileRef = 52706160B310BB66EB47ED73 /* scoped_native_library.cc */; };
-		C5BD04D42334B24F00E630F5 /* sequence_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6ECECB32A5D8CC3933CE29CD /* sequence_checker_impl.cc */; };
-		C5BD04D52334B24F00E630F5 /* sequenced_task_runner.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2D69B176CDA0B2AAF9AA25C4 /* sequenced_task_runner.cc */; };
-		C5BD04D62334B24F00E630F5 /* latin1_string_conversions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41D1C2226C85DB2FDEA8841D /* latin1_string_conversions.cc */; };
-		C5BD04D72334B24F00E630F5 /* nullable_string16.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6860F0D0DB380AF6B8C41E50 /* nullable_string16.cc */; };
-		C5BD04D82334B24F00E630F5 /* safe_sprintf.cc in Sources */ = {isa = PBXBuildFile; fileRef = 99E155794F941953ED7194D7 /* safe_sprintf.cc */; };
-		C5BD04D92334B24F00E630F5 /* string16.cc in Sources */ = {isa = PBXBuildFile; fileRef = A61EE66A3B6474D0CFA6CDFF /* string16.cc */; };
-		C5BD04DA2334B24F00E630F5 /* string_number_conversions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 22AF1C77FA2AE732E42EC001 /* string_number_conversions.cc */; };
-		C5BD04DB2334B24F00E630F5 /* string_split.cc in Sources */ = {isa = PBXBuildFile; fileRef = BF4BFBBB3832D2C3D602A54C /* string_split.cc */; };
-		C5BD04DC2334B24F00E630F5 /* string_piece.cc in Sources */ = {isa = PBXBuildFile; fileRef = DC2EBBFF643F7172CA4620FF /* string_piece.cc */; };
-		C5BD04DD2334B24F00E630F5 /* string_util.cc in Sources */ = {isa = PBXBuildFile; fileRef = 91FC7A926A392EECAAA8A4E4 /* string_util.cc */; };
-		C5BD04DE2334B24F00E630F5 /* string_util_constants.cc in Sources */ = {isa = PBXBuildFile; fileRef = 018215C0A38237766F01F676 /* string_util_constants.cc */; };
-		C5BD04DF2334B24F00E630F5 /* stringprintf.cc in Sources */ = {isa = PBXBuildFile; fileRef = CC4BBDA08E7F10417884410E /* stringprintf.cc */; };
-		C5BD04E02334B24F00E630F5 /* sys_string_conversions_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A2B82531991C1D0560663D7 /* sys_string_conversions_mac.mm */; };
-		C5BD04E12334B24F00E630F5 /* utf_offset_string_conversions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 53F30ED21ECA8892283D3A65 /* utf_offset_string_conversions.cc */; };
-		C5BD04E22334B24F00E630F5 /* utf_string_conversion_utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = E0BE4833557444D44BB83545 /* utf_string_conversion_utils.cc */; };
-		C5BD04E32334B24F00E630F5 /* utf_string_conversions.cc in Sources */ = {isa = PBXBuildFile; fileRef = C7FE5AD80CD8A6766FE93E86 /* utf_string_conversions.cc */; };
-		C5BD04E42334B24F00E630F5 /* cancellation_flag.cc in Sources */ = {isa = PBXBuildFile; fileRef = B7DAC23E9D93B75185671F7E /* cancellation_flag.cc */; };
-		C5BD04E52334B24F00E630F5 /* condition_variable_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCBA2802B9A2BFFF185C20 /* condition_variable_posix.cc */; };
-		C5BD04E62334B24F00E630F5 /* lock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 634A215411492EBF10D83021 /* lock.cc */; };
-		C5BD04E72334B24F00E630F5 /* lock_impl_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = A2C4F472B85566BBD75DFB38 /* lock_impl_posix.cc */; };
-		C5BD04E82334B24F00E630F5 /* waitable_event_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 485671E733497FF9470E2D0B /* waitable_event_posix.cc */; };
-		C5BD04E92334B24F00E630F5 /* waitable_event_watcher_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = AEFCC626E3B8622488C5E452 /* waitable_event_watcher_posix.cc */; };
-		C5BD04EA2334B24F00E630F5 /* sys_info.cc in Sources */ = {isa = PBXBuildFile; fileRef = F331F51B4C402B71736DDBD5 /* sys_info.cc */; };
-		C5BD04EC2334B24F00E630F5 /* sys_info_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 06BF09240DF54E41BE48706E /* sys_info_posix.cc */; };
-		C5BD04ED2334B24F00E630F5 /* task_runner.cc in Sources */ = {isa = PBXBuildFile; fileRef = FC59223C73C6B948A247A508 /* task_runner.cc */; };
-		C5BD04EE2334B24F00E630F5 /* thread_task_runner_handle.cc in Sources */ = {isa = PBXBuildFile; fileRef = A6940E81B3C2DA60CC368FE3 /* thread_task_runner_handle.cc */; };
-		C5BD04EF2334B24F00E630F5 /* non_thread_safe_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A59FD198A4551C186E13D /* non_thread_safe_impl.cc */; };
-		C5BD04F02334B24F00E630F5 /* platform_thread_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = F1E1571247D033283F6E2613 /* platform_thread_mac.mm */; };
-		C5BD04F12334B24F00E630F5 /* platform_thread_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 80F38800BFB8288CF1EA197B /* platform_thread_posix.cc */; };
-		C5BD04F22334B24F00E630F5 /* post_task_and_reply_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = B8B6F044757FA7BE262B5AAB /* post_task_and_reply_impl.cc */; };
-		C5BD04F32334B24F00E630F5 /* sequenced_worker_pool.cc in Sources */ = {isa = PBXBuildFile; fileRef = E55C9CA3F0AD4CB40199CEAB /* sequenced_worker_pool.cc */; };
-		C5BD04F42334B24F00E630F5 /* simple_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 24418E4F6436D6365D70EB39 /* simple_thread.cc */; };
-		C5BD04F52334B24F00E630F5 /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8887CEE1AE41676D021CD703 /* thread.cc */; };
-		C5BD04F62334B24F00E630F5 /* thread_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 02EA81EFE3B73C495550B6DF /* thread_checker_impl.cc */; };
-		C5BD04F72334B24F00E630F5 /* thread_collision_warner.cc in Sources */ = {isa = PBXBuildFile; fileRef = 07044152D0AACC196AF849F0 /* thread_collision_warner.cc */; };
-		C5BD04F82334B24F00E630F5 /* thread_id_name_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6B4C5B974C6F0C2C74C3B415 /* thread_id_name_manager.cc */; };
-		C5BD04F92334B24F00E630F5 /* thread_local_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = C2FA8D896851848B26DC3F0B /* thread_local_posix.cc */; };
-		C5BD04FA2334B24F00E630F5 /* thread_local_storage_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9B7AAA61464059B48595277E /* thread_local_storage_posix.cc */; };
-		C5BD04FB2334B24F00E630F5 /* thread_restrictions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B60B5E0A515BB2823D068 /* thread_restrictions.cc */; };
-		C5BD04FC2334B24F00E630F5 /* watchdog.cc in Sources */ = {isa = PBXBuildFile; fileRef = 341D1BF07FAF4BE25CBAA2B6 /* watchdog.cc */; };
-		C5BD04FD2334B24F00E630F5 /* worker_pool.cc in Sources */ = {isa = PBXBuildFile; fileRef = F2FEE5737B7450A02CA4A3F7 /* worker_pool.cc */; };
-		C5BD04FE2334B24F00E630F5 /* worker_pool_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = D0246D01A8BFAEE1CB0134E9 /* worker_pool_posix.cc */; };
-		C5BD04FF2334B24F00E630F5 /* clock.cc in Sources */ = {isa = PBXBuildFile; fileRef = AFAA63A8FB49CC11BC2EC9EC /* clock.cc */; };
-		C5BD05002334B24F00E630F5 /* default_clock.cc in Sources */ = {isa = PBXBuildFile; fileRef = A9B3023E92B7232499A784F9 /* default_clock.cc */; };
-		C5BD05012334B24F00E630F5 /* default_tick_clock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7CF3D2D5609E37C2241745B0 /* default_tick_clock.cc */; };
-		C5BD05022334B24F00E630F5 /* tick_clock.cc in Sources */ = {isa = PBXBuildFile; fileRef = D8BC6B5453D280F32802343B /* tick_clock.cc */; };
-		C5BD05032334B24F00E630F5 /* time.cc in Sources */ = {isa = PBXBuildFile; fileRef = CBCB22DF6A894551B6EEFD49 /* time.cc */; };
-		C5BD05042334B24F00E630F5 /* time_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 901A9E5191A7E5A721516045 /* time_mac.cc */; };
-		C5BD05052334B24F00E630F5 /* time_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = F3971963BE3D245936603563 /* time_posix.cc */; };
-		C5BD05062334B24F00E630F5 /* elapsed_timer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 219B62F7FD1F6B4823E0E27B /* elapsed_timer.cc */; };
-		C5BD05072334B24F00E630F5 /* timer.cc in Sources */ = {isa = PBXBuildFile; fileRef = BCB8ED6ABF907BAD842D0CB5 /* timer.cc */; };
-		C5BD05082334B24F00E630F5 /* tracked_objects.cc in Sources */ = {isa = PBXBuildFile; fileRef = D05B68371EB7AD71D6E8AC12 /* tracked_objects.cc */; };
-		C5BD05092334B24F00E630F5 /* tracking_info.cc in Sources */ = {isa = PBXBuildFile; fileRef = 52E065591DB8B60C782F89C4 /* tracking_info.cc */; };
-		C5BD050A2334B24F00E630F5 /* values.cc in Sources */ = {isa = PBXBuildFile; fileRef = FF2F43B5E31B8A673D3FC9AF /* values.cc */; };
-		C5BD050B2334B24F00E630F5 /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = DD31A75553CFCFFA1AE0A333 /* version.cc */; };
-		C5BD050C2334B24F00E630F5 /* vlog.cc in Sources */ = {isa = PBXBuildFile; fileRef = C85B8B3E2B9069469127A6EF /* vlog.cc */; };
-		C5BD050D2334B24F00E630F5 /* memory_stubs.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4E8C00D3BA17C9E7FC87CDE9 /* memory_stubs.cc */; };
-		C5BD063D2334D0D700E630F5 /* libevent-macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BD061D2334CC7400E630F5 /* libevent-macos.a */; };
-		C5BD063E2334D0D700E630F5 /* libmodp_b64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2883AD3020B511E7005E1F54 /* libmodp_b64.a */; };
-		C5BD063F2334D0D700E630F5 /* libxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CF2C6223321DE100C8CFEE /* libxml.a */; };
-		C5E235EC233224FF00287637 /* inode64.cc in Sources */ = {isa = PBXBuildFile; fileRef = C5E235EB233224FF00287637 /* inode64.cc */; };
->>>>>>> Merge "build-macos" branch with William
 		C64E8189107AADD4178FFAB9 /* file_enumerator.cc in Sources */ = {isa = PBXBuildFile; fileRef = EB2122CE7A2118BB2266E053 /* file_enumerator.cc */; };
 		CB401062F9CFAD6F55B76423 /* platform_file_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8EE1D54B0319E76A97FC6B9A /* platform_file_posix.cc */; };
 		CC5B80D9A2C86CC1B8C4C67A /* mac_logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 10515ED5DBF5BE4B8AFEB63A /* mac_logging.cc */; };
@@ -316,10 +141,6 @@
 		D82CDD6E080B3C1E3FD40162 /* stats_table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5F824FEC1AC0ED132FEBC943 /* stats_table.cc */; };
 		DA464EF45453AAD438B68561 /* rand_util.cc in Sources */ = {isa = PBXBuildFile; fileRef = F327C3E85C93D36C66270363 /* rand_util.cc */; };
 		DE8DB045BD0934E2D9DD961B /* sparse_histogram.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5FDBE46CA185C293C743E303 /* sparse_histogram.cc */; };
-<<<<<<< HEAD
-=======
-		DEACC4880F19760CCF08CEF1 /* dtoa_wrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDF333172FE806572F29B917 /* dtoa_wrapper.cc */; };
->>>>>>> Merge "build-macos" branch with William
 		DF82EFD95CDF27785D9A93EB /* process_handle_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3264B15AEC3598482C343985 /* process_handle_posix.cc */; };
 		E1D1492D18ADB9518EEC4BEE /* tracked_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7017E922D0EBDD98009F58C6 /* tracked_time.cc */; };
 		E1EE6A8C91F2317ABC5607CA /* sys_string_conversions_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8A2B82531991C1D0560663D7 /* sys_string_conversions_mac.mm */; };
@@ -330,10 +151,6 @@
 		E62B0C389B2D55987FECCC6C /* utf_string_conversion_utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = E0BE4833557444D44BB83545 /* utf_string_conversion_utils.cc */; };
 		E71C3A50A63BF5A76332AED2 /* message_pump.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1319323E85B260FC7BF87FE2 /* message_pump.cc */; };
 		E8F16FBC6F4611D7198186CA /* thread_id_name_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6B4C5B974C6F0C2C74C3B415 /* thread_id_name_manager.cc */; };
-<<<<<<< HEAD
-=======
-		E97B9AF419B54B2C808FF719 /* g_fmt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55C11FE22C73EA934C82F036 /* g_fmt.cc */; };
->>>>>>> Merge "build-macos" branch with William
 		E994EB4A1C81B973281758A2 /* sys_info.cc in Sources */ = {isa = PBXBuildFile; fileRef = F331F51B4C402B71736DDBD5 /* sys_info.cc */; };
 		EB3DB94408795849CE0089D9 /* scoped_profile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4460BB2228FBFC13A5E82167 /* scoped_profile.cc */; };
 		EBC169FC12156854DC82B0DF /* clock.cc in Sources */ = {isa = PBXBuildFile; fileRef = AFAA63A8FB49CC11BC2EC9EC /* clock.cc */; };
@@ -373,7 +190,6 @@
 			remoteGlobalIDString = BAD727EA1BA1BEC4008C52AC;
 			remoteInfo = xml;
 		};
-<<<<<<< HEAD
 		C54E8947234B841300F04AD4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C54E8943234B841300F04AD4 /* modp_b64.xcodeproj */;
@@ -412,11 +228,6 @@
 		C54E8960234B853000F04AD4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C54E8943234B841300F04AD4 /* modp_b64.xcodeproj */;
-=======
-		C5BD04692334B24F00E630F5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2883AD2B20B511E7005E1F54 /* modp_b64.xcodeproj */;
->>>>>>> Merge "build-macos" branch with William
 			proxyType = 1;
 			remoteGlobalIDString = 9D5D659AE4416D4670CD8571;
 			remoteInfo = modp_b64;
@@ -435,23 +246,6 @@
 			remoteGlobalIDString = 3957C557EC3642B16CCFD55B;
 			remoteInfo = event;
 		};
-<<<<<<< HEAD
-=======
-		C5BD06392334D0AB00E630F5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C5CF2C6323321DF400C8CFEE /* event.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C5BD05DE2334C70A00E630F5;
-			remoteInfo = "event-macos";
-		};
-		C5BD063B2334D0AB00E630F5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C5CF2C5D23321DE100C8CFEE /* xml.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BAD727EA1BA1BEC4008C52AC;
-			remoteInfo = xml;
-		};
->>>>>>> Merge "build-macos" branch with William
 		C5CF2C6123321DE100C8CFEE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C5CF2C5D23321DE100C8CFEE /* xml.xcodeproj */;
@@ -495,18 +289,10 @@
 		04368166CEDC3D0B4F33B16C /* thread_local_storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_local_storage.h; sourceTree = "<group>"; };
 		04BE3B6B24761173584327A1 /* pref_notifier_impl_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pref_notifier_impl_unittest.cc; sourceTree = "<group>"; };
 		04E3F54A52A46015759BEB76 /* weak_ptr_unittest.nc */ = {isa = PBXFileReference; lastKnownFileType = text; path = weak_ptr_unittest.nc; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		052D710FE6F9184F671BEC81 /* platform_thread_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_linux.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		05AA818C97E2828A5E6CE6C1 /* ref_counted_memory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ref_counted_memory.h; sourceTree = "<group>"; };
 		05C000A17F8D551995A80A49 /* mac_util.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mac_util.mm; sourceTree = "<group>"; };
 		061CEF993EB657D5DE331333 /* scoped_mach_port.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scoped_mach_port.cc; sourceTree = "<group>"; };
 		063D48F4AE142DACE41D0557 /* environment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = environment.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		063DC6FA4D7442ED01BB7E47 /* non_thread_safe_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = non_thread_safe_unittest.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		065E04FF47CF0B763CCC6968 /* shared_memory_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = shared_memory_android.cc; sourceTree = "<group>"; };
 		0661C6494E2E84510DA2E73C /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
 		06B53B40ECC6B6A1E855F1CC /* rand_util_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rand_util_unittest.cc; sourceTree = "<group>"; };
@@ -556,10 +342,6 @@
 		1082D023D9CF7B336D024843 /* process_metrics_freebsd.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_metrics_freebsd.cc; sourceTree = "<group>"; };
 		1089B1DAF6E10C9EAE0CAD02 /* testing_pref_service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testing_pref_service.h; sourceTree = "<group>"; };
 		10C8DFC54AABCBE6B0116C8B /* values_test_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = values_test_util.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		10E8546387DEF4752351CEC0 /* thread_local_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_unittest.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		110C2674AEB09ECBF3C57C40 /* json_pref_store_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json_pref_store_unittest.cc; sourceTree = "<group>"; };
 		114D81AF83A8CB42200B4CB3 /* process_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_posix.cc; sourceTree = "<group>"; };
 		115D61261069E421347EE00B /* sparse_histogram_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sparse_histogram_unittest.cc; sourceTree = "<group>"; };
@@ -568,10 +350,6 @@
 		125053A6225DCF3F5A050B0E /* type_profiler_control.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = type_profiler_control.cc; sourceTree = "<group>"; };
 		1255323003594778BD10274F /* expectation.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = expectation.cc; sourceTree = "<group>"; };
 		128984D2F035D38235D33B7F /* scoped_nsautorelease_pool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scoped_nsautorelease_pool.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		129F838D3A2D620DC77EC38D /* dmg_fp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dmg_fp.h; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		1319323E85B260FC7BF87FE2 /* message_pump.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_pump.cc; sourceTree = "<group>"; };
 		133334B57A4B940D8FDFF862 /* rand_util_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rand_util_posix.cc; sourceTree = "<group>"; };
 		134F7E18A62F2454468DD92F /* event_recorder_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = event_recorder_win.cc; sourceTree = "<group>"; };
@@ -585,10 +363,6 @@
 		161C87AF31EE6C7D28652589 /* message_pump_glib_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_pump_glib_unittest.cc; sourceTree = "<group>"; };
 		16647BB1899D99E53655ABB5 /* mac_logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mac_logging.h; sourceTree = "<group>"; };
 		16F05F8A66614876A521D7FF /* atomicops_internals_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = atomicops_internals_mac.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		170BCEAC5D352BA1166B2DCA /* platform_thread_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_win.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		171C9BB920E42AEAEBB8E61F /* mock_chrome_application_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mock_chrome_application_mac.h; sourceTree = "<group>"; };
 		1777AFE2B471FD3F20F77B95 /* process_metrics_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_metrics_posix.cc; sourceTree = "<group>"; };
 		18B29C06E02EE94D053F20B5 /* memory_mapped_file_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = memory_mapped_file_posix.cc; sourceTree = "<group>"; };
@@ -712,10 +486,6 @@
 		3DB4FBEBC46381D5B77B5350 /* sys_string_conversions_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_string_conversions_win.cc; sourceTree = "<group>"; };
 		3EAAB270F529D24219B09DB2 /* ref_counted_memory_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ref_counted_memory_unittest.cc; sourceTree = "<group>"; };
 		3EEC6808E150B08345E38266 /* process_handle_freebsd.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_handle_freebsd.cc; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		3EF3F910C2E963AE6A5CCF0A /* icu_utf.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = icu_utf.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		3F4B472888C03993EB7064B9 /* watchdog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = watchdog.h; sourceTree = "<group>"; };
 		3F92B9271F6C04C1AD1046E2 /* bits_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bits_unittest.cc; sourceTree = "<group>"; };
 		3FACBF9F82EC43D8C541BE67 /* waitable_event_watcher_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = waitable_event_watcher_win.cc; sourceTree = "<group>"; };
@@ -729,10 +499,6 @@
 		425BA8FA5D71FC40454AC2F9 /* sequenced_worker_pool_owner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sequenced_worker_pool_owner.h; sourceTree = "<group>"; };
 		42E2447662F7D341F0F80CF5 /* perf_time_logger.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = perf_time_logger.cc; sourceTree = "<group>"; };
 		432339E24EF87697A90CE6AF /* linux_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = linux_util.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		43871E16EFE35343A9317566 /* icu_utf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = icu_utf.h; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		43C085104FDADD791DEDDCB2 /* values_test_util.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = values_test_util.cc; sourceTree = "<group>"; };
 		4409906B006ECF49D8E47D61 /* path_service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = path_service.h; sourceTree = "<group>"; };
 		445D693B54096CDBE5112765 /* utf_string_conversions_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utf_string_conversions_unittest.cc; sourceTree = "<group>"; };
@@ -743,10 +509,6 @@
 		45CEA4CBEBF0BF3B7A6D8D0F /* sample_map.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sample_map.cc; sourceTree = "<group>"; };
 		46A2CCD7D81AD094F68EDE70 /* lock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lock.h; sourceTree = "<group>"; };
 		478D9CCA598A6D6BD8D39E21 /* lock_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lock_impl.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		481708FFFA1D9A90379530DB /* worker_pool_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = worker_pool_win.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		48374CEA46C235854AB5A6DE /* file_util_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_util_unittest.cc; sourceTree = "<group>"; };
 		485671E733497FF9470E2D0B /* waitable_event_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = waitable_event_posix.cc; sourceTree = "<group>"; };
 		48D77ADDD4CDB3AD3C521BDA /* tracked_objects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tracked_objects.h; sourceTree = "<group>"; };
@@ -801,10 +563,6 @@
 		554E86C7CF6EACDBFF3495C7 /* path_service_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = path_service_unittest.cc; sourceTree = "<group>"; };
 		55BA2060B532A44383691B6A /* file_util_proxy_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_util_proxy_unittest.cc; sourceTree = "<group>"; };
 		55BDF0FE5133ABBBF1B4DFB2 /* waitable_event_watcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = waitable_event_watcher.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		55C11FE22C73EA934C82F036 /* g_fmt.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = g_fmt.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		55E6CA68AE370E20EC4DFF76 /* process_metrics_openbsd.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_metrics_openbsd.cc; sourceTree = "<group>"; };
 		55FEC256FC5C8471DC7D9868 /* message_pump_glib.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_pump_glib.cc; sourceTree = "<group>"; };
 		5662A1E2DD48E361188FB1F7 /* different_last.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = different_last.txt; sourceTree = "<group>"; };
@@ -838,10 +596,6 @@
 		5F8E392F80CFB99FF5DA155C /* base_paths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = base_paths.h; sourceTree = "<group>"; };
 		5FDBE46CA185C293C743E303 /* sparse_histogram.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sparse_histogram.cc; sourceTree = "<group>"; };
 		6010C9FF47D8579C45C59851 /* message_pump_x11.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_pump_x11.cc; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		605A757C0A6437FFC5B58E63 /* worker_pool_posix_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = worker_pool_posix_unittest.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		608D0C3D13A7F60C4366FD9E /* scoped_launch_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scoped_launch_data.h; sourceTree = "<group>"; };
 		60A5161A3A551C360746E26A /* stats_counters.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stats_counters.cc; sourceTree = "<group>"; };
 		6172B049B4E3F45A13B409E2 /* file_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_posix.cc; sourceTree = "<group>"; };
@@ -903,19 +657,11 @@
 		70F637EA0E6DA52C3675C976 /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		70F6CAA8EDB30B7C4E659FA4 /* scoped_temp_dir.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scoped_temp_dir.cc; sourceTree = "<group>"; };
 		710C75B72967CFDBA3B35868 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-<<<<<<< HEAD
-=======
-		716EBB8A9D9C468803611228 /* thread_collision_warner_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_collision_warner_unittest.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		71FCC163B2B9F0051E6B33BE /* spin_wait.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spin_wait.h; sourceTree = "<group>"; };
 		72089EC63B15E7A05A48738E /* string_number_conversions_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_number_conversions_unittest.cc; sourceTree = "<group>"; };
 		723551EB1222D98D37791730 /* unit_test_launcher.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unit_test_launcher.cc; sourceTree = "<group>"; };
 		726442D44BC960EAC9DB21D7 /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		72D67F07D62B2A4A01EAEBC2 /* string_split.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = string_split.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		72DE4D37B90A0728B7345D60 /* platform_thread_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_android.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		72F1C27FC7A1A7200DDDA17F /* histogram_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = histogram_unittest.cc; sourceTree = "<group>"; };
 		741CEDCC48D0CC7581B12A0B /* test_result.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test_result.cc; sourceTree = "<group>"; };
 		74966B08DAB62F178D880DC1 /* critical_closure_ios.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = critical_closure_ios.mm; sourceTree = "<group>"; };
@@ -952,10 +698,6 @@
 		7FF9E851C19D9C0EACB5600A /* objc_property_releaser.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = objc_property_releaser.mm; sourceTree = "<group>"; };
 		805CD873427651F45C4E3665 /* mru_cache_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mru_cache_unittest.cc; sourceTree = "<group>"; };
 		80711F092E2242B7717F880E /* time_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = time_unittest.cc; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		80F38800BFB8288CF1EA197B /* platform_thread_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_posix.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		818925A296F7D3CF2C81FDF0 /* discardable_memory_mac.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = discardable_memory_mac.cc; sourceTree = "<group>"; };
 		81B9179A9106CB0D977DDD2A /* multiprocess_test_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = multiprocess_test_android.cc; sourceTree = "<group>"; };
 		82C9FD3BFCF408C10F6E3787 /* message_pump_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = message_pump_mac.h; sourceTree = "<group>"; };
@@ -1076,18 +818,9 @@
 		A6B35DD287A3421C1D12B0F9 /* sys_info_mac.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_info_mac.cc; sourceTree = "<group>"; };
 		A6C3C82E5B325868D7374982 /* histogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = histogram.h; sourceTree = "<group>"; };
 		A6FAC6D22405F5AECA868C35 /* tracking_info.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tracking_info.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		A78E3A29C81E4EC6108DF2C3 /* thread_local_storage_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_storage_win.cc; sourceTree = "<group>"; };
 		A7952DC2BA9321835F84711E /* singleton_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = singleton_unittest.cc; sourceTree = "<group>"; };
 		A7ECE10279577EF6C5AC4334 /* message_pump_ozone.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_pump_ozone.cc; sourceTree = "<group>"; };
-=======
-		A741FB53976D61AFC1828AB6 /* platform_thread_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_unittest.cc; sourceTree = "<group>"; };
-		A78E3A29C81E4EC6108DF2C3 /* thread_local_storage_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_storage_win.cc; sourceTree = "<group>"; };
-		A7952DC2BA9321835F84711E /* singleton_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = singleton_unittest.cc; sourceTree = "<group>"; };
-		A7999D8809759CBEF9C6E17F /* watchdog_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = watchdog_unittest.cc; sourceTree = "<group>"; };
-		A7ECE10279577EF6C5AC4334 /* message_pump_ozone.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_pump_ozone.cc; sourceTree = "<group>"; };
-		A803E8574AEC4690BA0D5C8C /* sequenced_worker_pool_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sequenced_worker_pool_unittest.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		A83A85D5EBB21F7CAF2D68B9 /* mock_chrome_application_mac.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mock_chrome_application_mac.mm; sourceTree = "<group>"; };
 		A84C8687D340ED5653956382 /* dir_reader_posix_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dir_reader_posix_unittest.cc; sourceTree = "<group>"; };
 		A8BC311745613A3DCDF6598F /* platform_file.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform_file.h; sourceTree = "<group>"; };
@@ -1123,11 +856,6 @@
 		B10C15E8E2784AA5F5339070 /* process_util_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_util_unittest.cc; sourceTree = "<group>"; };
 		B188E938583B1C9D58A37F8E /* tuple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tuple.h; sourceTree = "<group>"; };
 		B1B9F7A7635930E67D6315D0 /* sequenced_task_runner_helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sequenced_task_runner_helpers.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		B20557A60B5674CEC453C6CF /* simple_thread_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = simple_thread_unittest.cc; sourceTree = "<group>"; };
-		B2474B426B6413EC577C5F0C /* thread_local_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_win.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		B292C75BDBA5EBE3CFEFD394 /* aligned_memory.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = aligned_memory.cc; sourceTree = "<group>"; };
 		B337A2263469F9A687B56099 /* base_paths_win.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = base_paths_win.h; sourceTree = "<group>"; };
 		B355810D1F56528623650D52 /* process_metrics.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process_metrics.cc; sourceTree = "<group>"; };
@@ -1155,10 +883,6 @@
 		B9A236E376DA9B4B7B261882 /* test_simple_task_runner.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test_simple_task_runner.cc; sourceTree = "<group>"; };
 		BA35BDA01CE9EADA523DC1D8 /* sys_string_conversions_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_string_conversions_posix.cc; sourceTree = "<group>"; };
 		BB169204CFB784F28E1F70AC /* location.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = location.cc; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		BBE360A3076524F60ED00AA5 /* thread_id_name_manager_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_id_name_manager_unittest.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		BC4B57B80C7281822E66D0B2 /* stringprintf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stringprintf.h; sourceTree = "<group>"; };
 		BC4FCCBDAAE2B095782238C3 /* lock_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lock_unittest.cc; sourceTree = "<group>"; };
 		BCB8ED6ABF907BAD842D0CB5 /* timer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = timer.cc; sourceTree = "<group>"; };
@@ -1180,7 +904,6 @@
 		C40656179605B43EB4C386FD /* copy_test_data_ios.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = copy_test_data_ios.gypi; path = ../build/copy_test_data_ios.gypi; sourceTree = "<group>"; };
 		C41F0FB5A0E267DBC55C1054 /* sys_string_conversions_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_string_conversions_unittest.cc; sourceTree = "<group>"; };
 		C53C8F45D8B0731238182D6C /* vlog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vlog.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		C54E8938234B822300F04AD4 /* icu */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icu; path = "../../../third-party/icu"; sourceTree = "<group>"; };
 		C54E8939234B823400F04AD4 /* dmg_fp */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dmg_fp; path = "../../../third-party/dmg_fp"; sourceTree = "<group>"; };
 		C54E8943234B841300F04AD4 /* modp_b64.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = modp_b64.xcodeproj; path = "../../third-party/modp_b64/modp_b64.xcodeproj"; sourceTree = "<group>"; };
@@ -1188,22 +911,12 @@
 		C54E8955234B850400F04AD4 /* event.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = event.xcodeproj; path = "../../third-party/libevent/event.xcodeproj"; sourceTree = "<group>"; };
 		C56B914A8A8A0CD65B2718A3 /* test_shortcut_win.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = test_shortcut_win.h; sourceTree = "<group>"; };
 		C5BC2E0DE0F630EA31524385 /* same_length.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = same_length.txt; sourceTree = "<group>"; };
-=======
-		C56B914A8A8A0CD65B2718A3 /* test_shortcut_win.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = test_shortcut_win.h; sourceTree = "<group>"; };
-		C59D9F4E23328BD600601568 /* dynamic_annotations.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dynamic_annotations.c; path = third_party/dynamic_annotations/dynamic_annotations.c; sourceTree = "<group>"; };
-		C59D9F5023328C4A00601568 /* dynamic_annotations.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = dynamic_annotations.c; path = third_party/dynamic_annotations/dynamic_annotations.c; sourceTree = "<group>"; };
-		C5BC2E0DE0F630EA31524385 /* same_length.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = same_length.txt; sourceTree = "<group>"; };
-		C5BD05152334B24F00E630F5 /* libbase-macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbase-macos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
->>>>>>> Merge "build-macos" branch with William
 		C5CF2C5D23321DE100C8CFEE /* xml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xml.xcodeproj; path = ../libxml/xml.xcodeproj; sourceTree = "<group>"; };
 		C5CF2C6323321DF400C8CFEE /* event.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = event.xcodeproj; path = ../libevent/event.xcodeproj; sourceTree = "<group>"; };
 		C5DBDF8DAD45EBB3485D0C76 /* histogram_flattener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = histogram_flattener.h; sourceTree = "<group>"; };
 		C5E235EB233224FF00287637 /* inode64.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inode64.cc; sourceTree = "<group>"; };
 		C5EAA779EBA8C0B25A78C59A /* test_file_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = test_file_util.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		C5F53CB9233775B6008F114F /* platform_thread_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform_thread_posix.cc; sourceTree = "<group>"; };
-=======
->>>>>>> Merge "build-macos" branch with William
 		C61458245CC6C17C40646221 /* sys_info_openbsd.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_info_openbsd.cc; sourceTree = "<group>"; };
 		C663CD6F9B8B92795B94D32D /* pref_store_observer_mock.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pref_store_observer_mock.cc; sourceTree = "<group>"; };
 		C69F7983BE6FC9384C947373 /* sys_info.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sys_info.h; sourceTree = "<group>"; };
@@ -1230,10 +943,6 @@
 		CD0A3A074B7E6988ED69FFD2 /* raw_scoped_refptr_mismatch_checker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = raw_scoped_refptr_mismatch_checker.h; sourceTree = "<group>"; };
 		CD0C77BA5E076D3AA76934F7 /* xdg_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xdg_util.h; sourceTree = "<group>"; };
 		CDA37B15BC256C1EEDC4CF5A /* pref_service_factory.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pref_service_factory.cc; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		CDF333172FE806572F29B917 /* dtoa_wrapper.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dtoa_wrapper.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		CEA797CC1753AD324E460722 /* file_path_watcher_stub.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_path_watcher_stub.cc; sourceTree = "<group>"; };
 		CECFA11A51D5D0E12FFE282F /* mac_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mac_util.h; sourceTree = "<group>"; };
 		CF4F80171F89C58318D70B7D /* pref_store.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pref_store.cc; sourceTree = "<group>"; };
@@ -1263,10 +972,6 @@
 		D94053BC98BD9E291165F0BD /* lock_impl_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lock_impl_win.cc; sourceTree = "<group>"; };
 		D9B5C9E920C29F044DF9376F /* discardable_memory_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = discardable_memory_linux.cc; sourceTree = "<group>"; };
 		D9CD7B0CAE80FCCA2351A545 /* thread_local.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_local.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		DA12E9A29C0154E49B3AF089 /* thread_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_unittest.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		DA277DBB049231B3DBA46E90 /* release_defaults.gypi */ = {isa = PBXFileReference; explicitFileType = sourcecode; name = release_defaults.gypi; path = ../build/internal/release_defaults.gypi; sourceTree = "<group>"; };
 		DA36C5BB3C6756A2241D024F /* pref_observer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pref_observer.h; sourceTree = "<group>"; };
 		DA6C87CCDDF3C241BF16B215 /* allocator_extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = allocator_extension.h; sourceTree = "<group>"; };
@@ -1324,10 +1029,6 @@
 		EB2122CE7A2118BB2266E053 /* file_enumerator.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = file_enumerator.cc; sourceTree = "<group>"; };
 		EB9EA42DA2FD1B6CA85ED5CF /* message_loop_proxy_impl.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = message_loop_proxy_impl.cc; sourceTree = "<group>"; };
 		EC17BD28BAC36035B7CD3107 /* authorization_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = authorization_util.h; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		ECCE940327E3A12BAA42F85A /* worker_pool_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = worker_pool_unittest.cc; sourceTree = "<group>"; };
->>>>>>> Merge "build-macos" branch with William
 		ED9AE3EB47BCA335FB4C521C /* sys_info_ios.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = sys_info_ios.mm; sourceTree = "<group>"; };
 		EDC5DEC6072F1B79D6F42A86 /* atomic_sequence_num.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = atomic_sequence_num.h; sourceTree = "<group>"; };
 		EDDAF5A29FD8D56B4CA90F11 /* discardable_memory_allocator_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = discardable_memory_allocator_android.cc; sourceTree = "<group>"; };
@@ -1391,22 +1092,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-=======
-				C50D6E3C2332777B00E529E3 /* libevent.a in Frameworks */,
-				C50D6E3D2332777B00E529E3 /* libmodp_b64.a in Frameworks */,
-				C50D6E3E2332777B00E529E3 /* libxml.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C5BD050E2334B24F00E630F5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5BD063D2334D0D700E630F5 /* libevent-macos.a in Frameworks */,
-				C5BD063E2334D0D700E630F5 /* libmodp_b64.a in Frameworks */,
-				C5BD063F2334D0D700E630F5 /* libxml.a in Frameworks */,
->>>>>>> Merge "build-macos" branch with William
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1417,10 +1102,6 @@
 			isa = PBXGroup;
 			children = (
 				A24F8E8AF59B46B92FF23F23 /* libbase.a */,
-<<<<<<< HEAD
-=======
-				C5BD05152334B24F00E630F5 /* libbase-macos.a */,
->>>>>>> Merge "build-macos" branch with William
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1428,10 +1109,6 @@
 		0A7286D50106BD5CC293FB04 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-=======
-				C59D9F4E23328BD600601568 /* dynamic_annotations.c */,
->>>>>>> Merge "build-macos" branch with William
 				C5E235EB233224FF00287637 /* inode64.cc */,
 				DC7A971F388460B6A90F65AD /* allocator */,
 				B3C0508AEA385FECD9E15BCF /* containers */,
@@ -1699,19 +1376,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
-=======
-		2F1A11214600569910FFC735 /* dmg_fp */ = {
-			isa = PBXGroup;
-			children = (
-				129F838D3A2D620DC77EC38D /* dmg_fp.h */,
-				CDF333172FE806572F29B917 /* dtoa_wrapper.cc */,
-				55C11FE22C73EA934C82F036 /* g_fmt.cc */,
-			);
-			path = dmg_fp;
-			sourceTree = "<group>";
-		};
->>>>>>> Merge "build-macos" branch with William
 		3578BD970E768A03968D954A /* Build */ = {
 			isa = PBXGroup;
 			children = (
@@ -1780,18 +1444,6 @@
 			name = Projects;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
-=======
-		38C95A10CF616DA4EC63FF69 /* icu */ = {
-			isa = PBXGroup;
-			children = (
-				3EF3F910C2E963AE6A5CCF0A /* icu_utf.cc */,
-				43871E16EFE35343A9317566 /* icu_utf.h */,
-			);
-			path = icu;
-			sourceTree = "<group>";
-		};
->>>>>>> Merge "build-macos" branch with William
 		474E52491DF3F31619D5E366 /* file_util */ = {
 			isa = PBXGroup;
 			children = (
@@ -2084,13 +1736,9 @@
 		90B15C421F62336452443E7F = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				C54E8955234B850400F04AD4 /* event.xcodeproj */,
 				C54E8949234B842600F04AD4 /* xml.xcodeproj */,
 				C54E8943234B841300F04AD4 /* modp_b64.xcodeproj */,
-=======
-				C59D9F5023328C4A00601568 /* dynamic_annotations.c */,
->>>>>>> Merge "build-macos" branch with William
 				0A7286D50106BD5CC293FB04 /* Source */,
 				3785758FA23559100EF62567 /* Projects */,
 				E946129C1EDD13975BD1ABE5 /* Frameworks */,
@@ -2102,39 +1750,18 @@
 		97718248D6BC3B8AAD16896D /* threading */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				C5F53CB9233775B6008F114F /* platform_thread_posix.cc */,
 				D5A725E92D218D27BCB94C3B /* non_thread_safe.h */,
 				1A7A59FD198A4551C186E13D /* non_thread_safe_impl.cc */,
 				8991C615D4B46C8CA5EE4D82 /* non_thread_safe_impl.h */,
 				F6B62A52F2BAED5839FA52CF /* platform_thread.h */,
 				F1E1571247D033283F6E2613 /* platform_thread_mac.mm */,
-=======
-				D5A725E92D218D27BCB94C3B /* non_thread_safe.h */,
-				1A7A59FD198A4551C186E13D /* non_thread_safe_impl.cc */,
-				8991C615D4B46C8CA5EE4D82 /* non_thread_safe_impl.h */,
-				063DC6FA4D7442ED01BB7E47 /* non_thread_safe_unittest.cc */,
-				F6B62A52F2BAED5839FA52CF /* platform_thread.h */,
-				72DE4D37B90A0728B7345D60 /* platform_thread_android.cc */,
-				052D710FE6F9184F671BEC81 /* platform_thread_linux.cc */,
-				F1E1571247D033283F6E2613 /* platform_thread_mac.mm */,
-				80F38800BFB8288CF1EA197B /* platform_thread_posix.cc */,
-				A741FB53976D61AFC1828AB6 /* platform_thread_unittest.cc */,
-				170BCEAC5D352BA1166B2DCA /* platform_thread_win.cc */,
->>>>>>> Merge "build-macos" branch with William
 				B8B6F044757FA7BE262B5AAB /* post_task_and_reply_impl.cc */,
 				A5E57D0E0E45593391591B56 /* post_task_and_reply_impl.h */,
 				E55C9CA3F0AD4CB40199CEAB /* sequenced_worker_pool.cc */,
 				5E6DB07911AF4E4BBC29DB83 /* sequenced_worker_pool.h */,
-<<<<<<< HEAD
 				24418E4F6436D6365D70EB39 /* simple_thread.cc */,
 				317A0ADF2EE1818AE06DFD4B /* simple_thread.h */,
-=======
-				A803E8574AEC4690BA0D5C8C /* sequenced_worker_pool_unittest.cc */,
-				24418E4F6436D6365D70EB39 /* simple_thread.cc */,
-				317A0ADF2EE1818AE06DFD4B /* simple_thread.h */,
-				B20557A60B5674CEC453C6CF /* simple_thread_unittest.cc */,
->>>>>>> Merge "build-macos" branch with William
 				8887CEE1AE41676D021CD703 /* thread.cc */,
 				2F5CBD2571E6260E9D521562 /* thread.h */,
 				F5CEE3A70AE8AA43AADDF46F /* thread_checker.h */,
@@ -2143,46 +1770,22 @@
 				B5E332A966A115AF20B1FF86 /* thread_checker_unittest.cc */,
 				07044152D0AACC196AF849F0 /* thread_collision_warner.cc */,
 				961B967BAD62085DF1B59AF7 /* thread_collision_warner.h */,
-<<<<<<< HEAD
 				6B4C5B974C6F0C2C74C3B415 /* thread_id_name_manager.cc */,
 				5122224CF147807ADC49263E /* thread_id_name_manager.h */,
-=======
-				716EBB8A9D9C468803611228 /* thread_collision_warner_unittest.cc */,
-				6B4C5B974C6F0C2C74C3B415 /* thread_id_name_manager.cc */,
-				5122224CF147807ADC49263E /* thread_id_name_manager.h */,
-				BBE360A3076524F60ED00AA5 /* thread_id_name_manager_unittest.cc */,
->>>>>>> Merge "build-macos" branch with William
 				D9CD7B0CAE80FCCA2351A545 /* thread_local.h */,
 				C2FA8D896851848B26DC3F0B /* thread_local_posix.cc */,
 				04368166CEDC3D0B4F33B16C /* thread_local_storage.h */,
 				9B7AAA61464059B48595277E /* thread_local_storage_posix.cc */,
 				83A7422342BD4D8852A18F27 /* thread_local_storage_unittest.cc */,
 				A78E3A29C81E4EC6108DF2C3 /* thread_local_storage_win.cc */,
-<<<<<<< HEAD
 				0F5B60B5E0A515BB2823D068 /* thread_restrictions.cc */,
 				8AEB9A8745B9FFFDCB296DA4 /* thread_restrictions.h */,
 				341D1BF07FAF4BE25CBAA2B6 /* watchdog.cc */,
 				3F4B472888C03993EB7064B9 /* watchdog.h */,
-=======
-				10E8546387DEF4752351CEC0 /* thread_local_unittest.cc */,
-				B2474B426B6413EC577C5F0C /* thread_local_win.cc */,
-				0F5B60B5E0A515BB2823D068 /* thread_restrictions.cc */,
-				8AEB9A8745B9FFFDCB296DA4 /* thread_restrictions.h */,
-				DA12E9A29C0154E49B3AF089 /* thread_unittest.cc */,
-				341D1BF07FAF4BE25CBAA2B6 /* watchdog.cc */,
-				3F4B472888C03993EB7064B9 /* watchdog.h */,
-				A7999D8809759CBEF9C6E17F /* watchdog_unittest.cc */,
->>>>>>> Merge "build-macos" branch with William
 				F2FEE5737B7450A02CA4A3F7 /* worker_pool.cc */,
 				BE2AF108C4AC29B65A827DB5 /* worker_pool.h */,
 				D0246D01A8BFAEE1CB0134E9 /* worker_pool_posix.cc */,
 				FC9D1FD75E7A921ABC2AAE08 /* worker_pool_posix.h */,
-<<<<<<< HEAD
-=======
-				605A757C0A6437FFC5B58E63 /* worker_pool_posix_unittest.cc */,
-				ECCE940327E3A12BAA42F85A /* worker_pool_unittest.cc */,
-				481708FFFA1D9A90379530DB /* worker_pool_win.cc */,
->>>>>>> Merge "build-macos" branch with William
 			);
 			path = threading;
 			sourceTree = "<group>";
@@ -2379,7 +1982,6 @@
 			path = process;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
 		C54E8944234B841300F04AD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2404,8 +2006,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-=======
->>>>>>> Merge "build-macos" branch with William
 		C5CF2C5E23321DE100C8CFEE /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2500,13 +2100,8 @@
 		CEAE54AE8424B5F7B3081C8B /* third_party */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				C54E8939234B823400F04AD4 /* dmg_fp */,
 				C54E8938234B822300F04AD4 /* icu */,
-=======
-				2F1A11214600569910FFC735 /* dmg_fp */,
-				38C95A10CF616DA4EC63FF69 /* icu */,
->>>>>>> Merge "build-macos" branch with William
 			);
 			path = third_party;
 			sourceTree = "<group>";
@@ -2641,12 +2236,9 @@
 			buildRules = (
 			);
 			dependencies = (
-<<<<<<< HEAD
 				C54E8961234B853000F04AD4 /* PBXTargetDependency */,
 				C54E895F234B851F00F04AD4 /* PBXTargetDependency */,
 				C54E8952234B843B00F04AD4 /* PBXTargetDependency */,
-=======
->>>>>>> Merge "build-macos" branch with William
 				C5BD06382334D08300E630F5 /* PBXTargetDependency */,
 				C50D6E382332725D00E529E3 /* PBXTargetDependency */,
 				2883AD3420B51238005E1F54 /* PBXTargetDependency */,
@@ -2656,28 +2248,6 @@
 			productReference = A24F8E8AF59B46B92FF23F23 /* libbase.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-<<<<<<< HEAD
-=======
-		C5BD04632334B24F00E630F5 /* base-macos */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C5BD05122334B24F00E630F5 /* Build configuration list for PBXNativeTarget "base-macos" */;
-			buildPhases = (
-				C5BD046A2334B24F00E630F5 /* Sources */,
-				C5BD050E2334B24F00E630F5 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C5BD063A2334D0AB00E630F5 /* PBXTargetDependency */,
-				C5BD063C2334D0AB00E630F5 /* PBXTargetDependency */,
-				C5BD04682334B24F00E630F5 /* PBXTargetDependency */,
-			);
-			name = "base-macos";
-			productName = base;
-			productReference = C5BD05152334B24F00E630F5 /* libbase-macos.a */;
-			productType = "com.apple.product-type.library.static";
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2703,18 +2273,14 @@
 					ProjectRef = C5CF2C6323321DF400C8CFEE /* event.xcodeproj */;
 				},
 				{
-<<<<<<< HEAD
 					ProductGroup = C54E8956234B850400F04AD4 /* Products */;
 					ProjectRef = C54E8955234B850400F04AD4 /* event.xcodeproj */;
 				},
 				{
-=======
->>>>>>> Merge "build-macos" branch with William
 					ProductGroup = 2883AD2C20B511E7005E1F54 /* Products */;
 					ProjectRef = 2883AD2B20B511E7005E1F54 /* modp_b64.xcodeproj */;
 				},
 				{
-<<<<<<< HEAD
 					ProductGroup = C54E8944234B841300F04AD4 /* Products */;
 					ProjectRef = C54E8943234B841300F04AD4 /* modp_b64.xcodeproj */;
 				},
@@ -2723,8 +2289,6 @@
 					ProjectRef = C54E8949234B842600F04AD4 /* xml.xcodeproj */;
 				},
 				{
-=======
->>>>>>> Merge "build-macos" branch with William
 					ProductGroup = C5CF2C5E23321DE100C8CFEE /* Products */;
 					ProjectRef = C5CF2C5D23321DE100C8CFEE /* xml.xcodeproj */;
 				},
@@ -2732,10 +2296,6 @@
 			projectRoot = "";
 			targets = (
 				5272CB5A73F54B4A0E227C3D /* base */,
-<<<<<<< HEAD
-=======
-				C5BD04632334B24F00E630F5 /* base-macos */,
->>>>>>> Merge "build-macos" branch with William
 			);
 		};
 /* End PBXProject section */
@@ -2748,7 +2308,6 @@
 			remoteRef = 2883AD2F20B511E7005E1F54 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-<<<<<<< HEAD
 		C54E8948234B841300F04AD4 /* libmodp_b64.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2770,8 +2329,6 @@
 			remoteRef = C54E895A234B850400F04AD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-=======
->>>>>>> Merge "build-macos" branch with William
 		C5BD061D2334CC7400E630F5 /* libevent-macos.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2800,10 +2357,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-=======
-				C59D9F4F23328BD600601568 /* dynamic_annotations.c in Sources */,
->>>>>>> Merge "build-macos" branch with William
 				3CF6F43821B7C08300B7A811 /* guid_posix.cc in Sources */,
 				BA98688E1BE9BD2300279B91 /* message_pump_libevent.cc in Sources */,
 				BA5350F4191A881100178697 /* base_switches.cc in Sources */,
@@ -2811,12 +2364,6 @@
 				E40B056E1F4557C41A59C8E2 /* message_pump_mac.mm in Sources */,
 				16DA538D0807699F7F4782F9 /* file_descriptor_shuffle.cc in Sources */,
 				80B7367CE97F34C5B8F5E63A /* sync_socket_posix.cc in Sources */,
-<<<<<<< HEAD
-=======
-				E97B9AF419B54B2C808FF719 /* g_fmt.cc in Sources */,
-				DEACC4880F19760CCF08CEF1 /* dtoa_wrapper.cc in Sources */,
-				10C34ED01AC70B76312DB0F2 /* icu_utf.cc in Sources */,
->>>>>>> Merge "build-macos" branch with William
 				14AD79494F8C44CD9B65D1B2 /* allocator_extension.cc in Sources */,
 				3CBE85EA73AE7D3FB6F66FF1 /* type_profiler_control.cc in Sources */,
 				7040AD0A7FA8890F339C1BA8 /* at_exit.cc in Sources */,
@@ -2940,10 +2487,6 @@
 				462A75F2D80FAFB1B2214901 /* thread_task_runner_handle.cc in Sources */,
 				54E01D3F691F76FD422E323E /* non_thread_safe_impl.cc in Sources */,
 				AC811D8CAA305B5C4427E5F3 /* platform_thread_mac.mm in Sources */,
-<<<<<<< HEAD
-=======
-				5FE9330C68BD1202BA8D3C44 /* platform_thread_posix.cc in Sources */,
->>>>>>> Merge "build-macos" branch with William
 				D1174626FE2461283AB67344 /* post_task_and_reply_impl.cc in Sources */,
 				2845AB09BA06E93A71DF26A0 /* sequenced_worker_pool.cc in Sources */,
 				6DFAA1E66B6F7B43F1A41B4A /* simple_thread.cc in Sources */,
@@ -2959,10 +2502,7 @@
 				AE8FB37A8BCDA0F3168C8D52 /* worker_pool_posix.cc in Sources */,
 				EBC169FC12156854DC82B0DF /* clock.cc in Sources */,
 				956DCC24B1371CA04DEA3774 /* default_clock.cc in Sources */,
-<<<<<<< HEAD
 				C5F53CBA233775B7008F114F /* platform_thread_posix.cc in Sources */,
-=======
->>>>>>> Merge "build-macos" branch with William
 				8876CE92C85CA750345E8DA6 /* default_tick_clock.cc in Sources */,
 				12D86E194B907BE5DC90B0F0 /* tick_clock.cc in Sources */,
 				4B7549A37E64DE7EDB223137 /* time.cc in Sources */,
@@ -2979,172 +2519,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-<<<<<<< HEAD
-=======
-		C5BD046A2334B24F00E630F5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5BD046B2334B24F00E630F5 /* dynamic_annotations.c in Sources */,
-				C5BD046C2334B24F00E630F5 /* guid_posix.cc in Sources */,
-				C5BD046D2334B24F00E630F5 /* message_pump_libevent.cc in Sources */,
-				C5BD046E2334B24F00E630F5 /* base_switches.cc in Sources */,
-				C5BD046F2334B24F00E630F5 /* event_recorder_stubs.cc in Sources */,
-				C5BD04702334B24F00E630F5 /* message_pump_mac.mm in Sources */,
-				C5BD04712334B24F00E630F5 /* file_descriptor_shuffle.cc in Sources */,
-				C5BD04722334B24F00E630F5 /* sync_socket_posix.cc in Sources */,
-				C5BD04732334B24F00E630F5 /* g_fmt.cc in Sources */,
-				C5BD04742334B24F00E630F5 /* dtoa_wrapper.cc in Sources */,
-				C5BD04752334B24F00E630F5 /* icu_utf.cc in Sources */,
-				C5BD04762334B24F00E630F5 /* allocator_extension.cc in Sources */,
-				C5BD04772334B24F00E630F5 /* type_profiler_control.cc in Sources */,
-				C5BD04782334B24F00E630F5 /* at_exit.cc in Sources */,
-				C5BD04792334B24F00E630F5 /* barrier_closure.cc in Sources */,
-				C5BD047A2334B24F00E630F5 /* base_paths.cc in Sources */,
-				C5BD047B2334B24F00E630F5 /* base_paths_mac.mm in Sources */,
-				C5BD047C2334B24F00E630F5 /* bind_helpers.cc in Sources */,
-				C5BD047D2334B24F00E630F5 /* build_time.cc in Sources */,
-				C5BD047E2334B24F00E630F5 /* callback_helpers.cc in Sources */,
-				C5BD047F2334B24F00E630F5 /* callback_internal.cc in Sources */,
-				C5BD04802334B24F00E630F5 /* command_line.cc in Sources */,
-				C5BD04812334B24F00E630F5 /* cpu.cc in Sources */,
-				C5BD04832334B24F00E630F5 /* environment.cc in Sources */,
-				C5BD04842334B24F00E630F5 /* file_util.cc in Sources */,
-				C5BD04852334B24F00E630F5 /* file_util_mac.mm in Sources */,
-				C5BD04862334B24F00E630F5 /* file_util_posix.cc in Sources */,
-				C5BD04872334B24F00E630F5 /* file_version_info_mac.mm in Sources */,
-				C5BD04882334B24F00E630F5 /* file.cc in Sources */,
-				C5BD04892334B24F00E630F5 /* file_enumerator.cc in Sources */,
-				C5BD048A2334B24F00E630F5 /* file_enumerator_posix.cc in Sources */,
-				C5BD048B2334B24F00E630F5 /* inode64.cc in Sources */,
-				C5BD048C2334B24F00E630F5 /* file_path.cc in Sources */,
-				C5BD048D2334B24F00E630F5 /* file_path_constants.cc in Sources */,
-				C5BD048E2334B24F00E630F5 /* file_path_watcher.cc in Sources */,
-				C5BD048F2334B24F00E630F5 /* file_path_watcher_kqueue.cc in Sources */,
-				C5BD04902334B24F00E630F5 /* file_posix.cc in Sources */,
-				C5BD04912334B24F00E630F5 /* file_util_proxy.cc in Sources */,
-				C5BD04922334B24F00E630F5 /* important_file_writer.cc in Sources */,
-				C5BD04932334B24F00E630F5 /* memory_mapped_file.cc in Sources */,
-				C5BD04942334B24F00E630F5 /* memory_mapped_file_posix.cc in Sources */,
-				C5BD04952334B24F00E630F5 /* scoped_platform_file_closer.cc in Sources */,
-				C5BD04962334B24F00E630F5 /* scoped_temp_dir.cc in Sources */,
-				C5BD04972334B24F00E630F5 /* guid.cc in Sources */,
-				C5BD04982334B24F00E630F5 /* hash.cc in Sources */,
-				C5BD04992334B24F00E630F5 /* ini_parser.cc in Sources */,
-				C5BD049D2334B24F00E630F5 /* lazy_instance.cc in Sources */,
-				C5BD049E2334B24F00E630F5 /* location.cc in Sources */,
-				C5BD049F2334B24F00E630F5 /* logging.cc in Sources */,
-				C5BD04A02334B24F00E630F5 /* bundle_locations.mm in Sources */,
-				C5BD04A12334B24F00E630F5 /* foundation_util.mm in Sources */,
-				C5BD04A22334B24F00E630F5 /* mac_logging.cc in Sources */,
-				C5BD04A32334B24F00E630F5 /* objc_property_releaser.mm in Sources */,
-				C5BD04A42334B24F00E630F5 /* scoped_mach_port.cc in Sources */,
-				C5BD04A52334B24F00E630F5 /* scoped_nsautorelease_pool.mm in Sources */,
-				C5BD04A62334B24F00E630F5 /* md5.cc in Sources */,
-				C5BD04A72334B24F00E630F5 /* aligned_memory.cc in Sources */,
-				C5BD04A82334B24F00E630F5 /* discardable_memory.cc in Sources */,
-				C5BD04A92334B24F00E630F5 /* discardable_memory_emulated.cc in Sources */,
-				C5BD04AA2334B24F00E630F5 /* discardable_memory_mac.cc in Sources */,
-				C5BD04AB2334B24F00E630F5 /* discardable_memory_provider.cc in Sources */,
-				C5BD04AC2334B24F00E630F5 /* memory_pressure_listener.cc in Sources */,
-				C5BD04AD2334B24F00E630F5 /* ref_counted.cc in Sources */,
-				C5BD04AE2334B24F00E630F5 /* ref_counted_memory.cc in Sources */,
-				C5BD04AF2334B24F00E630F5 /* shared_memory_posix.cc in Sources */,
-				C5BD04B02334B24F00E630F5 /* singleton.cc in Sources */,
-				C5BD04B12334B24F00E630F5 /* weak_ptr.cc in Sources */,
-				C5BD04B22334B24F00E630F5 /* incoming_task_queue.cc in Sources */,
-				C5BD04B32334B24F00E630F5 /* message_loop.cc in Sources */,
-				C5BD04B42334B24F00E630F5 /* message_loop_proxy.cc in Sources */,
-				C5BD04B52334B24F00E630F5 /* message_loop_proxy_impl.cc in Sources */,
-				C5BD04B62334B24F00E630F5 /* message_pump.cc in Sources */,
-				C5BD04B72334B24F00E630F5 /* message_pump_default.cc in Sources */,
-				C5BD04B82334B24F00E630F5 /* sample_map.cc in Sources */,
-				C5BD04B92334B24F00E630F5 /* sample_vector.cc in Sources */,
-				C5BD04BA2334B24F00E630F5 /* bucket_ranges.cc in Sources */,
-				C5BD04BB2334B24F00E630F5 /* histogram.cc in Sources */,
-				C5BD04BC2334B24F00E630F5 /* histogram_base.cc in Sources */,
-				C5BD04BD2334B24F00E630F5 /* histogram_samples.cc in Sources */,
-				C5BD04BE2334B24F00E630F5 /* histogram_snapshot_manager.cc in Sources */,
-				C5BD04BF2334B24F00E630F5 /* sparse_histogram.cc in Sources */,
-				C5BD04C02334B24F00E630F5 /* statistics_recorder.cc in Sources */,
-				C5BD04C12334B24F00E630F5 /* stats_counters.cc in Sources */,
-				C5BD04C22334B24F00E630F5 /* stats_table.cc in Sources */,
-				C5BD04C32334B24F00E630F5 /* path_service.cc in Sources */,
-				C5BD04C42334B24F00E630F5 /* pending_task.cc in Sources */,
-				C5BD04C52334B24F00E630F5 /* pickle.cc in Sources */,
-				C5BD04C62334B24F00E630F5 /* platform_file.cc in Sources */,
-				C5BD04C72334B24F00E630F5 /* platform_file_posix.cc in Sources */,
-				C5BD04C82334B24F00E630F5 /* global_descriptors.cc in Sources */,
-				C5BD04CA2334B24F00E630F5 /* process_handle_posix.cc in Sources */,
-				C5BD04CC2334B24F00E630F5 /* scoped_profile.cc in Sources */,
-				C5BD04CD2334B24F00E630F5 /* alternate_timer.cc in Sources */,
-				C5BD04CE2334B24F00E630F5 /* tracked_time.cc in Sources */,
-				C5BD04CF2334B24F00E630F5 /* rand_util.cc in Sources */,
-				C5BD04D02334B24F00E630F5 /* rand_util_posix.cc in Sources */,
-				C5BD04D12334B24F00E630F5 /* run_loop.cc in Sources */,
-				C5BD04D22334B24F00E630F5 /* safe_strerror_posix.cc in Sources */,
-				C5BD04D32334B24F00E630F5 /* scoped_native_library.cc in Sources */,
-				C5BD04D42334B24F00E630F5 /* sequence_checker_impl.cc in Sources */,
-				C5BD04D52334B24F00E630F5 /* sequenced_task_runner.cc in Sources */,
-				C5BD04D62334B24F00E630F5 /* latin1_string_conversions.cc in Sources */,
-				C5BD04D72334B24F00E630F5 /* nullable_string16.cc in Sources */,
-				C5BD04D82334B24F00E630F5 /* safe_sprintf.cc in Sources */,
-				C5BD04D92334B24F00E630F5 /* string16.cc in Sources */,
-				C5BD04DA2334B24F00E630F5 /* string_number_conversions.cc in Sources */,
-				C5BD04DB2334B24F00E630F5 /* string_split.cc in Sources */,
-				C5BD04DC2334B24F00E630F5 /* string_piece.cc in Sources */,
-				C5BD04DD2334B24F00E630F5 /* string_util.cc in Sources */,
-				C5BD04DE2334B24F00E630F5 /* string_util_constants.cc in Sources */,
-				C5BD04DF2334B24F00E630F5 /* stringprintf.cc in Sources */,
-				C5BD04E02334B24F00E630F5 /* sys_string_conversions_mac.mm in Sources */,
-				C5BD04E12334B24F00E630F5 /* utf_offset_string_conversions.cc in Sources */,
-				C5BD04E22334B24F00E630F5 /* utf_string_conversion_utils.cc in Sources */,
-				C5BD04E32334B24F00E630F5 /* utf_string_conversions.cc in Sources */,
-				C5BD04E42334B24F00E630F5 /* cancellation_flag.cc in Sources */,
-				C5BD04E52334B24F00E630F5 /* condition_variable_posix.cc in Sources */,
-				C5BD04E62334B24F00E630F5 /* lock.cc in Sources */,
-				C5BD04E72334B24F00E630F5 /* lock_impl_posix.cc in Sources */,
-				C5BD04E82334B24F00E630F5 /* waitable_event_posix.cc in Sources */,
-				C5BD04E92334B24F00E630F5 /* waitable_event_watcher_posix.cc in Sources */,
-				C5BD04EA2334B24F00E630F5 /* sys_info.cc in Sources */,
-				C5BD04EC2334B24F00E630F5 /* sys_info_posix.cc in Sources */,
-				C5BD04ED2334B24F00E630F5 /* task_runner.cc in Sources */,
-				C5BD04EE2334B24F00E630F5 /* thread_task_runner_handle.cc in Sources */,
-				C5BD04EF2334B24F00E630F5 /* non_thread_safe_impl.cc in Sources */,
-				C5BD04F02334B24F00E630F5 /* platform_thread_mac.mm in Sources */,
-				C5BD04F12334B24F00E630F5 /* platform_thread_posix.cc in Sources */,
-				C5BD04F22334B24F00E630F5 /* post_task_and_reply_impl.cc in Sources */,
-				C5BD04F32334B24F00E630F5 /* sequenced_worker_pool.cc in Sources */,
-				C5BD04F42334B24F00E630F5 /* simple_thread.cc in Sources */,
-				C5BD04F52334B24F00E630F5 /* thread.cc in Sources */,
-				C5BD04F62334B24F00E630F5 /* thread_checker_impl.cc in Sources */,
-				C5BD04F72334B24F00E630F5 /* thread_collision_warner.cc in Sources */,
-				C5BD04F82334B24F00E630F5 /* thread_id_name_manager.cc in Sources */,
-				C5BD04F92334B24F00E630F5 /* thread_local_posix.cc in Sources */,
-				C5BD04FA2334B24F00E630F5 /* thread_local_storage_posix.cc in Sources */,
-				C5BD04FB2334B24F00E630F5 /* thread_restrictions.cc in Sources */,
-				C5BD04FC2334B24F00E630F5 /* watchdog.cc in Sources */,
-				C5BD04FD2334B24F00E630F5 /* worker_pool.cc in Sources */,
-				C5BD04FE2334B24F00E630F5 /* worker_pool_posix.cc in Sources */,
-				C5BD04FF2334B24F00E630F5 /* clock.cc in Sources */,
-				C5BD05002334B24F00E630F5 /* default_clock.cc in Sources */,
-				C5BD05012334B24F00E630F5 /* default_tick_clock.cc in Sources */,
-				C5BD05022334B24F00E630F5 /* tick_clock.cc in Sources */,
-				C5BD05032334B24F00E630F5 /* time.cc in Sources */,
-				C5BD05042334B24F00E630F5 /* time_mac.cc in Sources */,
-				C5BD05052334B24F00E630F5 /* time_posix.cc in Sources */,
-				C5BD05062334B24F00E630F5 /* elapsed_timer.cc in Sources */,
-				C5BD05072334B24F00E630F5 /* timer.cc in Sources */,
-				C5BD05082334B24F00E630F5 /* tracked_objects.cc in Sources */,
-				C5BD05092334B24F00E630F5 /* tracking_info.cc in Sources */,
-				C5BD050A2334B24F00E630F5 /* values.cc in Sources */,
-				C5BD050B2334B24F00E630F5 /* version.cc in Sources */,
-				C5BD050C2334B24F00E630F5 /* vlog.cc in Sources */,
-				C5BD050D2334B24F00E630F5 /* memory_stubs.cc in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3158,7 +2532,6 @@
 			name = xml;
 			targetProxy = C50D6E372332725D00E529E3 /* PBXContainerItemProxy */;
 		};
-<<<<<<< HEAD
 		C54E8952234B843B00F04AD4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = xml;
@@ -3178,27 +2551,6 @@
 			isa = PBXTargetDependency;
 			name = event;
 			targetProxy = C5BD06372334D08300E630F5 /* PBXContainerItemProxy */;
-=======
-		C5BD04682334B24F00E630F5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = modp_b64;
-			targetProxy = C5BD04692334B24F00E630F5 /* PBXContainerItemProxy */;
-		};
-		C5BD06382334D08300E630F5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = event;
-			targetProxy = C5BD06372334D08300E630F5 /* PBXContainerItemProxy */;
-		};
-		C5BD063A2334D0AB00E630F5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "event-macos";
-			targetProxy = C5BD06392334D0AB00E630F5 /* PBXContainerItemProxy */;
-		};
-		C5BD063C2334D0AB00E630F5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = xml;
-			targetProxy = C5BD063B2334D0AB00E630F5 /* PBXContainerItemProxy */;
->>>>>>> Merge "build-macos" branch with William
 		};
 /* End PBXTargetDependency section */
 
@@ -3234,31 +2586,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-<<<<<<< HEAD
 				HEADER_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = NO;
-=======
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(TOP_SRC_DIR)",
-					"$(TOP_SRC_DIR)/Luakit",
-				);
-				ONLY_ACTIVE_ARCH = YES;
->>>>>>> Merge "build-macos" branch with William
 				OTHER_CFLAGS = (
 					"-DTARGET_OS_IPHONE",
 					"-Wno-deprecated-register",
 				);
 				SDKROOT = iphoneos;
-<<<<<<< HEAD
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../../";
 				VALID_ARCHS = "x86_64 arm64 armv7";
-=======
-				TOP_SRC_DIR = "$(PROJECT_FILE_PATH)/../../..";
-				VALID_ARCHS = "x86_64 arm64 armv7 i386";
->>>>>>> Merge "build-macos" branch with William
 			};
 			name = Release;
 		};
@@ -3292,31 +2629,21 @@
 					NDEBUG,
 				);
 				HEADER_SEARCH_PATHS = (
-<<<<<<< HEAD
 					"$(TOP_SRC_DIR)/config",
 					"$(inherited)",
 					"$(TOP_SRC_DIR)/third-party",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/config",
-=======
-					"$(SRCROOT)/../",
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
->>>>>>> Merge "build-macos" branch with William
 					"$(TOP_SRC_DIR)",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = base;
 				SDKROOT = iphoneos;
-<<<<<<< HEAD
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../../";
 				VALID_ARCHS = "arm64 x86_64 armv7";
-=======
-				VALID_ARCHS = "arm64 x86_64 armv7 i386";
->>>>>>> Merge "build-macos" branch with William
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wendif-labels",
@@ -3362,31 +2689,21 @@
 					"_FORTIFY_SOURCE=2",
 				);
 				HEADER_SEARCH_PATHS = (
-<<<<<<< HEAD
 					"$(TOP_SRC_DIR)/config",
 					"$(inherited)",
 					"$(TOP_SRC_DIR)/third-party",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/config",
-=======
-					"$(SRCROOT)/../",
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
->>>>>>> Merge "build-macos" branch with William
 					"$(TOP_SRC_DIR)",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = base;
 				SDKROOT = iphoneos;
-<<<<<<< HEAD
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../../";
 				VALID_ARCHS = "arm64 x86_64 armv7";
-=======
-				VALID_ARCHS = "arm64 x86_64 armv7 i386";
->>>>>>> Merge "build-macos" branch with William
 				WARNING_CFLAGS = (
 					"-Wall",
 					"-Wendif-labels",
@@ -3433,146 +2750,19 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-<<<<<<< HEAD
 				HEADER_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = NO;
-=======
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(TOP_SRC_DIR)",
-					"$(TOP_SRC_DIR)/Luakit",
-				);
-				ONLY_ACTIVE_ARCH = YES;
->>>>>>> Merge "build-macos" branch with William
 				OTHER_CFLAGS = (
 					"-DTARGET_OS_IPHONE",
 					"-Wno-deprecated-register",
 				);
 				SDKROOT = iphoneos;
-<<<<<<< HEAD
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				TOP_SRC_DIR = "$(SRCROOT)/../../";
 				VALID_ARCHS = "x86_64 arm64 armv7";
 			};
 			name = Debug;
 		};
-=======
-				TOP_SRC_DIR = "$(PROJECT_FILE_PATH)/../../..";
-				VALID_ARCHS = "x86_64 arm64 armv7 i386";
-			};
-			name = Debug;
-		};
-		C5BD05132334B24F00E630F5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				COPY_PHASE_STRIP = NO;
-				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_OBJC_CALL_CXX_CDTORS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					V8_DEPRECATION_WARNINGS,
-					DISABLE_NACL,
-					CHROMIUM_BUILD,
-					"USE_LIBJPEG_TURBO=1",
-					ENABLE_INPUT_SPEECH,
-					DISCARDABLE_MEMORY_ALWAYS_SUPPORTED_NATIVELY,
-					SYSTEM_NATIVELY_SIGNALS_MEMORY_PRESSURE,
-					"ICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE",
-					"ENABLE_EGLIMAGE=1",
-					"CLD_VERSION=1",
-					"ENABLE_SPELLCHECK=1",
-					"DISABLE_FTP_SUPPORT=1",
-					__STDC_CONSTANT_MACROS,
-					__STDC_FORMAT_MACROS,
-					BASE_IMPLEMENTATION,
-					"DYNAMIC_ANNOTATIONS_ENABLED=1",
-					"WTF_USE_DYNAMIC_ANNOTATIONS=1",
-					NDEBUG,
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../",
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(TOP_SRC_DIR)",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				VALID_ARCHS = "arm64 x86_64 armv7 i386";
-				WARNING_CFLAGS = (
-					"-Wall",
-					"-Wendif-labels",
-					"-Wextra",
-					"-Wno-unused-parameter",
-					"-Wno-missing-field-initializers",
-					"-Wheader-hygiene",
-					"-Wno-char-subscripts",
-					"-Wno-unneeded-internal-declaration",
-					"-Wno-c++11-narrowing",
-				);
-			};
-			name = Debug;
-		};
-		C5BD05142334B24F00E630F5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_OBJC_CALL_CXX_CDTORS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					V8_DEPRECATION_WARNINGS,
-					DISABLE_NACL,
-					CHROMIUM_BUILD,
-					"USE_LIBJPEG_TURBO=1",
-					ENABLE_INPUT_SPEECH,
-					DISCARDABLE_MEMORY_ALWAYS_SUPPORTED_NATIVELY,
-					SYSTEM_NATIVELY_SIGNALS_MEMORY_PRESSURE,
-					"ICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE",
-					"ENABLE_EGLIMAGE=1",
-					"CLD_VERSION=1",
-					"ENABLE_SPELLCHECK=1",
-					"DISABLE_FTP_SUPPORT=1",
-					__STDC_CONSTANT_MACROS,
-					__STDC_FORMAT_MACROS,
-					BASE_IMPLEMENTATION,
-					NDEBUG,
-					NVALGRIND,
-					"DYNAMIC_ANNOTATIONS_ENABLED=0",
-					"NS_BLOCK_ASSERTIONS=1",
-					"_FORTIFY_SOURCE=2",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../",
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(TOP_SRC_DIR)",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				VALID_ARCHS = "arm64 x86_64 armv7 i386";
-				WARNING_CFLAGS = (
-					"-Wall",
-					"-Wendif-labels",
-					"-Wextra",
-					"-Wno-unused-parameter",
-					"-Wno-missing-field-initializers",
-					"-Wheader-hygiene",
-					"-Wno-char-subscripts",
-					"-Wno-unneeded-internal-declaration",
-					"-Wno-c++11-narrowing",
-				);
-			};
-			name = Release;
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3594,18 +2784,6 @@
 			defaultConfigurationIsVisible = 1;
 			defaultConfigurationName = Release;
 		};
-<<<<<<< HEAD
-=======
-		C5BD05122334B24F00E630F5 /* Build configuration list for PBXNativeTarget "base-macos" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C5BD05132334B24F00E630F5 /* Debug */,
-				C5BD05142334B24F00E630F5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 1;
-			defaultConfigurationName = Release;
-		};
->>>>>>> Merge "build-macos" branch with William
 /* End XCConfigurationList section */
 	};
 	rootObject = 9DCC1AA8493F25DC8559443F /* Project object */;

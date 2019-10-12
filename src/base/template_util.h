@@ -7,11 +7,7 @@
 
 #include <cstddef>  // For size_t.
 
-<<<<<<< HEAD
 #include "build_config.h"
-=======
-#include "config/build_config.h"
->>>>>>> Merge "build-macos" branch with William
 
 namespace base {
 

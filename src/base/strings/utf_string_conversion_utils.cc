@@ -4,7 +4,7 @@
 
 #include "base/strings/utf_string_conversion_utils.h"
 
-#include "base/third_party/icu/icu_utf.h"
+#include "icu/icu_utf.h" // Patch [LARPOUX]
 
 namespace base {
 

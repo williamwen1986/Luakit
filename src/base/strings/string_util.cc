@@ -23,11 +23,7 @@
 #include "base/memory/singleton.h"
 #include "base/strings/utf_string_conversion_utils.h"
 #include "base/strings/utf_string_conversions.h"
-<<<<<<< HEAD
 #include "icu/icu_utf.h" // Patch [LARPOUX]
-=======
-#include "base/third_party/icu/icu_utf.h"
->>>>>>> Merge "build-macos" branch with William
 #include "config/build_config.h"
 
 // Remove when this entire file is in the base namespace.
