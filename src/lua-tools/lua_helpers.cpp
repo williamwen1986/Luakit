@@ -49,71 +49,8 @@ static LuaErrorFun luaErrorFun = NULL;
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
-/*
-extern void  (lua_getfenv) (lua_State *L, int funcindex) // Patch [LARPOUX]
-{
-/ *local function getfenv(fn)
-  local i = 1
-  while true do
-    local name, val = debug.getupvalue(fn, i)
-    if name == "_ENV" then
-      return val
-    elseif not name then
-      break
-    end
-    i = i + 1
-  end
-end
-* /
-    for(int i = 1;; ++i)
-    {
-        const char* name = lua_getupvalue (L, funcindex, i);
-        if (name == NULL)
-            break;
-        if (strcmp(name, "_ENV" ) == 0)
-            break;
-        lua_pop (L, 1);
-    }
-}
 
-extern int   (lua_setfenv) (lua_State *L, int funcindex) // Patch [LARPOUX]
-{
-/ *
-local function setfenv(fn, env)
-  local i = 1
-  while true do
-    local name = debug.getupvalue(fn, i)
-    if name == "_ENV" then
-      debug.upvaluejoin(fn, i, (function()
-        return env
-      end), 1)
-      break
-    elseif not name then
-      break
-    end
 
-    i = i + 1
-  end
-
-  return fn
-end
-* /
-    for(int i = 1;; ++i)
-    {
-        const char* name = lua_getupvalue (L, funcindex, i);
-        if (name == NULL)
-            break;
-        if (strcmp(name, "_ENV" ) == 0)
-        {
-             lua_upvaluejoin(L, funcindex, i, 0, 0);
-             return 0;
-        }
-        lua_pop (L, 1);
-    }
-    return 0;
-}
-
-*/
 extern void pushWeakUserdataTable(lua_State *L)
 {
     BEGIN_STACK_MODIFY(L)
@@ -388,13 +325,13 @@ extern int luaInit(lua_State* L)
 */
     {
     
-        #if defined(OS_MACOSX) && (! defined(OS_IOS)) // Patch [LARPOUX]
-            std::string lua = "package.path = '" +packagePath+"/Contents/Resources/lua/?.lua'";
-        #elif defined(OS_ANDROID)
-            std::string lua = "package.path = '" + packagePath + "/?.lua'";
-        #else // IOS
-            std::string lua = "package.path = '" + packagePath+"/lua/?.lua'";
-        #endif
+        //#if defined(OS_MACOSX) && (! defined(OS_IOS)) // Patch [LARPOUX]
+              std::string lua = "package.path = '" + packagePath + "/lua/?.lua;" + packagePath + "/lua-extension/?.lua;?.lua'";
+        //#elif defined(OS_ANDROID)
+            //std::string lua = "package.path = '" + packagePath + "/lua/?.lua;" + packagePath + "/lua-extension/?.lua'";
+        //#else // IOS
+            //std::string lua = "package.path = '" + packagePath + "/lua/?.lua;" + packagePath + "/lua-extension/?.lua'";
+        //#endif
         luaL_dostring(L, lua.c_str());
     }
     return 0;

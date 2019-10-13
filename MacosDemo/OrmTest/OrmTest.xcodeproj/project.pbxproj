@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C528CFE6235321BB00639F64 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C528CFE5235321BB00639F64 /* lua */; };
+		C528CFE82353743300639F64 /* lua-extension in Resources */ = {isa = PBXBuildFile; fileRef = C528CFE72353743300639F64 /* lua-extension */; };
 		C558449D2351DD1900F553C3 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C558449A2351DCFA00F553C3 /* libluakit.a */; };
 		C591BD23232E1EF3003DF5E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C591BD22232E1EF3003DF5E1 /* AppDelegate.m */; };
 		C591BD28232E1EF5003DF5E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C591BD27232E1EF5003DF5E1 /* Assets.xcassets */; };
 		C591BD2B232E1EF5003DF5E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C591BD29232E1EF5003DF5E1 /* Main.storyboard */; };
 		C591BD37232E1F72003DF5E1 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C591BD35232E1F72003DF5E1 /* ViewController.mm */; };
 		C591BD38232E1F72003DF5E1 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C591BD36232E1F72003DF5E1 /* main.mm */; };
-		C5BD07772335347800E630F5 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C5BD07762335347800E630F5 /* lua */; };
 		C5BD077C233534B100E630F5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BD077B233534B000E630F5 /* libssl.a */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C528CFE5235321BB00639F64 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = OrmTest/lua; sourceTree = "<group>"; };
+		C528CFE72353743300639F64 /* lua-extension */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "lua-extension"; path = "../../extensions/orm/lua-extension"; sourceTree = "<group>"; };
 		C55844802351DCFA00F553C3 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../IOSFrameWork/luakit.xcodeproj; sourceTree = "<group>"; };
 		C591BD1E232E1EF3003DF5E1 /* OrmTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrmTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C591BD21232E1EF3003DF5E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -47,7 +50,6 @@
 		C591BD35232E1F72003DF5E1 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		C591BD36232E1F72003DF5E1 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		C591BE29232E2798003DF5E1 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = OrmTest/lua; sourceTree = "<group>"; };
-		C5BD07762335347800E630F5 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = OrmTest/lua; sourceTree = "<group>"; };
 		C5BD077B233534B000E630F5 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/macos10.14-Debug/libssl.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,8 +77,9 @@
 		C591BD15232E1EF3003DF5E1 = {
 			isa = PBXGroup;
 			children = (
+				C528CFE5235321BB00639F64 /* lua */,
+				C528CFE72353743300639F64 /* lua-extension */,
 				C55844802351DCFA00F553C3 /* luakit.xcodeproj */,
-				C5BD07762335347800E630F5 /* lua */,
 				C591BE29232E2798003DF5E1 /* lua */,
 				C591BD20232E1EF3003DF5E1 /* OrmTest */,
 				C591BD1F232E1EF3003DF5E1 /* Products */,
@@ -190,7 +193,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5BD07772335347800E630F5 /* lua in Resources */,
+				C528CFE6235321BB00639F64 /* lua in Resources */,
+				C528CFE82353743300639F64 /* lua-extension in Resources */,
 				C591BD28232E1EF5003DF5E1 /* Assets.xcassets in Resources */,
 				C591BD2B232E1EF5003DF5E1 /* Main.storyboard in Resources */,
 			);

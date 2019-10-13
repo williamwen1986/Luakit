@@ -41,8 +41,14 @@ void startLuakit(int argc, char * argv[])
         CommandLine::Init(argc, argv);
         std::string  bundlePath = [[[NSBundle mainBundle] bundlePath] cStringUsingEncoding:NSUTF8StringEncoding];
         //bundlePath += "/lua"; // Patch [LARPOUX]
-        if (luaGetPackagePath().size() == 0) {
-            luaSetPackagePath(bundlePath);
+        if (luaGetPackagePath().size() == 0)
+        {
+            #if defined(OS_MACOSX) && (! defined(OS_IOS)) // Patch [LARPOUX]
+                luaSetPackagePath(bundlePath + "/Contents/Resources");
+            #else // OS_IOS
+                luaSetPackagePath(bundlePath );
+            #endif
+
         }
         setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
         BusinessMainDelegate* delegate = new BusinessMainDelegate();

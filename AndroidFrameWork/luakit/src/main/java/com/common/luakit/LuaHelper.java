@@ -41,7 +41,9 @@ public class LuaHelper {
     }
 
     public static void startLuaKit(Context c){
-        String toPath = PathUtils.getDataDirectory(c)+"/lua";
+        String dataDir = PathUtils.getDataDirectory(c);
+
+        String toPath = dataDir + "/lua";
         File toFolder = new File(toPath);
         if (toFolder.exists()){
             deleteDirection(toFolder);
@@ -49,8 +51,19 @@ public class LuaHelper {
         toFolder = new File(toPath);
         toFolder.mkdir();
         copyFolderFromAssets(c, "lua",toPath);
+
+        String toPathext = dataDir + "/lua-extension";
+        File toFolderext = new File(toPathext);
+        if (toFolderext.exists()){
+            deleteDirection(toFolderext);
+        }
+        toFolderext = new File(toPath);
+        toFolderext.mkdir();
+        copyFolderFromAssets(c, "lua-extension", toPathext);
+
+
         Log.d("copyfile", "copyFolderFromAssets");
-        setPackagePath(toPath);
+        setPackagePath(dataDir);
         setDataDirectoryPath(PathUtils.getDataDirectory(c));
         setDatabaseDirectoryPath(PathUtils.getDatabaseDirectory(c));
         setCacheDirectoryPath(PathUtils.getCacheDirectory(c));

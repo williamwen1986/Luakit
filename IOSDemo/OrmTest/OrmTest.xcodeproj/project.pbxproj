@@ -13,9 +13,10 @@
 		2898CA0A20C694E200249775 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2898CA0920C694E200249775 /* Assets.xcassets */; };
 		2898CA0D20C694E200249775 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2898CA0B20C694E200249775 /* LaunchScreen.storyboard */; };
 		2898CA1020C694E200249775 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2898CA0F20C694E200249775 /* main.mm */; };
+		C528CFA62353175B00639F64 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C528CFA52353175B00639F64 /* lua */; };
+		C528D0162353762000639F64 /* lua-extension in Resources */ = {isa = PBXBuildFile; fileRef = C528D0152353762000639F64 /* lua-extension */; };
 		C54E8B7D234BC18700F04AD4 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8B7A234BC17000F04AD4 /* libluakit.a */; };
 		C5DAC5A92332AFF600AED9A4 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DAC5A82332AFF600AED9A4 /* libssl.a */; };
-		C5DAC5AB2332B05200AED9A4 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C5DAC5AA2332B05200AED9A4 /* lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,9 +47,10 @@
 		2898CA0C20C694E200249775 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2898CA0E20C694E200249775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2898CA0F20C694E200249775 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		C528CFA52353175B00639F64 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = OrmTest/lua; sourceTree = "<group>"; };
+		C528D0152353762000639F64 /* lua-extension */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "lua-extension"; path = "../../extensions/orm/lua-extension"; sourceTree = "<group>"; };
 		C54E8B67234BC17000F04AD4 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../IOSFrameWork/luakit.xcodeproj; sourceTree = "<group>"; };
 		C5DAC5A82332AFF600AED9A4 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/ios12.4-Debug/libssl.a"; sourceTree = "<group>"; };
-		C5DAC5AA2332B05200AED9A4 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = OrmTest/lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +69,9 @@
 		2898C9F420C694E100249775 = {
 			isa = PBXGroup;
 			children = (
+				C528CFA52353175B00639F64 /* lua */,
+				C528D0152353762000639F64 /* lua-extension */,
 				C54E8B67234BC17000F04AD4 /* luakit.xcodeproj */,
-				C5DAC5AA2332B05200AED9A4 /* lua */,
 				2898C9FF20C694E100249775 /* OrmTest */,
 				2898C9FE20C694E100249775 /* Products */,
 				2898CA2820C695C500249775 /* Frameworks */,
@@ -189,7 +192,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5DAC5AB2332B05200AED9A4 /* lua in Resources */,
+				C528CFA62353175B00639F64 /* lua in Resources */,
+				C528D0162353762000639F64 /* lua-extension in Resources */,
 				2898CA0D20C694E200249775 /* LaunchScreen.storyboard in Resources */,
 				2898CA0A20C694E200249775 /* Assets.xcassets in Resources */,
 				2898CA0820C694E100249775 /* Main.storyboard in Resources */,
