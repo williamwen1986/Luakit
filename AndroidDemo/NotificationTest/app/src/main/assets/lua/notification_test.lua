@@ -7,7 +7,7 @@ end
 local listener
 
 notification.testOnLOGICThread = function ()
-    listener = lua_notification.createListener(function (l)
+    lua_notification.createListener(function (l)
         listener = l
         listener:AddObserver(3,
             function (data)

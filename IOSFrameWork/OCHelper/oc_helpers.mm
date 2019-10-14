@@ -11,8 +11,7 @@ extern "C" {
 #endif
 #import "oc_callback.h"
 #include "common/notification_service.h"
-//#include "lua_notify.h" // Patch [LARPOUX]
-#include "luaconf.h"
+#include "lua_notify.h"
 #include "NotificationProxyObserver.h"
 #include "lua_helpers.h"
 
@@ -20,7 +19,7 @@ extern "C" {
 #include "base/memory/scoped_ptr.h"
 #include "common/business_main_delegate.h"
 #include "common/business_runtime.h"
-#include "lua-tools/lua_helpers.h" // Patch [LARPOUX]
+#include "lua_helpers.h"
 #include "base/thread_task_runner_handle.h"
 #include "common/base_lambda_support.h"
 
@@ -67,6 +66,9 @@ void pushDictObject(lua_State *L, NSDictionary *d)
 {
     lua_newtable(L);
     for (int i = 0; i<d.allKeys.count; i++) {
+        if([d.allKeys[i] isKindOfClass:[NSNull class]] || [d.allValues[i] isKindOfClass:[NSNull class]]){
+            continue;
+        }
         pushOneObject(L, d.allKeys[i]);
         pushOneObject(L, d.allValues[i]);
         lua_rawset(L, -3);
@@ -77,6 +79,9 @@ void pushArrayObject(lua_State *L, NSArray* a)
 {
     lua_newtable(L);
     for (int i = 0; i<a.count; i++) {
+        if([a[i] isKindOfClass:[NSNull class]]){
+            continue;
+        }
         pushOneObject(L, @(i+1));
         pushOneObject(L, a[i]);
         lua_rawset(L, -3);
@@ -88,28 +93,34 @@ void pushOneObject(lua_State *L, id object)
     if(!object){
         lua_pushnil(L);
     } else if([object isKindOfClass:[NSNumber class]]){
-        switch ([object objCType][0]) {
-            case _C_CHR:
-            case _C_SHT:
-            case _C_INT:
-            case _C_LNG:
-            case _C_LNG_LNG:
-                lua_pushinteger(L, [object integerValue]);
-                break;
-            case _C_USHT:
-            case _C_UINT:
-            case _C_ULNG:
-            case _C_ULNG_LNG:
-                lua_pushinteger(L, [object unsignedIntegerValue]);
-                break;
-            case _C_FLT:
-                lua_pushnumber(L, [object floatValue]);
-            case _C_DBL:
-                lua_pushnumber(L, [object doubleValue]);
-                break;
-            default:
-                lua_pushinteger(L, [object integerValue]);
-                break;
+        const char * objCClass = class_getName([object class]);
+        if (strcmp(objCClass, "__NSCFBoolean") == 0) {
+            BOOL b = [object boolValue];
+            lua_pushboolean(L, b);
+        } else {
+            switch ([object objCType][0]) {
+                case _C_CHR:
+                case _C_SHT:
+                case _C_INT:
+                case _C_LNG:
+                case _C_LNG_LNG:
+                    lua_pushinteger(L, [object integerValue]);
+                    break;
+                case _C_USHT:
+                case _C_UINT:
+                case _C_ULNG:
+                case _C_ULNG_LNG:
+                    lua_pushinteger(L, [object unsignedIntegerValue]);
+                    break;
+                case _C_FLT:
+                    lua_pushnumber(L, [object floatValue]);
+                case _C_DBL:
+                    lua_pushnumber(L, [object doubleValue]);
+                    break;
+                default:
+                    lua_pushinteger(L, [object integerValue]);
+                    break;
+            }
         }
     } else if([object isKindOfClass:[NSString class]]) {
         NSString * s = (NSString *)object;
@@ -183,7 +194,7 @@ id getOneObject(lua_State *L, int stackIndex)
         break;
         case LUA_TBOOLEAN:{
             int ret = lua_toboolean(L, stackIndex);
-            return @(ret);
+            return [NSNumber numberWithBool:ret];
         }
         break;
         case LUA_TNUMBER:{

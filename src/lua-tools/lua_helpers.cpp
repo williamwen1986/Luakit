@@ -317,23 +317,9 @@ extern int luaInit(lua_State* L)
     lua_setglobal(L, "print");
 #endif
     
-/* Patch [LARPOUX]
-    if (packagePath.length() > 0) {
-        std::string lua = "package.path = '" +packagePath+"/?.lua'";
-        luaL_dostring(L, lua.c_str());
-    } else
-*/
-    {
-    
-        //#if defined(OS_MACOSX) && (! defined(OS_IOS)) // Patch [LARPOUX]
-              std::string lua = "package.path = '" + packagePath + "/lua/?.lua;" + packagePath + "/lua-extension/?.lua;?.lua'";
-        //#elif defined(OS_ANDROID)
-            //std::string lua = "package.path = '" + packagePath + "/lua/?.lua;" + packagePath + "/lua-extension/?.lua'";
-        //#else // IOS
-            //std::string lua = "package.path = '" + packagePath + "/lua/?.lua;" + packagePath + "/lua-extension/?.lua'";
-        //#endif
-        luaL_dostring(L, lua.c_str());
-    }
+
+    std::string lua = "package.path = '" + packagePath + "/lua/?.lua;" + packagePath + "/lua-extension/?.lua;" +  packagePath + "/?.lua;;'";// Patch [LARPOUX]
+    luaL_dostring(L, lua.c_str());
     return 0;
 }
 

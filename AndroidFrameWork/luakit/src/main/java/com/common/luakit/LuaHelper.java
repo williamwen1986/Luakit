@@ -57,7 +57,7 @@ public class LuaHelper {
         if (toFolderext.exists()){
             deleteDirection(toFolderext);
         }
-        toFolderext = new File(toPath);
+        toFolderext = new File(toPathext);
         toFolderext.mkdir();
         copyFolderFromAssets(c, "lua-extension", toPathext);
 

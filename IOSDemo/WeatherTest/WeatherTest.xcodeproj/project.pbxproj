@@ -14,6 +14,7 @@
 		286F342720BFEEED000E64CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 286F342520BFEEED000E64CF /* LaunchScreen.storyboard */; };
 		286F342A20BFEEED000E64CF /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 286F342920BFEEED000E64CF /* main.mm */; };
 		2898C87720C562A400249775 /* WeatherManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2898C87620C562A400249775 /* WeatherManager.mm */; };
+		C528D10B23545C0800639F64 /* lua-extension in Resources */ = {isa = PBXBuildFile; fileRef = C528D10A23545C0800639F64 /* lua-extension */; };
 		C54E8BAD234BC34F00F04AD4 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8BAA234BC33500F04AD4 /* libluakit.a */; };
 		C5DAC5E12332B44C00AED9A4 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DAC5E02332B44C00AED9A4 /* libssl.a */; };
 		C5DAC5E32332B46C00AED9A4 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C5DAC5E22332B46C00AED9A4 /* lua */; };
@@ -49,6 +50,7 @@
 		286F342920BFEEED000E64CF /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		2898C87520C562A300249775 /* WeatherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherManager.h; sourceTree = "<group>"; };
 		2898C87620C562A400249775 /* WeatherManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WeatherManager.mm; sourceTree = "<group>"; };
+		C528D10A23545C0800639F64 /* lua-extension */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "lua-extension"; path = "../../extensions/orm/lua-extension"; sourceTree = "<group>"; };
 		C54E8B97234BC33500F04AD4 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../IOSFrameWork/luakit.xcodeproj; sourceTree = "<group>"; };
 		C5DAC5E02332B44C00AED9A4 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/ios12.4-Debug/libssl.a"; sourceTree = "<group>"; };
 		C5DAC5E22332B46C00AED9A4 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = WeatherTest/lua; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		286F340E20BFEEEC000E64CF = {
 			isa = PBXGroup;
 			children = (
+				C528D10A23545C0800639F64 /* lua-extension */,
 				C54E8B97234BC33500F04AD4 /* luakit.xcodeproj */,
 				C5DAC5E22332B46C00AED9A4 /* lua */,
 				286F341920BFEEEC000E64CF /* WeatherTest */,
@@ -194,6 +197,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C528D10B23545C0800639F64 /* lua-extension in Resources */,
 				C5DAC5E32332B46C00AED9A4 /* lua in Resources */,
 				286F342720BFEEED000E64CF /* LaunchScreen.storyboard in Resources */,
 				286F342420BFEEED000E64CF /* Assets.xcassets in Resources */,
