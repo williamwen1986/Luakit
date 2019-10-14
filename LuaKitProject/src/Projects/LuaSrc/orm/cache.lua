@@ -124,7 +124,7 @@ _cache = {
                 kv[t.__primary_key.name] = rowId
             end
             _cache._saveKVtoCache(tablename,kv)
-            return
+            return result,rowId
         end
     end,
 

@@ -100,8 +100,12 @@ function Query(own_table, data)
             if needPrimaryKey then
                 local result,rowId = lua_thread.postToThreadSync(self.own_table.cacheThreadId,"orm.cache","insert",self.own_table.__tablename__,kv,needPrimaryKey)
                 self:setPrimaryKey(needPrimaryKey,rowId)
+                return rowId
             else
                 lua_thread.postToThread(self.own_table.cacheThreadId,"orm.cache","insert",self.own_table.__tablename__,kv,needPrimaryKey)
+                if self.own_table.__primary_key then
+                    return self[self.own_table.__primary_key.name]
+                end
             end
 
         end,
@@ -171,7 +175,7 @@ function Query(own_table, data)
 
         -- save row
         save = function (self)
-            self:_add()
+            return self:_add()
         end,
 
         -- delete row
