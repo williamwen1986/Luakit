@@ -124,7 +124,7 @@ _cache = {
                 kv[t.__primary_key.name] = rowId
             end
             _cache._saveKVtoCache(tablename,kv)
-            return
+            return result,rowId
         end
     end,
 
@@ -194,7 +194,8 @@ _cache = {
 
     batchInsert = function(tablename, params)
         local saveParams = {}
-        for _, param in ipairs(params) do
+        local allNoNeedPrimaryKey = true
+        for i, param in ipairs(params) do
             local kv = param["kv"];
             local needPrimaryKey = param["needPrimaryKey"];
             local insert , bindValues = _cache._getInsertSqlAndBindValues(tablename, kv, needPrimaryKey)
@@ -202,11 +203,17 @@ _cache = {
             saveParam["insert"] = insert
             saveParam["bindValues"] = bindValues
             saveParam["needPrimaryKey"] = needPrimaryKey
+            if needPrimaryKey then
+                allNoNeedPrimaryKey = false
+            end
             table.insert(saveParams, saveParam)
         end
-
-        local result = lua_thread.postToThreadSync(_dbThreadId,"orm.model","batchInsert",saveParams)
-
+        local result = {}
+        if allNoNeedPrimaryKey then
+            lua_thread.postToThread(_dbThreadId,"orm.model","batchInsert",saveParams)
+        else 
+            result = lua_thread.postToThreadSync(_dbThreadId,"orm.model","batchInsert",saveParams)
+        end
         for i, param in ipairs(params) do
             local kv = param["kv"];
             local needPrimaryKey = param["needPrimaryKey"];
@@ -221,7 +228,6 @@ _cache = {
                 _cache._saveKVtoCache(tablename,kv)
             end
         end
-
         return result
     end,
 
@@ -253,6 +259,7 @@ _cache = {
             for _,v in ipairs(results) do
                 table.insert(ids, v[1])
             end
+
             if #ids > 0 then
                 local s = require('orm.class.select')(t)
                 s:primaryKey(ids)
@@ -365,7 +372,12 @@ _cache = {
         end
     end,
 
-
+    deleteAll = function (tablename)
+        Table(tablename)
+        local sql = "DELETE from "..tablename
+        lua_thread.postToThread(_dbThreadId,"orm.model","execute",sql)
+        _instanceCache[tablename] = nil
+    end,
 
     delete = function (tablename, whereSql, bindValues)
         local t = Table(tablename)

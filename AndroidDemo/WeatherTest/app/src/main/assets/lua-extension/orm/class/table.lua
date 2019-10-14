@@ -29,6 +29,7 @@ Table = {
 function  Table:isTableExist(tableName)
     local sql = "SELECT tbl_name FROM sqlite_master WHERE type='table' AND tbl_name=?"
     local result = lua_thread.postToThreadSync(self.cacheThreadId,"orm.cache","query",sql,{tableName})
+
     if result and #result > 0 then
         return true
     else 
@@ -183,8 +184,8 @@ function Table.addTableInfoOnLogicThread(params,callback)
 end
 
 function Table.saveOrm(params,callback)
-    local function c()
-        callback(nil)
+    local function c(result)
+        callback(result)
     end
     local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
     lua_thread.postToThread(threadId,"orm.class.table","saveOrmOnLogicThread",params, c);
@@ -195,25 +196,35 @@ function Table.saveOrmOnLogicThread(params,callback)
     local orm = params.args
     local t = Table(tableName)
     local data = t(orm)
-    data:save();
-    callback();
+    local result = data:save();
+    callback(result);
 end
 
 function Table.batchSaveOrms(params,callback)
-    local function c()
-        callback(nil)
-    end
-    local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
-    lua_thread.postToThread(threadId,"orm.class.table","batchSaveOrmsOnLogicThread",params, c);
-end
-
-function Table.batchSaveOrmsOnLogicThread(params,callback)
     local tableName = params.name
     local data = params.args
     local t = Table(tableName)
-    local list = require('orm.class.query_list')(t,data)
-    list:save()
-    callback();
+    -- print("time -1 ".. require("socket").gettime())
+    -- local list = require('orm.class.query_list')(t,data)
+    for _, d in pairs(data) do
+        local kv = d
+        local needPrimaryKey = false
+        if t.__primary_key and t.__primary_key.field.__type__ == "integer" and (not d[t.__primary_key.name])   then
+            needPrimaryKey = true
+        end
+        local param = {}
+        param["kv"] = kv
+        param["needPrimaryKey"] = needPrimaryKey
+        table.insert(params, param)
+    end
+    -- print("time 1 ".. require("socket").gettime())
+    lua_thread.postToThread(t.cacheThreadId,"orm.cache","batchInsert",t.__tablename__,params)
+    -- print("time -2 ".. require("socket").gettime())
+    callback(nil);
+end
+
+function Table.batchSaveOrmsOnLogicThread(params,callback)
+    
 end
 
 function Table.prepareQuery(t,params)
@@ -305,8 +316,12 @@ function Table.getAllByParamsOnLogicThread(params,callback)
     local data = params.args
     local t = Table(tableName)
     local selectItem = Table.prepareQuery(t,data)
-    local d = selectItem:all():getPureData()
-    callback(d)
+    local result = selectItem:all()
+    if result then
+        callback(result:getPureData())
+    else
+        callback(nil)
+    end
 end
 
 function Table.getFirstByParams(params,callback)
@@ -322,7 +337,13 @@ function Table.getFirstOnLogicThread(params,callback)
     local data = params.args
     local t = Table(tableName)
     local selectItem = Table.prepareQuery(t,data)
-    callback(selectItem:first():getPureData())
+    local result = selectItem:first()
+    if result then
+        callback(result:getPureData())
+    else
+        callback(nil)
+    end
+
 end
 
 function Table.deleteByParams(params,callback)
@@ -506,10 +527,11 @@ function Table.new(self, tableName)
         if coltype[2].to then
             coltype[2].to = _G.All_Tables[coltype[2].to]
         end
+        local typeStr = coltype[1]
         coltype = fields[coltype[1]](coltype[2])
         coltype.name = colname
         coltype.__table__ = Table_instance
-
+        coltype.typeStr = typeStr
         table.insert(Table_instance.__colnames, coltype)
         if coltype.settings.foreign_key then
             table.insert(Table_instance.__foreign_keys, coltype)
@@ -518,7 +540,6 @@ function Table.new(self, tableName)
             Table_instance.__primary_key = coltype
         end
     end
-
     Table_instance.args = args
     Table_instance.args.__tablename__ =self.__tablename__ 
     Table_instance.args.__dbname__ =self.__dbname__ 
@@ -538,7 +559,6 @@ function Table.new(self, tableName)
         self:create_table(Table_instance)
         self:createIndexes(Table_instance)
     end
-
     return Table_instance
 end
 

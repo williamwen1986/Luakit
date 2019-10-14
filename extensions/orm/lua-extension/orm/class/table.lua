@@ -184,8 +184,8 @@ function Table.addTableInfoOnLogicThread(params,callback)
 end
 
 function Table.saveOrm(params,callback)
-    local function c()
-        callback(nil)
+    local function c(result)
+        callback(result)
     end
     local threadId = lua_thread.createThread(BusinessThreadLOGIC,"OrmsThread")
     lua_thread.postToThread(threadId,"orm.class.table","saveOrmOnLogicThread",params, c);
@@ -196,8 +196,8 @@ function Table.saveOrmOnLogicThread(params,callback)
     local orm = params.args
     local t = Table(tableName)
     local data = t(orm)
-    data:save();
-    callback();
+    local result = data:save();
+    callback(result);
 end
 
 function Table.batchSaveOrms(params,callback)
@@ -343,6 +343,7 @@ function Table.getFirstOnLogicThread(params,callback)
     else
         callback(nil)
     end
+
 end
 
 function Table.deleteByParams(params,callback)
