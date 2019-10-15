@@ -13,7 +13,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "config/build_config.h"
+#include "build_config.h"
 
 #if defined(OS_WIN)
 #include <windows.h>

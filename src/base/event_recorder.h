@@ -7,7 +7,7 @@
 
 #include "base/base_export.h"
 #include "base/basictypes.h"
-#include "config/build_config.h"
+#include "build_config.h"
 
 #if defined(OS_WIN)
 #include <stdio.h>

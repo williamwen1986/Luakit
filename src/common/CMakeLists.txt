@@ -83,5 +83,5 @@ include_directories(
                     ${PROJECT_SOURCE_DIR}/../../extensions/language
                     ${PROJECT_SOURCE_DIR}/../jni
                     ${PROJECT_SOURCE_DIR}/../lua-tools
-                    ${PROJECT_SOURCE_DIR}/../../config
+                    ${PROJECT_SOURCE_DIR}/../../include
 )

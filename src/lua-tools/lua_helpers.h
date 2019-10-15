@@ -8,6 +8,26 @@ extern "C" {
 #include <string>
 
 typedef void (*LuaErrorFun)(const char *);
+//typedef void (*LuaOpenFun)();
+typedef enum
+{
+    GPL,
+    LGPL,
+    MIT,
+    APACHE,
+    MPL2,
+    PROPRIETARY
+} tLicense;
+
+class LuakitExtension
+{
+        public:
+            tLicense    license;
+            char*       extensionName;
+            virtual void LuaOpen(lua_State* L) = 0;
+};
+
+extern LuakitExtension* ExtensionsList [];
 
 
 #define BEGIN_STACK_MODIFY(L)    int __startStackIndex = lua_gettop((L));

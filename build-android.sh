@@ -111,7 +111,7 @@ cd third-party/openssl-1.1.1c
 checkError
 cd ../..
 
-cd src/jni
+cd AndroidFramework
 ./build-android.sh 
 checkError
 cd ../..

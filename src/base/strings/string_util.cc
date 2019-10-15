@@ -24,7 +24,7 @@
 #include "base/strings/utf_string_conversion_utils.h"
 #include "base/strings/utf_string_conversions.h"
 #include "icu/icu_utf.h" // Patch [LARPOUX]
-#include "config/build_config.h"
+#include "build_config.h"
 
 // Remove when this entire file is in the base namespace.
 using base::char16;

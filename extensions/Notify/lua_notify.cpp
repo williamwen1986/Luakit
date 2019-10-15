@@ -8,6 +8,20 @@ extern "C" {
 #include "common/base_lambda_support.h"
 #include "serialize.h"
 
+class NotifyExtension : LuakitExtension
+{
+public:
+    /* ctor */ NotifyExtension() 
+    {
+        license = MIT;
+        extensionName = "Notify";
+    }
+    virtual void LuaOpen(lua_State* L)
+    {
+        luaopen_notification(L);
+    }
+} TheNotifyExtension;
+
 static int postNotification(lua_State *L);
 static int createListener(lua_State *L);
 static int AddObserver(lua_State *L);

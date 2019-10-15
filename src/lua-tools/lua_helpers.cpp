@@ -4,21 +4,22 @@ extern "C" {
 #include "lauxlib.h"
 #include "lualib.h"
 #include "lsqlite3.h"
-#include "lua_cjson.h"
-#include "mobdebug.h"
+//#include "lua_cjson.h"
+//#include "mobdebug.h"
 #ifdef __cplusplus
 }
 #endif
 #include "lua_helpers.h"
-#include "lua_http.h"
-#include "lua_async_socket.h"
-#include "lua_timer.h"
-#include "lua_thread.h"
+//#include "lua_http.h"
+//#include "lua_async_socket.h"
+//#include "lua_timer.h"
+//#include "lua_thread.h"
 #include "base/path_service.h"
 #include "base/files/file_path.h"
-#include "lua_file.h"
-#include "lua_notify.h"
-#include "lua_language.h"
+#include "base/logging.h"
+//#include "lua_file.h"
+//#include "lua_notify.h"
+//#include "lua_language.h"
 #include "LuakitLoader.h"
 #include "xxtea.h"
 
@@ -50,6 +51,7 @@ static LuaErrorFun luaErrorFun = NULL;
 #include "lauxlib.h"
 #include "lualib.h"
 
+#define LUA_CALLBACK_METATABLE_NAME "lua_callback"
 
 extern void pushWeakUserdataTable(lua_State *L)
 {
@@ -286,18 +288,22 @@ extern int luaInit(lua_State* L)
     lua_atpanic(L, &lua_panic);
     // lua_aterr(L, &lua_err); // Patch [LARPOUX]
     luaL_openlibs(L);
-    luaopen_file(L);
-    luaopen_mobdebug_scripts(L);
+    //luaopen_file(L);
+    //luaopen_mobdebug_scripts(L);
     luaopen_lsqlite3(L);
-    luaopen_http(L);
-    luaopen_callback(L);
-    luaopen_thread(L);
-    luaopen_timer(L);
-    luaopen_language(L);
-    luaopen_cjson(L);
-    luaopen_cjson_safe(L);
-    luaopen_async_socket(L);
-    luaopen_notification(L);
+    //luaopen_http(L);
+    //luaopen_callback(L);
+    //luaopen_thread(L);
+    //luaopen_timer(L);
+    //luaopen_language(L);
+    //luaopen_cjson(L);
+    //luaopen_cjson_safe(L);
+    //luaopen_async_socket(L);
+    //luaopen_notification(L);
+    for (int i = 0; ExtensionsList[i] != NULL; ++i)
+    {
+        ExtensionsList[i] -> LuaOpen(L);
+    }
     addLuaLoader(L,luakit_loader);
     std::string path = "";
     #if defined(OS_IOS) || defined(OS_MACOSX) // Patch [LARPOUX]

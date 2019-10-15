@@ -222,9 +222,9 @@ include_directories(
                     ${PROJECT_SOURCE_DIR}/../
                     ${PROJECT_SOURCE_DIR}/../../
                     ${PROJECT_SOURCE_DIR}/../base/android/
-                    ${PROJECT_SOURCE_DIR}/../../extensions/timer/
+                    #####${PROJECT_SOURCE_DIR}/../../extensions/timer/
                     ${PROJECT_SOURCE_DIR}/../../third-party/
                     ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src/
-                    ${PROJECT_SOURCE_DIR}/../../config
+                    ${PROJECT_SOURCE_DIR}/../../include
 
 )

@@ -37,6 +37,6 @@ include_directories(
                 ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src
                 ${PROJECT_SOURCE_DIR}/../lua-tools
                 ${PROJECT_SOURCE_DIR}/../../third-party/curl/include
-                ${PROJECT_SOURCE_DIR}/../../config
+                ${PROJECT_SOURCE_DIR}/../../include
                 ${PROJECT_SOURCE_DIR}/../../third-party
 )

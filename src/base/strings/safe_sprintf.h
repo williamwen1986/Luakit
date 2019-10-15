@@ -5,7 +5,7 @@
 #ifndef BASE_STRINGS_SAFE_SPRINTF_H_
 #define BASE_STRINGS_SAFE_SPRINTF_H_
 
-#include "config/build_config.h"
+#include "build_config.h"
 
 #include <stddef.h>
 #include <stdint.h>

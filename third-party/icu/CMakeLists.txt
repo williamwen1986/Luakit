@@ -30,5 +30,5 @@ add_library(
 include_directories(
                 ${PROJECT_SOURCE_DIR}
                 ${PROJECT_SOURCE_DIR}/..
-                ${PROJECT_SOURCE_DIR}/../../config
+                ${PROJECT_SOURCE_DIR}/../../include
 )

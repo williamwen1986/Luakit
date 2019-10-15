@@ -6,60 +6,58 @@
 cmake_minimum_required(VERSION 3.4.1)
 project(luakit)
 
-file(GLOB ALL_SRCS
  
-	"${PROJECT_SOURCE_DIR}/AsyncSocket/*.cpp"
-	"${PROJECT_SOURCE_DIR}/AsyncSocket/*.c"
-	"${PROJECT_SOURCE_DIR}/AsyncSocket/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/AsyncSocket/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/AsyncSocket" ${lib_build_DIR} )
+set_target_properties( AsyncSocket PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libAsyncSocket.a)
 
-	"${PROJECT_SOURCE_DIR}/debug/*.cpp"
-	"${PROJECT_SOURCE_DIR}/debug/*.c"
-	"${PROJECT_SOURCE_DIR}/debug/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/debug/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/debug" ${lib_build_DIR} )
+set_target_properties( debug PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libdebug.a)
 
-	"${PROJECT_SOURCE_DIR}/File/*.cpp"
-	"${PROJECT_SOURCE_DIR}/File/*.c"
-	"${PROJECT_SOURCE_DIR}/File/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/File/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/File" ${lib_build_DIR} )
+set_target_properties( File PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libFile.a)
 
-	"${PROJECT_SOURCE_DIR}/HTTP/*.cpp"
-	"${PROJECT_SOURCE_DIR}/HTTP/*.c"
-	"${PROJECT_SOURCE_DIR}/HTTP/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/HTTP/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/HTTP" ${lib_build_DIR} )
+set_target_properties( HTTP PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libHTTP.a)
 
-	"${PROJECT_SOURCE_DIR}/language/*.cpp"
-	"${PROJECT_SOURCE_DIR}/language/*.c"
-	"${PROJECT_SOURCE_DIR}/language/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/language/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/language" ${lib_build_DIR} )
+set_target_properties( language PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/liblanguage.a)
 
-	"${PROJECT_SOURCE_DIR}/lua-cjson-master/*.cpp"
-	"${PROJECT_SOURCE_DIR}/lua-cjson-master/*.c"
-	"${PROJECT_SOURCE_DIR}/lua-cjson-master/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/lua-cjson-master/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/lua-cjson-master" ${lib_build_DIR} )
+set_target_properties( lua_cjson PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/liblua_cjson.a)
 
-	"${PROJECT_SOURCE_DIR}/luasocket/*.cpp"
-	"${PROJECT_SOURCE_DIR}/luasocket/*.c"
-	"${PROJECT_SOURCE_DIR}/luasocket/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/Notify/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/Notify" ${lib_build_DIR} )
+set_target_properties( Notify PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libNotify.a)
 
-	"${PROJECT_SOURCE_DIR}/Notify/*.cpp"
-	"${PROJECT_SOURCE_DIR}/Notify/*.c"
-	"${PROJECT_SOURCE_DIR}/Notify/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/luasocket/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/luasocket" ${lib_build_DIR} )
+set_target_properties( luasocket PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libluasocket.a)
 
-	"${PROJECT_SOURCE_DIR}/thread/*.cpp"
-	"${PROJECT_SOURCE_DIR}/thread/*.c"
-	"${PROJECT_SOURCE_DIR}/thread/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/thread/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/thread" ${lib_build_DIR} )
+set_target_properties( thread PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libthread.a)
 
-	"${PROJECT_SOURCE_DIR}/timer/*.cpp"
-	"${PROJECT_SOURCE_DIR}/timer/*.c"
-	"${PROJECT_SOURCE_DIR}/timer/*.cc"
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/timer/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/timer" ${lib_build_DIR} )
+set_target_properties( timer PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libttimer.a)
 
-)
 
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*lua_timer.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*_win.cc$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*shell.c$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*test.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*mock_server.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*tests.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*_ios.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*html_utils.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*wwhttpapi.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*authhttpapi.cpp$")
 
 add_library(
                 # Sets the name of the library.
@@ -68,29 +66,19 @@ add_library(
                 # Sets the library as a shared library.
                 STATIC
 
-                ${ALL_SRCS}
+                dummy.c
 )
 
-# Specifies a path to native header files.
-include_directories(
-                    ${PROJECT_SOURCE_DIR}/..
-                    ${PROJECT_SOURCE_DIR}/lua-cjson-master
-                    ${PROJECT_SOURCE_DIR}/debug
-                    ${PROJECT_SOURCE_DIR}/HTTP
-                    ${PROJECT_SOURCE_DIR}/AsyncSocket
-                    ${PROJECT_SOURCE_DIR}/timer
-                    ${PROJECT_SOURCE_DIR}/thread
-                    ${PROJECT_SOURCE_DIR}/luasocket
-                    ${PROJECT_SOURCE_DIR}/File
-                    ${PROJECT_SOURCE_DIR}/Notify
-		    ${PROJECT_SOURCE_DIR}/../third-party
-                    ${PROJECT_SOURCE_DIR}/../third-party/lua-5.1.5/src
-                    ${PROJECT_SOURCE_DIR}/../third-party/curl/include
-		    ${PROJECT_SOURCE_DIR}/../src
-		    ${PROJECT_SOURCE_DIR}/../src/jni
-		    ${PROJECT_SOURCE_DIR}/../src/lua-tools
-		    ${PROJECT_SOURCE_DIR}/../src/network
-		    ${PROJECT_SOURCE_DIR}/../src/network/net
-		    ${PROJECT_SOURCE_DIR}/../src/common
-		    ${PROJECT_SOURCE_DIR}/../config
+target_link_libraries( extensions
+	AsyncSocket
+	debug
+	File
+	HTTP
+	language
+	lua_cjson
+	luasocket
+	Notify
+	thread
+	timer
 )
+

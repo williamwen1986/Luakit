@@ -15,7 +15,7 @@
 #include "base/basictypes.h"
 #include "base/files/file_path.h"
 #include "base/process/process.h"
-#include "config/build_config.h"
+#include "build_config.h"
 
 #if defined(OS_WIN)
 #include <windows.h>

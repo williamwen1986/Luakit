@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "config/build_config.h"
+#include "build_config.h"
 
 #if defined(COMPILER_MSVC)
 // MSDN says to #include <intrin.h>, but that breaks the VS2005 build.
