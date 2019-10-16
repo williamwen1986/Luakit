@@ -24,7 +24,7 @@ class LuakitExtension
         public:
             tLicense    license;
             char*       extensionName;
-            virtual void LuaOpen(lua_State* L) = 0;
+            virtual void LuaOpen(lua_State* L);//  = 0;
 };
 
 extern LuakitExtension* ExtensionsList [];

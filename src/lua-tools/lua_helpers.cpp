@@ -53,6 +53,10 @@ static LuaErrorFun luaErrorFun = NULL;
 
 #define LUA_CALLBACK_METATABLE_NAME "lua_callback"
 
+void LuakitExtension::LuaOpen(lua_State* L)
+{
+}
+
 extern void pushWeakUserdataTable(lua_State *L)
 {
     BEGIN_STACK_MODIFY(L)

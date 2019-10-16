@@ -29,7 +29,7 @@ android {
 
     sourceSets{
         main{
-            main.jni.srcDirs     = [ '../../../src/jni' ]
+            main.jni.srcDirs     = [ '.' ]
         }
     }
 

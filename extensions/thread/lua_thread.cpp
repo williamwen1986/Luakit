@@ -44,6 +44,23 @@ static const struct luaL_Reg functions[] = {
     {NULL, NULL}
 };
 
+
+class ThreadExtension : LuakitExtension
+{
+public:
+    /* ctor */ ThreadExtension()
+    {
+        license = MIT;
+        extensionName = "thread";
+    }
+    virtual void LuaOpen(lua_State* L)
+    {
+        luaopen_thread(L);
+        luaopen_callback(L);
+    }
+} TheThreadExtension;
+
+
 static int unpack(lua_State *L){
     return seri_unpack(L);
 }

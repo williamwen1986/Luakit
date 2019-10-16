@@ -37,7 +37,7 @@ public class LuaHelper {
 
     static
     {
-        System.loadLibrary("luaFramework");
+        System.loadLibrary("luakitApp");
     }
 
     public static void startLuaKit(Context c){

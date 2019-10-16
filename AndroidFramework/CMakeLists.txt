@@ -8,7 +8,7 @@ set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC -llog -lz -lc"
 
 add_library( luaFramework 
         STATIC 
-        dummy.c
+        dummy.cpp
 )
 
 link_directories(${PROJECT_SOURCE_DIR}/../libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE})
@@ -97,32 +97,33 @@ target_link_libraries(luaFramework
                 crypto
                 #Notify
                 third_party
-                jni
                 lua
+                jni
 )
 
 # Specifies a path to native header files.
 include_directories(
                     $ENV{OUTPUT_DIR}/
-                    ${PROJECT_SOURCE_DIR}/../
-		    ${PROJECT_SOURCE_DIR}/../jni
-                    ${PROJECT_SOURCE_DIR}/../common/
-                    ${PROJECT_SOURCE_DIR}/../../third-party
-                    ${PROJECT_SOURCE_DIR}/../../third-party/openssl/include/
-                    ${PROJECT_SOURCE_DIR}/../../third-party/curl/include
-                    ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src
-                    ${PROJECT_SOURCE_DIR}/../lua-tools
-                    ${PROJECT_SOURCE_DIR}/../../extensions/lua-cjson-master
-                    ${PROJECT_SOURCE_DIR}/../../extensions/debug
-                    ${PROJECT_SOURCE_DIR}/../../extensions/HTTP
-                    ${PROJECT_SOURCE_DIR}/../../extensions/AsyncSocket
-                    ${PROJECT_SOURCE_DIR}/../../extensions/timer
-                    ${PROJECT_SOURCE_DIR}/../../extensions/thread
-                    ${PROJECT_SOURCE_DIR}/../../extensions/File
-                    ${PROJECT_SOURCE_DIR}/../../extensions/Notify
-                    ${PROJECT_SOURCE_DIR}/../../extensions/language
-                    ${PROJECT_SOURCE_DIR}/../../third-party/sqlite-amalgamation-3290000
-                    ${PROJECT_SOURCE_DIR}/../../third-party/toluapp/include
-                    ${PROJECT_SOURCE_DIR}/../../include
+                    ${PROJECT_SOURCE_DIR}/
+		    ${PROJECT_SOURCE_DIR}/jni
+                    ${PROJECT_SOURCE_DIR}/../src
+                    ${PROJECT_SOURCE_DIR}/../src/common/
+                    ${PROJECT_SOURCE_DIR}/../third-party
+                    ${PROJECT_SOURCE_DIR}/../third-party/openssl/include/
+                    ${PROJECT_SOURCE_DIR}/../third-party/curl/include
+                    ${PROJECT_SOURCE_DIR}/../third-party/lua-5.1.5/src
+                    ${PROJECT_SOURCE_DIR}/../src/lua-tools
+                    ${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master
+                    ${PROJECT_SOURCE_DIR}/../extensions/debug
+                    ${PROJECT_SOURCE_DIR}/../extensions/HTTP
+                    ${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket
+                    ${PROJECT_SOURCE_DIR}/../extensions/timer
+                    ${PROJECT_SOURCE_DIR}/../extensions/thread
+                    ${PROJECT_SOURCE_DIR}/../extensions/File
+                    ${PROJECT_SOURCE_DIR}/../extensions/Notify
+                    ${PROJECT_SOURCE_DIR}/../extensions/language
+                    ${PROJECT_SOURCE_DIR}/../third-party/sqlite-amalgamation-3290000
+                    ${PROJECT_SOURCE_DIR}/../third-party/toluapp/include
+                    ${PROJECT_SOURCE_DIR}/../include
 
 )
