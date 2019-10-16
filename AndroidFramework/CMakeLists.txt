@@ -95,7 +95,9 @@ target_link_libraries(luaFramework
                 sqlite
                 ssl
                 crypto
-                #Notify
+                #timer
+                #lua_cjson
+                #debug
                 third_party
                 lua
                 jni

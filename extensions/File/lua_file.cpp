@@ -21,6 +21,24 @@ static int IsDirectoryEmpty(lua_State *L);
 static int CreateDirectory(lua_State *L);
 static int GetFileSize(lua_State *L);
 
+
+class FileExtension : LuakitExtension
+{
+public:
+    /* ctor */ FileExtension()
+    {
+        license = MIT;
+        extensionName = "File";
+        needChromium = true;
+    }
+    virtual void LuaOpen(lua_State* L)
+    {
+        luaopen_file(L);
+    }
+} TheFileExtension;
+
+
+
 static int ComputeDirectorySize(lua_State *L)
 {
     const char * path = luaL_checkstring(L, 1);

@@ -28,7 +28,7 @@ list(FILTER ALL_SRCS EXCLUDE REGEX ".*authhttpapi.cpp$")
 
 add_library(
                 # Sets the name of the library.
-                debug
+                Debug
 
                 # Sets the library as a shared library.
                 STATIC

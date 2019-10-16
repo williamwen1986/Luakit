@@ -10,6 +10,24 @@ extern "C" {
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread_restrictions.h"
 
+
+class HTTPExtension : LuakitExtension
+{
+public:
+    /* ctor */ HTTPExtension()
+    {
+        license = MIT;
+        extensionName = "HTTP";
+        needChromium = true;
+    }
+    virtual void LuaOpen(lua_State* L)
+    {
+        luaopen_http(L);
+    }
+} TheHTTPExtension;
+
+
+
 static scoped_refptr<network::HttpCgiTaskDispatcher> dispatcher = NULL;
 static int request(lua_State *L);
 

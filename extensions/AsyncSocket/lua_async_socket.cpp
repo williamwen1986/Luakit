@@ -17,6 +17,24 @@ static int write(lua_State *L);
 static int disconnect(lua_State *L);
 static int isConnected(lua_State *L);
 
+
+class AsyncSocketExtension : LuakitExtension
+{
+public:
+    /* ctor */ AsyncSocketExtension()
+    {
+        license = MIT;
+        extensionName = "AsyncSocket";
+        needChromium = true;
+    }
+    virtual void LuaOpen(lua_State* L)
+    {
+        luaopen_async_socket(L);
+    }
+} TheAsyncSocketExtension;
+
+
+
 static int create(lua_State *L)
 {
     BEGIN_STACK_MODIFY(L);

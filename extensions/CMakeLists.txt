@@ -15,7 +15,7 @@ set_target_properties( AsyncSocket PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/debug/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/debug" ${lib_build_DIR} )
-set_target_properties( debug PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libdebug.a)
+set_target_properties( Debug PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libdebug.a)
 
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/File/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
@@ -71,7 +71,7 @@ add_library(
 
 target_link_libraries( extensions
 	AsyncSocket
-	debug
+	Debug
 	File
 	HTTP
 	language

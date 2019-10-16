@@ -38,6 +38,24 @@ enum LanguageType {
     THAI,
 };
 
+
+class LuaLanguageExtension : LuakitExtension
+{
+public:
+    /* ctor */ LuaLanguageExtension()
+    {
+        license = MIT;
+        extensionName = "LuaLanguage";
+        needChromium = true;
+    }
+    virtual void LuaOpen(lua_State* L)
+    {
+        luaopen_language(L);
+    }
+} TheLuaLanguageExtension;
+
+
+
 LanguageType getLanguageTypeByISO2(const char* code)
 {
     // this function is used by all platforms to get system language

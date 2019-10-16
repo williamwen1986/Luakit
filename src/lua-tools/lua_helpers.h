@@ -24,6 +24,7 @@ class LuakitExtension
         public:
             tLicense    license;
             char*       extensionName;
+            bool        needChromium;
             virtual void LuaOpen(lua_State* L);//  = 0;
 };
 

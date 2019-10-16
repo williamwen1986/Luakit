@@ -9,6 +9,24 @@ extern "C" {
 #include "lua_helpers.h"
 #include "base/timer/timer.h"
 
+
+class TimerExtension : LuakitExtension
+{
+public:
+    /* ctor */ TimerExtension()
+    {
+        license = MIT;
+        extensionName = "Timer";
+        needChromium = true;
+    }
+    virtual void LuaOpen(lua_State* L)
+    {
+        luaopen_timer(L);
+    }
+} TheTimerExtension;
+
+
+
 static int __newindex(lua_State *L)
 {
     BEGIN_STACK_MODIFY(L);

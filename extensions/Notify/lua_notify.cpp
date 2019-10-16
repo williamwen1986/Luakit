@@ -15,6 +15,7 @@ public:
     {
         license = MIT;
         extensionName = "Notify";
+        needChromium = true;
     }
     virtual void LuaOpen(lua_State* L)
     {

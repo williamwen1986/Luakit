@@ -1,1 +1,1 @@
-static int dummy; // just to satisfy this stupid ios linker
+static int dummy; // just to satisfy this stupid Android linker
