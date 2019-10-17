@@ -8,9 +8,11 @@ extern class LuakitExtension TheTimerExtension;
 extern class LuakitExtension TheLuaLanguageExtension;
 extern class LuakitExtension TheDebugExtension;
 extern class LuakitExtension TheHTTPExtension;
+extern class LuakitExtension TheSQLiteExtension;
 
 extern class LuakitExtension* ExtensionsList [] =
 {
+    &TheSQLiteExtension,
     &TheThreadExtension,
     &TheTimerExtension,
     &TheLuaLanguageExtension,

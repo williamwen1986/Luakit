@@ -28,11 +28,6 @@ file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/lua-5.1.5" ${lib_build_DIR} )
 set_target_properties( lua PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/liblua.a)
 
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/sqlite-amalgamation-3290000/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( "${PROJECT_SOURCE_DIR}/sqlite-amalgamation-3290000" ${lib_build_DIR} )
-set_target_properties( sqlite PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libsqlite-amalgamation-3290000.a)
-
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/modp_b64/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/modp_b64" ${lib_build_DIR} )
@@ -90,7 +85,6 @@ target_link_libraries( third_party
 
                 toluapp
                 lua
-                sqlite
                 modp_b64
                 xml
                 event

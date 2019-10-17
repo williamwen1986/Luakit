@@ -29,6 +29,8 @@ add_library(
 
 # Specifies a path to native header files.
 include_directories(
-                ${PROJECT_SOURCE_DIR}/../lua-5.1.5/src
+                ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src
+                ${PROJECT_SOURCE_DIR}/../../third-party/toluapp/include
+                ${PROJECT_SOURCE_DIR}/../../src/
                 "${PROJECT_SOURCE_DIR}"
 )

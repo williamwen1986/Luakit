@@ -3,17 +3,10 @@ extern "C" {
 #endif
 #include "lauxlib.h"
 #include "lualib.h"
-#include "lsqlite3.h"
-//#include "lua_cjson.h"
-//#include "mobdebug.h"
 #ifdef __cplusplus
 }
 #endif
 #include "lua_helpers.h"
-//#include "lua_http.h"
-//#include "lua_async_socket.h"
-//#include "lua_timer.h"
-//#include "lua_thread.h"
 #include "base/path_service.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
@@ -292,7 +285,6 @@ extern int luaInit(lua_State* L)
     lua_atpanic(L, &lua_panic);
     // lua_aterr(L, &lua_err); // Patch [LARPOUX]
     luaL_openlibs(L);
-    luaopen_lsqlite3(L);
     for (int i = 0; ExtensionsList[i] != NULL; ++i)
     {
         ExtensionsList[i] -> LuaOpen(L);

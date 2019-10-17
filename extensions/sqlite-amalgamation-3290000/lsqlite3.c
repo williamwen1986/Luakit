@@ -69,6 +69,8 @@
     #define SQLITE3_OPEN(L,filename,flags) sqlite3_open_v2(L,filename,flags,NULL)
 #endif
 
+
+
 typedef struct sdb sdb;
 typedef struct sdb_vm sdb_vm;
 typedef struct sdb_bu sdb_bu;

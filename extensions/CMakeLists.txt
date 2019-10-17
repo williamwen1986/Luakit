@@ -7,6 +7,11 @@ cmake_minimum_required(VERSION 3.4.1)
 project(luakit)
 
  
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/sqlite-amalgamation-3290000/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/sqlite-amalgamation-3290000" ${lib_build_DIR} )
+set_target_properties( sqlite PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libsqlite-amalgamation-3290000.a)
+
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/AsyncSocket/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/AsyncSocket" ${lib_build_DIR} )
@@ -80,5 +85,6 @@ target_link_libraries( extensions
 	Notify
 	thread
 	timer
+	sqlite
 )
 
