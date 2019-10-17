@@ -2,7 +2,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "common/notification_service.h"
+#include "notification_service.h"
 #include "common/business_client_thread.h"
 #include "common/base_lambda_support.h"
 #include "common/network_util.h"

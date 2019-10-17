@@ -5,10 +5,10 @@
 #include <map>
 
 #include "base/memory/ref_counted.h"
-#include "common/notification_observer.h"
-#include "common/notification_registrar.h"
+#include "notification_observer.h"
+#include "notification_registrar.h"
 #include "common/business_client_thread.h"
-#include "network/network_define.h"
+#include "network_define.h"
 
 namespace network {
 

@@ -3,7 +3,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "curl_connection.h"
-#include "network/async_task_dispatcher.h"
+#include "async_task_dispatcher.h"
 #include "common/base_lambda_support.h"
 #include "base/thread_task_runner_handle.h"
 bool OPEN_CURL_LOG = true;

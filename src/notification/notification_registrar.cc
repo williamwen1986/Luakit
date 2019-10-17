@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "common/notification_registrar.h"
+#include "notification_registrar.h"
 
 #include <algorithm>
 
 #include "base/logging.h"
-#include "common/notification_service_impl.h"
+#include "notification_service_impl.h"
 
 namespace content {
 

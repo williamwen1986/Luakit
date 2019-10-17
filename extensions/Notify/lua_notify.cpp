@@ -4,9 +4,22 @@ extern "C" {
 }
 #include "lua-tools/lua_helpers.h"
 #include "lua_notify.h"
-#include "common/notification_service.h"
+#include "notification_service.h"
 #include "common/base_lambda_support.h"
 #include "serialize.h"
+#ifdef ANDROID
+// Hack to force the link-editor to link-edit with JNI
+#include "com_common_luakit_LuaNotificationListener.h"
+#include "com_common_luakit_NotificationHelper.h"
+#include "notification_registrar.h"
+
+void dummyFn()
+{
+    content::NotificationRegistrar dummy;
+    Java_com_common_luakit_LuaNotificationListener_nativeNewNotificationListener(0,0);
+    Java_com_common_luakit_NotificationHelper_postNotificationNative(0,0,0,0);
+}
+#endif
 
 class NotifyExtension : LuakitExtension
 {

@@ -1,10 +1,10 @@
 #ifndef ANDROID_NOTIFICATION_LISTENER_IMPL_H
 #define ANDROID_NOTIFICATION_LISTENER_IMPL_H
-#include "common/notification_observer.h"
-#include "common/notification_registrar.h"
-#include "common/notification_details.h"
-#include "common/notification_service.h"
-#include "common/notification_source.h"
+#include "notification_observer.h"
+#include "notification_registrar.h"
+#include "notification_details.h"
+#include "notification_service.h"
+#include "notification_source.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/scoped_ptr.h"
 #include "JavaRefCountedWrapper.h"

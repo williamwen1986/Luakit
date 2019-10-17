@@ -10,8 +10,8 @@
 #define CONTENT_PUBLIC_BROWSER_NOTIFICATION_SERVICE_H_
 #pragma once
 
-#include "common/notification_details.h"
-#include "common/notification_source.h"
+#include "notification_details.h"
+#include "notification_source.h"
 
 namespace content {
 

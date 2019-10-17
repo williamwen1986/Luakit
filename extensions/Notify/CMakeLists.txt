@@ -45,6 +45,7 @@ include_directories(
 		    ${PROJECT_SOURCE_DIR}/../../include
 		    ${PROJECT_SOURCE_DIR}/../../third-party
 		    ${PROJECT_SOURCE_DIR}/../../src/common
+		    ${PROJECT_SOURCE_DIR}/../../src/notification
 		    ${PROJECT_SOURCE_DIR}/../../extensions/thread
 		    ${PROJECT_SOURCE_DIR}/../../AndroidFramework/jni
  )

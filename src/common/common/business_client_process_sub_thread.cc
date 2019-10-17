@@ -7,8 +7,8 @@
 //#include "base/debug/leak_tracker.h"
 #include "base/threading/thread_restrictions.h"
 #include "build_config.h"
-#include "common/notification_service.h"
-#include "common/notification_service_impl.h"
+#include "notification_service.h"
+#include "notification_service_impl.h"
 //#include "net/url_request/url_fetcher.h"
 
 BusinessProcessSubThread::BusinessProcessSubThread(BusinessThreadID identifier, const char * threadName)

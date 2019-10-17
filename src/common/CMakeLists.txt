@@ -65,6 +65,7 @@ add_library(
 # Specifies a path to native header files.
 include_directories(
                     ${PROJECT_SOURCE_DIR}/../
+                    ${PROJECT_SOURCE_DIR}/../notification
                     ${PROJECT_SOURCE_DIR}
                     ${PROJECT_SOURCE_DIR}/../../third-party
                     ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src

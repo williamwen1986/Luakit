@@ -1,9 +1,9 @@
-#include "network/async_task_dispatcher.h"
-#include "common/common/notification_service.h"
+#include "async_task_dispatcher.h"
+#include "notification_service.h"
 #include "common/business_client_thread.h"
-#include "network/socket_watcher.h"
-#include "network/curl_connection.h"
-#include "common/common/network_monitor.h"
+#include "socket_watcher.h"
+#include "curl_connection.h"
+#include "common/network_monitor.h"
 namespace network {
     
 AsyncTaskDispatcher::AsyncTaskDispatcher(const std::string& name, bool fifo) :

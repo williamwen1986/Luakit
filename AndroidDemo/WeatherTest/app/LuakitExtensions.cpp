@@ -1,5 +1,3 @@
-#include "jniLinkedModules.h" // I'm not proud of this hack. (I have fight much time to force the link-editor to link-edit correctly jni).
-
 extern class LuakitExtension TheCjsonExtension;
 extern class LuakitExtension TheFileExtension;
 extern class LuakitExtension TheAsyncSocketExtension;
@@ -9,6 +7,7 @@ extern class LuakitExtension TheLuaLanguageExtension;
 extern class LuakitExtension TheDebugExtension;
 extern class LuakitExtension TheHTTPExtension;
 extern class LuakitExtension TheSQLiteExtension;
+extern class LuakitExtension TheNotifyExtension;
 
 extern class LuakitExtension* ExtensionsList [] =
 {
@@ -21,5 +20,6 @@ extern class LuakitExtension* ExtensionsList [] =
     &TheDebugExtension,
     &TheFileExtension,
     &TheHTTPExtension,
+    &TheNotifyExtension,
 	0
 };

@@ -12,39 +12,40 @@ project(luakit)
 # Gradle automatically packages shared libraries with your APK.
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_HISTORICAL_STRERRO_R -DNVALGRIND -fvisibility=hidden")
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -fexceptions -frtti -fPIC -DUSE_HISTORICAL_STRERRO_R")
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC -llog -lz -lc")
 
-
-
-file(GLOB all_SRCS
+file(GLOB ALL_SRCS
         "${PROJECT_SOURCE_DIR}/*.cpp"
         "${PROJECT_SOURCE_DIR}/*.c"
-        )
+        "${PROJECT_SOURCE_DIR}/*.cc"
 
-list(FILTER all_SRCS EXCLUDE REGEX ".*lua_timer.cpp$")
-list(FILTER all_SRCS EXCLUDE REGEX ".*shell.c$")
-
-
-
-add_library( jni 
-        STATIC 
-        ${all_SRCS}
 )
+
+add_library(
+                # Sets the name of the library.
+                notification
+
+                # Sets the library as a shared library.
+                STATIC
+
+                ${ALL_SRCS}
+)
+
+
 
 # Specifies a path to native header files.
 include_directories(
-                    $ENV{OUTPUT_DIR}/
                     ${PROJECT_SOURCE_DIR}/../
-                    ${PROJECT_SOURCE_DIR}/../../src/
-                    ${PROJECT_SOURCE_DIR}/../../src/common/
+                    ${PROJECT_SOURCE_DIR}
                     ${PROJECT_SOURCE_DIR}/../../third-party
+                    ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src
                     ${PROJECT_SOURCE_DIR}/../../third-party/openssl/include/
                     ${PROJECT_SOURCE_DIR}/../../third-party/curl/include
-                    ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src
-                    ${PROJECT_SOURCE_DIR}/../../src/lua-tools
                     ${PROJECT_SOURCE_DIR}/../../third-party/sqlite-amalgamation-3290000
-                    ${PROJECT_SOURCE_DIR}/../../third-party/toluapp/include
+                    ${PROJECT_SOURCE_DIR}/../../extensions/Notify
+                    ${PROJECT_SOURCE_DIR}/../../AndroidFramework/jni
+                    ${PROJECT_SOURCE_DIR}/../lua-tools
                     ${PROJECT_SOURCE_DIR}/../../include
-
+                    ${PROJECT_SOURCE_DIR}/../common
 )

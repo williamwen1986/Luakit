@@ -13,7 +13,7 @@
 #include "base/metrics/statistics_recorder.h"
 #include "base/metrics/stats_table.h"
 #include "common/business_switches.h"
-#include "common/notification_service.h"
+#include "notification_service.h"
 #include "common/business_main_loop.h"
 #include "common/business_main_delegate.h"
 #include "common/main_function_params.h"

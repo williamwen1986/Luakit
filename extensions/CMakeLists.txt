@@ -60,7 +60,12 @@ set_target_properties( thread PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libt
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/timer/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/timer" ${lib_build_DIR} )
-set_target_properties( timer PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libttimer.a)
+set_target_properties( timer PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libtimer.a)
+
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/network/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/network" ${lib_build_DIR} )
+set_target_properties( network PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libnetwork.a)
 
 
 
@@ -86,5 +91,6 @@ target_link_libraries( extensions
 	thread
 	timer
 	sqlite
+	network
 )
 

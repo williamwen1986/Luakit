@@ -1,8 +1,8 @@
 
 #include "base/strings/string_number_conversions.h"
 #include "base/guid.h"
-#include "network/async_cgi_task_dispatcher.h"
-#include "network/curl_connection.h"
+#include "async_cgi_task_dispatcher.h"
+#include "curl_connection.h"
 
 namespace network {
     

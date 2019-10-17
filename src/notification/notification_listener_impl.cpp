@@ -6,9 +6,9 @@
 #include "JniLuaConvertor.h"
 #include "LogicModel.h"
 #include "lua_notify.h"
-#include "common/notification_service.h"
-#include "common/notification_details.h"
-#include "common/notification_source.h"
+#include "notification_service.h"
+#include "notification_details.h"
+#include "notification_source.h"
 
 NotificationListenerImpl::NotificationListenerImpl(const jobject& jlistener) :
         jlistener_(new java_weak_ref(jlistener)){

@@ -9,7 +9,7 @@
 
 #include "base/observer_list.h"
 #include "common/content_export.h"
-#include "common/notification_service.h"
+#include "notification_service.h"
 
 namespace content {
 
