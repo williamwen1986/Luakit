@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C501C136234CD8CF0093ACBA /* lsqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = C501C130234CD8CF0093ACBA /* lsqlite3.c */; };
 		C501C138234CD8CF0093ACBA /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = C501C133234CD8CF0093ACBA /* sqlite3.c */; };
+		C57B66A9235982BD001AB6A1 /* lsqlite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C57B66A8235982BD001AB6A1 /* lsqlite.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,7 @@
 		C501C133234CD8CF0093ACBA /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = SOURCE_ROOT; };
 		C501C134234CD8CF0093ACBA /* lsqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lsqlite3.h; sourceTree = SOURCE_ROOT; };
 		C501C135234CD8CF0093ACBA /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = SOURCE_ROOT; };
+		C57B66A8235982BD001AB6A1 /* lsqlite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lsqlite.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		C501C126234CD8A30093ACBA /* sqlite */ = {
 			isa = PBXGroup;
 			children = (
+				C57B66A8235982BD001AB6A1 /* lsqlite.cpp */,
 				C501C130234CD8CF0093ACBA /* lsqlite3.c */,
 				C501C134234CD8CF0093ACBA /* lsqlite3.h */,
 				C501C133234CD8CF0093ACBA /* sqlite3.c */,
@@ -129,6 +132,7 @@
 			files = (
 				C501C138234CD8CF0093ACBA /* sqlite3.c in Sources */,
 				C501C136234CD8CF0093ACBA /* lsqlite3.c in Sources */,
+				C57B66A9235982BD001AB6A1 /* lsqlite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +263,16 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../lua-5.1.5/src";
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/include",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/extensions",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/third-party/toluapp/include",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -275,7 +288,16 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../lua-5.1.5/src";
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/include",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/extensions",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/third-party/toluapp/include",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

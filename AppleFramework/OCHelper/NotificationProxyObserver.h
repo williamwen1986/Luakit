@@ -2,11 +2,11 @@
 extern "C" {
 #include "lua.h"
 }
-#include "common/notification_observer.h"
-#include "common/notification_registrar.h"
-#include "common/notification_details.h"
-#include "common/notification_service.h"
-#include "common/notification_source.h"
+#include "notification/notification_observer.h"
+#include "notification/notification_registrar.h"
+#include "notification/notification_details.h"
+#include "notification/notification_service.h"
+#include "notification/notification_source.h"
 #include "extensions/Notify/lua_notify.h"
 #include "oc_helpers.h"
 

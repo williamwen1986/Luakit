@@ -29,7 +29,12 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_async_socket(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            extern LuakitExtension TheSocketExtension; TheSocketExtension.LuaOpen(L);
+            luaopen_async_socket(L);
+        }
     }
 } TheAsyncSocketExtension;
 

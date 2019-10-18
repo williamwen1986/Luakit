@@ -18,7 +18,11 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_socket_core(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            luaopen_socket_core(L);
+        }
     }
 } TheSocketExtension;
 

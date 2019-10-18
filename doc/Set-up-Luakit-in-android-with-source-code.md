@@ -54,12 +54,47 @@ You will get your library in luakit/libs/
 
 
 Create a new project with Android Studio
------------------------------
+----------------------------------------
 If you have your own project , skip this step
 
+
+Copy the src code and framework
+-------------------------------
+Copy (or clone) Github [source code folder](../..) somewhere on your disk.
+
 Add dependence
------------------------------
-Open your project, add jniLibs.srcDir to your app build.gradle, such as below
+--------------
+- Create a CMakeLists.txt file in your project :
+```
+cmake_minimum_required(VERSION 3.4.1)
+project(luakit)
+set( LUAKIT_ROOT ${PROJECT_SOURCE_DIR}/../../.. )
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC -llog -lz -lc")
+file(GLOB jni_SRCS "${LUAKIT_ROOT}/AndroidFramework/jni/*.cpp")
+
+add_library( luakitApp SHARED LuakitExtensions.cpp ${jni_SRCS} )
+
+set( lib_build_DIR ${LUAKIT_ROOT}/AndroidFramework/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${LUAKIT_ROOT}/AndroidFramework"  ${lib_build_DIR})
+set_target_properties( luaFramework PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libluaFramework.a)
+
+
+target_link_libraries( luakitApp luaFramework )
+
+include_directories(
+                    ${LUAKIT_ROOT}/AndroidFramework
+                    ${LUAKIT_ROOT}/AndroidFramework/jni
+                    ${LUAKIT_ROOT}/src
+                    ${LUAKIT_ROOT}/src/common
+                    ${LUAKIT_ROOT}/include
+                    ${LUAKIT_ROOT}/third-party
+                    ${LUAKIT_ROOT}/third-party/lua-5.1.5/src
+                    ${LUAKIT_ROOT}/src/lua-tools
+)
+
+```
+- Open your project, add jniLibs.srcDir to your app build.gradle, such as below
 
 
 ```
@@ -79,17 +114,10 @@ android {
     externalNativeBuild {
         cmake {
             version "3.10.2"
-            path file('../../../src/jni/CMakeLists.txt')
+            path file('./CMakeLists.txt')
         }
     }
 
-    //add jniLibs.srcDir
-    sourceSets{
-        main{
-            main.jni.srcDirs = [ '../../../src/jni' ]
-
-        }
-    }
     dependencies {
         implementation 'com.android.support:appcompat-v7:28.0.0'
         implementation 'com.android.support.constraint:constraint-layout:1.1.3'
@@ -105,13 +133,29 @@ Create a "setting.gradle" file into your Project Directory, with the following :
 
 ```
 include ':app', ':luakit', ':lib_chromium'
-project(':luakit').projectDir = new File(settingsDir, '../../AndroidFrameWork/luakit')
+project(':luakit').projectDir = new File(settingsDir, '../../AndroidFramework/luakit')
 project(':lib_chromium').projectDir = new File(settingsDir, '../../AndroidFrameWork/lib_chromium')
+```
+
+Specify the Luakit Extensions that you need
+-------------------------------------------
+Create a ".cpp" file in your project as below :
+```c++
+extern class LuakitExtension TheThreadExtension;
+extern class LuakitExtension TheTimerExtension;
+
+extern class LuakitExtension* ExtensionsList [] =
+{
+        &TheThreadExtension,
+        &TheTimerExtension,
+        0
+};
 ```
 
 Copy your lua source code to android assets/lua folder
 ------------------------------------------------------
-You must add your own lua files to assets/lua folder (the name "lua" is important).
+- Go to Build Phases -> Copy Bundle Resources, and add your "lua" directory. The name "lua" is important. You must check the option "Create folder Refeferences"
+- If you want a Luakit Extension which needs Lua sources, go to Build Phases, Copy Bundle Resources, and add your "lua-extension" directory. The name "lua-extension" is important. You must check the option "Create folder Refeferences"
 
 Initialization Luakit
 ---------------------
@@ -120,6 +164,7 @@ Add below code to your entrance of your app
 ```java
 LuaHelper.startLuaKit(this);
 ```
+
 Create your own business model
 ------------------------------
 Luakit provide general interface to connect java and lua ,Refer to [LuaHelper.java](../src/main/java/com/common/luakit/LuaHelper.java.java)
@@ -140,60 +185,4 @@ LuaHelper.callLuaFunction("WeatherManager","loadWeather", callback);
 ```
 The goal of the above code is to connect the [lua file](../AndroidDemo/WeatherTest/app/src/main/assets/lua/WeatherManager.lua).
 
-The lua code is the finally working code
-
-```lua
-local _weatherManager = {}
-
-local Table = require('orm.class.table')
-local _weatherTable = Table("weather")
-
-_weatherManager.getWeather = function ()
-	return _weatherTable.get:all():getPureData()
-end
-
-_weatherManager.parseWeathers = function (responseStr,callback)
-	local t = cjson.decode(responseStr)
-	local weatherTable = _weatherTable
-	local ret = {}
-	if t and t.weather and t.weather[1] and t.weather[1].future then
-		weatherTable.get:delete()
-		local city = t.weather[1].city_name
-		for i,v in ipairs(t.weather[1].future) do
-			local t = {}
-			t.wind = v.wind
-			t.date = v.date
-			t.low = tonumber(v.low)
-			t.high = tonumber(v.high)
-			t.id = i
-			t.city = city
-			local weather = weatherTable(t)
-			weather:save()
-			table.insert(ret,weather:getPureData())
-		end
-	end
-	if callback then
-		callback(ret)
-	end
-end
-
-_weatherManager.loadWeather = function (callback)
-	lua_http.request({ url  = "http://tj.nineton.cn/Heart/index/all?city=CHSH000000",
-		onResponse = function (response)
-			if response.http_code ~= 200 then
-				if callback then
-					callback(nil)
-				end
-			else
-				lua_thread.postToThread(BusinessThreadLOGIC,"WeatherManager","parseWeathers",response.response,function(data)
-					if callback then
-						callback(data)
-					end
-				end)
-			end
-		end})
-end
-
-return _weatherManager
-```
 

@@ -7,26 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C55844BC23521CC100F553C3 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C55844B923521CAA00F553C3 /* libluakit.a */; };
 		C56DE542232F612D00253F26 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C56DE541232F612D00253F26 /* AppDelegate.m */; };
 		C56DE547232F612D00253F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C56DE546232F612D00253F26 /* Assets.xcassets */; };
 		C56DE54A232F612D00253F26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C56DE548232F612D00253F26 /* Main.storyboard */; };
 		C56DE585232F629A00253F26 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C56DE583232F629A00253F26 /* main.mm */; };
 		C56DE586232F629A00253F26 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C56DE584232F629A00253F26 /* ViewController.mm */; };
 		C56DE588232F631D00253F26 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C56DE587232F631D00253F26 /* lua */; };
+		C57B681A2359969E001AB6A1 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57B681723599673001AB6A1 /* libluakit.a */; };
+		C57B681C235996B0001AB6A1 /* LuakitExtensions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C57B681B235996B0001AB6A1 /* LuakitExtensions.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C55844B823521CAA00F553C3 /* PBXContainerItemProxy */ = {
+		C57B681623599673001AB6A1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C558449F23521CAA00F553C3 /* luakit.xcodeproj */;
+			containerPortal = C57B67F323599672001AB6A1 /* luakit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C545B526233DF2DE00B44FF2;
 			remoteInfo = luakit;
 		};
-		C55844BA23521CB600F553C3 /* PBXContainerItemProxy */ = {
+		C57B68182359968F001AB6A1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C558449F23521CAA00F553C3 /* luakit.xcodeproj */;
+			containerPortal = C57B67F323599672001AB6A1 /* luakit.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = C545B525233DF2DE00B44FF2;
 			remoteInfo = luakit;
@@ -34,7 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C558449F23521CAA00F553C3 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../IOSFrameWork/luakit.xcodeproj; sourceTree = "<group>"; };
 		C56DE53D232F612C00253F26 /* ThreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C56DE540232F612D00253F26 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C56DE541232F612D00253F26 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -47,6 +47,8 @@
 		C56DE584232F629A00253F26 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		C56DE587232F631D00253F26 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = ThreadTest/lua; sourceTree = "<group>"; };
 		C56DE58A232F636D00253F26 /* libLuakit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLuakit.dylib; path = "../../libs/macos-Debug/libLuakit.dylib"; sourceTree = "<group>"; };
+		C57B67F323599672001AB6A1 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../AppleFramework/luakit.xcodeproj; sourceTree = "<group>"; };
+		C57B681B235996B0001AB6A1 /* LuakitExtensions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuakitExtensions.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,25 +56,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C55844BC23521CC100F553C3 /* libluakit.a in Frameworks */,
+				C57B681A2359969E001AB6A1 /* libluakit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C55844A023521CAA00F553C3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C55844B923521CAA00F553C3 /* libluakit.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C56DE534232F612C00253F26 = {
 			isa = PBXGroup;
 			children = (
-				C558449F23521CAA00F553C3 /* luakit.xcodeproj */,
+				C57B681B235996B0001AB6A1 /* LuakitExtensions.cpp */,
+				C57B67F323599672001AB6A1 /* luakit.xcodeproj */,
 				C56DE587232F631D00253F26 /* lua */,
 				C56DE53F232F612C00253F26 /* ThreadTest */,
 				C56DE53E232F612C00253F26 /* Products */,
@@ -112,6 +107,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C57B67F423599672001AB6A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57B681723599673001AB6A1 /* libluakit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,7 +129,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				C55844BB23521CB600F553C3 /* PBXTargetDependency */,
+				C57B68192359968F001AB6A1 /* PBXTargetDependency */,
 			);
 			name = ThreadTest;
 			productName = ThreadTest;
@@ -160,8 +163,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C55844A023521CAA00F553C3 /* Products */;
-					ProjectRef = C558449F23521CAA00F553C3 /* luakit.xcodeproj */;
+					ProductGroup = C57B67F423599672001AB6A1 /* Products */;
+					ProjectRef = C57B67F323599672001AB6A1 /* luakit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -172,11 +175,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C55844B923521CAA00F553C3 /* libluakit.a */ = {
+		C57B681723599673001AB6A1 /* libluakit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libluakit.a;
-			remoteRef = C55844B823521CAA00F553C3 /* PBXContainerItemProxy */;
+			remoteRef = C57B681623599673001AB6A1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -202,16 +205,17 @@
 				C56DE585232F629A00253F26 /* main.mm in Sources */,
 				C56DE542232F612D00253F26 /* AppDelegate.m in Sources */,
 				C56DE586232F629A00253F26 /* ViewController.mm in Sources */,
+				C57B681C235996B0001AB6A1 /* LuakitExtensions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C55844BB23521CB600F553C3 /* PBXTargetDependency */ = {
+		C57B68192359968F001AB6A1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = luakit;
-			targetProxy = C55844BA23521CB600F553C3 /* PBXContainerItemProxy */;
+			targetProxy = C57B68182359968F001AB6A1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -361,7 +365,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../src",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
-					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
+					"$(SRCROOT)/../../AppleFramework/OCHelper",
 					"$(SRCROOT)/../../src/common",
 				);
 				INFOPLIST_FILE = ThreadTest/Info.plist;
@@ -385,7 +389,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../src",
 					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
-					"$(SRCROOT)/../../IOSFrameWork/OCHelper",
+					"$(SRCROOT)/../../AppleFramework/OCHelper",
 					"$(SRCROOT)/../../src/common",
 				);
 				INFOPLIST_FILE = ThreadTest/Info.plist;

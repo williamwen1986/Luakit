@@ -22,7 +22,11 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_http(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            luaopen_http(L);
+        }
     }
 } TheHTTPExtension;
 

@@ -55,8 +55,12 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_thread(L);
-        luaopen_callback(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            luaopen_thread(L);
+            luaopen_callback(L);
+        }
     }
 } TheThreadExtension;
 

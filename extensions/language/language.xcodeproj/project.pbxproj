@@ -1,0 +1,324 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C57CC00E2358DF0000206922 /* languageUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = C57CC00A2358DF0000206922 /* languageUtil.mm */; };
+		C57CC00F2358DF0000206922 /* lua_language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C57CC00C2358DF0000206922 /* lua_language.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C57CBFFA2358DE3400206922 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C57CBFFC2358DE3400206922 /* liblanguage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblanguage.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C57CC0092358DF0000206922 /* lua_language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_language.h; sourceTree = SOURCE_ROOT; };
+		C57CC00A2358DF0000206922 /* languageUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = languageUtil.mm; sourceTree = SOURCE_ROOT; };
+		C57CC00C2358DF0000206922 /* lua_language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_language.cpp; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C57CBFF92358DE3400206922 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C57CBFF32358DE3400206922 = {
+			isa = PBXGroup;
+			children = (
+				C57CBFFE2358DE3400206922 /* language */,
+				C57CBFFD2358DE3400206922 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C57CBFFD2358DE3400206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CBFFC2358DE3400206922 /* liblanguage.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CBFFE2358DE3400206922 /* language */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC00A2358DF0000206922 /* languageUtil.mm */,
+				C57CC00C2358DF0000206922 /* lua_language.cpp */,
+				C57CC0092358DF0000206922 /* lua_language.h */,
+			);
+			path = language;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C57CBFFB2358DE3400206922 /* language */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C57CC0052358DE3400206922 /* Build configuration list for PBXNativeTarget "language" */;
+			buildPhases = (
+				C57CBFF82358DE3400206922 /* Sources */,
+				C57CBFF92358DE3400206922 /* Frameworks */,
+				C57CBFFA2358DE3400206922 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = language;
+			productName = language;
+			productReference = C57CBFFC2358DE3400206922 /* liblanguage.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C57CBFF42358DE3400206922 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = larpoux;
+				TargetAttributes = {
+					C57CBFFB2358DE3400206922 = {
+						CreatedOnToolsVersion = 11.0;
+					};
+				};
+			};
+			buildConfigurationList = C57CBFF72358DE3400206922 /* Build configuration list for PBXProject "language" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C57CBFF32358DE3400206922;
+			productRefGroup = C57CBFFD2358DE3400206922 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C57CBFFB2358DE3400206922 /* language */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C57CBFF82358DE3400206922 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C57CC00F2358DF0000206922 /* lua_language.cpp in Sources */,
+				C57CC00E2358DF0000206922 /* languageUtil.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C57CC0032358DE3400206922 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Debug;
+		};
+		C57CC0042358DE3400206922 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Release;
+		};
+		C57CC0062358DE3400206922 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/include",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/extensions",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/lua-tools",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Debug;
+		};
+		C57CC0072358DE3400206922 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/include",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/extensions",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/lua-tools",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C57CBFF72358DE3400206922 /* Build configuration list for PBXProject "language" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C57CC0032358DE3400206922 /* Debug */,
+				C57CC0042358DE3400206922 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C57CC0052358DE3400206922 /* Build configuration list for PBXNativeTarget "language" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C57CC0062358DE3400206922 /* Debug */,
+				C57CC0072358DE3400206922 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C57CBFF42358DE3400206922 /* Project object */;
+}

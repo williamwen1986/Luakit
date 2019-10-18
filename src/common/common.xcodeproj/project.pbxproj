@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C526DF912330FA5C0069143A /* notification_registrar.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF6A2330FA5B0069143A /* notification_registrar.cc */; };
 		C526DF922330FA5C0069143A /* network_monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF6D2330FA5B0069143A /* network_monitor.cpp */; };
 		C526DF932330FA5C0069143A /* network_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF702330FA5B0069143A /* network_util.cpp */; };
 		C526DF942330FA5C0069143A /* network_monitor_android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF712330FA5B0069143A /* network_monitor_android.cpp */; };
@@ -20,7 +19,6 @@
 		C526DF9B2330FA5C0069143A /* business_client_process_sub_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF892330FA5C0069143A /* business_client_process_sub_thread.cc */; };
 		C526DF9C2330FA5C0069143A /* business_client_thread_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8D2330FA5C0069143A /* business_client_thread_impl.cc */; };
 		C526DF9D2330FA5C0069143A /* network_monitor_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8E2330FA5C0069143A /* network_monitor_ios.mm */; };
-		C526DF9E2330FA5C0069143A /* notification_service_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = C526DF8F2330FA5C0069143A /* notification_service_impl.cc */; };
 		C526DF9F2330FA5C0069143A /* business_main_delegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C526DF902330FA5C0069143A /* business_main_delegate.cpp */; };
 /* End PBXBuildFile section */
 
@@ -58,11 +56,9 @@
 /* Begin PBXFileReference section */
 		04A4FA121D7464E500E42FE3 /* libcommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA4685D21DD1C8A200A8CCB4 /* libcommon_unittests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_unittests.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C526DF6A2330FA5B0069143A /* notification_registrar.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = notification_registrar.cc; path = common/notification_registrar.cc; sourceTree = "<group>"; };
 		C526DF6B2330FA5B0069143A /* business_client_shutdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_shutdown.h; path = common/business_client_shutdown.h; sourceTree = "<group>"; };
 		C526DF6C2330FA5B0069143A /* business_main_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_main_loop.h; path = common/business_main_loop.h; sourceTree = "<group>"; };
 		C526DF6D2330FA5B0069143A /* network_monitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network_monitor.cpp; path = common/network_monitor.cpp; sourceTree = "<group>"; };
-		C526DF6E2330FA5B0069143A /* notification_details.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_details.h; path = common/notification_details.h; sourceTree = "<group>"; };
 		C526DF6F2330FA5B0069143A /* ph-promise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ph-promise.h"; path = "common/ph-promise.h"; sourceTree = "<group>"; };
 		C526DF702330FA5B0069143A /* network_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network_util.cpp; path = common/network_util.cpp; sourceTree = "<group>"; };
 		C526DF712330FA5B0069143A /* network_monitor_android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network_monitor_android.cpp; path = common/network_monitor_android.cpp; sourceTree = "<group>"; };
@@ -77,25 +73,19 @@
 		C526DF7A2330FA5B0069143A /* network_monitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_monitor.h; path = common/network_monitor.h; sourceTree = "<group>"; };
 		C526DF7B2330FA5B0069143A /* network_util_android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network_util_android.cpp; path = common/network_util_android.cpp; sourceTree = "<group>"; };
 		C526DF7C2330FA5B0069143A /* business_main_delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_main_delegate.h; path = common/business_main_delegate.h; sourceTree = "<group>"; };
-		C526DF7D2330FA5B0069143A /* notification_service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_service.h; path = common/notification_service.h; sourceTree = "<group>"; };
 		C526DF7E2330FA5C0069143A /* business_switches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_switches.h; path = common/business_switches.h; sourceTree = "<group>"; };
 		C526DF7F2330FA5C0069143A /* base_lambda_support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base_lambda_support.h; path = common/base_lambda_support.h; sourceTree = "<group>"; };
 		C526DF802330FA5C0069143A /* business_main_loop.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_main_loop.cc; path = common/business_main_loop.cc; sourceTree = "<group>"; };
 		C526DF812330FA5C0069143A /* business_client_thread_delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_thread_delegate.h; path = common/business_client_thread_delegate.h; sourceTree = "<group>"; };
 		C526DF822330FA5C0069143A /* network_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_util.h; path = common/network_util.h; sourceTree = "<group>"; };
-		C526DF832330FA5C0069143A /* notification_observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_observer.h; path = common/notification_observer.h; sourceTree = "<group>"; };
 		C526DF842330FA5C0069143A /* business_client_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_thread.h; path = common/business_client_thread.h; sourceTree = "<group>"; };
 		C526DF852330FA5C0069143A /* business_client_main_parts.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_client_main_parts.cc; path = common/business_client_main_parts.cc; sourceTree = "<group>"; };
-		C526DF862330FA5C0069143A /* notification_source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_source.h; path = common/notification_source.h; sourceTree = "<group>"; };
-		C526DF872330FA5C0069143A /* notification_service_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_service_impl.h; path = common/notification_service_impl.h; sourceTree = "<group>"; };
 		C526DF882330FA5C0069143A /* business_client_thread_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = business_client_thread_impl.h; path = common/business_client_thread_impl.h; sourceTree = "<group>"; };
 		C526DF892330FA5C0069143A /* business_client_process_sub_thread.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_client_process_sub_thread.cc; path = common/business_client_process_sub_thread.cc; sourceTree = "<group>"; };
-		C526DF8A2330FA5C0069143A /* notification_registrar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_registrar.h; path = common/notification_registrar.h; sourceTree = "<group>"; };
 		C526DF8B2330FA5C0069143A /* observer_wrapper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = observer_wrapper.hpp; path = common/observer_wrapper.hpp; sourceTree = "<group>"; };
 		C526DF8C2330FA5C0069143A /* content_export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = content_export.h; path = common/content_export.h; sourceTree = "<group>"; };
 		C526DF8D2330FA5C0069143A /* business_client_thread_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_client_thread_impl.cc; path = common/business_client_thread_impl.cc; sourceTree = "<group>"; };
 		C526DF8E2330FA5C0069143A /* network_monitor_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = network_monitor_ios.mm; path = common/network_monitor_ios.mm; sourceTree = "<group>"; };
-		C526DF8F2330FA5C0069143A /* notification_service_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = notification_service_impl.cc; path = common/notification_service_impl.cc; sourceTree = "<group>"; };
 		C526DF902330FA5C0069143A /* business_main_delegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = business_main_delegate.cpp; path = common/business_main_delegate.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,14 +155,6 @@
 				C526DF752330FA5B0069143A /* network_util_ios.mm */,
 				C526DF702330FA5B0069143A /* network_util.cpp */,
 				C526DF822330FA5C0069143A /* network_util.h */,
-				C526DF6E2330FA5B0069143A /* notification_details.h */,
-				C526DF832330FA5C0069143A /* notification_observer.h */,
-				C526DF6A2330FA5B0069143A /* notification_registrar.cc */,
-				C526DF8A2330FA5C0069143A /* notification_registrar.h */,
-				C526DF8F2330FA5C0069143A /* notification_service_impl.cc */,
-				C526DF872330FA5C0069143A /* notification_service_impl.h */,
-				C526DF7D2330FA5B0069143A /* notification_service.h */,
-				C526DF862330FA5C0069143A /* notification_source.h */,
 				C526DF8B2330FA5C0069143A /* observer_wrapper.hpp */,
 				C526DF6F2330FA5B0069143A /* ph-promise.h */,
 				C526DF742330FA5B0069143A /* result_codes.h */,
@@ -264,14 +246,12 @@
 				C526DF9B2330FA5C0069143A /* business_client_process_sub_thread.cc in Sources */,
 				C526DF932330FA5C0069143A /* network_util.cpp in Sources */,
 				C526DF942330FA5C0069143A /* network_monitor_android.cpp in Sources */,
-				C526DF9E2330FA5C0069143A /* notification_service_impl.cc in Sources */,
 				C526DF9C2330FA5C0069143A /* business_client_thread_impl.cc in Sources */,
 				C526DF992330FA5C0069143A /* business_main_loop.cc in Sources */,
 				C526DF9A2330FA5C0069143A /* business_client_main_parts.cc in Sources */,
 				C526DF9F2330FA5C0069143A /* business_main_delegate.cpp in Sources */,
 				C526DF9D2330FA5C0069143A /* network_monitor_ios.mm in Sources */,
 				C526DF972330FA5C0069143A /* network_util_ios.mm in Sources */,
-				C526DF912330FA5C0069143A /* notification_registrar.cc in Sources */,
 				C526DF952330FA5C0069143A /* business_switches.cpp in Sources */,
 				C526DF962330FA5C0069143A /* business_runtime.cpp in Sources */,
 				C526DF922330FA5C0069143A /* network_monitor.cpp in Sources */,
@@ -430,8 +410,9 @@
 					"$(TOP_SRC_DIR)/src/common",
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/third-party",
-					"$(TOP_SRC_DIR)/config",
+					"$(TOP_SRC_DIR)/include",
 					"$(TOP_SRC_DIR)/third-party/lua-5.1.5/src",
+					"$(TOP_SRC_DIR)/src/notification",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
@@ -455,8 +436,9 @@
 					"$(TOP_SRC_DIR)/src/common",
 					"$(TOP_SRC_DIR)/src",
 					"$(TOP_SRC_DIR)/third-party",
-					"$(TOP_SRC_DIR)/config",
+					"$(TOP_SRC_DIR)/include",
 					"$(TOP_SRC_DIR)/third-party/lua-5.1.5/src",
+					"$(TOP_SRC_DIR)/src/notification",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;

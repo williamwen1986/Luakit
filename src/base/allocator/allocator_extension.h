@@ -9,7 +9,7 @@
 
 #include "base/allocator/allocator_extension_thunks.h"
 #include "base/base_export.h"
-#include "config/build_config.h"
+#include "build_config.h"
 
 namespace base {
 namespace allocator {

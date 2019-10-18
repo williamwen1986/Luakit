@@ -13,7 +13,11 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_cjson(L);
-        luaopen_cjson_safe(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            luaopen_cjson(L);
+            luaopen_cjson_safe(L);
+        }
 	}
 } TheCjsonExtension;

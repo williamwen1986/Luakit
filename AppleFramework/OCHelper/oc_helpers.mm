@@ -10,7 +10,7 @@ extern "C" {
 }
 #endif
 #import "oc_callback.h"
-#include "common/notification_service.h"
+#include "notification/notification_service.h"
 //#include "lua_notify.h"
 #include "NotificationProxyObserver.h"
 #include "lua_helpers.h"

@@ -33,7 +33,11 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_file(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            luaopen_file(L);
+        }
     }
 } TheFileExtension;
 

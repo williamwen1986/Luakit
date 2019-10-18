@@ -21,7 +21,7 @@
 //   printf("xyz: %" PRIuS, size);
 // The "u" in the macro corresponds to %u, and S is for "size".
 
-#include "config/build_config.h"
+#include "build_config.h"
 
 #if defined(OS_POSIX)
 

@@ -48,7 +48,7 @@ cd ../..
 
 
 
-cd IOSFrameWork
+cd AppleFramework
 ./build-macos.sh
 checkError
 cd ..

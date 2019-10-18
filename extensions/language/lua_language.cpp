@@ -50,7 +50,11 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_language(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            luaopen_language(L);
+        }
     }
 } TheLuaLanguageExtension;
 

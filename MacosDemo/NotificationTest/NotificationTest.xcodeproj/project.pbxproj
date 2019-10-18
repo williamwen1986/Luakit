@@ -12,18 +12,26 @@
 		C517AB31232969050039AF93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C517AB30232969050039AF93 /* Assets.xcassets */; };
 		C517AB34232969050039AF93 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C517AB32232969050039AF93 /* Main.storyboard */; };
 		C517AB3F232A0A8C0039AF93 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C517AB3E232A0A8C0039AF93 /* main.mm */; };
+		C57B67C3235994B5001AB6A1 /* LuakitExtensions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C57B67C2235994B5001AB6A1 /* LuakitExtensions.cpp */; };
+		C57B67C6235994CE001AB6A1 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57B67C12359949C001AB6A1 /* libluakit.a */; };
 		C5BD06E623351B5D00E630F5 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C5BD06E523351B5D00E630F5 /* lua */; };
 		C5BD06F02335204300E630F5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BD06E323351ABF00E630F5 /* libssl.a */; };
 		C5BF739E2350BB4A00BEDDD4 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BF739D2350BB4A00BEDDD4 /* libcommon.a */; };
-		C5FA3AF02350BAB80092B297 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C565D76A23507F66008F6126 /* libluakit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C565D76923507F66008F6126 /* PBXContainerItemProxy */ = {
+		C57B67C02359949C001AB6A1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C565D75023507F66008F6126 /* luakit.xcodeproj */;
+			containerPortal = C57B679D2359949C001AB6A1 /* luakit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C545B526233DF2DE00B44FF2;
+			remoteInfo = luakit;
+		};
+		C57B67C4235994C0001AB6A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57B679D2359949C001AB6A1 /* luakit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C545B525233DF2DE00B44FF2;
 			remoteInfo = luakit;
 		};
 		C5BD06DC23351A4800E630F5 /* PBXContainerItemProxy */ = {
@@ -32,13 +40,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 2883AC9120B43DFB005E1F54;
 			remoteInfo = Luakit;
-		};
-		C5FA3AEE2350BAA80092B297 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C565D75023507F66008F6126 /* luakit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C545B525233DF2DE00B44FF2;
-			remoteInfo = luakit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -53,7 +54,8 @@
 		C517AB35232969050039AF93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C517AB38232969050039AF93 /* NotificationTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationTest.entitlements; sourceTree = "<group>"; };
 		C517AB3E232A0A8C0039AF93 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
-		C565D75023507F66008F6126 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../IOSFrameWork/luakit.xcodeproj; sourceTree = "<group>"; };
+		C57B679D2359949C001AB6A1 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../AppleFramework/luakit.xcodeproj; sourceTree = "<group>"; };
+		C57B67C2235994B5001AB6A1 /* LuakitExtensions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuakitExtensions.cpp; sourceTree = "<group>"; };
 		C5BD06D123351A4800E630F5 /* Luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Luakit.xcodeproj; path = ../../MacosFramework/Luakit.xcodeproj; sourceTree = "<group>"; };
 		C5BD06E323351ABF00E630F5 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/macos10.14-Debug/libssl.a"; sourceTree = "<group>"; };
 		C5BD06E523351B5D00E630F5 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = NotificationTest/lua; sourceTree = "<group>"; };
@@ -66,8 +68,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C57B67C6235994CE001AB6A1 /* libluakit.a in Frameworks */,
 				C5BF739E2350BB4A00BEDDD4 /* libcommon.a in Frameworks */,
-				C5FA3AF02350BAB80092B297 /* libluakit.a in Frameworks */,
 				C5BD06F02335204300E630F5 /* libssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,7 +80,8 @@
 		C517AB1E232969040039AF93 = {
 			isa = PBXGroup;
 			children = (
-				C565D75023507F66008F6126 /* luakit.xcodeproj */,
+				C57B67C2235994B5001AB6A1 /* LuakitExtensions.cpp */,
+				C57B679D2359949C001AB6A1 /* luakit.xcodeproj */,
 				C5BD06E523351B5D00E630F5 /* lua */,
 				C5BD06D123351A4800E630F5 /* Luakit.xcodeproj */,
 				C517AB29232969040039AF93 /* NotificationTest */,
@@ -121,10 +124,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C565D75123507F66008F6126 /* Products */ = {
+		C57B679E2359949C001AB6A1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C565D76A23507F66008F6126 /* libluakit.a */,
+				C57B67C12359949C001AB6A1 /* libluakit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,7 +154,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				C5FA3AEF2350BAA80092B297 /* PBXTargetDependency */,
+				C57B67C5235994C0001AB6A1 /* PBXTargetDependency */,
 			);
 			name = NotificationTest;
 			productName = NotificationTest;
@@ -189,8 +192,8 @@
 					ProjectRef = C5BD06D123351A4800E630F5 /* Luakit.xcodeproj */;
 				},
 				{
-					ProductGroup = C565D75123507F66008F6126 /* Products */;
-					ProjectRef = C565D75023507F66008F6126 /* luakit.xcodeproj */;
+					ProductGroup = C57B679E2359949C001AB6A1 /* Products */;
+					ProjectRef = C57B679D2359949C001AB6A1 /* luakit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -201,11 +204,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C565D76A23507F66008F6126 /* libluakit.a */ = {
+		C57B67C12359949C001AB6A1 /* libluakit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libluakit.a;
-			remoteRef = C565D76923507F66008F6126 /* PBXContainerItemProxy */;
+			remoteRef = C57B67C02359949C001AB6A1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C5BD06DD23351A4800E630F5 /* libLuakit.a */ = {
@@ -238,16 +241,17 @@
 				C517AB3F232A0A8C0039AF93 /* main.mm in Sources */,
 				C517AB2C232969040039AF93 /* AppDelegate.m in Sources */,
 				C501CF6A232A836E00BE63BB /* ViewController.mm in Sources */,
+				C57B67C3235994B5001AB6A1 /* LuakitExtensions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C5FA3AEF2350BAA80092B297 /* PBXTargetDependency */ = {
+		C57B67C5235994C0001AB6A1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = luakit;
-			targetProxy = C5FA3AEE2350BAA80092B297 /* PBXContainerItemProxy */;
+			targetProxy = C57B67C4235994C0001AB6A1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -388,13 +392,14 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
+					"$(LUAKIT_ROOT)/AppleFramework/OCHelper",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 					"$(LUAKIT_ROOT)/src",
-					"$(LUAKIT_ROOT)/config",
+					"$(LUAKIT_ROOT)/include",
 					"$(LUAKIT_ROOT)",
 					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/src/notification",
 				);
 				INFOPLIST_FILE = NotificationTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -417,13 +422,14 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				HEADER_SEARCH_PATHS = (
-					"$(LUAKIT_ROOT)/IOSFrameWork/OCHelper",
+					"$(LUAKIT_ROOT)/AppleFramework/OCHelper",
 					"$(LUAKIT_ROOT)/src/common",
 					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
 					"$(LUAKIT_ROOT)/src",
-					"$(LUAKIT_ROOT)/config",
+					"$(LUAKIT_ROOT)/include",
 					"$(LUAKIT_ROOT)",
 					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/src/notification",
 				);
 				INFOPLIST_FILE = NotificationTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

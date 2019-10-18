@@ -52,7 +52,7 @@ checkError
 cd ../..
 
 
-cd IOSFrameWork
+cd AppleFramework
 ./build-ios.sh
 checkError
 cd ..

@@ -11,6 +11,10 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
+        //if (!isOpen)
+        {
+            isOpen = true;
+        }
     }
 } TheNetworkExtension;
 

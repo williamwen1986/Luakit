@@ -32,7 +32,11 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_notification(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            luaopen_notification(L);
+        }
     }
 } TheNotifyExtension;
 

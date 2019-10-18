@@ -14,7 +14,11 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_mobdebug_scripts(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            luaopen_mobdebug_scripts(L);
+        }
     }
 } TheDebugExtension;
 

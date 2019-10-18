@@ -23,11 +23,6 @@ android {
         }
     }
 
-    sourceSets{
-        main{
-            main.jni.srcDirs = [    '../../../src/jni' ]
-        }
-    }
 }
 
 dependencies {

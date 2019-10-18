@@ -16,7 +16,11 @@ public:
     }
     virtual void LuaOpen(lua_State* L)
     {
-        luaopen_lsqlite3(L);
+        //if (!isOpen)
+        {
+            isOpen = true;
+            luaopen_lsqlite3(L);
+        }
     }
 } TheSQLiteExtension;
 

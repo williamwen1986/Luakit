@@ -1,3 +1,6 @@
+#ifndef _LUA_HELPERS_H_
+#define _LUA_HELPERS_H_
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -25,7 +28,9 @@ class LuakitExtension
             tLicense    license;
             char*       extensionName;
             bool        needChromium;
-            virtual void LuaOpen(lua_State* L);//  = 0;
+            bool        isOpen;
+            /* ctor */ LuakitExtension (): isOpen(false) {}
+            virtual void LuaOpen(lua_State* L)  {}
 };
 
 extern LuakitExtension* ExtensionsList [];
@@ -71,3 +76,4 @@ extern void luaSetExternalStorageDirectoryPath(std::string path);
 extern std::string luaGetExternalStorageDirectoryPath();
 
 
+#endif // _LUA_HELPERS_H_

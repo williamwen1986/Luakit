@@ -17,6 +17,7 @@
 		C501C1B5234CDBAC0093ACBA /* net_errors.cc in Sources */ = {isa = PBXBuildFile; fileRef = C501C1AF234CDBAC0093ACBA /* net_errors.cc */; };
 		C501C1B7234CDBAC0093ACBA /* io_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = C501C1B1234CDBAC0093ACBA /* io_buffer.cc */; };
 		C501C1B8234CDBAC0093ACBA /* net_errors_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = C501C1B2234CDBAC0093ACBA /* net_errors_posix.cc */; };
+		C57CC21B2359411800206922 /* network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C57CC21A2359411800206922 /* network.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +61,7 @@
 		C501C1B2234CDBAC0093ACBA /* net_errors_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = net_errors_posix.cc; path = net/net_errors_posix.cc; sourceTree = "<group>"; };
 		C501C1B3234CDBAC0093ACBA /* net_errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = net_errors.h; path = net/net_errors.h; sourceTree = "<group>"; };
 		C501C1B4234CDBAC0093ACBA /* io_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = io_buffer.h; path = net/io_buffer.h; sourceTree = "<group>"; };
+		C57CC21A2359411800206922 /* network.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = network.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		C501C17A234CDB600093ACBA = {
 			isa = PBXGroup;
 			children = (
+				C57CC21A2359411800206922 /* network.cpp */,
 				C501C1AD234CDB990093ACBA /* net */,
 				C501C197234CDB910093ACBA /* async_cgi_task_dispatcher.cpp */,
 				C501C194234CDB910093ACBA /* async_cgi_task_dispatcher.h */,
@@ -192,6 +195,7 @@
 				C501C1A8234CDB920093ACBA /* curl_connection.cpp in Sources */,
 				C501C1A7234CDB920093ACBA /* async_socket.cpp in Sources */,
 				C501C1AB234CDB920093ACBA /* curl_http_form.cpp in Sources */,
+				C57CC21B2359411800206922 /* network.cpp in Sources */,
 				C501C1A9234CDB920093ACBA /* base_connection.cpp in Sources */,
 				C501C1A5234CDB920093ACBA /* async_task_dispatcher.cpp in Sources */,
 				C501C1B7234CDBAC0093ACBA /* io_buffer.cc in Sources */,
@@ -326,13 +330,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/..",
-					"$(SRCROOT)/../../config",
-					"$(SRCROOT)/../../third-party",
-					"$(SRCROOT)/../../third-party/curl/include",
-					"$(SRCROOT)/../common",
-					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/include",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/notification",
+					"$(LUAKIT_ROOT)/third-party/curl/include",
 				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -349,13 +355,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YY4QLF92X;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/..",
-					"$(SRCROOT)/../../config",
-					"$(SRCROOT)/../../third-party",
-					"$(SRCROOT)/../../third-party/curl/include",
-					"$(SRCROOT)/../common",
-					"$(SRCROOT)/../../third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/third-party",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/include",
+					"$(LUAKIT_ROOT)/src",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/notification",
+					"$(LUAKIT_ROOT)/third-party/curl/include",
 				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

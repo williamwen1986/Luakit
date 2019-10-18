@@ -10,9 +10,6 @@ extern "C" {
 #include "base/path_service.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
-//#include "lua_file.h"
-//#include "lua_notify.h"
-//#include "lua_language.h"
 #include "LuakitLoader.h"
 #include "xxtea.h"
 
@@ -46,9 +43,6 @@ static LuaErrorFun luaErrorFun = NULL;
 
 #define LUA_CALLBACK_METATABLE_NAME "lua_callback"
 
-void LuakitExtension::LuaOpen(lua_State* L)
-{
-}
 
 extern void pushWeakUserdataTable(lua_State *L)
 {
