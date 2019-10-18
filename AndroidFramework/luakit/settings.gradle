@@ -1,0 +1,3 @@
+include ':luakit', ':lib_chromium'
+project(':lib_chromium').projectDir = new File(settingsDir, '../lib_chromium')
+project(':luakit').projectDir = new File(settingsDir, '../luakit')

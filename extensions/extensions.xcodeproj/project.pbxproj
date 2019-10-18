@@ -1,0 +1,827 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C57CC1292358EC9B00206922 /* dummy.c in Sources */ = {isa = PBXBuildFile; fileRef = C57CC1282358EC9B00206922 /* dummy.c */; };
+		C57CC1432358ECF700206922 /* libAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC0DB2358EB0400206922 /* libAsyncSocket.a */; };
+		C57CC1442358ECF700206922 /* libDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC0E12358EB0C00206922 /* libDebug.a */; };
+		C57CC1452358ECF700206922 /* libFile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC0E72358EB1700206922 /* libFile.a */; };
+		C57CC1462358ECF700206922 /* libHTTP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC0ED2358EB1D00206922 /* libHTTP.a */; };
+		C57CC1472358ECF700206922 /* liblanguage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC0F32358EB2400206922 /* liblanguage.a */; };
+		C57CC1482358ECF700206922 /* liblua_cjson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC0F92358EB2B00206922 /* liblua_cjson.a */; };
+		C57CC1492358ECF700206922 /* libluasocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC0FF2358EB3200206922 /* libluasocket.a */; };
+		C57CC14A2358ECF700206922 /* libnetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC1052358EB3A00206922 /* libnetwork.a */; };
+		C57CC14B2358ECF700206922 /* libNotify.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC10B2358EB4200206922 /* libNotify.a */; };
+		C57CC14C2358ECF700206922 /* libsqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC1112358EB4A00206922 /* libsqlite.a */; };
+		C57CC14D2358ECF700206922 /* libthread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC1172358EB5000206922 /* libthread.a */; };
+		C57CC14E2358ECF700206922 /* libtimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CC11D2358EB5600206922 /* libtimer.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C57CC0DA2358EB0400206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0D62358EB0400206922 /* AsyncSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CBF992358D71400206922;
+			remoteInfo = AsyncSocket;
+		};
+		C57CC0E02358EB0C00206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0DC2358EB0C00206922 /* Debug.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CBFB12358D8F900206922;
+			remoteInfo = Debug;
+		};
+		C57CC0E62358EB1700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0E22358EB1700206922 /* File.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CBFC92358DB2D00206922;
+			remoteInfo = File;
+		};
+		C57CC0EC2358EB1D00206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0E82358EB1D00206922 /* HTTP.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CBFE12358DC7500206922;
+			remoteInfo = HTTP;
+		};
+		C57CC0F22358EB2400206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0EE2358EB2400206922 /* language.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CBFFC2358DE3400206922;
+			remoteInfo = language;
+		};
+		C57CC0F82358EB2B00206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0F42358EB2B00206922 /* lua_cjson.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CC0192358E03B00206922;
+			remoteInfo = lua_cjson;
+		};
+		C57CC0FE2358EB3200206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0FA2358EB3200206922 /* luasocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CC03C2358E1BF00206922;
+			remoteInfo = luasocket;
+		};
+		C57CC1042358EB3A00206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC1002358EB3A00206922 /* network.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C501C183234CDB600093ACBA;
+			remoteInfo = network;
+		};
+		C57CC10A2358EB4200206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC1062358EB4200206922 /* Notify.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CC0832358E42800206922;
+			remoteInfo = Notify;
+		};
+		C57CC1102358EB4A00206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC10C2358EB4900206922 /* sqlite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C501C124234CD8A30093ACBA;
+			remoteInfo = sqlite;
+		};
+		C57CC1162358EB5000206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC1122358EB5000206922 /* thread.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CC0AC2358E89F00206922;
+			remoteInfo = thread;
+		};
+		C57CC11C2358EB5600206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC1182358EB5600206922 /* timer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C57CC0C72358E9F300206922;
+			remoteInfo = timer;
+		};
+		C57CC12A2358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC1182358EB5600206922 /* timer.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CC0C62358E9F300206922;
+			remoteInfo = timer;
+		};
+		C57CC12C2358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC1122358EB5000206922 /* thread.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CC0AB2358E89F00206922;
+			remoteInfo = thread;
+		};
+		C57CC12E2358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC10C2358EB4900206922 /* sqlite.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C501C123234CD8A30093ACBA;
+			remoteInfo = sqlite;
+		};
+		C57CC1302358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC1062358EB4200206922 /* Notify.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CC0822358E42800206922;
+			remoteInfo = Notify;
+		};
+		C57CC1322358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC1002358EB3A00206922 /* network.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C501C182234CDB600093ACBA;
+			remoteInfo = network;
+		};
+		C57CC1342358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0FA2358EB3200206922 /* luasocket.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CC03B2358E1BF00206922;
+			remoteInfo = luasocket;
+		};
+		C57CC1362358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0F42358EB2B00206922 /* lua_cjson.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CC0182358E03B00206922;
+			remoteInfo = lua_cjson;
+		};
+		C57CC1382358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0EE2358EB2400206922 /* language.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CBFFB2358DE3400206922;
+			remoteInfo = language;
+		};
+		C57CC13A2358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0E82358EB1D00206922 /* HTTP.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CBFE02358DC7500206922;
+			remoteInfo = HTTP;
+		};
+		C57CC13C2358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0E22358EB1700206922 /* File.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CBFC82358DB2D00206922;
+			remoteInfo = File;
+		};
+		C57CC13E2358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0DC2358EB0C00206922 /* Debug.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CBFB02358D8F900206922;
+			remoteInfo = Debug;
+		};
+		C57CC1402358ECD700206922 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57CC0D62358EB0400206922 /* AsyncSocket.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C57CBF982358D71400206922;
+			remoteInfo = AsyncSocket;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C58B055B2336B0E200A125C2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C57CC0D62358EB0400206922 /* AsyncSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AsyncSocket.xcodeproj; path = AsyncSocket/AsyncSocket.xcodeproj; sourceTree = "<group>"; };
+		C57CC0DC2358EB0C00206922 /* Debug.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Debug.xcodeproj; path = debug/Debug.xcodeproj; sourceTree = "<group>"; };
+		C57CC0E22358EB1700206922 /* File.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = File.xcodeproj; path = File/File.xcodeproj; sourceTree = "<group>"; };
+		C57CC0E82358EB1D00206922 /* HTTP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTTP.xcodeproj; path = HTTP/HTTP.xcodeproj; sourceTree = "<group>"; };
+		C57CC0EE2358EB2400206922 /* language.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = language.xcodeproj; path = language/language.xcodeproj; sourceTree = "<group>"; };
+		C57CC0F42358EB2B00206922 /* lua_cjson.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua_cjson.xcodeproj; path = "lua-cjson-master/lua_cjson.xcodeproj"; sourceTree = "<group>"; };
+		C57CC0FA2358EB3200206922 /* luasocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luasocket.xcodeproj; path = luasocket/luasocket.xcodeproj; sourceTree = "<group>"; };
+		C57CC1002358EB3A00206922 /* network.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = network.xcodeproj; path = network/network.xcodeproj; sourceTree = "<group>"; };
+		C57CC1062358EB4200206922 /* Notify.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Notify.xcodeproj; path = Notify/Notify.xcodeproj; sourceTree = "<group>"; };
+		C57CC10C2358EB4900206922 /* sqlite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlite.xcodeproj; path = "sqlite-amalgamation-3290000/sqlite.xcodeproj"; sourceTree = "<group>"; };
+		C57CC1122358EB5000206922 /* thread.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = thread.xcodeproj; path = thread/thread.xcodeproj; sourceTree = "<group>"; };
+		C57CC1182358EB5600206922 /* timer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = timer.xcodeproj; path = timer/timer.xcodeproj; sourceTree = "<group>"; };
+		C57CC1282358EC9B00206922 /* dummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dummy.c; sourceTree = "<group>"; };
+		C58B055D2336B0E200A125C2 /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libextensions.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C58B055A2336B0E200A125C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C57CC1432358ECF700206922 /* libAsyncSocket.a in Frameworks */,
+				C57CC1442358ECF700206922 /* libDebug.a in Frameworks */,
+				C57CC1452358ECF700206922 /* libFile.a in Frameworks */,
+				C57CC1462358ECF700206922 /* libHTTP.a in Frameworks */,
+				C57CC1472358ECF700206922 /* liblanguage.a in Frameworks */,
+				C57CC1482358ECF700206922 /* liblua_cjson.a in Frameworks */,
+				C57CC1492358ECF700206922 /* libluasocket.a in Frameworks */,
+				C57CC14A2358ECF700206922 /* libnetwork.a in Frameworks */,
+				C57CC14B2358ECF700206922 /* libNotify.a in Frameworks */,
+				C57CC14C2358ECF700206922 /* libsqlite.a in Frameworks */,
+				C57CC14D2358ECF700206922 /* libthread.a in Frameworks */,
+				C57CC14E2358ECF700206922 /* libtimer.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C57CC0D72358EB0400206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC0DB2358EB0400206922 /* libAsyncSocket.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC0DD2358EB0C00206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC0E12358EB0C00206922 /* libDebug.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC0E32358EB1700206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC0E72358EB1700206922 /* libFile.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC0E92358EB1D00206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC0ED2358EB1D00206922 /* libHTTP.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC0EF2358EB2400206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC0F32358EB2400206922 /* liblanguage.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC0F52358EB2B00206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC0F92358EB2B00206922 /* liblua_cjson.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC0FB2358EB3200206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC0FF2358EB3200206922 /* libluasocket.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC1012358EB3A00206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC1052358EB3A00206922 /* libnetwork.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC1072358EB4200206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC10B2358EB4200206922 /* libNotify.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC10D2358EB4900206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC1112358EB4A00206922 /* libsqlite.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC1132358EB5000206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC1172358EB5000206922 /* libthread.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC1192358EB5600206922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57CC11D2358EB5600206922 /* libtimer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57CC1422358ECF700206922 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C58B05542336B0E200A125C2 = {
+			isa = PBXGroup;
+			children = (
+				C57CC1282358EC9B00206922 /* dummy.c */,
+				C57CC1182358EB5600206922 /* timer.xcodeproj */,
+				C57CC1122358EB5000206922 /* thread.xcodeproj */,
+				C57CC10C2358EB4900206922 /* sqlite.xcodeproj */,
+				C57CC1062358EB4200206922 /* Notify.xcodeproj */,
+				C57CC1002358EB3A00206922 /* network.xcodeproj */,
+				C57CC0FA2358EB3200206922 /* luasocket.xcodeproj */,
+				C57CC0F42358EB2B00206922 /* lua_cjson.xcodeproj */,
+				C57CC0EE2358EB2400206922 /* language.xcodeproj */,
+				C57CC0E82358EB1D00206922 /* HTTP.xcodeproj */,
+				C57CC0E22358EB1700206922 /* File.xcodeproj */,
+				C57CC0DC2358EB0C00206922 /* Debug.xcodeproj */,
+				C57CC0D62358EB0400206922 /* AsyncSocket.xcodeproj */,
+				C58B055E2336B0E200A125C2 /* Products */,
+				C57CC1422358ECF700206922 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C58B055E2336B0E200A125C2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C58B055D2336B0E200A125C2 /* libextensions.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C58B055C2336B0E200A125C2 /* extensions */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C58B05662336B0E200A125C2 /* Build configuration list for PBXNativeTarget "extensions" */;
+			buildPhases = (
+				C58B05592336B0E200A125C2 /* Sources */,
+				C58B055A2336B0E200A125C2 /* Frameworks */,
+				C58B055B2336B0E200A125C2 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C57CC12B2358ECD700206922 /* PBXTargetDependency */,
+				C57CC12D2358ECD700206922 /* PBXTargetDependency */,
+				C57CC12F2358ECD700206922 /* PBXTargetDependency */,
+				C57CC1312358ECD700206922 /* PBXTargetDependency */,
+				C57CC1332358ECD700206922 /* PBXTargetDependency */,
+				C57CC1352358ECD700206922 /* PBXTargetDependency */,
+				C57CC1372358ECD700206922 /* PBXTargetDependency */,
+				C57CC1392358ECD700206922 /* PBXTargetDependency */,
+				C57CC13B2358ECD700206922 /* PBXTargetDependency */,
+				C57CC13D2358ECD700206922 /* PBXTargetDependency */,
+				C57CC13F2358ECD700206922 /* PBXTargetDependency */,
+				C57CC1412358ECD700206922 /* PBXTargetDependency */,
+			);
+			name = extensions;
+			productName = extensions;
+			productReference = C58B055D2336B0E200A125C2 /* libextensions.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C58B05552336B0E200A125C2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = larpoux;
+				TargetAttributes = {
+					C58B055C2336B0E200A125C2 = {
+						CreatedOnToolsVersion = 11.0;
+					};
+				};
+			};
+			buildConfigurationList = C58B05582336B0E200A125C2 /* Build configuration list for PBXProject "extensions" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C58B05542336B0E200A125C2;
+			productRefGroup = C58B055E2336B0E200A125C2 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C57CC0D72358EB0400206922 /* Products */;
+					ProjectRef = C57CC0D62358EB0400206922 /* AsyncSocket.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC0DD2358EB0C00206922 /* Products */;
+					ProjectRef = C57CC0DC2358EB0C00206922 /* Debug.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC0E32358EB1700206922 /* Products */;
+					ProjectRef = C57CC0E22358EB1700206922 /* File.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC0E92358EB1D00206922 /* Products */;
+					ProjectRef = C57CC0E82358EB1D00206922 /* HTTP.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC0EF2358EB2400206922 /* Products */;
+					ProjectRef = C57CC0EE2358EB2400206922 /* language.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC0F52358EB2B00206922 /* Products */;
+					ProjectRef = C57CC0F42358EB2B00206922 /* lua_cjson.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC0FB2358EB3200206922 /* Products */;
+					ProjectRef = C57CC0FA2358EB3200206922 /* luasocket.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC1012358EB3A00206922 /* Products */;
+					ProjectRef = C57CC1002358EB3A00206922 /* network.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC1072358EB4200206922 /* Products */;
+					ProjectRef = C57CC1062358EB4200206922 /* Notify.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC10D2358EB4900206922 /* Products */;
+					ProjectRef = C57CC10C2358EB4900206922 /* sqlite.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC1132358EB5000206922 /* Products */;
+					ProjectRef = C57CC1122358EB5000206922 /* thread.xcodeproj */;
+				},
+				{
+					ProductGroup = C57CC1192358EB5600206922 /* Products */;
+					ProjectRef = C57CC1182358EB5600206922 /* timer.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C58B055C2336B0E200A125C2 /* extensions */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C57CC0DB2358EB0400206922 /* libAsyncSocket.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAsyncSocket.a;
+			remoteRef = C57CC0DA2358EB0400206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC0E12358EB0C00206922 /* libDebug.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDebug.a;
+			remoteRef = C57CC0E02358EB0C00206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC0E72358EB1700206922 /* libFile.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libFile.a;
+			remoteRef = C57CC0E62358EB1700206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC0ED2358EB1D00206922 /* libHTTP.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libHTTP.a;
+			remoteRef = C57CC0EC2358EB1D00206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC0F32358EB2400206922 /* liblanguage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblanguage.a;
+			remoteRef = C57CC0F22358EB2400206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC0F92358EB2B00206922 /* liblua_cjson.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblua_cjson.a;
+			remoteRef = C57CC0F82358EB2B00206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC0FF2358EB3200206922 /* libluasocket.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libluasocket.a;
+			remoteRef = C57CC0FE2358EB3200206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC1052358EB3A00206922 /* libnetwork.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnetwork.a;
+			remoteRef = C57CC1042358EB3A00206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC10B2358EB4200206922 /* libNotify.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libNotify.a;
+			remoteRef = C57CC10A2358EB4200206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC1112358EB4A00206922 /* libsqlite.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libsqlite.a;
+			remoteRef = C57CC1102358EB4A00206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC1172358EB5000206922 /* libthread.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthread.a;
+			remoteRef = C57CC1162358EB5000206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C57CC11D2358EB5600206922 /* libtimer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libtimer.a;
+			remoteRef = C57CC11C2358EB5600206922 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C58B05592336B0E200A125C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C57CC1292358EC9B00206922 /* dummy.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C57CC12B2358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = timer;
+			targetProxy = C57CC12A2358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC12D2358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = thread;
+			targetProxy = C57CC12C2358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC12F2358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = sqlite;
+			targetProxy = C57CC12E2358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC1312358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Notify;
+			targetProxy = C57CC1302358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC1332358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = network;
+			targetProxy = C57CC1322358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC1352358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = luasocket;
+			targetProxy = C57CC1342358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC1372358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = lua_cjson;
+			targetProxy = C57CC1362358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC1392358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = language;
+			targetProxy = C57CC1382358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC13B2358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTTP;
+			targetProxy = C57CC13A2358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC13D2358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = File;
+			targetProxy = C57CC13C2358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC13F2358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Debug;
+			targetProxy = C57CC13E2358ECD700206922 /* PBXContainerItemProxy */;
+		};
+		C57CC1412358ECD700206922 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AsyncSocket;
+			targetProxy = C57CC1402358ECD700206922 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C58B05642336B0E200A125C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "LUA_COMPAT_5_1=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Debug;
+		};
+		C58B05652336B0E200A125C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "LUA_COMPAT_5_1=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Release;
+		};
+		C58B05672336B0E200A125C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = "";
+				LUAKIT_ROOT = "$(SRCROOT)/..";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Debug;
+		};
+		C58B05682336B0E200A125C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = "";
+				LUAKIT_ROOT = "$(SRCROOT)/..";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C58B05582336B0E200A125C2 /* Build configuration list for PBXProject "extensions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C58B05642336B0E200A125C2 /* Debug */,
+				C58B05652336B0E200A125C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C58B05662336B0E200A125C2 /* Build configuration list for PBXNativeTarget "extensions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C58B05672336B0E200A125C2 /* Debug */,
+				C58B05682336B0E200A125C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C58B05552336B0E200A125C2 /* Project object */;
+}

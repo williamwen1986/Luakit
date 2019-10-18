@@ -1,0 +1,697 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C500A1FD234DE943001998F1 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C500A1FA234DE92E001998F1 /* liblua.a */; };
+		C5830B80234CA6E000E2576E /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C15234CA49D00F04AD4 /* libcurl.a */; };
+		C5830B81234CA6E000E2576E /* libdmg_fp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C1D234CA4A700F04AD4 /* libdmg_fp.a */; };
+		C5830B82234CA6E000E2576E /* libdynamic_annotations.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C23234CA4C800F04AD4 /* libdynamic_annotations.a */; };
+		C5830B83234CA6E000E2576E /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C2F234CA4DE00F04AD4 /* libevent.a */; };
+		C5830B84234CA6E000E2576E /* libicu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C29234CA4D300F04AD4 /* libicu.a */; };
+		C5830B86234CA6E000E2576E /* libmodp_b64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C41234CA51000F04AD4 /* libmodp_b64.a */; };
+		C5830B88234CA6E000E2576E /* libtoluapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C50234CA52700F04AD4 /* libtoluapp.a */; };
+		C5830B89234CA6E000E2576E /* libxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8C35234CA4F100F04AD4 /* libxml.a */; };
+		C5868459234E311500CD0BC7 /* dummy.c in Sources */ = {isa = PBXBuildFile; fileRef = C5868457234E311500CD0BC7 /* dummy.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C500A1F9234DE92E001998F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C500A1F4234DE92E001998F1 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C5830BE4234CC51C00E2576E;
+			remoteInfo = lua;
+		};
+		C500A1FB234DE93A001998F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C500A1F4234DE92E001998F1 /* lua.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C5830BE3234CC51C00E2576E;
+			remoteInfo = lua;
+		};
+		C54E8C14234CA49D00F04AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C0F234CA49D00F04AD4 /* curl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C521881E23313510001AA895;
+			remoteInfo = curl;
+		};
+		C54E8C1C234CA4A700F04AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C18234CA4A700F04AD4 /* dmg_fp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C54E89D6234B949A00F04AD4;
+			remoteInfo = dmg_fp;
+		};
+		C54E8C22234CA4C800F04AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C1E234CA4C800F04AD4 /* dynamic_annotations.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C54E8A91234B9A5B00F04AD4;
+			remoteInfo = dynamic_annotations;
+		};
+		C54E8C28234CA4D300F04AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C24234CA4D300F04AD4 /* icu.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C54E8AE9234BA50800F04AD4;
+			remoteInfo = icu;
+		};
+		C54E8C2E234CA4DE00F04AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C2A234CA4DE00F04AD4 /* event.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FC3DE02F41FA36BF9BC0714C;
+			remoteInfo = event;
+		};
+		C54E8C34234CA4F100F04AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C30234CA4F100F04AD4 /* xml.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BAD727EB1BA1BEC4008C52AC;
+			remoteInfo = xml;
+		};
+		C54E8C40234CA51000F04AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C3C234CA51000F04AD4 /* modp_b64.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0E4F2F6A1B89E26245AF06BC;
+			remoteInfo = modp_b64;
+		};
+		C54E8C4F234CA52700F04AD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C4B234CA52700F04AD4 /* toluapp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C54E8A1C234B971600F04AD4;
+			remoteInfo = toluapp;
+		};
+		C5830B5F234CA6BF00E2576E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C4B234CA52700F04AD4 /* toluapp.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C54E8A1B234B971600F04AD4;
+			remoteInfo = toluapp;
+		};
+		C5830B63234CA6BF00E2576E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C3C234CA51000F04AD4 /* modp_b64.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D5D659AE4416D4670CD8571;
+			remoteInfo = modp_b64;
+		};
+		C5830B67234CA6BF00E2576E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C30234CA4F100F04AD4 /* xml.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BAD727EA1BA1BEC4008C52AC;
+			remoteInfo = xml;
+		};
+		C5830B69234CA6BF00E2576E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C2A234CA4DE00F04AD4 /* event.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3957C557EC3642B16CCFD55B;
+			remoteInfo = event;
+		};
+		C5830B6B234CA6BF00E2576E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C24234CA4D300F04AD4 /* icu.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C54E8AE8234BA50800F04AD4;
+			remoteInfo = icu;
+		};
+		C5830B6D234CA6BF00E2576E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C1E234CA4C800F04AD4 /* dynamic_annotations.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C54E8A90234B9A5B00F04AD4;
+			remoteInfo = dynamic_annotations;
+		};
+		C5830B6F234CA6BF00E2576E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C18234CA4A700F04AD4 /* dmg_fp.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C54E89D5234B949A00F04AD4;
+			remoteInfo = dmg_fp;
+		};
+		C5830B71234CA6BF00E2576E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54E8C0F234CA49D00F04AD4 /* curl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C521881D23313510001AA895;
+			remoteInfo = curl;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C54E8C01234CA45600F04AD4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C500A1F4234DE92E001998F1 /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = "lua-5.1.5/lua.xcodeproj"; sourceTree = "<group>"; };
+		C54E8C03234CA45600F04AD4 /* libthird-party.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libthird-party.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C54E8C0F234CA49D00F04AD4 /* curl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = curl.xcodeproj; path = curl/curl.xcodeproj; sourceTree = "<group>"; };
+		C54E8C18234CA4A700F04AD4 /* dmg_fp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = dmg_fp.xcodeproj; path = dmg_fp/dmg_fp.xcodeproj; sourceTree = "<group>"; };
+		C54E8C1E234CA4C800F04AD4 /* dynamic_annotations.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = dynamic_annotations.xcodeproj; path = dynamic_annotations/dynamic_annotations.xcodeproj; sourceTree = "<group>"; };
+		C54E8C24234CA4D300F04AD4 /* icu.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = icu.xcodeproj; path = icu/icu.xcodeproj; sourceTree = "<group>"; };
+		C54E8C2A234CA4DE00F04AD4 /* event.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = event.xcodeproj; path = libevent/event.xcodeproj; sourceTree = "<group>"; };
+		C54E8C30234CA4F100F04AD4 /* xml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xml.xcodeproj; path = libxml/xml.xcodeproj; sourceTree = "<group>"; };
+		C54E8C3C234CA51000F04AD4 /* modp_b64.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = modp_b64.xcodeproj; path = modp_b64/modp_b64.xcodeproj; sourceTree = "<group>"; };
+		C54E8C4B234CA52700F04AD4 /* toluapp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = toluapp.xcodeproj; path = toluapp/toluapp.xcodeproj; sourceTree = "<group>"; };
+		C5868457234E311500CD0BC7 /* dummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dummy.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C54E8C00234CA45600F04AD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C500A1FD234DE943001998F1 /* liblua.a in Frameworks */,
+				C5830B80234CA6E000E2576E /* libcurl.a in Frameworks */,
+				C5830B81234CA6E000E2576E /* libdmg_fp.a in Frameworks */,
+				C5830B82234CA6E000E2576E /* libdynamic_annotations.a in Frameworks */,
+				C5830B83234CA6E000E2576E /* libevent.a in Frameworks */,
+				C5830B84234CA6E000E2576E /* libicu.a in Frameworks */,
+				C5830B86234CA6E000E2576E /* libmodp_b64.a in Frameworks */,
+				C5830B88234CA6E000E2576E /* libtoluapp.a in Frameworks */,
+				C5830B89234CA6E000E2576E /* libxml.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C500A1F5234DE92E001998F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C500A1FA234DE92E001998F1 /* liblua.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C54E8BFA234CA45600F04AD4 = {
+			isa = PBXGroup;
+			children = (
+				C5868457234E311500CD0BC7 /* dummy.c */,
+				C500A1F4234DE92E001998F1 /* lua.xcodeproj */,
+				C54E8C4B234CA52700F04AD4 /* toluapp.xcodeproj */,
+				C54E8C3C234CA51000F04AD4 /* modp_b64.xcodeproj */,
+				C54E8C30234CA4F100F04AD4 /* xml.xcodeproj */,
+				C54E8C2A234CA4DE00F04AD4 /* event.xcodeproj */,
+				C54E8C24234CA4D300F04AD4 /* icu.xcodeproj */,
+				C54E8C1E234CA4C800F04AD4 /* dynamic_annotations.xcodeproj */,
+				C54E8C18234CA4A700F04AD4 /* dmg_fp.xcodeproj */,
+				C54E8C0F234CA49D00F04AD4 /* curl.xcodeproj */,
+				C54E8C04234CA45600F04AD4 /* Products */,
+				C5830B7F234CA6E000E2576E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C54E8C04234CA45600F04AD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C54E8C03234CA45600F04AD4 /* libthird-party.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C54E8C10234CA49D00F04AD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C54E8C15234CA49D00F04AD4 /* libcurl.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C54E8C19234CA4A700F04AD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C54E8C1D234CA4A700F04AD4 /* libdmg_fp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C54E8C1F234CA4C800F04AD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C54E8C23234CA4C800F04AD4 /* libdynamic_annotations.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C54E8C25234CA4D300F04AD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C54E8C29234CA4D300F04AD4 /* libicu.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C54E8C2B234CA4DE00F04AD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C54E8C2F234CA4DE00F04AD4 /* libevent.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C54E8C31234CA4F100F04AD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C54E8C35234CA4F100F04AD4 /* libxml.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C54E8C3D234CA51000F04AD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C54E8C41234CA51000F04AD4 /* libmodp_b64.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C54E8C4C234CA52700F04AD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C54E8C50234CA52700F04AD4 /* libtoluapp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C5830B7F234CA6E000E2576E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C54E8C02234CA45600F04AD4 /* third-party */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C54E8C0C234CA45600F04AD4 /* Build configuration list for PBXNativeTarget "third-party" */;
+			buildPhases = (
+				C54E8BFF234CA45600F04AD4 /* Sources */,
+				C54E8C00234CA45600F04AD4 /* Frameworks */,
+				C54E8C01234CA45600F04AD4 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C500A1FC234DE93A001998F1 /* PBXTargetDependency */,
+				C5830B60234CA6BF00E2576E /* PBXTargetDependency */,
+				C5830B64234CA6BF00E2576E /* PBXTargetDependency */,
+				C5830B68234CA6BF00E2576E /* PBXTargetDependency */,
+				C5830B6A234CA6BF00E2576E /* PBXTargetDependency */,
+				C5830B6C234CA6BF00E2576E /* PBXTargetDependency */,
+				C5830B6E234CA6BF00E2576E /* PBXTargetDependency */,
+				C5830B70234CA6BF00E2576E /* PBXTargetDependency */,
+				C5830B72234CA6BF00E2576E /* PBXTargetDependency */,
+			);
+			name = "third-party";
+			productName = "third-party";
+			productReference = C54E8C03234CA45600F04AD4 /* libthird-party.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C54E8BFB234CA45600F04AD4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = larpoux;
+				TargetAttributes = {
+					C54E8C02234CA45600F04AD4 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = C54E8BFE234CA45600F04AD4 /* Build configuration list for PBXProject "third-party" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C54E8BFA234CA45600F04AD4;
+			productRefGroup = C54E8C04234CA45600F04AD4 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C54E8C10234CA49D00F04AD4 /* Products */;
+					ProjectRef = C54E8C0F234CA49D00F04AD4 /* curl.xcodeproj */;
+				},
+				{
+					ProductGroup = C54E8C19234CA4A700F04AD4 /* Products */;
+					ProjectRef = C54E8C18234CA4A700F04AD4 /* dmg_fp.xcodeproj */;
+				},
+				{
+					ProductGroup = C54E8C1F234CA4C800F04AD4 /* Products */;
+					ProjectRef = C54E8C1E234CA4C800F04AD4 /* dynamic_annotations.xcodeproj */;
+				},
+				{
+					ProductGroup = C54E8C2B234CA4DE00F04AD4 /* Products */;
+					ProjectRef = C54E8C2A234CA4DE00F04AD4 /* event.xcodeproj */;
+				},
+				{
+					ProductGroup = C54E8C25234CA4D300F04AD4 /* Products */;
+					ProjectRef = C54E8C24234CA4D300F04AD4 /* icu.xcodeproj */;
+				},
+				{
+					ProductGroup = C500A1F5234DE92E001998F1 /* Products */;
+					ProjectRef = C500A1F4234DE92E001998F1 /* lua.xcodeproj */;
+				},
+				{
+					ProductGroup = C54E8C3D234CA51000F04AD4 /* Products */;
+					ProjectRef = C54E8C3C234CA51000F04AD4 /* modp_b64.xcodeproj */;
+				},
+				{
+					ProductGroup = C54E8C4C234CA52700F04AD4 /* Products */;
+					ProjectRef = C54E8C4B234CA52700F04AD4 /* toluapp.xcodeproj */;
+				},
+				{
+					ProductGroup = C54E8C31234CA4F100F04AD4 /* Products */;
+					ProjectRef = C54E8C30234CA4F100F04AD4 /* xml.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C54E8C02234CA45600F04AD4 /* third-party */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C500A1FA234DE92E001998F1 /* liblua.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblua.a;
+			remoteRef = C500A1F9234DE92E001998F1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C54E8C15234CA49D00F04AD4 /* libcurl.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcurl.a;
+			remoteRef = C54E8C14234CA49D00F04AD4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C54E8C1D234CA4A700F04AD4 /* libdmg_fp.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libdmg_fp.a;
+			remoteRef = C54E8C1C234CA4A700F04AD4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C54E8C23234CA4C800F04AD4 /* libdynamic_annotations.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libdynamic_annotations.a;
+			remoteRef = C54E8C22234CA4C800F04AD4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C54E8C29234CA4D300F04AD4 /* libicu.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libicu.a;
+			remoteRef = C54E8C28234CA4D300F04AD4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C54E8C2F234CA4DE00F04AD4 /* libevent.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libevent.a;
+			remoteRef = C54E8C2E234CA4DE00F04AD4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C54E8C35234CA4F100F04AD4 /* libxml.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libxml.a;
+			remoteRef = C54E8C34234CA4F100F04AD4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C54E8C41234CA51000F04AD4 /* libmodp_b64.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libmodp_b64.a;
+			remoteRef = C54E8C40234CA51000F04AD4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C54E8C50234CA52700F04AD4 /* libtoluapp.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libtoluapp.a;
+			remoteRef = C54E8C4F234CA52700F04AD4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C54E8BFF234CA45600F04AD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5868459234E311500CD0BC7 /* dummy.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C500A1FC234DE93A001998F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = lua;
+			targetProxy = C500A1FB234DE93A001998F1 /* PBXContainerItemProxy */;
+		};
+		C5830B60234CA6BF00E2576E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = toluapp;
+			targetProxy = C5830B5F234CA6BF00E2576E /* PBXContainerItemProxy */;
+		};
+		C5830B64234CA6BF00E2576E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = modp_b64;
+			targetProxy = C5830B63234CA6BF00E2576E /* PBXContainerItemProxy */;
+		};
+		C5830B68234CA6BF00E2576E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = xml;
+			targetProxy = C5830B67234CA6BF00E2576E /* PBXContainerItemProxy */;
+		};
+		C5830B6A234CA6BF00E2576E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = event;
+			targetProxy = C5830B69234CA6BF00E2576E /* PBXContainerItemProxy */;
+		};
+		C5830B6C234CA6BF00E2576E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = icu;
+			targetProxy = C5830B6B234CA6BF00E2576E /* PBXContainerItemProxy */;
+		};
+		C5830B6E234CA6BF00E2576E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = dynamic_annotations;
+			targetProxy = C5830B6D234CA6BF00E2576E /* PBXContainerItemProxy */;
+		};
+		C5830B70234CA6BF00E2576E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = dmg_fp;
+			targetProxy = C5830B6F234CA6BF00E2576E /* PBXContainerItemProxy */;
+		};
+		C5830B72234CA6BF00E2576E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = curl;
+			targetProxy = C5830B71234CA6BF00E2576E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C54E8C0A234CA45600F04AD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Debug;
+		};
+		C54E8C0B234CA45600F04AD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Release;
+		};
+		C54E8C0D234CA45600F04AD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Debug;
+		};
+		C54E8C0E234CA45600F04AD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C54E8BFE234CA45600F04AD4 /* Build configuration list for PBXProject "third-party" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C54E8C0A234CA45600F04AD4 /* Debug */,
+				C54E8C0B234CA45600F04AD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C54E8C0C234CA45600F04AD4 /* Build configuration list for PBXNativeTarget "third-party" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C54E8C0D234CA45600F04AD4 /* Debug */,
+				C54E8C0E234CA45600F04AD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C54E8BFB234CA45600F04AD4 /* Project object */;
+}

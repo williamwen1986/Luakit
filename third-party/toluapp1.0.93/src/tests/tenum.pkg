@@ -1,0 +1,13 @@
+$#include "tenum.h"
+
+enum Order {
+  FIRST,
+  SECOND
+};
+
+typedef enum {
+  FALSE,
+  TRUE
+} Status;
+
+Status checkenum (Order o);

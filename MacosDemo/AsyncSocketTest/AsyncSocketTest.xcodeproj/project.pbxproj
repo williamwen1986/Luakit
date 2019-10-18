@@ -1,0 +1,455 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C5383F57232A8FB800E8F2A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5383F56232A8FB800E8F2A4 /* AppDelegate.m */; };
+		C5383F5C232A8FB900E8F2A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5383F5B232A8FB900E8F2A4 /* Assets.xcassets */; };
+		C5383F5F232A8FB900E8F2A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5383F5D232A8FB900E8F2A4 /* Main.storyboard */; };
+		C5383F6B232A904100E8F2A4 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C5383F69232A904100E8F2A4 /* ViewController.mm */; };
+		C5383F6C232A904100E8F2A4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C5383F6A232A904100E8F2A4 /* main.mm */; };
+		C57B6796235992B0001AB6A1 /* libluakit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57B67932359928F001AB6A1 /* libluakit.a */; };
+		C57B679A23599418001AB6A1 /* LuakitExtensions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C57B679923599418001AB6A1 /* LuakitExtensions.cpp */; };
+		C5BD070B233528D900E630F5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BD070A233528D900E630F5 /* libssl.a */; };
+		C5BD071123352C3D00E630F5 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = C5BD071023352C3D00E630F5 /* lua */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C57B67922359928F001AB6A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57B676F2359928E001AB6A1 /* luakit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C545B526233DF2DE00B44FF2;
+			remoteInfo = luakit;
+		};
+		C57B67942359929E001AB6A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C57B676F2359928E001AB6A1 /* luakit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C545B525233DF2DE00B44FF2;
+			remoteInfo = luakit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C5383F52232A8FB800E8F2A4 /* AsyncSocketTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsyncSocketTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5383F55232A8FB800E8F2A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C5383F56232A8FB800E8F2A4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C5383F58232A8FB800E8F2A4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C5383F5B232A8FB900E8F2A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C5383F5E232A8FB900E8F2A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C5383F60232A8FB900E8F2A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5383F63232A8FB900E8F2A4 /* AsyncSocketTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AsyncSocketTest.entitlements; sourceTree = "<group>"; };
+		C5383F69232A904100E8F2A4 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		C5383F6A232A904100E8F2A4 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		C5383F74232A90D500E8F2A4 /* libLuakit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLuakit.dylib; path = "../../libs/macos-Debug/libLuakit.dylib"; sourceTree = "<group>"; };
+		C57B676F2359928E001AB6A1 /* luakit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit.xcodeproj; path = ../../AppleFramework/luakit.xcodeproj; sourceTree = "<group>"; };
+		C57B679923599418001AB6A1 /* LuakitExtensions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuakitExtensions.cpp; sourceTree = "<group>"; };
+		C57F400F2350CC0B005D4087 /* libextensions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libextensions.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5BD070A233528D900E630F5 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../libs/macos10.14-Debug/libssl.a"; sourceTree = "<group>"; };
+		C5BD071023352C3D00E630F5 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lua; path = AsyncSocketTest/lua; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C5383F4F232A8FB800E8F2A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C57B6796235992B0001AB6A1 /* libluakit.a in Frameworks */,
+				C5BD070B233528D900E630F5 /* libssl.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C5383F49232A8FB800E8F2A4 = {
+			isa = PBXGroup;
+			children = (
+				C57B679923599418001AB6A1 /* LuakitExtensions.cpp */,
+				C57B676F2359928E001AB6A1 /* luakit.xcodeproj */,
+				C5BD071023352C3D00E630F5 /* lua */,
+				C5383F54232A8FB800E8F2A4 /* AsyncSocketTest */,
+				C5383F53232A8FB800E8F2A4 /* Products */,
+				C5383F73232A90D500E8F2A4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C5383F53232A8FB800E8F2A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C5383F52232A8FB800E8F2A4 /* AsyncSocketTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C5383F54232A8FB800E8F2A4 /* AsyncSocketTest */ = {
+			isa = PBXGroup;
+			children = (
+				C5383F6A232A904100E8F2A4 /* main.mm */,
+				C5383F69232A904100E8F2A4 /* ViewController.mm */,
+				C5383F55232A8FB800E8F2A4 /* AppDelegate.h */,
+				C5383F56232A8FB800E8F2A4 /* AppDelegate.m */,
+				C5383F58232A8FB800E8F2A4 /* ViewController.h */,
+				C5383F5B232A8FB900E8F2A4 /* Assets.xcassets */,
+				C5383F5D232A8FB900E8F2A4 /* Main.storyboard */,
+				C5383F60232A8FB900E8F2A4 /* Info.plist */,
+				C5383F63232A8FB900E8F2A4 /* AsyncSocketTest.entitlements */,
+			);
+			path = AsyncSocketTest;
+			sourceTree = "<group>";
+		};
+		C5383F73232A90D500E8F2A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C57F400F2350CC0B005D4087 /* libextensions.a */,
+				C5BD070A233528D900E630F5 /* libssl.a */,
+				C5383F74232A90D500E8F2A4 /* libLuakit.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C57B67702359928E001AB6A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57B67932359928F001AB6A1 /* libluakit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C5383F51232A8FB800E8F2A4 /* AsyncSocketTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5383F66232A8FB900E8F2A4 /* Build configuration list for PBXNativeTarget "AsyncSocketTest" */;
+			buildPhases = (
+				C5383F4E232A8FB800E8F2A4 /* Sources */,
+				C5383F4F232A8FB800E8F2A4 /* Frameworks */,
+				C5383F50232A8FB800E8F2A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C57B67952359929E001AB6A1 /* PBXTargetDependency */,
+			);
+			name = AsyncSocketTest;
+			productName = AsyncSocketTest;
+			productReference = C5383F52232A8FB800E8F2A4 /* AsyncSocketTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C5383F4A232A8FB800E8F2A4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = larpoux;
+				TargetAttributes = {
+					C5383F51232A8FB800E8F2A4 = {
+						CreatedOnToolsVersion = 10.3;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = C5383F4D232A8FB800E8F2A4 /* Build configuration list for PBXProject "AsyncSocketTest" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C5383F49232A8FB800E8F2A4;
+			productRefGroup = C5383F53232A8FB800E8F2A4 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C57B67702359928E001AB6A1 /* Products */;
+					ProjectRef = C57B676F2359928E001AB6A1 /* luakit.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C5383F51232A8FB800E8F2A4 /* AsyncSocketTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C57B67932359928F001AB6A1 /* libluakit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libluakit.a;
+			remoteRef = C57B67922359928F001AB6A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C5383F50232A8FB800E8F2A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5BD071123352C3D00E630F5 /* lua in Resources */,
+				C5383F5C232A8FB900E8F2A4 /* Assets.xcassets in Resources */,
+				C5383F5F232A8FB900E8F2A4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C5383F4E232A8FB800E8F2A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5383F6C232A904100E8F2A4 /* main.mm in Sources */,
+				C5383F6B232A904100E8F2A4 /* ViewController.mm in Sources */,
+				C5383F57232A8FB800E8F2A4 /* AppDelegate.m in Sources */,
+				C57B679A23599418001AB6A1 /* LuakitExtensions.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C57B67952359929E001AB6A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = luakit;
+			targetProxy = C57B67942359929E001AB6A1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C5383F5D232A8FB900E8F2A4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C5383F5E232A8FB900E8F2A4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C5383F64232A8FB900E8F2A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/AppleFramework/Luakit/OCHelper",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src",
+				);
+				LIBRARY_SEARCH_PATHS = "$(LUAKIT_ROOT)/libs/macos$SDK_VERSION-$CONFIGURATION";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
+			};
+			name = Debug;
+		};
+		C5383F65232A8FB900E8F2A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/AppleFramework/Luakit/OCHelper",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/src/lua-5.1.5/lua",
+					"$(LUAKIT_ROOT)/src",
+				);
+				LIBRARY_SEARCH_PATHS = "$(LUAKIT_ROOT)/libs/macos$SDK_VERSION-$CONFIGURATION";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
+			};
+			name = Release;
+		};
+		C5383F67232A8FB900E8F2A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AsyncSocketTest/AsyncSocketTest.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/AppleFramework/OCHelper",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/src",
+				);
+				INFOPLIST_FILE = AsyncSocketTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = Canardoux.AsyncSocketTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
+			};
+			name = Debug;
+		};
+		C5383F68232A8FB900E8F2A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AsyncSocketTest/AsyncSocketTest.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5YY4QLF92X;
+				HEADER_SEARCH_PATHS = (
+					"$(LUAKIT_ROOT)/AppleFramework/OCHelper",
+					"$(LUAKIT_ROOT)/src/common",
+					"$(LUAKIT_ROOT)/third-party/lua-5.1.5/src",
+					"$(LUAKIT_ROOT)/src",
+				);
+				INFOPLIST_FILE = AsyncSocketTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LUAKIT_ROOT = "$(SRCROOT)/../..";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = Canardoux.AsyncSocketTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C5383F4D232A8FB800E8F2A4 /* Build configuration list for PBXProject "AsyncSocketTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5383F64232A8FB900E8F2A4 /* Debug */,
+				C5383F65232A8FB900E8F2A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C5383F66232A8FB900E8F2A4 /* Build configuration list for PBXNativeTarget "AsyncSocketTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5383F67232A8FB900E8F2A4 /* Debug */,
+				C5383F68232A8FB900E8F2A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C5383F4A232A8FB800E8F2A4 /* Project object */;
+}
