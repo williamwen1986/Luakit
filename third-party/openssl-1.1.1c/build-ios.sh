@@ -6,7 +6,7 @@ then
 fi
 
 if [ -z $IOS_SDK_VERSION ]; then
-	IOS_SDK_VERSION="13.0"
+	IOS_SDK_VERSION="13.1"
 fi
 
 

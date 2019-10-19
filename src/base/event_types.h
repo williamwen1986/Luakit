@@ -5,7 +5,7 @@
 #ifndef BASE_EVENT_TYPES_H
 #define BASE_EVENT_TYPES_H
 
-#include "config/build_config.h"
+#include "build_config.h"
 
 #if defined(OS_WIN)
 #include <windows.h>

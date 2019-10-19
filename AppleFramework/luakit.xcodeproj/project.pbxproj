@@ -7,15 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C545B5F2233DF59500B44FF2 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B5AF233DF53500B44FF2 /* libbase.a */; };
-		C545B5F3233DF59500B44FF2 /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C545B59B233DF52200B44FF2 /* libcommon.a */; };
+		C503D1D2235B4ACB00B05283 /* libluakit_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C503D1CF235B4A5400B05283 /* libluakit_engine.a */; };
 		C545B613233DFE3D00B44FF2 /* oc_callback.mm in Sources */ = {isa = PBXBuildFile; fileRef = C545B535233DF38D00B44FF2 /* oc_callback.mm */; };
 		C545B614233DFE3D00B44FF2 /* oc_helpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = C545B537233DF38D00B44FF2 /* oc_helpers.mm */; };
-		C545B624233E012600B44FF2 /* LuakitLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C545B61E233E010300B44FF2 /* LuakitLoader.cpp */; };
-		C545B625233E012600B44FF2 /* lua_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C545B620233E010300B44FF2 /* lua_helpers.cpp */; };
-		C545B626233E012600B44FF2 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C545B622233E010300B44FF2 /* xxtea.cpp */; };
-		C57CC1912359361D00206922 /* notification_service_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = C57CC1852359361D00206922 /* notification_service_impl.cc */; };
-		C57CC1942359361D00206922 /* notification_registrar.cc in Sources */ = {isa = PBXBuildFile; fileRef = C57CC1902359361D00206922 /* notification_registrar.cc */; };
 		C5830BBB234CAA0800E2576E /* libextensions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C54E8BF7234C8E4D00F04AD4 /* libextensions.a */; };
 		C5E42F05234E359E0015AECA /* libthird-party.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C500A1AF234DE2F7001998F1 /* libthird-party.a */; };
 /* End PBXBuildFile section */
@@ -35,40 +29,19 @@
 			remoteGlobalIDString = C54E8C02234CA45600F04AD4;
 			remoteInfo = "third-party";
 		};
-		C545B59A233DF52200B44FF2 /* PBXContainerItemProxy */ = {
+		C503D1CE235B4A5400B05283 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C545B594233DF52200B44FF2 /* common.xcodeproj */;
+			containerPortal = C503D1C0235B4A5400B05283 /* luakit_engine.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 04A4FA121D7464E500E42FE3;
-			remoteInfo = common;
+			remoteGlobalIDString = C503D136235B48E300B05283;
+			remoteInfo = luakit_engine;
 		};
-		C545B59C233DF52200B44FF2 /* PBXContainerItemProxy */ = {
+		C503D1D0235B4AAD00B05283 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C545B594233DF52200B44FF2 /* common.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BA4685D21DD1C8A200A8CCB4;
-			remoteInfo = common_unittests;
-		};
-		C545B5AE233DF53500B44FF2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C545B5A9233DF53400B44FF2 /* base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A24F8E8AF59B46B92FF23F23;
-			remoteInfo = base;
-		};
-		C545B5D8233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C545B5A9233DF53400B44FF2 /* base.xcodeproj */;
+			containerPortal = C503D1C0235B4A5400B05283 /* luakit_engine.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 5272CB5A73F54B4A0E227C3D;
-			remoteInfo = base;
-		};
-		C545B5DC233DF57B00B44FF2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C545B594233DF52200B44FF2 /* common.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 04A4FA111D7464E500E42FE3;
-			remoteInfo = common;
+			remoteGlobalIDString = C503D135235B48E300B05283;
+			remoteInfo = luakit_engine;
 		};
 		C54E8BF6234C8E4D00F04AD4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -112,29 +85,14 @@
 		C501C10F234CD4D70093ACBA /* libsqlite.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libsqlite.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C501C111234CD4F90093ACBA /* libsqlite.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libsqlite.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C501C117234CD7940093ACBA /* libsqlite.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libsqlite.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C503D1C0235B4A5400B05283 /* luakit_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = luakit_engine.xcodeproj; path = ../src/luakit_engine.xcodeproj; sourceTree = "<group>"; };
 		C545B526233DF2DE00B44FF2 /* libluakit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libluakit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C545B533233DF38D00B44FF2 /* NotificationProxyObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationProxyObserver.h; sourceTree = "<group>"; };
 		C545B534233DF38D00B44FF2 /* oc_callback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oc_callback.h; sourceTree = "<group>"; };
 		C545B535233DF38D00B44FF2 /* oc_callback.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_callback.mm; sourceTree = "<group>"; };
 		C545B536233DF38D00B44FF2 /* oc_helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oc_helpers.h; sourceTree = "<group>"; };
 		C545B537233DF38D00B44FF2 /* oc_helpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = oc_helpers.mm; sourceTree = "<group>"; };
-		C545B594233DF52200B44FF2 /* common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common.xcodeproj; path = ../src/common/common.xcodeproj; sourceTree = "<group>"; };
-		C545B5A9233DF53400B44FF2 /* base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = base.xcodeproj; path = ../src/base/base.xcodeproj; sourceTree = "<group>"; };
-		C545B61E233E010300B44FF2 /* LuakitLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LuakitLoader.cpp; sourceTree = "<group>"; };
-		C545B61F233E010300B44FF2 /* LuakitLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LuakitLoader.h; sourceTree = "<group>"; };
-		C545B620233E010300B44FF2 /* lua_helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lua_helpers.cpp; sourceTree = "<group>"; };
-		C545B621233E010300B44FF2 /* lua_helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_helpers.h; sourceTree = "<group>"; };
-		C545B622233E010300B44FF2 /* xxtea.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
-		C545B623233E010300B44FF2 /* xxtea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		C54E8BF1234C8E4D00F04AD4 /* extensions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = extensions.xcodeproj; path = ../extensions/extensions.xcodeproj; sourceTree = "<group>"; };
-		C57CC1852359361D00206922 /* notification_service_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = notification_service_impl.cc; path = ../src/notification/notification_service_impl.cc; sourceTree = "<group>"; };
-		C57CC1882359361D00206922 /* notification_service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_service.h; path = ../src/notification/notification_service.h; sourceTree = "<group>"; };
-		C57CC18A2359361D00206922 /* notification_registrar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_registrar.h; path = ../src/notification/notification_registrar.h; sourceTree = "<group>"; };
-		C57CC18B2359361D00206922 /* notification_source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_source.h; path = ../src/notification/notification_source.h; sourceTree = "<group>"; };
-		C57CC18C2359361D00206922 /* notification_observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_observer.h; path = ../src/notification/notification_observer.h; sourceTree = "<group>"; };
-		C57CC18D2359361D00206922 /* notification_details.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_details.h; path = ../src/notification/notification_details.h; sourceTree = "<group>"; };
-		C57CC18F2359361D00206922 /* notification_service_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notification_service_impl.h; path = ../src/notification/notification_service_impl.h; sourceTree = "<group>"; };
-		C57CC1902359361D00206922 /* notification_registrar.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = notification_registrar.cc; path = ../src/notification/notification_registrar.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,10 +100,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C503D1D2235B4ACB00B05283 /* libluakit_engine.a in Frameworks */,
 				C5E42F05234E359E0015AECA /* libthird-party.a in Frameworks */,
 				C5830BBB234CAA0800E2576E /* libextensions.a in Frameworks */,
-				C545B5F2233DF59500B44FF2 /* libbase.a in Frameworks */,
-				C545B5F3233DF59500B44FF2 /* libcommon.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,15 +117,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C503D1C1235B4A5400B05283 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C503D1CF235B4A5400B05283 /* libluakit_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C545B51D233DF2DE00B44FF2 = {
 			isa = PBXGroup;
 			children = (
-				C57CC183235935D300206922 /* notification */,
+				C503D1C0235B4A5400B05283 /* luakit_engine.xcodeproj */,
 				C500A1A1234DE2F7001998F1 /* third-party.xcodeproj */,
 				C54E8BF1234C8E4D00F04AD4 /* extensions.xcodeproj */,
-				C545B61D233E010300B44FF2 /* lua-tools */,
-				C545B5A9233DF53400B44FF2 /* base.xcodeproj */,
-				C545B594233DF52200B44FF2 /* common.xcodeproj */,
 				C545B532233DF38D00B44FF2 /* OCHelper */,
 				C545B527233DF2DF00B44FF2 /* Products */,
 				C545B5F1233DF59500B44FF2 /* Frameworks */,
@@ -195,23 +157,6 @@
 			path = OCHelper;
 			sourceTree = "<group>";
 		};
-		C545B595233DF52200B44FF2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C545B59B233DF52200B44FF2 /* libcommon.a */,
-				C545B59D233DF52200B44FF2 /* libcommon_unittests.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C545B5AA233DF53400B44FF2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C545B5AF233DF53500B44FF2 /* libbase.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C545B5F1233DF59500B44FF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,41 +176,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C545B61D233E010300B44FF2 /* lua-tools */ = {
-			isa = PBXGroup;
-			children = (
-				C545B61E233E010300B44FF2 /* LuakitLoader.cpp */,
-				C545B61F233E010300B44FF2 /* LuakitLoader.h */,
-				C545B620233E010300B44FF2 /* lua_helpers.cpp */,
-				C545B621233E010300B44FF2 /* lua_helpers.h */,
-				C545B622233E010300B44FF2 /* xxtea.cpp */,
-				C545B623233E010300B44FF2 /* xxtea.h */,
-			);
-			name = "lua-tools";
-			path = "../src/lua-tools";
-			sourceTree = "<group>";
-		};
 		C54E8BF2234C8E4D00F04AD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				C54E8BF7234C8E4D00F04AD4 /* libextensions.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		C57CC183235935D300206922 /* notification */ = {
-			isa = PBXGroup;
-			children = (
-				C57CC18D2359361D00206922 /* notification_details.h */,
-				C57CC18C2359361D00206922 /* notification_observer.h */,
-				C57CC1902359361D00206922 /* notification_registrar.cc */,
-				C57CC18A2359361D00206922 /* notification_registrar.h */,
-				C57CC1852359361D00206922 /* notification_service_impl.cc */,
-				C57CC18F2359361D00206922 /* notification_service_impl.h */,
-				C57CC1882359361D00206922 /* notification_service.h */,
-				C57CC18B2359361D00206922 /* notification_source.h */,
-			);
-			name = notification;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,10 +198,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				C503D1D1235B4AAD00B05283 /* PBXTargetDependency */,
 				C500A1B1234DE325001998F1 /* PBXTargetDependency */,
 				C5830BB8234CA9F600E2576E /* PBXTargetDependency */,
-				C545B5D9233DF57B00B44FF2 /* PBXTargetDependency */,
-				C545B5DD233DF57B00B44FF2 /* PBXTargetDependency */,
 			);
 			name = luakit;
 			productName = luakit;
@@ -321,16 +236,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C545B5AA233DF53400B44FF2 /* Products */;
-					ProjectRef = C545B5A9233DF53400B44FF2 /* base.xcodeproj */;
-				},
-				{
-					ProductGroup = C545B595233DF52200B44FF2 /* Products */;
-					ProjectRef = C545B594233DF52200B44FF2 /* common.xcodeproj */;
-				},
-				{
 					ProductGroup = C54E8BF2234C8E4D00F04AD4 /* Products */;
 					ProjectRef = C54E8BF1234C8E4D00F04AD4 /* extensions.xcodeproj */;
+				},
+				{
+					ProductGroup = C503D1C1235B4A5400B05283 /* Products */;
+					ProjectRef = C503D1C0235B4A5400B05283 /* luakit_engine.xcodeproj */;
 				},
 				{
 					ProductGroup = C500A1A2234DE2F7001998F1 /* Products */;
@@ -352,25 +263,11 @@
 			remoteRef = C500A1AE234DE2F7001998F1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C545B59B233DF52200B44FF2 /* libcommon.a */ = {
+		C503D1CF235B4A5400B05283 /* libluakit_engine.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libcommon.a;
-			remoteRef = C545B59A233DF52200B44FF2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C545B59D233DF52200B44FF2 /* libcommon_unittests.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcommon_unittests.a;
-			remoteRef = C545B59C233DF52200B44FF2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C545B5AF233DF53500B44FF2 /* libbase.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libbase.a;
-			remoteRef = C545B5AE233DF53500B44FF2 /* PBXContainerItemProxy */;
+			path = libluakit_engine.a;
+			remoteRef = C503D1CE235B4A5400B05283 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C54E8BF7234C8E4D00F04AD4 /* libextensions.a */ = {
@@ -387,12 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C545B624233E012600B44FF2 /* LuakitLoader.cpp in Sources */,
-				C545B625233E012600B44FF2 /* lua_helpers.cpp in Sources */,
-				C57CC1942359361D00206922 /* notification_registrar.cc in Sources */,
-				C545B626233E012600B44FF2 /* xxtea.cpp in Sources */,
 				C545B613233DFE3D00B44FF2 /* oc_callback.mm in Sources */,
-				C57CC1912359361D00206922 /* notification_service_impl.cc in Sources */,
 				C545B614233DFE3D00B44FF2 /* oc_helpers.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,15 +297,10 @@
 			name = "third-party";
 			targetProxy = C500A1B0234DE325001998F1 /* PBXContainerItemProxy */;
 		};
-		C545B5D9233DF57B00B44FF2 /* PBXTargetDependency */ = {
+		C503D1D1235B4AAD00B05283 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = base;
-			targetProxy = C545B5D8233DF57B00B44FF2 /* PBXContainerItemProxy */;
-		};
-		C545B5DD233DF57B00B44FF2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = common;
-			targetProxy = C545B5DC233DF57B00B44FF2 /* PBXContainerItemProxy */;
+			name = luakit_engine;
+			targetProxy = C503D1D0235B4AAD00B05283 /* PBXContainerItemProxy */;
 		};
 		C5830BB8234CA9F600E2576E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

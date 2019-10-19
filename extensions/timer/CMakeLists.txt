@@ -6,25 +6,11 @@
 cmake_minimum_required(VERSION 3.4.1)
 project(luakit)
 
-file(GLOB ALL_SRCS
- 
-	"${PROJECT_SOURCE_DIR}/*.cpp"
-	"${PROJECT_SOURCE_DIR}/*.c"
-	"${PROJECT_SOURCE_DIR}/*.cc"
-
-
-)
-
-#########?????????list(FILTER ALL_SRCS EXCLUDE REGEX ".*lua_timer.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*_win.cc$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*shell.c$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*test.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*mock_server.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*tests.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*_ios.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*html_utils.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*wwhttpapi.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*authhttpapi.cpp$")
+if (${ANDROID})
+    set (SRC lua_timer_android.cpp)
+else ()
+    set (SRC lua_timer.cpp)
+endif ()
 
 add_library(
                 # Sets the name of the library.
@@ -33,13 +19,16 @@ add_library(
                 # Sets the library as a shared library.
                 STATIC
 
-                ${ALL_SRCS}
+                # Provides a relative path to your source file(s).
+                ${SRC}
 )
+
+
 
 # Specifies a path to native header files.
 include_directories(
 		    ${PROJECT_SOURCE_DIR}
-                    ${PROJECT_SOURCE_DIR}/..
+            ${PROJECT_SOURCE_DIR}/..
 		    ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src
 		    ${PROJECT_SOURCE_DIR}/../../src
 		    ${PROJECT_SOURCE_DIR}/../../include

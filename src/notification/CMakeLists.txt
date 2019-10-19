@@ -22,6 +22,14 @@ file(GLOB ALL_SRCS
 
 )
 
+if (${ANDROID})
+    set (OS_SPECIFIC
+    )
+elseif (${LINUX})
+                list(FILTER ALL_SRCS EXCLUDE REGEX ".*LogicModel.cpp$")
+                list(FILTER ALL_SRCS EXCLUDE REGEX ".*notification_listener_impl.cpp$")
+endif()
+
 add_library(
                 # Sets the name of the library.
                 notification
@@ -43,7 +51,7 @@ include_directories(
                     ${PROJECT_SOURCE_DIR}/../../third-party/openssl/include/
                     ${PROJECT_SOURCE_DIR}/../../third-party/curl/include
                     ${PROJECT_SOURCE_DIR}/../../third-party/sqlite-amalgamation-3290000
-                    ${PROJECT_SOURCE_DIR}/../../extensions/Notify
+                    ###${PROJECT_SOURCE_DIR}/../../extensions/Notify
                     ${PROJECT_SOURCE_DIR}/../../AndroidFramework/jni
                     ${PROJECT_SOURCE_DIR}/../lua-tools
                     ${PROJECT_SOURCE_DIR}/../../include

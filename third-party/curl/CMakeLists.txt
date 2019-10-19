@@ -43,7 +43,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                       # Provides the path to the library you want to import.
-                      ${LUAKIT_ROOT}/libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libssl.a 
+                      $ENV{OUTPUT_DIR}/libssl.a 
                 )
 
 add_library( crypto
@@ -57,7 +57,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                         #Provides the path to the library you want to import.
-                        ${LUAKIT_ROOT}/libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libcrypto.a 
+                        $ENV{OUTPUT_DIR}/libcrypto.a 
                       )
 #---------------------------end ssl -----------------------
 
@@ -69,9 +69,8 @@ target_link_libraries( curl ssl crypto)
 
 # Specifies a path to native header files.
 include_directories(
-	${PROJECT_SOURCE_DIR}/include
-	${PROJECT_SOURCE_DIR}/lib
-	#${PROJECT_SOURCE_DIR}/../openssl-1.1.1c/include
+	    ${PROJECT_SOURCE_DIR}/include
+	    ${PROJECT_SOURCE_DIR}/lib
         $ENV{OUTPUT_DIR}/include/
-	/usr/local/Cellar/node/11.5.0/include/node
+	    /usr/local/Cellar/node/11.5.0/include/node
 )

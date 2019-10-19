@@ -15,17 +15,6 @@ file(GLOB ALL_SRCS
 
 )
 
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*lua_timer.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*_win.cc$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*shell.c$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*test.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*mock_server.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*tests.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*_ios.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*html_utils.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*wwhttpapi.cpp$")
-list(FILTER ALL_SRCS EXCLUDE REGEX ".*authhttpapi.cpp$")
-
 add_library(
                 # Sets the name of the library.
                 language

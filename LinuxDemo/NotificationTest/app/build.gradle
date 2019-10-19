@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+
+android {
+        compileSdkVersion 28
+        defaultConfig {
+            applicationId "luakit.com.notificationtest"
+            minSdkVersion 24
+            targetSdkVersion 28
+            versionCode 1
+            versionName "1.0"
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        }
+
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+     }
+
+    externalNativeBuild {
+        cmake {
+            version "3.10.2"
+            path file('./CMakeLists.txt')
+        }
+    }
+
+    sourceSets{
+        main{
+            main.jni.srcDirs     = [ '.' ]
+        }
+    }
+
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            universalApk false
+        }
+    }
+ }
+
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.so'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation project(':luakit')
+    //implementation 'com.github.williamwen1986:LuakitJitpack:1.0.9'
+
+}

@@ -114,4 +114,4 @@ cd ../..
 cd AndroidFramework
 ./build-android.sh 
 checkError
-cd ../..
+cd ..

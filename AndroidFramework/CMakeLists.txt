@@ -18,40 +18,20 @@ file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/jni" ${lib_build_DIR} )
 set_target_properties( jni PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libjni.a)
 
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../src/common/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( "${PROJECT_SOURCE_DIR}/../src/common" ${lib_build_DIR} )
-set_target_properties( common PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libcommon.a)
-
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../src/base/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( "${PROJECT_SOURCE_DIR}/../src/base" ${lib_build_DIR} )
-set_target_properties( base PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libbase.a)
-
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../src/notification/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( "${PROJECT_SOURCE_DIR}/../src/notification" ${lib_build_DIR} )
-set_target_properties( notification PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libnotification.a)
-
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../extensions/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/../extensions" ${lib_build_DIR} )
 set_target_properties( extensions PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libextensions.a)
 
-#set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../src/network/outputs/${ANDROID_ABI})
-#file(MAKE_DIRECTORY ${lib_build_DIR})
-#add_subdirectory( "${PROJECT_SOURCE_DIR}/../src/network" ${lib_build_DIR} )
-#set_target_properties( network PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libnetwork.a)
-
-set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../src/lua-tools/outputs/${ANDROID_ABI})
-file(MAKE_DIRECTORY ${lib_build_DIR})
-add_subdirectory( "${PROJECT_SOURCE_DIR}/../src/lua-tools" ${lib_build_DIR} )
-set_target_properties( lua_tools PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/liblua_tools.a)
-
 set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../third-party/outputs/${ANDROID_ABI})
 file(MAKE_DIRECTORY ${lib_build_DIR})
 add_subdirectory( "${PROJECT_SOURCE_DIR}/../third-party" ${lib_build_DIR} )
 set_target_properties( third_party PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libthird_party.a)
+
+set( lib_build_DIR ${PROJECT_SOURCE_DIR}/../src/outputs/${ANDROID_ABI})
+file(MAKE_DIRECTORY ${lib_build_DIR})
+add_subdirectory( "${PROJECT_SOURCE_DIR}/../src" ${lib_build_DIR} )
+set_target_properties( luakit_engine PROPERTIES IMPORTED_LOCATION ${lib_build_DIR}/libluakit_engine.a)
 
 ### ssl ###
 
@@ -88,25 +68,21 @@ set_target_properties( # Specifies the target library.
 ###link_directories(${outputDir}/${ANDROID_ABI})
 
 target_link_libraries(luaFramework
+                luakit_engine
                 extensions
-                common
-                #network
-                lua_tools
                 base
-                notification
-                event
-                dmg_fp
                 icu
+                dmg_fp
+                event
                 curl
                 sqlite
                 ssl
                 crypto
-                #timer
-                #lua_cjson
-                #debug
                 third_party
                 lua
                 jni
+                ###notification
+                ###thread
 )
 
 # Specifies a path to native header files.
@@ -121,15 +97,6 @@ include_directories(
                     ${PROJECT_SOURCE_DIR}/../third-party/curl/include
                     ${PROJECT_SOURCE_DIR}/../third-party/lua-5.1.5/src
                     ${PROJECT_SOURCE_DIR}/../src/lua-tools
-                    ###${PROJECT_SOURCE_DIR}/../extensions/lua-cjson-master
-                    ###${PROJECT_SOURCE_DIR}/../extensions/debug
-                    ###${PROJECT_SOURCE_DIR}/../extensions/HTTP
-                    ###${PROJECT_SOURCE_DIR}/../extensions/AsyncSocket
-                    ###${PROJECT_SOURCE_DIR}/../extensions/timer
-                    ###${PROJECT_SOURCE_DIR}/../extensions/thread
-                    ###${PROJECT_SOURCE_DIR}/../extensions/File
-                    ###${PROJECT_SOURCE_DIR}/../extensions/Notify
-                    ###${PROJECT_SOURCE_DIR}/../extensions/language
                     ${PROJECT_SOURCE_DIR}/../third-party/sqlite-amalgamation-3290000
                     ${PROJECT_SOURCE_DIR}/../third-party/toluapp/include
                     ${PROJECT_SOURCE_DIR}/../include

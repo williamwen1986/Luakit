@@ -2629,7 +2629,6 @@
 					NDEBUG,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(TOP_SRC_DIR)/config",
 					"$(inherited)",
 					"$(TOP_SRC_DIR)/third-party",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -2689,7 +2688,6 @@
 					"_FORTIFY_SOURCE=2",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(TOP_SRC_DIR)/config",
 					"$(inherited)",
 					"$(TOP_SRC_DIR)/third-party",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

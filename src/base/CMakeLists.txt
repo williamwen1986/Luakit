@@ -16,8 +16,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_HISTORICAL_STRERRO_R -DNVALGRIND -fvis
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -fexceptions -frtti -fPIC -DUSE_HISTORICAL_STRERRO_R")
 #set(CMAKE_STATIC_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC -llog -lz -lc")
 
-#set (OS_SPECIFIC "")
-
 if (${ANDROID})
     set (OS_SPECIFIC
                    "${ANDROID_NDK}/sources/android/cpufeatures/cpu-features.c"
@@ -48,6 +46,16 @@ if (${ANDROID})
                    "sys_info_android.cc"
                    "threading/platform_thread_android.cc"
       )
+elseif (${LINUX})
+    set (GDK_INCLUDE
+                    /usr/lib/x86_64-linux-gnu/glib-2.0/include
+                    /usr/include/pango-1.0
+                    /usr/include/gdk-pixbuf-2.0
+                    /usr/include/gtk-3.0
+                    /usr/include/glib-2.0/
+                    /usr/include/cairo
+                    /usr/include/gdk-pixbuf-2.0
+    )
 endif()
 
 add_library(
@@ -226,5 +234,5 @@ include_directories(
                     ${PROJECT_SOURCE_DIR}/../../third-party/
                     ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src/
                     ${PROJECT_SOURCE_DIR}/../../include
-
+                    ${GDK_INCLUDE}
 )

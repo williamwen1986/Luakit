@@ -21,6 +21,32 @@ struct AndroidTimer
     int type;
 };
 
+class TimerExtension : LuakitExtension
+{
+public:
+    /* ctor */ TimerExtension()
+    {
+        license = MIT;
+        extensionName = "Timer";
+        needChromium = true;
+    }
+    virtual void LuaOpen(lua_State* L)
+    {
+        //if (!isOpen)
+        {
+            if (! isOpen)
+            {
+                isOpen = true;
+                extern bool RegisterTimerUtil();
+                RegisterTimerUtil();
+            }
+            luaopen_timer(L);
+        }
+    }
+} TheTimerExtension;
+
+
+
 static base::subtle::AtomicWord g_createTimer = 0;
 static jobject createTimer(JNIEnv* env) {
   CHECK_CLAZZ(env, g_TimerUtil_clazz,
@@ -130,7 +156,8 @@ static const JNINativeMethod kMethodsTimerUtil[] = {
         reinterpret_cast<void*>(timerCall) }
 };
 
-extern bool RegisterTimerUtil(JNIEnv* env) {
+extern bool RegisterTimerUtil() {
+  JNIEnv* env = base::android::AttachCurrentThread();
   g_TimerUtil_clazz = reinterpret_cast<jclass>(env->NewGlobalRef(
       base::android::GetClass(env, kTimerUtilClassPath).obj()));
   const int kMethodsTimerUtilSize = arraysize(kMethodsTimerUtil);

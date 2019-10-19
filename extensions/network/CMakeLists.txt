@@ -35,6 +35,7 @@ include_directories(
                 ${PROJECT_SOURCE_DIR}/../Notify
                 ${PROJECT_SOURCE_DIR}/../../src
                 ${PROJECT_SOURCE_DIR}/../../src/common
+                ${PROJECT_SOURCE_DIR}/../../src/base
                 ${PROJECT_SOURCE_DIR}/../../src/notification
                 ${PROJECT_SOURCE_DIR}/../../third-party/lua-5.1.5/src
                 ${PROJECT_SOURCE_DIR}/../../src/lua-tools
