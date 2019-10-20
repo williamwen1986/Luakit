@@ -19,6 +19,8 @@ else ()
     list(FILTER ALL_SRCS EXCLUDE REGEX ".*com_common_luakit_NativeHandleHolder.cpp$")
     list(FILTER ALL_SRCS EXCLUDE REGEX ".*com_common_luakit_NotificationHelper.cpp$")
     list(FILTER ALL_SRCS EXCLUDE REGEX ".*lua_notification_utility_android.cpp$")
+    list(FILTER ALL_SRCS EXCLUDE REGEX ".*LogicModel.cpp")
+    list(FILTER ALL_SRCS EXCLUDE REGEX ".*notification_listener_impl.cpp$")
 endif ()
 
 add_library(

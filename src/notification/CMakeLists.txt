@@ -51,7 +51,7 @@ include_directories(
                     ${PROJECT_SOURCE_DIR}/../../third-party/openssl/include/
                     ${PROJECT_SOURCE_DIR}/../../third-party/curl/include
                     ${PROJECT_SOURCE_DIR}/../../third-party/sqlite-amalgamation-3290000
-                    ###${PROJECT_SOURCE_DIR}/../../extensions/Notify
+                    ${PROJECT_SOURCE_DIR}/../../extensions/Notify
                     ${PROJECT_SOURCE_DIR}/../../AndroidFramework/jni
                     ${PROJECT_SOURCE_DIR}/../lua-tools
                     ${PROJECT_SOURCE_DIR}/../../include

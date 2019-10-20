@@ -3,7 +3,7 @@ project(luakit)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_HISTORICAL_STRERRO_R -DNVALGRIND -fvisibility=hidden")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -fexceptions -frtti -fPIC -DUSE_HISTORICAL_STRERRO_R")
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC -llog -lz -lc")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC -lz -lc")
 
 
 add_library( luaFramework 
@@ -41,7 +41,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                       # Provides the path to the library you want to import.
-                      ${PROJECT_SOURCE_DIR}/../libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libssl.a 
+                      $ENV{OUTPUT_DIR}/libssl.a 
                 )
 ### crypto ###
 
@@ -56,7 +56,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                         #Provides the path to the library you want to import.
-                        ${PROJECT_SOURCE_DIR}/../libs/android${ANDROID_NATIVE_API_LEVEL}-${CMAKE_BUILD_TYPE}/${ANDROID_ABI}/libcrypto.a 
+                        $ENV{OUTPUT_DIR}/libcrypto.a 
                       )
 ###
 
